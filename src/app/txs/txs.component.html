@@ -1,0 +1,26 @@
+<div class="card events-card">
+  <header class="card-header">
+    <p class="card-header-title">Transactions</p>
+  </header>
+  <div class="card-table">
+    <div class="content">
+      <table class="table is-fullwidth is-striped">
+        <tbody>
+          <tr>
+            <th>Hash</th>
+            <th>Gas Used</th>
+            <th>Gas Wanted</th>
+            <th>Height</th>
+          </tr>
+          <tr *ngFor="let tx of txs.reverse()">
+            <td>{{tx.hash}}</td>
+            <td>{{tx.gasUsed}}</td>
+            <td>{{tx.gasWanted}}</td>
+            <td>{{tx.height}}</td>
+            <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

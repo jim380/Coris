@@ -1,0 +1,23 @@
+<div class="card events-card">
+  <header class="card-header">
+    <p class="card-header-title">Validators</p>
+  </header>
+  <div class="card-table">
+    <div class="content">
+      <table class="table is-fullwidth is-striped">
+        <tbody>
+          <tr>
+            <th>#</th>
+            <th>address</th>
+            <th>power</th>
+          </tr>
+          <tr *ngFor="let validator of validators; index as i">
+            <td>{{i+1}}</td>
+            <td>{{validator.address}}</td>
+            <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

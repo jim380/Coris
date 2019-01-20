@@ -1,0 +1,22 @@
+<div *ngFor="let block of blocks.reverse().slice(0,1)" class="card events-card">
+  <header class="card-header">
+    <p class="card-header-title">Latest Block</p>
+    <p>Block at {{block.data.value.block.header.height}} | App-Hash: {{block.data.value.block.header.app_hash}}</p>
+  </header>
+  <div class="card-table">
+    <div class="content">
+      <table class="table is-fullwidth is-striped">
+        <tbody>
+          <tr>
+            <th>Validator Address</th>
+          </tr>
+          <tr *ngFor="let validator of block.data.value.block.last_commit.precommits">
+            <td *ngIf="(validator === null)">Abscent!</td>
+            <td *ngIf="(validator !== null)">{{validator.validator_address}}</td>
+            <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

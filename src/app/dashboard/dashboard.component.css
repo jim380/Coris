@@ -1,0 +1,16 @@
+
+table {
+  table-layout: fixed;
+  /*width: 100px;*/
+}
+
+td {
+  overflow: hidden; /* to hide anything that doesn't fit in the containing element. */
+  white-space: nowrap; /* to make sure the line doesn't break when it is longer than the containing div. */
+  text-overflow: ellipsis;
+}
+
+.dash-card-table {
+  max-height: 200px;
+  overflow-y: scroll;
+}

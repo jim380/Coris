@@ -1,0 +1,24 @@
+<div class="card events-card">
+  <header class="card-header">
+    <p class="card-header-title">Blocks</p>
+  </header>
+  <div class="card-table">
+    <div class="content">
+      <table class="table is-fullwidth is-striped">
+        <tbody>
+          <tr>
+            <th>Hash</th>
+            <th>Height</th>
+            <th>Time</th>
+          </tr>
+          <tr *ngFor="let block of blocks">
+            <td>{{block.block_id.hash}}</td>
+            <td>{{block.header.height}}</td>
+            <td>{{block.header.time}}</td>
+            <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
