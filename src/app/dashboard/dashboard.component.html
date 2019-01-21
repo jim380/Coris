@@ -10,12 +10,11 @@
         <div class="content">
           <table class="table is-striped">
             <tbody>
-
-              <tr *ngFor="let block of blocks.reverse()">
+              <tr *ngFor="let block of (appState | async).blocks">
                 <td width="5%"><i class="fas fa-vector-square"></i></td>
                 <td class="block-title">{{block.data.value.block.header.app_hash}}</td>
-              </tr>
-              
+                <td class="block-title">{{block.data.value.block.header.height}}</td>
+               </tr>
             </tbody>
           </table>
         </div>
@@ -37,13 +36,11 @@
         <div class="content">
           <table class="table is-fullwidth is-striped">
             <tbody>
-              
-              <tr *ngFor="let tx of txs.reverse()">
-                <td width="5%"><i class="fas fa-exchange-alt"></i></td>
+              <tr *ngFor="let tx of (appState | async).txs">
+                <td width="5%"><i class="fas fa-vector-square"></i></td>                
                 <td class="block-title">{{tx.data.value.TxResult.tx}}</td>
                 <td width="20%">{{tx.data.value.TxResult.height}}</td>
               </tr>
-              
             </tbody>
           </table>
         </div>

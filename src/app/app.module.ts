@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -10,6 +11,7 @@ import { BlocksComponent } from './blocks/blocks.component';
 import { TxsComponent } from './txs/txs.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LastBlockComponent } from './last-block/last-block.component';
+import { appReducer } from './app.reducers';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { LastBlockComponent } from './last-block/last-block.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    StoreModule.forRoot({ App: appReducer }),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,32 +1,17 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import * as AppActions from './app.actions'
 
 @Injectable({
   providedIn: 'root'
 })
 export class WsService {
-  // Subscribtion queries
-  // subQuery = [
-  //   'Tx', 
-  //   'NewBlock', 
-  //   'NewBlockHeader', 
-  //   'Vote', 
-  //   'NewRound', 
-  //   'NewRoundStep', 
-  //   'Polka', 
-  //   'Relock', 
-  //   'TimeoutPropose', 
-  //   'TimeoutWait', 
-  //   'Unlock', 
-  //   'ValidBlock', 
-  //   'ValidatorSetUpdates', 
-  //   'Lock', 
-  //   'CompleteProposal',
-  // // ];
-  // getwsBlockStore = () => {
-  //   return wsBlockStore;
-  // }
   newWebSocket = new WebSocket("wss://aakatev.me/iris/websocket");
-  // query from ws and store data in js object
+
+  blocksState: Observable<{blocks: []}>;
+  txsState: Observable<{txs: []}>;
+
   wsBlockStore = [];
   wsTxStore = [];
   numOfValidators;
@@ -58,7 +43,7 @@ export class WsService {
     }
   };
 
-  constructor() { 
+  constructor(private store: Store<{App: { blocks: [], txs: []} }>) { 
      // WS handlers
     this.newWebSocket.onopen = (event) => {
       this.subscribe();
@@ -72,13 +57,15 @@ export class WsService {
             this.wsBlockStore.shift();
           }
           this.wsBlockStore.push(json.result);
+          // Update Store
+          this.store.dispatch(new AppActions.UpdateBlocks(this.wsBlockStore));
         } else if(json.result.data.type === 'tendermint/event/Tx') {
           if(Object.keys(this.wsTxStore).length >= this.MAX_STORE_INDEX) {
             this.wsTxStore.shift();
           }
           this.wsTxStore.push(json.result);
-
-          console.log(this.getWsTxStore());
+          // Update store
+          this.store.dispatch(new AppActions.UpdateTxs(this.wsTxStore));
         }
 
         // console.log(this.getNumOfValidators());
@@ -101,3 +88,25 @@ export class WsService {
     this.newWebSocket.send(JSON.stringify(this.unsubBlockMsg));
   };
 }
+// More info:
+// Subscribtion queries
+// subQuery = [
+//   'Tx', 
+//   'NewBlock', 
+//   'NewBlockHeader', 
+//   'Vote', 
+//   'NewRound', 
+//   'NewRoundStep', 
+//   'Polka', 
+//   'Relock', 
+//   'TimeoutPropose', 
+//   'TimeoutWait', 
+//   'Unlock', 
+//   'ValidBlock', 
+//   'ValidatorSetUpdates', 
+//   'Lock', 
+//   'CompleteProposal',
+// // ];
+// getwsBlockStore = () => {
+//   return wsBlockStore;
+// }
