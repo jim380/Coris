@@ -53,6 +53,7 @@ export class WsService {
       let json = JSON.parse(event.data);
       if (Object.keys(json.result).length !== 0) {
         if(json.result.data.type === 'tendermint/event/NewBlock') {
+          console.log('NewBlock!');
           if(Object.keys(this.wsBlockStore).length >= this.MAX_STORE_INDEX) {
             this.wsBlockStore.shift();
           }
@@ -60,6 +61,7 @@ export class WsService {
           // Update Store
           this.store.dispatch(new AppActions.UpdateBlocks(this.wsBlockStore));
         } else if(json.result.data.type === 'tendermint/event/Tx') {
+          console.log('NewTx!');
           if(Object.keys(this.wsTxStore).length >= this.MAX_STORE_INDEX) {
             this.wsTxStore.shift();
           }
@@ -67,17 +69,13 @@ export class WsService {
           // Update store
           this.store.dispatch(new AppActions.UpdateTxs(this.wsTxStore));
         }
-
-        // console.log(this.getNumOfValidators());
       }
-      // console.log(this.lastBlock);
     };
   };
 
   ngOnInit() { };
   getWsBlockStore() { return this.wsBlockStore };
   getWsTxStore() { return this.wsTxStore };
-  // getNumOfValidators() { return this.wsBlockStore.pop() };
 
   subscribe() {
     this.newWebSocket.send(JSON.stringify(this.subBlockMsg));

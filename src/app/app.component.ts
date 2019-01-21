@@ -19,12 +19,11 @@ export class AppComponent {
     this.appState.lastBlocks=this.ws.getWsBlockStore();
   }
 
-  getNumValidators(): void {
-    // this.appState.numValidators = this.ws.getNumOfValidators();
+  ngOnInit() { }
+
+  ngOnDestroy() {
+    this.ws.unsubscribe();
   }
 
-  ngOnInit() { 
-    this.getNumValidators();
-  }
 }
 
