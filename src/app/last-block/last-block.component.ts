@@ -1,23 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { WsService } from '../ws.service';
+import { Store } from '@ngrx/store';
 import { Block } from '../blocks/block';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-last-block',
   templateUrl: './last-block.component.html',
-  providers: [WsService],
   styleUrls: ['./last-block.component.css']
 })
 export class LastBlockComponent implements OnInit {
-  blocks = [];
+  appState: Observable<{blocks: [], txs: []}>;
 
-  constructor(private ws:WsService) { 
-    this.blocks=this.ws.getWsBlockStore();
-  }
+  constructor(private store: Store<{App: { blocks: [], txs: []} }>) { }
 
-  ngOnInit() { }
-
-  ngOnDestroy() {
-    this.ws.unsubscribe();
+  ngOnInit() { 
+    this.appState = this.store.select('App');
   }
 }

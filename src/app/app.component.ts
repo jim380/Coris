@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { State } from './state';
 import { HttpClient } from '@angular/common/http';
 import { WsService } from './ws.service';
+import { Observable } from 'rxjs';
+import { Block } from './blocks/block';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -9,17 +12,20 @@ import { WsService } from './ws.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  appState = new State();
+  appState: Observable<{blocks: [], txs:[]}>;
 
-  constructor(private http: HttpClient, private ws:WsService) { 
-    this.http.get('https://aakatev.me/iris/status').subscribe(data => {
-      this.appState.lastBlock = data['result'].sync_info.latest_block_height;
-      this.appState.chainId = data['result'].node_info.network;
-    });
-    this.appState.lastBlocks=this.ws.getWsBlockStore();
+  constructor(private http: HttpClient, private ws:WsService, private store: Store<{App: { blocks: [], txs: [] } }>) {
+    console.log('constr!');
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.appState = this.store.select('App');
+  }
+
+  ngAfterViewInit() {
+    console.log('init!');
+    
+  }
 
   ngOnDestroy() {
     this.ws.unsubscribe();

@@ -14,6 +14,6 @@ export class DashboardComponent implements OnInit {
   constructor(private store: Store<{App: { blocks: [], txs: []} }>) { }
 
   ngOnInit() { 
-    this.appState = this.store.select('App')
+    this.appState = this.store.select('App');
   }
 }

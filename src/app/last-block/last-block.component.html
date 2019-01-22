@@ -1,22 +1,28 @@
-<div *ngFor="let block of blocks.reverse().slice(0,1)" class="card events-card">
-  <header class="card-header">
-    <p class="card-header-title">Latest Block</p>
-    <p>Block at {{block.data.value.block.header.height}} | App-Hash: {{block.data.value.block.header.app_hash}}</p>
-  </header>
+<div *ngFor="let block of (appState | async).blocks.slice(0,1)" class="card events-card">
+  
   <div class="card-table">
     <div class="content">
+      <article class="message">
+        <div class="message-header">
+          <i class="fab fa-codepen"></i>
+          <p>Latest Block</p>
+        </div>
+        <div class="message-body">
+          <h3>Block at {{block.header.height}}</h3>
+          <h3>App-Hash: {{block.header.app_hash}}</h3>
       <table class="table is-fullwidth is-striped">
         <tbody>
           <tr>
-            <th>Validator Address</th>
+            <th>Validators Address</th>
           </tr>
-          <tr *ngFor="let validator of block.data.value.block.last_commit.precommits">
+        <!--   <tr *ngFor="let validator of block.data.value.block.last_commit.precommits">
             <td *ngIf="(validator === null)">Abscent!</td>
             <td *ngIf="(validator !== null)">{{validator.validator_address}}</td>
-            <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
           </tr>
-        </tbody>
+         --></tbody>
       </table>
+        </div>
+      </article>
     </div>
   </div>
 </div>

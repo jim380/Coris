@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import * as AppActions from './app.actions'
 
 @Injectable({
@@ -43,7 +44,24 @@ export class WsService {
     }
   };
 
-  constructor(private store: Store<{App: { blocks: [], txs: []} }>) { 
+  constructor(private store: Store<{App: { blocks: [], txs: []} }>, private http: HttpClient) { 
+    this.http.get('https://aakatev.me/iris/status').subscribe(data => {
+      // Debugging
+      // let currValidators = data['result'].genesis.validators;
+      let lastBlock = data['result'].sync_info.latest_block_height;
+
+      this.http.get(`https://aakatev.me/iris/tx_search?query="tx.height>${lastBlock-100}"`).subscribe(data => {
+        this.wsTxStore = data['result'].txs.reverse();
+        this.store.dispatch(new AppActions.UpdateTxs(this.wsTxStore));
+      });
+
+      this.http.get(`https://aakatev.me/iris/blockchain?minHeight=${lastBlock-50}&maxHeight=${lastBlock}`).subscribe(data => {
+        this.wsBlockStore = data['result'].block_metas.reverse();
+        this.store.dispatch(new AppActions.UpdateBlocks(this.wsBlockStore));
+      });
+    });
+
+
      // WS handlers
     this.newWebSocket.onopen = (event) => {
       this.subscribe();
@@ -57,7 +75,8 @@ export class WsService {
           if(Object.keys(this.wsBlockStore).length >= this.MAX_STORE_INDEX) {
             this.wsBlockStore.shift();
           }
-          this.wsBlockStore.push(json.result);
+          this.wsBlockStore.push(json.result.data.value.block);
+          console.log(json.result.data.value);
           // Update Store
           this.store.dispatch(new AppActions.UpdateBlocks(this.wsBlockStore));
         } else if(json.result.data.type === 'tendermint/event/Tx') {
@@ -65,7 +84,8 @@ export class WsService {
           if(Object.keys(this.wsTxStore).length >= this.MAX_STORE_INDEX) {
             this.wsTxStore.shift();
           }
-          this.wsTxStore.push(json.result);
+          console.log(json.result.data.value.TxResult);
+          this.wsTxStore.push(json.result.data.value.TxResult);
           // Update store
           this.store.dispatch(new AppActions.UpdateTxs(this.wsTxStore));
         }
@@ -74,6 +94,7 @@ export class WsService {
   };
 
   ngOnInit() { };
+
   getWsBlockStore() { return this.wsBlockStore };
   getWsTxStore() { return this.wsTxStore };
 
