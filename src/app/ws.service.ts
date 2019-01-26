@@ -15,6 +15,8 @@ export class WsService {
 
   wsBlockStore = [];
   wsTxStore = [];
+  wsValidatorsStore = [];
+
   numOfValidators;
   MAX_STORE_INDEX = 10;
 
@@ -44,7 +46,16 @@ export class WsService {
     }
   };
 
-  constructor(private store: Store<{App: { blocks: [], txs: []} }>, private http: HttpClient) { 
+  subValMsg = {
+    "jsonrpc": "2.0",
+    "method": "subscribe",
+    "id": "0",
+    "params": {
+      "query": `tm.event='ValidatorSetUpdate'`
+    }
+  };
+
+  constructor(private store: Store<{App: { blocks: [], txs: [], validators: []} }>, private http: HttpClient) { 
     this.http.get('https://aakatev.me/iris/status').subscribe(data => {
       // Debugging
       // let currValidators = data['result'].genesis.validators;
@@ -58,6 +69,12 @@ export class WsService {
       this.http.get(`https://aakatev.me/iris/blockchain?minHeight=${lastBlock-50}&maxHeight=${lastBlock}`).subscribe(data => {
         this.wsBlockStore = data['result'].block_metas.reverse();
         this.store.dispatch(new AppActions.UpdateBlocks(this.wsBlockStore));
+      });
+
+      this.http.get(`https://aakatev.me/iris/validators?height=${lastBlock}`).subscribe(data => {
+        this.wsValidatorsStore = data['result'].validators;
+        this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
+        console.log('WS DATA!!!', this.wsValidatorsStore);
       });
     });
 
@@ -88,6 +105,20 @@ export class WsService {
           this.wsTxStore.push(json.result.data.value.TxResult);
           // Update store
           this.store.dispatch(new AppActions.UpdateTxs(this.wsTxStore));
+        } else if(json.result.data.type === 'tendermint/event/ValidatorSetUpdates') {
+          this.http.get('https://aakatev.me/iris/status').subscribe(data => {
+            // Debugging
+            // let currValidators = data['result'].genesis.validators;
+            let lastBlock = data['result'].sync_info.latest_block_height;
+            console.log('New validator at ');
+            console.log(lastBlock);
+            console.log('Performing validators set update!');
+            this.http.get(`https://aakatev.me/iris/validators?height=${lastBlock}`).subscribe(data => {
+              this.wsValidatorsStore = data['result'].validators;
+              this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
+              console.log('WS DATA!!!', this.wsValidatorsStore);
+            });    
+          });  
         }
       }
     };
@@ -101,6 +132,7 @@ export class WsService {
   subscribe() {
     this.newWebSocket.send(JSON.stringify(this.subBlockMsg));
     this.newWebSocket.send(JSON.stringify(this.subTxMsg));
+    this.newWebSocket.send(JSON.stringify(this.subValMsg));
   };
 
   unsubscribe() {

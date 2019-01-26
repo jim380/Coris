@@ -8,14 +8,14 @@
       <table class="table is-fullwidth is-striped">
         <tbody>
           <tr>
-            <th>#</th>
-            <th>address</th>
-            <th>power</th>
+            <th>Address</th>
+            <th>Power, Stake</th>
+            <th>Proposer Priority</th>
           </tr>
-          <tr *ngFor="let validator of validators; index as i">
-            <td>{{i+1}}</td>
+          <tr *ngFor="let validator of (appState | async).validators">
             <td>{{validator.address}}</td>
-            <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td>
+            <td><a class="button is-small is-primary">{{validator.voting_power}}</a></td>
+            <td><a class="button is-small is-primary">{{validator.proposer_priority}}</a></td>
           </tr>
         </tbody>
       </table>

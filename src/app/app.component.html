@@ -32,24 +32,24 @@
             <p class="subtitle">Last Block</p>
           </article>
         </div>
-        <div class="tile is-parent">
+        <!-- <div class="tile is-parent">
           <article class="tile is-child box">
             <p class="title">n/a</p>
             <p class="subtitle">Tokens</p>
           </article>
-        </div>
+        </div> -->
          <div style="cursor: pointer;" routerLink="/validators" class="tile is-parent">
           <article class="tile is-child box">
-            <p class="title">1</p>
+            <p class="title">{{(appState | async).validators.length}}</p>
             <p class="subtitle">Validators</p>
           </article>
         </div>
-        <div class="tile is-parent">
+        <!-- <div class="tile is-parent">
           <article class="tile is-child box">
             <p class="title">n/a</p>
             <p class="subtitle">Block Time</p>
           </article>
-        </div>
+        </div> -->
       </div>
     </section>
     <router-outlet></router-outlet>
