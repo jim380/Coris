@@ -2,7 +2,7 @@
 A community built Blockchain explorer for IRISnet, brought to you by Cypher Core LLC.
 
 ## Deploy
-####Prerequisite
+#### Prerequisite
 - [node.js](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions-enterprise-linux-fedora-and-snap-packages)
     ```$ curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -```
     ```$ sudo apt-get install -y nodejs```
@@ -27,5 +27,5 @@ Open http://localhost:4200 in your browser to see the app in action.
 http://iris.cyphercore.io/
 
 ## Contact
-@aakatev
+@aakatev<br/>
 @jim380
