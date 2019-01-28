@@ -4,10 +4,10 @@ A community built Blockchain explorer for IRISnet, brought to you by Cypher Core
 ## Deploy
 #### Prerequisite
 - [node.js](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions-enterprise-linux-fedora-and-snap-packages)
-    ```$ curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -```
-    ```$ sudo apt-get install -y nodejs```
-- [Angular CLI]()
-    ```$ sudo npm install -g @angular/cli```
+<br/>```$ curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -```<br/>
+```$ sudo apt-get install -y nodejs```
+- [Angular CLI](https://cli.angular.io/)
+<br/>```$ sudo npm install -g @angular/cli```
 #### Method 1 – from source
 1. ```$ git clone https://github.com/jim380/irisnet-explorer```
 2. ```$ cd irisnet-explorer```
