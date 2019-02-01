@@ -12,15 +12,17 @@
             <th>Gas Wanted</th>
             <th>Height</th>
           </tr>
-          <tr *ngFor="let tx of txs.reverse()">
+          <tr *ngFor="let tx of txs">
             <td>{{tx.hash}}</td>
             <td>{{tx.gasUsed}}</td>
             <td>{{tx.gasWanted}}</td>
             <td>{{tx.height}}</td>
-            <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
+<nav class="pagination" role="navigation" aria-label="pagination">
+  <button (click)="displayOlderTxs()" id="btn-older" class="pagination-next button is-dark">Older</button>
+</nav>

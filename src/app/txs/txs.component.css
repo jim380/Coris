@@ -8,3 +8,11 @@ td {
   white-space: nowrap; /* to make sure the line doesn't break when it is longer than the containing div. */
   text-overflow: ellipsis;
 }
+
+button {
+  margin: 15px;
+}
+
+nav {
+  justify-content: center;
+}
