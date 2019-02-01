@@ -37,7 +37,7 @@
         <div class="content">
           <table class="table is-fullwidth is-striped">
             <tbody>
-              <tr *ngFor="let tx of (appState | async).txs.reverse()">            
+              <tr *ngFor="let tx of (appState | async).txs">            
                 <td class="block-title">{{tx.tx}}</td>
                 <td width="20%">{{tx.height}}</td>
               </tr>

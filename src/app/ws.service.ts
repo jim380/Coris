@@ -102,7 +102,7 @@ export class WsService {
             this.wsTxStore.shift();
           }
           console.log(json.result.data.value.TxResult);
-          this.wsTxStore.push(json.result.data.value.TxResult);
+          this.wsTxStore.unshift(json.result.data.value.TxResult);
           // Update store
           this.store.dispatch(new AppActions.UpdateTxs(this.wsTxStore));
         } else if(json.result.data.type === 'tendermint/event/ValidatorSetUpdates') {

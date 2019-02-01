@@ -13,13 +13,15 @@
       <table class="table is-fullwidth is-striped">
         <tbody>
           <tr>
-            <th>Validators Address</th>
+            <th><a (click)="showHideElem()">Precommits (Validators)</a></th>
           </tr>
-        <!--   <tr *ngFor="let validator of block.data.value.block.last_commit.precommits">
-            <td *ngIf="(validator === null)">Abscent!</td>
-            <td *ngIf="(validator !== null)">{{validator.validator_address}}</td>
-          </tr>
-         --></tbody>
+          <div [style.display]="displayCommits ? 'flex': 'none'" id="precommits">
+            <tr *ngFor="let validator of block.last_commit.precommits">
+              <td *ngIf="(validator === null)">Abscent!</td>
+              <td *ngIf="(validator !== null)">{{validator.validator_address}}</td>
+            </tr>
+          </div>
+        </tbody>
       </table>
         </div>
       </article>
