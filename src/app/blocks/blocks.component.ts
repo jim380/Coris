@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { DOCUMENT } from '@angular/common'; 
+import { Inject }  from '@angular/core';
 
 @Component({
   selector: 'app-blocks',
@@ -12,7 +14,7 @@ export class BlocksComponent implements OnInit {
   blocks = [];
   blocksToDisplay = 20;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, @Inject(DOCUMENT) document) { }
 
   fetchBlocks() {
     this.http.get(`https://aakatev.me/iris/blockchain?minHeight=${this.currentBlock-this.blocksToDisplay+1}&maxHeight=${this.currentBlock}`).subscribe(data => {
@@ -22,13 +24,17 @@ export class BlocksComponent implements OnInit {
 
   displayOlderBlocks() {
     if(this.currentBlock - this.blocksToDisplay > 20) {
+      document.getElementById('btn-newer').removeAttribute('disabled');
       this.currentBlock -= this.blocksToDisplay;
     }
     this.fetchBlocks();
   }
 
   displayNewerBlocks() {
-    if(this.currentBlock + this.blocksToDisplay <= this.startBlock) {
+    if(this.currentBlock + this.blocksToDisplay == this.startBlock) {
+      document.getElementById('btn-newer').setAttribute('disabled', 'true');
+      this.currentBlock += this.blocksToDisplay;
+    } else if(this.currentBlock + this.blocksToDisplay < this.startBlock) {
       this.currentBlock += this.blocksToDisplay;
     }
     this.fetchBlocks();

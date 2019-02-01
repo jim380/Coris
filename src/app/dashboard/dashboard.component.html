@@ -3,6 +3,7 @@
     <div class="card events-card">
       <header class="card-header">
         <p class="card-header-title">
+          <i class="fas fa-vector-square"></i>
           Recent Blocks
         </p>
       </header>
@@ -11,7 +12,6 @@
           <table class="table is-striped">
             <tbody>
               <tr *ngFor="let block of (appState | async).blocks">
-                <td width="5%"><i class="fas fa-vector-square"></i></td>
                 <td class="block-title">{{block.header.app_hash}}</td>
                 <td width="20%">{{block.header.height}}</td>
                </tr>
@@ -29,6 +29,7 @@
     <div class="card events-card">
       <header class="card-header">
         <p class="card-header-title">
+          <i class="fas fa-exchange-alt"></i>
           Recent Transactions
         </p>
       </header>
@@ -36,8 +37,7 @@
         <div class="content">
           <table class="table is-fullwidth is-striped">
             <tbody>
-              <tr *ngFor="let tx of (appState | async).txs.reverse()">
-                <td width="5%"><i class="fas fa-exchange-alt"></i></td>                
+              <tr *ngFor="let tx of (appState | async).txs.reverse()">            
                 <td class="block-title">{{tx.tx}}</td>
                 <td width="20%">{{tx.height}}</td>
               </tr>
