@@ -74,7 +74,6 @@ export class WsService {
       this.http.get(`https://aakatev.me/iris/validators?height=${lastBlock}`).subscribe(data => {
         this.wsValidatorsStore = data['result'].validators;
         this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
-        console.log('WS DATA!!!', this.wsValidatorsStore);
       });
     });
 
@@ -88,35 +87,39 @@ export class WsService {
       let json = JSON.parse(event.data);
       if (Object.keys(json.result).length !== 0) {
         if(json.result.data.type === 'tendermint/event/NewBlock') {
-          console.log('NewBlock!');
+          // Debugging
+          // console.log('NewBlock!');
           if(Object.keys(this.wsBlockStore).length >= this.MAX_STORE_INDEX) {
             this.wsBlockStore.shift();
           }
           this.wsBlockStore.push(json.result.data.value.block);
-          console.log(json.result.data.value);
+          // Debugging
+          // console.log(json.result.data.value);
           // Update Store
           this.store.dispatch(new AppActions.UpdateBlocks(this.wsBlockStore));
         } else if(json.result.data.type === 'tendermint/event/Tx') {
-          console.log('NewTx!');
-          if(Object.keys(this.wsTxStore).length >= this.MAX_STORE_INDEX) {
-            this.wsTxStore.shift();
-          }
-          console.log(json.result.data.value.TxResult);
-          this.wsTxStore.unshift(json.result.data.value.TxResult);
-          // Update store
-          this.store.dispatch(new AppActions.UpdateTxs(this.wsTxStore));
+          // Debugging
+          // console.log('NewTx!');
+          this.http.get(`https://aakatev.me/iris/tx_search?query="tx.height=${json.result.data.value.TxResult.height}"`).subscribe(data => {
+            if(Object.keys(this.wsTxStore).length >= this.MAX_STORE_INDEX) {
+              this.wsTxStore.shift();
+            }
+            // Debugging
+            // console.log('Data', data);
+            // console.log('Json', json.result);
+            this.wsTxStore.unshift(data['result'].txs[json.result.data.value.TxResult.index]);
+            // Update store
+            this.store.dispatch(new AppActions.UpdateTxs(this.wsTxStore));
+          });
+
         } else if(json.result.data.type === 'tendermint/event/ValidatorSetUpdates') {
           this.http.get('https://aakatev.me/iris/status').subscribe(data => {
             // Debugging
             // let currValidators = data['result'].genesis.validators;
             let lastBlock = data['result'].sync_info.latest_block_height;
-            console.log('New validator at ');
-            console.log(lastBlock);
-            console.log('Performing validators set update!');
             this.http.get(`https://aakatev.me/iris/validators?height=${lastBlock}`).subscribe(data => {
               this.wsValidatorsStore = data['result'].validators;
               this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
-              console.log('WS DATA!!!', this.wsValidatorsStore);
             });    
           });  
         }
