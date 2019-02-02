@@ -12,6 +12,8 @@ import { TxsComponent } from './txs/txs.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LastBlockComponent } from './last-block/last-block.component';
 import { appReducer } from './app.reducers';
+import { BlockComponent } from './block/block.component';
+import { TxComponent } from './tx/tx.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { appReducer } from './app.reducers';
     TxsComponent,
     DashboardComponent,
     LastBlockComponent,
+    BlockComponent,
+    TxComponent,
   ],
   imports: [
     BrowserModule,

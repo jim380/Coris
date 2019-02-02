@@ -3,8 +3,8 @@ table {
   /*width: 100px;*/
 }
 
-td, div, h1, h3 {
-  overflow: hidden;
+td, div, h1, h3, p {
+  overflow: hidden; 
   white-space: nowrap;
   text-overflow: ellipsis;
 }

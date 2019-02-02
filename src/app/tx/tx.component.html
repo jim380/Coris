@@ -1,0 +1,18 @@
+<div *ngIf="(tx.hash !== undefined)" class="card events-card">
+  <div class="card-table">
+    <div class="content">
+      <article class="message">
+        <div class="message-header">
+          <i class="fab fa-codepen"></i>
+          <p>Tx</p>
+        </div>
+        <div class="message-body">
+          <h3>Hash {{tx.hash}}</h3>
+          <h3>Height {{tx.height}}</h3>
+          <p>Gas: {{tx.tx_result.gasUsed}}/{{tx.tx_result.gasWanted}}</p>
+          <p>Msg: {{tx.tx}}</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>

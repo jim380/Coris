@@ -11,7 +11,7 @@
         <div class="content">
           <table class="table is-striped">
             <tbody>
-              <tr *ngFor="let block of (appState | async).blocks">
+              <tr routerLink="/block/{{block.header.height}}" class="clickable" *ngFor="let block of (appState | async).blocks">
                 <td class="block-title">{{block.header.app_hash}}</td>
                 <td width="20%">{{block.header.height}}</td>
                </tr>
@@ -37,8 +37,8 @@
         <div class="content">
           <table class="table is-fullwidth is-striped">
             <tbody>
-              <tr *ngFor="let tx of (appState | async).txs">            
-                <td class="block-title">{{tx.tx}}</td>
+              <tr routerLink="/tx/{{tx.hash}}" class="clickable" *ngFor="let tx of (appState | async).txs">            
+                <td class="block-title">{{tx.hash}}</td>
                 <td width="20%">{{tx.height}}</td>
               </tr>
             </tbody>

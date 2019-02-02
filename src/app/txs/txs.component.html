@@ -12,7 +12,7 @@
             <th>Gas Wanted</th>
             <th>Height</th>
           </tr>
-          <tr *ngFor="let tx of txs">
+          <tr routerLink="/tx/{{tx.hash}}" class="clickable" *ngFor="let tx of txs">
             <td>{{tx.hash}}</td>
             <td>{{tx.gasUsed}}</td>
             <td>{{tx.gasWanted}}</td>

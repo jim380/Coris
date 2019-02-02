@@ -11,7 +11,7 @@
             <th>Height</th>
             <th>Time</th>
           </tr>
-          <tr *ngFor="let block of blocks">
+          <tr routerLink="/block/{{block.header.height}}" class="clickable" *ngFor="let block of blocks">
             <td>{{block.block_id.hash}}</td>
             <td>{{block.header.height}}</td>
             <td>{{block.header.time}}</td>
