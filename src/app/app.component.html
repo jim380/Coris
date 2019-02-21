@@ -19,7 +19,7 @@
           <h1 class="title">
             Coris - IRISnet Explorer
           </h1>
-          <h2 class="subtitle">Chain: {{(appState | async).blocks[0].header.chain_id}}</h2>
+          <h2 class="subtitle">Chain: {{(appState | async).blocks[0]?.header.chain_id}}</h2>
         </div>
       </div>
     </section>
@@ -28,7 +28,7 @@
       <div class="tile is-ancestor has-text-centered">
         <div style="cursor: pointer;" routerLink="/last-block" class="tile is-parent">
           <article class="tile is-child box">
-            <p *ngFor="let block of (appState | async).blocks.reverse().slice(0,1)" class="title">{{block.header.height}}</p>
+            <p *ngFor="let block of (appState | async).blocks.reverse().slice(0,1)" class="title">{{block.header?.height}}</p>
             <p class="subtitle">Last Block</p>
           </article>
         </div>
@@ -40,7 +40,7 @@
         </div> -->
          <div style="cursor: pointer;" routerLink="/validators" class="tile is-parent">
           <article class="tile is-child box">
-            <p class="title">{{(appState | async).validators.length}}</p>
+            <p class="title">{{(appState | async).validators?.length}}</p>
             <p class="subtitle">Validators</p>
           </article>
         </div>

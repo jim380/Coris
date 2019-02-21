@@ -19,7 +19,7 @@ export class TxsComponent implements OnInit {
   fetchTxs() {
     document.getElementById('btn-older').classList.add('is-loading');
     this.http.get(`https://aakatev.me/iris/tx_search?query="tx.height>${this.minHeight}"`).subscribe(data => {
-      console.log(`https://aakatev.me/iris/tx_search?query="tx.height>${this.minHeight}"`);
+      // console.log(`https://aakatev.me/iris/tx_search?query="tx.height>${this.minHeight}"`);
       let currTxs = data['result'].txs.reverse();
       
       currTxs.forEach(tx => {

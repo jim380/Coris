@@ -25,7 +25,7 @@ export class ValidatorsComponent implements OnInit {
       let lastBlock = data['result'].sync_info.latest_block_height;
 
       this.http.get(`https://aakatev.me/iris/validators?height=${lastBlock}`).subscribe(data => {
-        console.log(`Got validators at ${lastBlock}`);
+        // console.log(`Got validators at ${lastBlock}`);
         this.store.dispatch(new AppActions.UpdateValidators(data['result'].validators));
       });
     });
