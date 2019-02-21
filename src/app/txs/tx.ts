@@ -1,4 +1,6 @@
-export class Tx {
+export interface Tx {
   hash: string;
-  gas: string;
+  height: number;
+  gasWanted: number;
+  gasUsed: number;
 }

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common'; 
 import { Inject }  from '@angular/core';
+import { Block } from './block';
+import { nodeRpc } from '../../config.js'
+
 
 @Component({
   selector: 'app-blocks',
@@ -9,17 +12,29 @@ import { Inject }  from '@angular/core';
   styleUrls: ['./blocks.component.css']
 })
 export class BlocksComponent implements OnInit {
+  blocks: Block[];
   currentBlock = 0;
   startBlock = 0;
-  blocks = [];
   blocksToDisplay = 20;
 
   constructor(private http: HttpClient, @Inject(DOCUMENT) document) { }
 
+  clearBlocks() {
+    this.blocks = [];
+  }
+
   fetchBlocks() {
-    this.http.get(`https://aakatev.me/iris/blockchain?minHeight=${this.currentBlock-this.blocksToDisplay+1}&maxHeight=${this.currentBlock}`).subscribe(data => {
-      this.blocks = data['result'].block_metas;
-    });
+    this.http.get(`${nodeRpc}/blockchain?minHeight=${this.currentBlock-this.blocksToDisplay+1}&maxHeight=${this.currentBlock}`)
+      .subscribe(data => {
+        this.clearBlocks();
+        data['result'].block_metas.forEach(block => {
+          this.blocks.push({
+            hash: block.block_id.hash, 
+            height: block.header.height, 
+            time: block.header.time
+          });
+        });
+      });
   }
 
   displayOlderBlocks() {
@@ -41,7 +56,7 @@ export class BlocksComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get('https://aakatev.me/iris/status').subscribe(data => {
+    this.http.get(`${nodeRpc}/status`).subscribe(data => {
       this.startBlock = data['result'].sync_info.latest_block_height;
       this.currentBlock = this.startBlock;
       this.fetchBlocks();

@@ -28,7 +28,10 @@
       <div class="tile is-ancestor has-text-centered">
         <div style="cursor: pointer;" routerLink="/last-block" class="tile is-parent">
           <article class="tile is-child box">
-            <p *ngFor="let block of (appState | async).blocks.reverse().slice(0,1)" class="title">{{block.header?.height}}</p>
+            <p 
+              *ngFor="let block of (appState | async).blocks.reverse().slice(0,1)" 
+              class="title" 
+              [innerHTML]="block.header?.height !== null ? block.header.height : 0"></p>
             <p class="subtitle">Last Block</p>
           </article>
         </div>

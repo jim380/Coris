@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common'; 
 import { Inject }  from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { nodeRpc } from '../../config.js'
+
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -18,7 +20,7 @@ export class TxComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get(`https://aakatev.me/iris/tx_search?query="tx.hash='${this.txHash}'"`).subscribe(data => {
+    this.http.get(`${nodeRpc}/tx_search?query="tx.hash='${this.txHash}'"`).subscribe(data => {
       this.tx = data['result'].txs[0];
     });
   }

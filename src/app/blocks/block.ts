@@ -1,5 +1,5 @@
-export class Block {
-  height: number;
+export interface Block {
   hash: string;
-  precommits: {};
+  height: number;
+  time: string;
 }

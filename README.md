@@ -23,8 +23,17 @@ A community built Blockchain explorer for IRISnet, brought to you by Cypher Core
 
 Open http://localhost:4200 in your browser to see the app in action.
 
+
+## Configuring RPC
+
+After install you need to create config file, to point explorer to running RPC client
+```bash
+echo "nodeRpc = '<rpc_addr>:<rpc_port>';" > src/config.js 
+```
+
 ## Demo
 http://iris.cyphercore.io/
+
 
 ## Contact
 @aakatev<br/>

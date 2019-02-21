@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Inject }  from '@angular/core';
 import { DOCUMENT } from '@angular/common'; 
+import { Tx } from './tx';
+import { nodeRpc } from '../../config.js'
+
 
 @Component({
   selector: 'app-txs',
@@ -9,28 +12,31 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./txs.component.css']
 })
 export class TxsComponent implements OnInit {
-  txs = [];
+  txs: Tx[];
   minHeight = 0;
   lastBlock = 0;
   blocksToScan = 100;
 
   constructor(private http: HttpClient, @Inject(DOCUMENT) document) { }
 
+  clearTxs() {
+    this.txs = [];
+  }
+
   fetchTxs() {
     document.getElementById('btn-older').classList.add('is-loading');
-    this.http.get(`https://aakatev.me/iris/tx_search?query="tx.height>${this.minHeight}"`).subscribe(data => {
-      // console.log(`https://aakatev.me/iris/tx_search?query="tx.height>${this.minHeight}"`);
+    this.http.get(`${nodeRpc}/tx_search?query="tx.height>${this.minHeight}"`).subscribe(data => {
+      // console.log(`${nodeRpc}/tx_search?query="tx.height>${this.minHeight}"`);
       let currTxs = data['result'].txs.reverse();
       
       currTxs.forEach(tx => {
         if(tx.height < this.minHeight + this.blocksToScan) {
-          let newTx = {
+          this.txs.push({
             hash: tx.hash, 
             height: tx.height,
             gasUsed: tx.tx_result.gasUsed,
             gasWanted: tx.tx_result.gasWanted
-          };
-          this.txs.push(newTx);        
+          });        
         }
       });
       document.getElementById('btn-older').classList.remove('is-loading');
@@ -38,9 +44,10 @@ export class TxsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get('https://aakatev.me/iris/status').subscribe(data => {
+    this.http.get(`${nodeRpc}/status`).subscribe(data => {
       this.lastBlock = data['result'].sync_info.latest_block_height;
       this.minHeight = this.lastBlock - this.blocksToScan;
+      this.clearTxs();
       this.fetchTxs();  
     });
   }

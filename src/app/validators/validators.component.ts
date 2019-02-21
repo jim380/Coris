@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as AppActions from '../app.actions'
+import { nodeRpc } from '../../config.js'
 
 @Component({
   selector: 'app-validators',
@@ -19,12 +20,12 @@ export class ValidatorsComponent implements OnInit {
 
     this.appState = this.store.select('App');
 
-    this.http.get('https://aakatev.me/iris/status').subscribe(data => {
+    this.http.get(`${nodeRpc}/status`).subscribe(data => {
       // Debugging
       // let currValidators = data['result'].genesis.validators;
       let lastBlock = data['result'].sync_info.latest_block_height;
 
-      this.http.get(`https://aakatev.me/iris/validators?height=${lastBlock}`).subscribe(data => {
+      this.http.get(`${nodeRpc}/validators?height=${lastBlock}`).subscribe(data => {
         // console.log(`Got validators at ${lastBlock}`);
         this.store.dispatch(new AppActions.UpdateValidators(data['result'].validators));
       });

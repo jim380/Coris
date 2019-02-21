@@ -3,6 +3,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import * as AppActions from './app.actions'
+import { nodeRpc } from '../config.js'
+
 
 @Injectable({
   providedIn: 'root'
@@ -56,22 +58,22 @@ export class WsService {
   };
 
   constructor(private store: Store<{App: { blocks: [], txs: [], validators: []} }>, private http: HttpClient) { 
-    this.http.get('https://aakatev.me/iris/status').subscribe(data => {
+    this.http.get(`${nodeRpc}/status`).subscribe(data => {
       // Debugging
       // let currValidators = data['result'].genesis.validators;
       let lastBlock = data['result'].sync_info.latest_block_height;
 
-      this.http.get(`https://aakatev.me/iris/tx_search?query="tx.height>${lastBlock-100}"`).subscribe(data => {
+      this.http.get(`${nodeRpc}/tx_search?query="tx.height>${lastBlock-100}"`).subscribe(data => {
         this.wsTxStore = data['result'].txs.reverse();
         this.store.dispatch(new AppActions.UpdateTxs(this.wsTxStore));
       });
 
-      this.http.get(`https://aakatev.me/iris/blockchain?minHeight=${lastBlock-50}&maxHeight=${lastBlock}`).subscribe(data => {
+      this.http.get(`${nodeRpc}/blockchain?minHeight=${lastBlock-50}&maxHeight=${lastBlock}`).subscribe(data => {
         this.wsBlockStore = data['result'].block_metas.reverse();
         this.store.dispatch(new AppActions.UpdateBlocks(this.wsBlockStore));
       });
 
-      this.http.get(`https://aakatev.me/iris/validators?height=${lastBlock}`).subscribe(data => {
+      this.http.get(`${nodeRpc}/validators?height=${lastBlock}`).subscribe(data => {
         this.wsValidatorsStore = data['result'].validators;
         this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
       });
@@ -100,7 +102,7 @@ export class WsService {
         } else if(json.result.data.type === 'tendermint/event/Tx') {
           // Debugging
           // console.log('NewTx!');
-          this.http.get(`https://aakatev.me/iris/tx_search?query="tx.height=${json.result.data.value.TxResult.height}"`).subscribe(data => {
+          this.http.get(`${nodeRpc}/tx_search?query="tx.height=${json.result.data.value.TxResult.height}"`).subscribe(data => {
             if(Object.keys(this.wsTxStore).length >= this.MAX_STORE_INDEX) {
               this.wsTxStore.shift();
             }
@@ -113,11 +115,11 @@ export class WsService {
           });
 
         } else if(json.result.data.type === 'tendermint/event/ValidatorSetUpdates') {
-          this.http.get('https://aakatev.me/iris/status').subscribe(data => {
+          this.http.get(`${nodeRpc}/status`).subscribe(data => {
             // Debugging
             // let currValidators = data['result'].genesis.validators;
             let lastBlock = data['result'].sync_info.latest_block_height;
-            this.http.get(`https://aakatev.me/iris/validators?height=${lastBlock}`).subscribe(data => {
+            this.http.get(`${nodeRpc}/validators?height=${lastBlock}`).subscribe(data => {
               this.wsValidatorsStore = data['result'].validators;
               this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
             });    

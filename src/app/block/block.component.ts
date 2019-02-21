@@ -3,6 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { Inject }  from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { nodeRpc } from '../../config.js'
 
 @Component({
   selector: 'app-block',
@@ -24,7 +25,7 @@ export class BlockComponent implements OnInit {
   }
 
   fetchBlock() {
-    this.http.get(`https://aakatev.me/iris//block?height=${this.queryHeight}`).subscribe(data => {
+    this.http.get(`${nodeRpc}//block?height=${this.queryHeight}`).subscribe(data => {
       this.block = data['result'].block;
     });
   }
