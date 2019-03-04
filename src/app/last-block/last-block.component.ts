@@ -11,10 +11,10 @@ import { Inject }  from '@angular/core';
   styleUrls: ['./last-block.component.css']
 })
 export class LastBlockComponent implements OnInit {
-  appState: Observable<{blocks: [], txs: []}>;
+  appState: Observable<{blocks: [], txs: [], round: {}}>;
   displayCommits = false;
 
-  constructor(@Inject(DOCUMENT) document, private store: Store<{App: { blocks: [], txs: []} }>) { }
+  constructor(private store: Store<{App: { blocks: [], txs: [], round: {}} }>) { }
 
   ngOnInit() { 
     this.appState = this.store.select('App');

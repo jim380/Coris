@@ -23,11 +23,18 @@
         </div>
       </div>
     </section>
-
+    <section class="is-info is-small">
+      <div class="hero-body">
+        <div class="container">
+          <h2 class="subtitle">Proposer: {{(appState | async).round.proposer?.address}}</h2>
+        </div>
+      </div>
+    </section>
     <section class="info-tiles">
       <div class="tile is-ancestor has-text-centered">
         <div style="cursor: pointer;" routerLink="/last-block" class="tile is-parent">
           <article class="tile is-child box">
+            <!-- <p class="title">{{(appState | async).round?.height}}</p> -->
             <p 
               *ngFor="let block of (appState | async).blocks.reverse().slice(0,1)" 
               class="title" 
@@ -35,24 +42,18 @@
             <p class="subtitle">Last Block</p>
           </article>
         </div>
-        <!-- <div class="tile is-parent">
+        <div class="tile is-parent">
           <article class="tile is-child box">
-            <p class="title">n/a</p>
-            <p class="subtitle">Tokens</p>
+            <p class="title">{{(appState | async).roundStep.step?.split('RoundStep')[1]}}</p>
+            <p class="subtitle">Round {{(appState | async).roundStep.round}}</p>
           </article>
-        </div> -->
+        </div>
          <div style="cursor: pointer;" routerLink="/validators" class="tile is-parent">
           <article class="tile is-child box">
             <p class="title">{{(appState | async).validators?.length}}</p>
             <p class="subtitle">Validators</p>
           </article>
         </div>
-        <!-- <div class="tile is-parent">
-          <article class="tile is-child box">
-            <p class="title">n/a</p>
-            <p class="subtitle">Block Time</p>
-          </article>
-        </div> -->
       </div>
     </section>
     <router-outlet></router-outlet>

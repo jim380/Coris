@@ -10,9 +10,19 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  appState: Observable<{blocks: [], txs:[], validators: []}>;
+  appState: Observable<{blocks:[], txs:[], validators:[], round:{}, roundStep: {}}>;
 
-  constructor(private http: HttpClient, private ws:WsService, private store: Store<{App: { blocks: [], txs: [], validators:[] } }>) {  }
+  constructor(
+    private http: HttpClient, 
+    private ws:WsService, 
+    private store: Store <{App: {
+      blocks:[], 
+      txs:[], 
+      validators:[], 
+      round:{}, 
+      roundStep: {}  
+    }
+  }>) {  }
 
   ngOnInit() { 
     this.appState = this.store.select('App');

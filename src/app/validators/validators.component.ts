@@ -26,7 +26,9 @@ export class ValidatorsComponent implements OnInit {
       let lastBlock = data['result'].sync_info.latest_block_height;
 
       this.http.get(`${nodeRpc}/validators?height=${lastBlock}`).subscribe(data => {
+        // Debugging
         // console.log(`Got validators at ${lastBlock}`);
+        // console.log(data['result'].validators);
         this.store.dispatch(new AppActions.UpdateValidators(data['result'].validators));
       });
     });

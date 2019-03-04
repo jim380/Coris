@@ -14,6 +14,8 @@ export class WsService {
 
   blocksState: Observable<{blocks: []}>;
   txsState: Observable<{txs: []}>;
+  roundState: Observable<{round: []}>;
+  roundStepState: Observable<{roundStep: []}>;
 
   wsBlockStore = [];
   wsTxStore = [];
@@ -57,7 +59,25 @@ export class WsService {
     }
   };
 
-  constructor(private store: Store<{App: { blocks: [], txs: [], validators: []} }>, private http: HttpClient) { 
+  subRoundMsg = {
+    "jsonrpc": "2.0",
+    "method": "subscribe",
+    "id": "0",
+    "params": {
+      "query": `tm.event='NewRound'`
+    }
+  };
+
+  subRoundStepMsg = {
+    "jsonrpc": "2.0",
+    "method": "subscribe",
+    "id": "0",
+    "params": {
+      "query": `tm.event='NewRoundStep'`
+    }
+  };
+  
+  constructor(private store: Store<{App: { blocks: [], txs: [], validators: [], round: {}, roundStep: {}} }>, private http: HttpClient) { 
     this.http.get(`${nodeRpc}/status`).subscribe(data => {
       // Debugging
       // let currValidators = data['result'].genesis.validators;
@@ -121,9 +141,21 @@ export class WsService {
             let lastBlock = data['result'].sync_info.latest_block_height;
             this.http.get(`${nodeRpc}/validators?height=${lastBlock}`).subscribe(data => {
               this.wsValidatorsStore = data['result'].validators;
+              // Debugging
+              // console.log(data['result'].validators);
               this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
             });    
           });  
+        } else if (json.result.data.type === 'tendermint/event/NewRound') {
+          // Debugging
+          // console.log(json.result.data.value);
+          // Update Store
+          this.store.dispatch(new AppActions.UpdateRound(json.result.data.value));
+        } else if (json.result.data.type === 'tendermint/event/RoundState') {
+          // Debugging
+          // console.log(json.result.data.value);
+          // Update Store
+          this.store.dispatch(new AppActions.UpdateRoundStep(json.result.data.value));
         }
       }
     };
@@ -138,6 +170,8 @@ export class WsService {
     this.newWebSocket.send(JSON.stringify(this.subBlockMsg));
     this.newWebSocket.send(JSON.stringify(this.subTxMsg));
     this.newWebSocket.send(JSON.stringify(this.subValMsg));
+    this.newWebSocket.send(JSON.stringify(this.subRoundMsg));
+    this.newWebSocket.send(JSON.stringify(this.subRoundStepMsg));
   };
 
   unsubscribe() {
