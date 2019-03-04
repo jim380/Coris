@@ -10,7 +10,7 @@
           <h3>Block at {{block.header.height}}</h3>
           <h3>App-Hash: {{block.header.app_hash}}</h3>
           <table class="table is-fullwidth is-striped">
-            <tbody>
+            <tbody *ngIf="block.last_commit">
               <tr>
                 <th><a (click)="showHideElem()">Precommits ({{block.last_commit.precommits.length}})</a></th>
               </tr>

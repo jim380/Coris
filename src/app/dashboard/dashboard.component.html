@@ -14,7 +14,7 @@
               <tr routerLink="/block/{{block.header.height}}" class="clickable" *ngFor="let block of (appState | async).blocks">
                 <td class="block-title">{{block.header.app_hash}}</td>
                 <td width="20%">{{block.header.height}}</td>
-               </tr>
+              </tr>
             </tbody>
           </table>
         </div>

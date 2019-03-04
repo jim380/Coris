@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Block } from '../blocks/block';
 import { Observable } from 'rxjs';
-import { DOCUMENT } from '@angular/common'; 
-import { Inject }  from '@angular/core';
 
 @Component({
   selector: 'app-last-block',
