@@ -3,14 +3,14 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import * as AppActions from './app.actions'
-import { nodeRpc } from '../config.js'
+import { nodeRpc, nodeWs, nodeRpcTest } from '../config.js'
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class WsService {
-  newWebSocket = new WebSocket("wss://aakatev.me/iris/websocket");
+  newWebSocket = new WebSocket(nodeWs);
 
   blocksState: Observable<{blocks: []}>;
   txsState: Observable<{txs: []}>;
@@ -78,6 +78,25 @@ export class WsService {
   };
   
   constructor(private store: Store<{App: { blocks: [], txs: [], validators: [], round: {}, roundStep: {}} }>, private http: HttpClient) { 
+    // @aakatev Testing custom rpc
+    // Test validators detailed info
+    this.http.get(`${nodeRpcTest}/get_info`).subscribe(data => {
+      console.log(data);
+    });
+    
+    // Test validators mapping
+    this.http.get(`${nodeRpcTest}/get_validators`,  { responseType:'text' }).subscribe(data => {
+      
+      let validators = data.split(';');
+      // console.log(validators);
+
+      validators.forEach(validator => {
+        console.log(validator.split('\n'));
+      });
+    });
+    // End testing custom rpc
+
+
     this.http.get(`${nodeRpc}/status`).subscribe(data => {
       // Debugging
       // let currValidators = data['result'].genesis.validators;

@@ -1,3 +1,7 @@
 node_modules
 dist
-src/config.js
+
+#TODO @aakatev
+# uncomment before
+# making app public!
+#src/config.js
