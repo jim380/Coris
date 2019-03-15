@@ -88,10 +88,23 @@ export class WsService {
     this.http.get(`${nodeRpcTest}/get_validators`,  { responseType:'text' }).subscribe(data => {
       
       let validators = data.split(';');
-      // console.log(validators);
-
       validators.forEach(validator => {
-        console.log(validator.split('\n'));
+        validator.split('\n').forEach(info => {
+          // console.log(info);
+          // Address
+          console.log(info.match(/([A-z]|[0-9]){40}$/g));
+          // Hex
+          console.log(info.match(/([A-z]|[0-9]){64}$/g));  
+          // Bech 32
+          // Account
+          console.log(info.match(/([A-z]|[0-9]){76}$/g));  
+          // Operator
+          console.log(info.match(/([A-z]|[0-9]){83}$/g));  
+          // Consensus
+          // console.log(info.match(/ ([A-z]|[0-9]){64}$/g));  
+          
+        });
+        
       });
     });
     // End testing custom rpc
