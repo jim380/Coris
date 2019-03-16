@@ -19,7 +19,7 @@ export class WsService {
 
   wsBlockStore = [];
   wsTxStore = [];
-  wsValidatorsStore = [];
+  wsValidatorsStore = null;
 
   numOfValidators;
   MAX_STORE_INDEX = 10;
@@ -94,13 +94,13 @@ export class WsService {
         this.store.dispatch(new AppActions.UpdateBlocks(this.wsBlockStore));
       });
 
+      // TODO remove this snippet after testings
       // Old logic to get validators
       // this.http.get(`${nodeRpc}/validators?height=${lastBlock}`).subscribe(data => {
       //   this.wsValidatorsStore = data['result'].validators;
       //   this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
       // });
     });
-
 
      // WS handlers
     this.newWebSocket.onopen = (event) => {
@@ -137,17 +137,8 @@ export class WsService {
           });
 
         } else if(json.result.data.type === 'tendermint/event/ValidatorSetUpdates') {
-          this.http.get(`${nodeRpc}/status`).subscribe(data => {
-            // Debugging
-            // let currValidators = data['result'].genesis.validators;
-            let lastBlock = data['result'].sync_info.latest_block_height;
-            this.http.get(`${nodeRpc}/validators?height=${lastBlock}`).subscribe(data => {
-              this.wsValidatorsStore = data['result'].validators;
-              // Debugging
-              // console.log(data['result'].validators);
-              this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
-            });    
-          });  
+          // TODO check if this logic is sufficient
+          this.initValidators();
         } else if (json.result.data.type === 'tendermint/event/NewRound') {
           // Debugging
           // console.log(json.result.data.value);
@@ -164,16 +155,21 @@ export class WsService {
     this.initValidators();
   };
 
+  // Validators mapping
   setValidators(validators) {
     this.wsValidatorsStore = validators;
     this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
   }
-
+  
+  updateValidators() {
+    this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
+    // console.log(this.wsValidatorsStore);
+  }
+  
   getValidatorsRanking() {
     this.http.get(`${nodeRpcTest}/validators_ranking`).subscribe(data => {
       // Debugging
       // console.log(data);
-      // this.setValidators(data['validators']);
       if(data !== null) {
         this.setValidators(data['validators']);
       } else {
@@ -184,8 +180,21 @@ export class WsService {
 
   getValidatorsDetails() {
     this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
-      if(data !== null) {
-        console.log(data);
+      // console.log(data);
+      if(data !== null && this.wsValidatorsStore !== null) {
+        for (let validator_index in data) {
+          // Debugging
+          // console.log(data[validator]);
+          for(let validator_rank_index in this.wsValidatorsStore) {
+            if(this.wsValidatorsStore[validator_rank_index].pub_key === data[validator_index].consensus_pubkey) {
+              this.wsValidatorsStore[validator_rank_index].description = data[validator_index].description; 
+              // console.log(data[validator_index].description);
+              
+              // TODO @aakatev improve this logic
+              this.updateValidators();
+            }
+          }
+        }
       } else {
         this.getValidatorsDetails();
       }
@@ -193,23 +202,10 @@ export class WsService {
   }
 
   async initValidators() {
-    // @aakatev Testing custom rpc
-    // Test validators detailed info
-    // this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
-    //   // Debugging
-    //   await console.log(data);
-    //   if(data === null) {
-    //     this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
-    //       // Debugging
-    //       await console.log(data);
-    //     });
-    //   }
-    // });    
-    // Test validators mapping
     await this.getValidatorsRanking();
     await this.getValidatorsDetails();
-    // End testing custom rpc
   };
+  // End validators mapping
 
   getWsBlockStore() { return this.wsBlockStore };
   getWsTxStore() { return this.wsTxStore };
@@ -226,8 +222,10 @@ export class WsService {
     this.newWebSocket.send(JSON.stringify(this.unsubBlockMsg));
   };
 }
-// More info:
-// Subscribtion queries
+// @aakatev
+// 
+// Possible ws sub queries
+// 
 // subQuery = [
 //   'Tx', 
 //   'NewBlock', 
@@ -248,3 +246,4 @@ export class WsService {
 // getwsBlockStore = () => {
 //   return wsBlockStore;
 // }
+// end
