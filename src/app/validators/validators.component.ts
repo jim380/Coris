@@ -20,17 +20,18 @@ export class ValidatorsComponent implements OnInit {
 
     this.appState = this.store.select('App');
 
-    this.http.get(`${nodeRpc}/status`).subscribe(data => {
-      // Debugging
-      // let currValidators = data['result'].genesis.validators;
-      let lastBlock = data['result'].sync_info.latest_block_height;
+    // FIX improve refresh logic later
+    // this.http.get(`${nodeRpc}/status`).subscribe(data => {
+    //   // Debugging
+    //   // let currValidators = data['result'].genesis.validators;
+    //   let lastBlock = data['result'].sync_info.latest_block_height;
 
-      this.http.get(`${nodeRpc}/validators?height=${lastBlock}`).subscribe(data => {
-        // Debugging
-        // console.log(`Got validators at ${lastBlock}`);
-        // console.log(data['result'].validators);
-        this.store.dispatch(new AppActions.UpdateValidators(data['result'].validators));
-      });
-    });
+    //   this.http.get(`${nodeRpc}/validators?height=${lastBlock}`).subscribe(data => {
+    //     // Debugging
+    //     // console.log(`Got validators at ${lastBlock}`);
+    //     // console.log(data['result'].validators);
+    //     this.store.dispatch(new AppActions.UpdateValidators(data['result'].validators));
+    //   });
+    // });
   }
 }

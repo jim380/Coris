@@ -78,37 +78,7 @@ export class WsService {
   };
   
   constructor(private store: Store<{App: { blocks: [], txs: [], validators: [], round: {}, roundStep: {}} }>, private http: HttpClient) { 
-    // @aakatev Testing custom rpc
-    // Test validators detailed info
-    this.http.get(`${nodeRpcTest}/get_info`).subscribe(data => {
-      console.log(data);
-    });
-    
-    // Test validators mapping
-    this.http.get(`${nodeRpcTest}/get_validators`,  { responseType:'text' }).subscribe(data => {
-      
-      let validators = data.split(';');
-      validators.forEach(validator => {
-        validator.split('\n').forEach(info => {
-          // console.log(info);
-          // Address
-          console.log(info.match(/([A-z]|[0-9]){40}$/g));
-          // Hex
-          console.log(info.match(/([A-z]|[0-9]){64}$/g));  
-          // Bech 32
-          // Account
-          console.log(info.match(/([A-z]|[0-9]){76}$/g));  
-          // Operator
-          console.log(info.match(/([A-z]|[0-9]){83}$/g));  
-          // Consensus
-          // console.log(info.match(/ ([A-z]|[0-9]){64}$/g));  
-          
-        });
-        
-      });
-    });
-    // End testing custom rpc
-
+    this.initValidators();
 
     this.http.get(`${nodeRpc}/status`).subscribe(data => {
       // Debugging
@@ -125,10 +95,11 @@ export class WsService {
         this.store.dispatch(new AppActions.UpdateBlocks(this.wsBlockStore));
       });
 
-      this.http.get(`${nodeRpc}/validators?height=${lastBlock}`).subscribe(data => {
-        this.wsValidatorsStore = data['result'].validators;
-        this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
-      });
+      // Old logic to get validators
+      // this.http.get(`${nodeRpc}/validators?height=${lastBlock}`).subscribe(data => {
+      //   this.wsValidatorsStore = data['result'].validators;
+      //   this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
+      // });
     });
 
 
@@ -193,7 +164,39 @@ export class WsService {
     };
   };
 
-  ngOnInit() { };
+  setValidators(validators) {
+    this.wsValidatorsStore = validators;
+    this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
+  }
+
+  initValidators() {
+    // @aakatev Testing custom rpc
+    // Test validators detailed info
+    this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
+      // Debugging
+      await console.log(data);
+      if(data === null) {
+        this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
+          // Debugging
+          await console.log(data);
+        });
+      }
+    });    
+    // Test validators mapping
+    this.http.get(`${nodeRpcTest}/validators_ranking`).subscribe(async data => {
+      // Debugging
+      await console.log(data);
+      this.setValidators(data['validators']);
+      if(data === null) {
+        this.http.get(`${nodeRpcTest}/validators_ranking`).subscribe(async data => {
+          // Debugging
+          await console.log(data);
+          this.setValidators(data['validators']);
+        });
+      }
+    });
+    // End testing custom rpc
+  };
 
   getWsBlockStore() { return this.wsBlockStore };
   getWsTxStore() { return this.wsTxStore };
