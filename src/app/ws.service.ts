@@ -78,7 +78,6 @@ export class WsService {
   };
   
   constructor(private store: Store<{App: { blocks: [], txs: [], validators: [], round: {}, roundStep: {}} }>, private http: HttpClient) { 
-    this.initValidators();
 
     this.http.get(`${nodeRpc}/status`).subscribe(data => {
       // Debugging
@@ -162,6 +161,7 @@ export class WsService {
         }
       }
     };
+    this.initValidators();
   };
 
   setValidators(validators) {
@@ -169,32 +169,45 @@ export class WsService {
     this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
   }
 
-  initValidators() {
-    // @aakatev Testing custom rpc
-    // Test validators detailed info
-    this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
+  getValidatorsRanking() {
+    this.http.get(`${nodeRpcTest}/validators_ranking`).subscribe(data => {
       // Debugging
-      await console.log(data);
-      if(data === null) {
-        this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
-          // Debugging
-          await console.log(data);
-        });
-      }
-    });    
-    // Test validators mapping
-    this.http.get(`${nodeRpcTest}/validators_ranking`).subscribe(async data => {
-      // Debugging
-      await console.log(data);
-      this.setValidators(data['validators']);
-      if(data === null) {
-        this.http.get(`${nodeRpcTest}/validators_ranking`).subscribe(async data => {
-          // Debugging
-          await console.log(data);
-          this.setValidators(data['validators']);
-        });
+      // console.log(data);
+      // this.setValidators(data['validators']);
+      if(data !== null) {
+        this.setValidators(data['validators']);
+      } else {
+        this.getValidatorsRanking();
       }
     });
+  }
+
+  getValidatorsDetails() {
+    this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
+      if(data !== null) {
+        console.log(data);
+      } else {
+        this.getValidatorsDetails();
+      }
+    });
+  }
+
+  async initValidators() {
+    // @aakatev Testing custom rpc
+    // Test validators detailed info
+    // this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
+    //   // Debugging
+    //   await console.log(data);
+    //   if(data === null) {
+    //     this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
+    //       // Debugging
+    //       await console.log(data);
+    //     });
+    //   }
+    // });    
+    // Test validators mapping
+    await this.getValidatorsRanking();
+    await this.getValidatorsDetails();
     // End testing custom rpc
   };
 
