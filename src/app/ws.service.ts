@@ -165,7 +165,7 @@ export class WsService {
   
   updateValidators() {
     this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
-    // console.log(this.wsValidatorsStore);
+    console.log(this.wsValidatorsStore);
   }
   
   getValidatorsRanking() {
@@ -180,30 +180,69 @@ export class WsService {
     });
   }
 
-  getValidatorsDetails() {
-    this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
-      // console.log(data);
-      if(data !== null && this.wsValidatorsStore !== null) {
-        for (let validator_index in data) {
-          for(let validator_rank_index in this.wsValidatorsStore) {
-            if(this.wsValidatorsStore[validator_rank_index].pub_key === data[validator_index].consensus_pubkey) {
-              this.wsValidatorsStore[validator_rank_index].data = data[validator_index]; 
-              // console.log(data[validator_index].description);
-              
-              // TODO @aakatev improve this logic
-              this.updateValidators();
-            }
+  mergeProperties(targetArray, targetArrayProperty, propertyArray, propertyArrayProperty, propertyName) {
+    return new Promise(resolve => {
+      for(let targetIndex in targetArray) {
+        for(let propertyIndex in propertyArray) {
+          if(propertyArray[propertyIndex][propertyArrayProperty] === targetArray[targetIndex][targetArrayProperty]) {
+            targetArray[targetIndex][propertyName] = propertyArray[propertyIndex];
+            // Debugging
+            // console.log(targetArray[targetIndex]);  
           }
         }
-      } else {
-        this.getValidatorsDetails();
       }
+      resolve();
+    });
+  }
+
+  getValidatorsDetails() {
+    return new Promise(resolve => {
+      this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
+        // console.log(data);
+        if(data !== null && this.wsValidatorsStore !== null) {
+          // for (let validator_index in data) {
+          //   for(let validator_rank_index in this.wsValidatorsStore) {
+          //     if(this.wsValidatorsStore[validator_rank_index].pub_key === data[validator_index].consensus_pubkey) {
+          //       this.wsValidatorsStore[validator_rank_index].data = data[validator_index]; 
+          //       // console.log(data[validator_index].description);
+                
+          //       // TODO @aakatev improve this logic
+
+          //     }
+          //   }
+          // }
+          this.mergeProperties(this.wsValidatorsStore, "pub_key", data, "consensus_pubkey","data")
+            .then(() => {this.updateValidators()});
+          resolve();
+        } else {
+          await this.getValidatorsDetails();
+          resolve();
+        }
+      });
+    });
+  }
+
+  getValidatorsKeys() {
+    return new Promise(resolve => {
+      this.http.get(`${nodeRpcTest}/validators_keys`).subscribe(async data => {
+        if(data !== null) {
+          // Debugging
+          console.log(data);
+          this.mergeProperties(this.wsValidatorsStore, "pub_key", data, "Bech32 Validator Consensus", "keys")
+            .then(() => {this.updateValidators()});
+          resolve();  
+        } else {
+          await this.getValidatorsKeys();
+          resolve();
+        }
+      });
     });
   }
 
   async initValidators() {
     await this.getValidatorsRanking();
     await this.getValidatorsDetails();
+    await this.getValidatorsKeys();
   };
   // End validators mapping
 
