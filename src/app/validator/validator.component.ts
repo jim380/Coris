@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class ValidatorComponent implements OnInit {
+  displayKeys=false;
 
   selectedValidator = -1;
   private subscription;
@@ -46,4 +47,7 @@ export class ValidatorComponent implements OnInit {
     this.selectedValidator = -1;
   }
 
+  showHideElem() {
+    this.displayKeys = !this.displayKeys;
+  }
 }

@@ -25,16 +25,20 @@
             <table class="table is-fullwidth is-striped">
               <tbody>
                 <tr>
+                  <th><a (click)="showHideElem()">Pub Keys</a></th>
+                </tr>  
+                <div *ngIf="(appState | async).validators[selectedValidator].keys!==undefined" [style.display]="displayKeys ? 'flex': 'none'" id="precommits">
+                  <tr><td>ADDRESS {{(appState | async).validators[selectedValidator].keys?.Addres}}</td></tr>
+                  <tr><td>BECH32 ACC {{(appState | async).validators[selectedValidator].keys['Bech32 Acc']}}</td></tr>
+                  <tr><td>BECH32 VAL CONSEN {{(appState | async).validators[selectedValidator].keys['Bech32 Validator Consensus']}}</td></tr>
+                  <tr><td>BECH32 VAL CONSEN {{(appState | async).validators[selectedValidator].keys['Bech32 Validator Operator']}}</td></tr>
+                  <tr><td>HEX {{(appState | async).validators[selectedValidator].keys['Hex']}}</td></tr>
+                  <tr><td>Tendermint ed25519 {{(appState | async).validators[selectedValidator].keys['JSON (base64)'].value}}</td></tr>
+                </div>
+                <tr>
                   <th><a routerLink="/validators">Back</a></th>
                 </tr>
-                <!-- <div [style.display]="displayCommits ? 'flex': 'none'" id="precommits">
-                  <tr>
-                    <td *ngIf="(validator === null)">Abscent!</td>
-                    <td *ngIf="(validator !== null)">{{validator.validator_address}}</td>
-                  </tr>
-                </div> -->
               </tbody>
-
             </table>
           </div>
         </article>
