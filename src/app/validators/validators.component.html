@@ -1,26 +1,32 @@
-<div class="card events-card">
-  <header class="card-header">
-    
-    <p class="card-header-title"><i class="fas fa-users"></i>Validators</p>
-  </header>
-  <div class="card-table">
-    <div class="content">
-      <table class="table is-fullwidth is-striped">
-        <tbody>
-          <tr>
-            <th>Moniker</th>
-            <th>Power, Stake</th>
-            <th>Proposer Priority</th>
-          </tr>
-          <tr  
-            routerLink="/validator/{{validator.address}}"
-            *ngFor="let validator of (appState | async).validators">
-              <td>{{validator.data?.description.moniker}}</td>
-              <td><a class="button is-small is-primary">{{validator.voting_power}}</a></td>
-              <td><a class="button is-small is-primary">{{validator.proposer_priority}}</a></td>
-          </tr>
-        </tbody>
-      </table>
+<div 
+  *ngFor="let validator of (appState | async).validators"
+  class="card events-card">
+    <div class="card-table">
+      <div class="content">
+        <article class="message">
+          <div class="message-header">
+            <i class="fab fa-codepen"></i>
+            <p>Validator</p>
+          </div>
+          <div class="message-body">
+            <h3>Moniker: {{validator.data?.description.moniker}}</h3>
+            <h5>Power: {{validator.voting_power}}</h5>
+            <h5>Priotrity: {{validator.proposer_priority}}</h5>
+            <table class="table is-fullwidth is-striped">
+              <tbody>
+                <tr>
+                  <th><a routerLink="/validator/{{validator.address}}">Learn more</a></th>
+                </tr>
+                <!-- <div [style.display]="displayCommits ? 'flex': 'none'" id="precommits">
+                  <tr>
+                    <td *ngIf="(validator === null)">Abscent!</td>
+                    <td *ngIf="(validator !== null)">{{validator.validator_address}}</td>
+                  </tr>
+                </div> -->
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </div>
     </div>
-  </div>
 </div>

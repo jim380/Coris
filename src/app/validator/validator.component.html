@@ -1,29 +1,43 @@
-<div class="card events-card">
-  <div class="card-table">
-    <div class="content">
-      <article class="message">
-        <div class="message-header">
-          <i class="fab fa-codepen"></i>
-          <p>Validator</p>
-        </div>
-        <div class="message-body">
-          <h3>Details</h3>
-          <h3>Stuff</h3>
-          <table class="table is-fullwidth is-striped">
-            <tbody>
-              <tr>
-                <th><a>Some info</a></th>
-              </tr>
-              <!-- <div [style.display]="displayCommits ? 'flex': 'none'" id="precommits">
+<div 
+  *ngIf="selectedValidator!==-1"
+  class="card events-card">
+    <div class="card-table">
+      <div class="content">
+        <article class="message">
+          <div class="message-header">
+            <i class="fab fa-codepen"></i>
+            <p>Validator</p>
+          </div>
+          <div class="message-body">
+            <h3>Validator {{(appState | async).validators[selectedValidator].data?.description.moniker}}</h3>
+            <h3>Address {{(appState | async).validators[selectedValidator].address}}</h3>
+            <h4>Description</h4>
+            <p>Details {{(appState | async).validators[selectedValidator].data?.description.details}}</p>
+            <p>Website {{(appState | async).validators[selectedValidator].data?.description.website}}</p>
+            <h4>Info</h4>
+            <p>Tokens {{(appState | async).validators[selectedValidator].data?.tokens}}</p>
+            <p>Jailed? {{(appState | async).validators[selectedValidator].data?.jailed}}</p>
+            <h4>Comission</h4>
+            <p>Max. change rate {{(appState | async).validators[selectedValidator].data?.commission.max_change_rate}}</p>
+            <p>Max. rate {{(appState | async).validators[selectedValidator].data?.commission.max_rate}}</p>
+            <p>Delegator shares {{(appState | async).validators[selectedValidator].data?.commission.delegator_shares}}</p>
+            <p>Rate {{(appState | async).validators[selectedValidator].data?.commission.rate}}</p>
+            <table class="table is-fullwidth is-striped">
+              <tbody>
                 <tr>
-                  <td *ngIf="(validator === null)">Abscent!</td>
-                  <td *ngIf="(validator !== null)">{{validator.validator_address}}</td>
+                  <th><a routerLink="/validators">Back</a></th>
                 </tr>
-              </div> -->
-            </tbody>
-          </table>
-        </div>
-      </article>
+                <!-- <div [style.display]="displayCommits ? 'flex': 'none'" id="precommits">
+                  <tr>
+                    <td *ngIf="(validator === null)">Abscent!</td>
+                    <td *ngIf="(validator !== null)">{{validator.validator_address}}</td>
+                  </tr>
+                </div> -->
+              </tbody>
+
+            </table>
+          </div>
+        </article>
+      </div>
     </div>
-  </div>
 </div>
