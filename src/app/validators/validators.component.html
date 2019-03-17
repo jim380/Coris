@@ -12,10 +12,12 @@
             <th>Power, Stake</th>
             <th>Proposer Priority</th>
           </tr>
-          <tr *ngFor="let validator of (appState | async).validators">
-            <td>{{validator.description?.moniker}}</td>
-            <td><a class="button is-small is-primary">{{validator.voting_power}}</a></td>
-            <td><a class="button is-small is-primary">{{validator.proposer_priority}}</a></td>
+          <tr  
+            routerLink="/validator/{{validator.address}}"
+            *ngFor="let validator of (appState | async).validators">
+              <td>{{validator.data?.description.moniker}}</td>
+              <td><a class="button is-small is-primary">{{validator.voting_power}}</a></td>
+              <td><a class="button is-small is-primary">{{validator.proposer_priority}}</a></td>
           </tr>
         </tbody>
       </table>

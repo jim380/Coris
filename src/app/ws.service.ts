@@ -161,6 +161,8 @@ export class WsService {
     this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
   }
   
+
+  
   updateValidators() {
     this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
     // console.log(this.wsValidatorsStore);
@@ -183,11 +185,9 @@ export class WsService {
       // console.log(data);
       if(data !== null && this.wsValidatorsStore !== null) {
         for (let validator_index in data) {
-          // Debugging
-          // console.log(data[validator]);
           for(let validator_rank_index in this.wsValidatorsStore) {
             if(this.wsValidatorsStore[validator_rank_index].pub_key === data[validator_index].consensus_pubkey) {
-              this.wsValidatorsStore[validator_rank_index].description = data[validator_index].description; 
+              this.wsValidatorsStore[validator_rank_index].data = data[validator_index]; 
               // console.log(data[validator_index].description);
               
               // TODO @aakatev improve this logic

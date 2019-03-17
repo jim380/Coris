@@ -1,25 +1,25 @@
-<div *ngIf="(block?.last_commit)" class="card events-card">
+<div class="card events-card">
   <div class="card-table">
     <div class="content">
       <article class="message">
         <div class="message-header">
           <i class="fab fa-codepen"></i>
-          <p>Block</p>
+          <p>Validator</p>
         </div>
         <div class="message-body">
-          <h3>Block at {{block.header.height}}</h3>
-          <h3>App-Hash: {{block.header.app_hash}}</h3>
+          <h3>Details</h3>
+          <h3>Stuff</h3>
           <table class="table is-fullwidth is-striped">
             <tbody>
               <tr>
-                <th><a (click)="showHideElem()">Precommits ({{block.last_commit.precommits.length}})</a></th>
+                <th><a>Some info</a></th>
               </tr>
-              <div [style.display]="displayCommits ? 'flex': 'none'" id="precommits">
-                <tr *ngFor="let validator of block.last_commit.precommits">
+              <!-- <div [style.display]="displayCommits ? 'flex': 'none'" id="precommits">
+                <tr>
                   <td *ngIf="(validator === null)">Abscent!</td>
                   <td *ngIf="(validator !== null)">{{validator.validator_address}}</td>
                 </tr>
-              </div>
+              </div> -->
             </tbody>
           </table>
         </div>

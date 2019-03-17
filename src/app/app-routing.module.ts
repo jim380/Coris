@@ -8,6 +8,8 @@ import { BlocksComponent } from './blocks/blocks.component';
 import { TxComponent } from './tx/tx.component';
 import { TxsComponent } from './txs/txs.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ValidatorComponent } from './validator/validator.component';
+
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -17,6 +19,7 @@ const routes: Routes = [
   { path: 'blocks', component: BlocksComponent },
   { path: 'tx/:hash', component: TxComponent },
   { path: 'txs', component: TxsComponent },
+  { path: 'validator/:address', component: ValidatorComponent }
 ];
 
 @NgModule({
