@@ -31,6 +31,12 @@ After install you need to create config file, to point explorer to running RPC c
 echo "export const nodeRpc = '<rpc_addr>:<rpc_port>';" > src/config.js 
 ```
 
+## Bundle project
+
+```bash
+npm run bundle
+```
+
 ## Demo
 http://iris.cyphercore.io/
 
