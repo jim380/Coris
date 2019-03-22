@@ -45,6 +45,14 @@ h2 {
   overflow-y: scroll;
 }
 
+.navbar{
+  background: #202225;
+}
+
+.navbar a{
+  color: #F7F7F7;
+}
+
 .footer {
   background-color: #8f969e;
   color: #ffff;
@@ -52,4 +60,8 @@ h2 {
 
 .main-container {
   min-height: 76vh;
+}
+
+.hero-body{
+  background: #36393F;
 }

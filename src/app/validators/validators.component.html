@@ -1,33 +1,32 @@
-<div 
+<div
   *ngFor="let validator of (appState | async).validators"
-  class="card events-card"
-  id="{{validator.address}}">
-    <div class="card-table">
-      <div class="content">
-        <article class="message">
-          <div class="message-header">
-            <i class="fab fa-codepen"></i>
-            <p>Validator</p>
-          </div>
-          <div class="message-body">
-            <h3>Moniker: {{validator.data?.description.moniker}}</h3>
-            <h5>Power: {{validator.voting_power}}</h5>
-            <h5>Priotrity: {{validator.proposer_priority}}</h5>
-            <table class="table is-fullwidth is-striped">
-              <tbody>
-                <tr>
-                  <th><a routerLink="/validator/{{validator.keys?.Addres}}">Learn more</a></th>
-                </tr>
-                <!-- <div [style.display]="displayCommits ? 'flex': 'none'" id="precommits">
-                  <tr>
-                    <td *ngIf="(validator === null)">Abscent!</td>
-                    <td *ngIf="(validator !== null)">{{validator.validator_address}}</td>
-                  </tr>
-                </div> -->
-              </tbody>
-            </table>
-          </div>
-        </article>
+  class="validator_card"
+  id="{{validator.keys?.Addres}}">
+    <article class="validator_body">
+      <div class="validator_header">
+        <i class="fab fa-codepen"></i>
+        <p>Validator</p>
       </div>
-    </div>
+      <div class="validator__text">
+        <div class="validator__text--body">
+          <p>Moniker:</p>
+          <p>{{validator.data?.description.moniker}}</p>
+        </div>
+        <div class="validator__text--body">
+            <p>Power:</p>
+            <p>{{validator.voting_power}}</p>
+        </div>
+        <div class="validator__text--body">
+            <p>Priotrity:</p>
+            <p>{{validator.proposer_priority}}</p>
+        </div>
+        <table class="">
+          <tbody>
+            <tr>
+              <th><a routerLink="/validator/{{validator.keys?.Addres}}">Learn more</a></th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
 </div>

@@ -12,8 +12,9 @@ import { ValidatorComponent } from './validator/validator.component';
 
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent },
+  { path: '', redirectTo: '/validators', pathMatch: 'full'},
   { path: 'validators', component: ValidatorsComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'block/:height', component: BlockComponent },
   { path: 'last-block', component: LastBlockComponent },
   { path: 'blocks', component: BlocksComponent },

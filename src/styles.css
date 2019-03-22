@@ -5,3 +5,9 @@ i {
 .clickable {
   cursor: pointer;
 }
+
+html,
+body{
+  background: #484C52;
+  color: #F7F7F7;
+}

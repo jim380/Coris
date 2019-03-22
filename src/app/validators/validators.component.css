@@ -8,3 +8,39 @@ td {
   white-space: nowrap; /* to make sure the line doesn't break when it is longer than the containing div. */
   text-overflow: ellipsis;
 }
+
+.validator_card{
+  padding: 1rem;
+}
+
+.validator_body{
+  box-shadow: inset 0 0 10px rgb(24, 24, 24);
+}
+
+.validator_header{
+  background: #202225;
+  color: #F7F7F7;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.validator__text{
+  background: #36393F;
+  color: #F7F7F7;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.validator__text--body{
+  display: flex;
+  width: 100%;
+}
+
+.validator__text--body :first-child{
+  font-weight: bold;
+  font-size: 105%;
+  width: 25%;
+}
+

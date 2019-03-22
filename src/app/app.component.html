@@ -1,10 +1,10 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <!-- START NAV -->
-<nav class="navbar is-white">
+<nav class="navbar">
   <div class="container">
     <div class="navbar-brand">
-      <a class="navbar-item brand-text" routerLink="/">Dashboard</a>
       <a class="navbar-item" routerLink="/validators">Validators</a>
+      <a class="navbar-item brand-text" routerLink="/dashboard">Dashboard</a>
       <a class="navbar-item" routerLink="/blocks">Blocks</a>
       <a class="navbar-item" routerLink="/txs">Txs</a>
     </div>
@@ -25,9 +25,9 @@
     </section>
     <section class="is-info is-small">
       <div class="hero-body">
-        <div class="container" style="cursor: pointer;" routerLink="/validator/{{(appState | async).round.proposer?.address}}">
-          <h2 class="subtitle">Proposer: {{(appState | async).round.proposer?.address}}</h2>
-        </div>
+          <div class="container" style="cursor: pointer;" routerLink="/validator/{{(appState | async).round.proposer?.address}}">
+            <h2 class="subtitle" style="color: white;" >Proposer: {{(appState | async).round.proposer?.address}}</h2>
+          </div>
       </div>
     </section>
     <section class="info-tiles">
@@ -35,9 +35,9 @@
         <div style="cursor: pointer;" routerLink="/last-block" class="tile is-parent">
           <article class="tile is-child box">
             <!-- <p class="title">{{(appState | async).round?.height}}</p> -->
-            <p 
-              *ngFor="let block of (appState | async).blocks.reverse().slice(0,1)" 
-              class="title" 
+            <p
+              *ngFor="let block of (appState | async).blocks.reverse().slice(0,1)"
+              class="title"
               [innerHTML]="block.header?.height !== null ? block.header.height : 0"></p>
             <p class="subtitle">Last Block</p>
           </article>
