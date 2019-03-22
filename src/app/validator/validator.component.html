@@ -36,7 +36,7 @@
                   <tr><td>Tendermint ed25519 {{(appState | async).validators[selectedValidator].keys['JSON (base64)'].value}}</td></tr>
                 </div>
                 <tr>
-                  <th><a routerLink="/validators">Back</a></th>
+                  <th routerLink="/validators" fragment="{{(appState | async).validators[selectedValidator].address}}"><a>Back</a></th>
                 </tr>
               </tbody>
             </table>

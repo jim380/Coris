@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 // import { Validator } from './validator';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import * as AppActions from '../app.actions'
-import { nodeRpc } from '../../config.js'
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-validators',
@@ -13,25 +11,24 @@ import { nodeRpc } from '../../config.js'
 })
 export class ValidatorsComponent implements OnInit {
   appState: Observable<{blocks: [], txs:[], validators: []}>;
+  fragment = null;
   
-  constructor(private http: HttpClient, private store: Store<{App: { blocks: [], txs: [], validators:[] } }>) { }
+  constructor(private store: Store<{App: { blocks: [], txs: [], validators:[] } }>, private route: ActivatedRoute) { }
 
   ngOnInit() {
-
     this.appState = this.store.select('App');
 
-    // FIX improve refresh logic later
-    // this.http.get(`${nodeRpc}/status`).subscribe(data => {
-    //   // Debugging
-    //   // let currValidators = data['result'].genesis.validators;
-    //   let lastBlock = data['result'].sync_info.latest_block_height;
+    this.route.fragment.subscribe(fragment => { this.fragment = fragment; });
+  }
 
-    //   this.http.get(`${nodeRpc}/validators?height=${lastBlock}`).subscribe(data => {
-    //     // Debugging
-    //     // console.log(`Got validators at ${lastBlock}`);
-    //     // console.log(data['result'].validators);
-    //     this.store.dispatch(new AppActions.UpdateValidators(data['result'].validators));
-    //   });
-    // });
+  ngAfterViewInit(): void {
+    try {
+      if(this.fragment) {
+        document.querySelector('#' + this.fragment).scrollIntoView();
+      }
+    } catch (e) { 
+      // @aakatev hacky way of handling terminal errors dump
+      // TODO look for a better solution later
+    }
   }
 }

@@ -1,6 +1,7 @@
 <div 
   *ngFor="let validator of (appState | async).validators"
-  class="card events-card">
+  class="card events-card"
+  id="{{validator.address}}">
     <div class="card-table">
       <div class="content">
         <article class="message">
