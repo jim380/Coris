@@ -17,7 +17,12 @@
               <div [style.display]="displayCommits ? 'flex': 'none'" id="precommits">
                 <tr *ngFor="let validator of block.last_commit.precommits">
                   <td *ngIf="(validator === null)">Abscent!</td>
-                  <td *ngIf="(validator !== null)">{{validator.validator_address}}</td>
+                  <td 
+                    *ngIf="(validator !== null)"
+                    routerLink="/validator/{{validator.validator_address}}" 
+                    class="clickable"
+                      >{{validator.validator_address}}
+                  </td>
                 </tr>
               </div>
             </tbody>

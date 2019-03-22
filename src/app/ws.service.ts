@@ -93,13 +93,6 @@ export class WsService {
         this.wsBlockStore = data['result'].block_metas.reverse();
         this.store.dispatch(new AppActions.UpdateBlocks(this.wsBlockStore));
       });
-
-      // TODO remove this snippet after testings
-      // Old logic to get validators
-      // this.http.get(`${nodeRpc}/validators?height=${lastBlock}`).subscribe(data => {
-      //   this.wsValidatorsStore = data['result'].validators;
-      //   this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
-      // });
     });
 
      // WS handlers
@@ -200,17 +193,6 @@ export class WsService {
       this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
         // console.log(data);
         if(data !== null && this.wsValidatorsStore !== null) {
-          // for (let validator_index in data) {
-          //   for(let validator_rank_index in this.wsValidatorsStore) {
-          //     if(this.wsValidatorsStore[validator_rank_index].pub_key === data[validator_index].consensus_pubkey) {
-          //       this.wsValidatorsStore[validator_rank_index].data = data[validator_index]; 
-          //       // console.log(data[validator_index].description);
-                
-          //       // TODO @aakatev improve this logic
-
-          //     }
-          //   }
-          // }
           this.mergeProperties(this.wsValidatorsStore, "pub_key", data, "consensus_pubkey","data")
             .then(() => {this.updateValidators()});
           resolve();

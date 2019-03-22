@@ -31,7 +31,7 @@
                   <tr><td>ADDRESS {{(appState | async).validators[selectedValidator].keys?.Addres}}</td></tr>
                   <tr><td>BECH32 ACC {{(appState | async).validators[selectedValidator].keys['Bech32 Acc']}}</td></tr>
                   <tr><td>BECH32 VAL CONSEN {{(appState | async).validators[selectedValidator].keys['Bech32 Validator Consensus']}}</td></tr>
-                  <tr><td>BECH32 VAL CONSEN {{(appState | async).validators[selectedValidator].keys['Bech32 Validator Operator']}}</td></tr>
+                  <tr><td>BECH32 VAL OPERATOR {{(appState | async).validators[selectedValidator].keys['Bech32 Validator Operator']}}</td></tr>
                   <tr><td>HEX {{(appState | async).validators[selectedValidator].keys['Hex']}}</td></tr>
                   <tr><td>Tendermint ed25519 {{(appState | async).validators[selectedValidator].keys['JSON (base64)'].value}}</td></tr>
                 </div>

@@ -25,7 +25,7 @@
     </section>
     <section class="is-info is-small">
       <div class="hero-body">
-        <div class="container">
+        <div class="container" style="cursor: pointer;" routerLink="/validator/{{(appState | async).round.proposer?.address}}">
           <h2 class="subtitle">Proposer: {{(appState | async).round.proposer?.address}}</h2>
         </div>
       </div>
