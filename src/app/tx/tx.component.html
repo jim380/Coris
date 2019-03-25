@@ -1,3 +1,15 @@
+<div class="field has-addons">
+  <div class="control">
+    <input class="input" placeholder = "Enter tx hash" #queryInputRef >
+  </div>
+  <div class="control">
+    <a 
+      class = "button is-info" 
+      (click) = 'clickButton(queryInputRef.value)' >
+        Search
+    </a>
+  </div>
+</div>
 <div *ngIf="(tx?.hash); else elseBlock" class="card events-card">
   <div class="card-table">
     <div class="content">

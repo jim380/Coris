@@ -25,7 +25,11 @@
             <th>Gas Wanted</th>
             <th>Height</th>
           </tr>
-          <tr routerLink="/tx/{{tx.hash}}" class="clickable" *ngFor="let tx of txs">
+          <tr *ngIf="!txs?.length">
+            <td>No recent txs</td>
+          </tr>
+        </tbody>
+          <tr #elseBlock routerLink="/tx/{{tx.hash}}" class="clickable" *ngFor="let tx of txs">
             <td>{{tx.hash}}</td>
             <td>{{tx.gasUsed}}</td>
             <td>{{tx.gasWanted}}</td>
