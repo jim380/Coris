@@ -162,7 +162,8 @@ export class WsService {
   }
   
   getValidatorsRanking() {
-    this.http.get(`${nodeRpcTest}/validators_ranking`).subscribe(data => {
+    // this.http.get(`${nodeRpcTest}/validators_ranking`).subscribe(data => {
+      this.http.get(`https://aakatev.me/node_txs/validatorsets/latest`).subscribe(data => {
       // Debugging
       // console.log(data);
       if(data !== null) {
@@ -190,7 +191,8 @@ export class WsService {
 
   getValidatorsDetails() {
     return new Promise(resolve => {
-      this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
+      // this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
+        this.http.get(`https://aakatev.me/node_txs/staking/validators`).subscribe(async data => {
         // console.log(data);
         if(data !== null && this.wsValidatorsStore !== null) {
           this.mergeProperties(this.wsValidatorsStore, "pub_key", data, "consensus_pubkey","data")
