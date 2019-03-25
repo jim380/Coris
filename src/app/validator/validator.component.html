@@ -27,6 +27,12 @@
               <p>{{i+1}}.</p> 
               <p>{{deleg.delegator_address}}</p>  
               <p>Shares {{deleg.shares}}</p>  
+              <h5>Txs</h5>
+              <div *ngFor="let tx of deleg.txs; let i2 = index">
+                <p>Hash {{tx.txhash}}</p>
+                <p>Height {{tx.height}}</p>
+                <a routerLink="/tx/{{tx.txhash}}">View</a>
+              </div>
             </div>
             <table class="table is-fullwidth is-striped">
               <tbody>

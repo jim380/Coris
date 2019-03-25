@@ -29,6 +29,15 @@ export class ValidatorComponent implements OnInit {
   getDelegations(cosmosValoperAddr) {
     this.http.get(`https://aakatev.me/node_txs/staking/validators/${cosmosValoperAddr}/delegations`).subscribe(data => {
       this.delegationInfo = <[]>data;
+      for(let i = 0; i < this.delegationInfo.length; i++) {
+        this.getTxs(this.delegationInfo[i].delegator_address,i);
+      }
+    });
+  }
+
+  getTxs(cosmosDelegAddr, delegIndex) {
+    this.http.get(`https://aakatev.me/node_txs/staking/delegators/${cosmosDelegAddr}/txs`).subscribe(data => {
+      this.delegationInfo[delegIndex]['txs'] = data;
     });
   }
 
