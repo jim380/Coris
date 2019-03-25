@@ -1,4 +1,4 @@
-<div *ngIf="(tx?.hash)" class="card events-card">
+<div *ngIf="(tx?.hash); else elseBlock" class="card events-card">
   <div class="card-table">
     <div class="content">
       <article class="message">
@@ -16,3 +16,4 @@
     </div>
   </div>
 </div>
+<ng-template #elseBlock>No tx found</ng-template>

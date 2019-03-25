@@ -21,8 +21,7 @@ export class TxComponent implements OnInit {
 
   ngOnInit() {
     this.http.get(`${nodeRpc}/tx_search?query="tx.hash='${this.txHash}'"`).subscribe(data => {
-      this.tx = data['result'].txs[0];
+      if (data['error'] === undefined) this.tx = data['result'].txs[0];
     });
   }
-
 }
