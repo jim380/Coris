@@ -34,21 +34,17 @@ export class TxsService {
         "fees": [
           {
             "denom": "muon",
-            "amount": "10000"
+            "amount": "50000"
           }
         ],
         "simulate": false
       },
-      "title": "test",
-      "description": "test",
-      "proposal_type": "text",
-      "proposer": `${addr}`,
-      "initial_deposit": [
-        {
-          "denom": "muon",
-          "amount": "10000"
-        }
-      ]
+      "delegator_address": `${addr}`,
+      "validator_address": "cosmosvaloper1yds9h4lqn0xggm3kahn0vznhv59cljjlfh3sa2",
+      "delegation": {
+        "denom": "muon",
+        "amount": "100000"
+      }
     }
 
     // this.http.post(`http://149.28.228.142:1317/staking/delegators/${addr}/delegations`, postBody, postOptions)
@@ -71,3 +67,39 @@ export class TxsService {
     });
   }
 }
+
+
+// nginx angular POST proxy example
+// # node 1317 proxy
+// location /node_txs/ 
+//     {
+//     if ($request_method = 'OPTIONS') 
+//     {
+//         add_header 'Access-Control-Allow-Origin' '*';
+//         add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+//         #
+//         # Custom headers and headers various browsers *should* be OK with but aren't
+//         #
+//         add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range';
+//         #
+//         # Tell client that this pre-flight info is valid for 20 days
+//         #
+//         add_header 'Access-Control-Max-Age' 1728000;
+//         add_header 'Content-Type' 'text/plain; charset=utf-8';
+//         add_header 'Content-Length' 0;
+//         return 204;
+//     }
+
+//     add_header 'Access-Control-Allow-Origin' '*' always; 
+//     add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+//     add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range' always;
+//     add_header 'Access-Control-Allow-Credentials' 'true' always;
+//     add_header 'Access-Control-Max-Age' '1728000';
+//     add_header 'Content-Type' 'text/plain charset=UTF-8' always;
+//     #add_header 'Content-Length' '0';
+//     proxy_pass http://149.28.228.142:1317/;
+//     #proxy_http_version 1.1;
+//     #proxy_set_header Upgrade $http_upgrade;
+//     #proxy_set_header Connection "Upgrade";
+// }
+// End nginx angular POST proxy example
