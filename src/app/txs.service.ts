@@ -15,13 +15,11 @@ export class TxsService {
 
   public postData(addr: string): void {
   // public PostData(data: any): Observable<any> {
-
     const postOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
       })
     }
-
     const postBody =  {
       "base_req": {
         "from": `${addr}`,
@@ -59,12 +57,6 @@ export class TxsService {
       () => {
         console.log("The POST observable is now completed.");
       });
-    }
-
-  public newFunc() {
-    this.http.get(`${nodeRpc}/block?height=50`).subscribe(data => {
-      console.log(data);
-    });
   }
 }
 

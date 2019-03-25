@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-validator',
@@ -13,20 +14,35 @@ export class ValidatorComponent implements OnInit {
   displayKeys=false;
 
   selectedValidator = -1;
+  delegationInfo = [];
+
   private subscription;
 
   appState: Observable<{blocks: [], txs:[], validators: []}>;
-  constructor(private store: Store<{App: { blocks: [], txs: [], validators:[] } }>, private route: ActivatedRoute) { }
 
+  constructor(
+    private store: Store<{App: { blocks: [], txs: [], validators:[] } }>, 
+    private route: ActivatedRoute,
+    private http: HttpClient) { }
+
+
+  getDelegations(cosmosValoperAddr) {
+    this.http.get(`https://aakatev.me/node_txs/staking/validators/${cosmosValoperAddr}/delegations`).subscribe(data => {
+      this.delegationInfo = <[]>data;
+    });
+  }
 
   findValidator (validators): void {
     for (let validator_index in validators) {
-      if (validators[validator_index].keys.Addres === this.route.snapshot.paramMap.get('address')) {
+      if(validators[validator_index].keys !== undefined 
+        && validators[validator_index].keys.Addres === this.route.snapshot.paramMap.get('address')) {
         this.selectedValidator = Number(validator_index);
-        console.log(this.selectedValidator);
+        // Debugging @aakatev
+        this.getDelegations(validators[this.selectedValidator]['data'].operator_address);
+        // console.log(this.delegationService.getDelegationInfo());
+        // console.log(this.selectedValidator);
       }
     }
-
     // TODO figuire how to unsubscribe
     // this.subscription.unsubscribe();
   }
