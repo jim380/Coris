@@ -1,4 +1,16 @@
-<div *ngIf="(block?.last_commit)" class="card events-card">
+<div class="field has-addons">
+  <div class="control">
+    <input class="input" placeholder = "Enter block height" #queryInputRef >
+  </div>
+  <div class="control">
+    <a 
+      class = "button is-info" 
+      (click) = 'clickButton(queryInputRef.value)' >
+        Search
+    </a>
+  </div>
+</div>
+<div *ngIf="(block?.last_commit); else elseBlock" class="card events-card">
   <div class="card-table">
     <div class="content">
       <article class="message">
@@ -12,7 +24,7 @@
           <table class="table is-fullwidth is-striped">
             <tbody>
               <tr>
-                <th><a (click)="showHideElem()">Precommits ({{block.last_commit.precommits.length}})</a></th>
+                <th><a (click)="showHideElem()">Precommits ({{block.last_commit?.precommits?.length}})</a></th>
               </tr>
               <div [style.display]="displayCommits ? 'flex': 'none'" id="precommits">
                 <tr *ngFor="let validator of block.last_commit.precommits">
@@ -32,3 +44,4 @@
     </div>
   </div>
 </div>
+<ng-template #elseBlock>No block found at {{queryHeight}}!</ng-template>
