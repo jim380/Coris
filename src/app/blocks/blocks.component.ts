@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DOCUMENT } from '@angular/common'; 
-import { Inject }  from '@angular/core';
 import { Block } from './block';
 import { nodeRpc } from '../../config.js'
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,10 +16,15 @@ export class BlocksComponent implements OnInit {
   startBlock = 0;
   blocksToDisplay = 20;
 
-  constructor(private http: HttpClient, @Inject(DOCUMENT) document) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   clearBlocks() {
     this.blocks = [];
+  }
+
+  clickButton(value) {
+    console.log(value);
+    this.router.navigate([`block/${value}`]);
   }
 
   fetchBlocks() {

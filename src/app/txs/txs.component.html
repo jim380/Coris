@@ -1,6 +1,19 @@
+<div class="field has-addons">
+  <div class="control">
+    <input class="input" placeholder = "Enter tx hash" #queryInputRef >
+  </div>
+  <div class="control">
+    <a 
+      class = "button is-info" 
+      (click) = 'clickButton(queryInputRef.value)' >
+        Search
+    </a>
+  </div>
+</div>
 <div class="card events-card">
   <header class="card-header">
     <p class="card-header-title"><i class="fas fa-exchange-alt"></i>Transactions</p>
+    <a routerLink="/new/tx" class="pagination-next button is-primary">New</a>
   </header>
   <div class="card-table">
     <div class="content">
@@ -12,7 +25,11 @@
             <th>Gas Wanted</th>
             <th>Height</th>
           </tr>
-          <tr routerLink="/tx/{{tx.hash}}" class="clickable" *ngFor="let tx of txs">
+          <tr *ngIf="!txs?.length">
+            <td>No recent txs</td>
+          </tr>
+        </tbody>
+          <tr #elseBlock routerLink="/tx/{{tx.hash}}" class="clickable" *ngFor="let tx of txs">
             <td>{{tx.hash}}</td>
             <td>{{tx.gasUsed}}</td>
             <td>{{tx.gasWanted}}</td>

@@ -15,6 +15,7 @@ import { appReducer } from './app.reducers';
 import { BlockComponent } from './block/block.component';
 import { TxComponent } from './tx/tx.component';
 import { ValidatorComponent } from './validator/validator.component';
+import { NewTxComponent } from './new-tx/new-tx.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ValidatorComponent } from './validator/validator.component';
     BlockComponent,
     TxComponent,
     ValidatorComponent,
+    NewTxComponent,
   ],
   imports: [
     BrowserModule,
