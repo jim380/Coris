@@ -230,6 +230,13 @@ export class WsService {
   };
   // End validators mapping
 
+  
+  sortValidators(property) {
+    this.wsValidatorsStore.sort((a, b) => parseFloat(b[property]) - parseFloat(a[property]));
+    this.updateValidators();
+  }
+
+
   getWsBlockStore() { return this.wsBlockStore };
   getWsTxStore() { return this.wsTxStore };
 

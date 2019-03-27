@@ -1,3 +1,7 @@
+<div class="tags">
+  <a class="button tag is-primary" (click)="sortByPower()">Sort By Power</a>
+  <a class="button tag is-primary" (click)="sortByPriority()">Sort By Priority</a>  
+</div>
 <div
   *ngFor="let validator of (appState | async).validators"
   class="validator_card"
