@@ -225,12 +225,15 @@ export class WsService {
 
   // @aakatev WiP TODO look through this mapping again
   getValidatorAvatars(validator) {
-    return new Promise(resolve => {
-      this.http.get(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${validator.data.description.moniker.replace(/\s/g, '')}&fields=pictures`)
+    return new Promise(async resolve => {
+      let regex = await validator.data.description.moniker.replace(/\s/g, '').match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]*/i)[0];
+      this.http.get(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${regex}&fields=pictures`)
         .subscribe(async data => {
           // Debugging
           // console.log(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${validator.data.description.moniker.replace(/\s/g, '')}&fields=pictures`);
           // console.log(data['them']);
+          // Debugging regex to parse moniker
+          // console.log(validator.data.description.moniker.replace(/\s/g, '').match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]*/i)[0]);
           
           if (data['status'].code === 0) {
             validator.keybase = data['them']; 
