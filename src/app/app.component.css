@@ -1,6 +1,10 @@
-/* orange: */
+/*-------------------------------------------------*/
+/* Color HEX Codes */
+/*-------------------------------------------------*/
+/* orange: #FC7D14*/
+/* green: #00796B */
 /* backgroud: #111923 */
-/* tile background: #00796B*/
+
 
 /*-------------------------------------------------*/
 /* Basic Setup */
@@ -34,7 +38,7 @@ section {
 }
 
 .row {
-  max-width: 1140px;
+  max-width: 90%; /*1140px or in %*/
   margin: 0 auto;
 }
 
@@ -106,7 +110,7 @@ a:visited {
 
 a:hover,
 a:active {
-    color:orange;
+    color: #FC7D14;
     /* border-bottom: 1px solid transparent; */
 }
 
@@ -177,7 +181,7 @@ article {
 
 .subtitle {
   font-weight: 400;
-  color:orange;
+  color:#FC7D14;
 }
 
 
@@ -222,7 +226,7 @@ footer {
 .footer-nav {
   list-style: none;
   float: left;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 
 .social-links {
@@ -241,28 +245,56 @@ footer {
     margin-right: 0;
 }
 
-.footer-nav li a:link,
-.footer-nav li a:visited, 
-.social-links li a:link, 
-.social-links li a:visited,
+.footer-nav li:last-child,
+.social-links li:last-child {
+    margin-right: 0;
+}
+
 footer p a:link,
-footer p a:visited {
+footer p a:visited,
+.footer-nav li a:link,
+.footer-nav li a:visited,
+.social-links li a:link, 
+.social-links li a:visited {
     text-decoration: none;
     border: 0;
-    color: white;
+    color: #888888;
     transition: color 0.2s;
 }
 
-.footer-nav li a:hover,
-.footer-nav li a:active,
 footer p a:hover,
-footer p a:active {
-    color: orange;
+footer p a:active,
+.footer-nav li a:hover,
+.footer-nav li a:active {
+    color: #FC7D14;
 }
 
 .social-links li a:link,
 .social-links li a:visited {
-    font-size: 160%;
+    font-size: 150%;
+}
+
+.ion-social-facebook,
+.ion-social-twitter,
+.ion-social-googleplus,
+.ion-social-instagram {
+    transition: color 0.2s;
+}
+
+.ion-social-github:hover {
+    color: #a6b1b7;
+}
+
+.ion-social-twitter:hover {
+    color: #00aced;
+}
+
+.ion-paper-airplane:hover {
+    color: #0088cc;
+}
+
+.ion-social-linkedin:hover {
+    color: #007bb5;
 }
 
 footer p {

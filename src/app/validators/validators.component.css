@@ -25,9 +25,8 @@ html, body {
 /* Reusable Components */
 /*-------------------------------------------------*/
 .row {
-  max-width: 1140px;
+  max-width: 90%;
   margin: 0 auto;
-
 }
 
 section {
@@ -101,8 +100,6 @@ a:active {
     color:orange;
     /* border-bottom: 1px solid transparent; */
 }
-
-
 
 table {
   table-layout: fixed;

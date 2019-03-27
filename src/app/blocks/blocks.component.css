@@ -2,7 +2,7 @@
 /* Reusable Components */
 /*-------------------------------------------------*/
 .row {
-  max-width: 1140px;
+  max-width: 90%;
   margin: 0 auto;
 
 }
@@ -16,6 +16,7 @@ td {
   overflow: hidden; /* to hide anything that doesn't fit in the containing element. */
   white-space: nowrap; /* to make sure the line doesn't break when it is longer than the containing div. */
   text-overflow: ellipsis;
+  text-align: left;
 }
 
 button {
@@ -36,5 +37,13 @@ button {
 
 p,
 tbody {
+  color: white;
+}
+
+.td-1 {
+  color: #FC7D14;
+}
+
+.td-2 {
   color: white;
 }

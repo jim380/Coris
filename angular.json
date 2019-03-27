@@ -25,7 +25,8 @@
             "styles": [
               "src/styles.css",
               "src/app/vendors/normalize.css",
-              "src/app/vendors/grid.css"
+              "src/app/vendors/grid.css",
+              "node_modules/ionicons/dist/scss/ionicons.scss"
             ],
             "scripts": []
           },
@@ -83,7 +84,8 @@
             "styles": [
               "src/styles.css",
               "src/app/vendors/normalize.css",
-              "src/app/vendors/grid.css"
+              "src/app/vendors/grid.css",
+              "node_modules/ionicons/dist/scss/ionicons.scss"
             ],
             "scripts": [],
             "assets": [

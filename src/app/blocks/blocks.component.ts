@@ -31,7 +31,9 @@ export class BlocksComponent implements OnInit {
           this.blocks.push({
             hash: block.block_id.hash, 
             height: block.header.height, 
-            time: block.header.time
+            time: block.header.time,
+            txs: block.header.num_txs,
+            proposer: block.header.proposer_address
           });
         });
       });

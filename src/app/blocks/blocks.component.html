@@ -7,14 +7,17 @@
             <table class="table is-fullwidth">
               <tbody>
                 <tr>
-                  <th>Hash</th>
-                  <th>Height</th>
-                  <th>Time</th>
+                  <th >Height</th>
+                  <th>Transactions</th>
+                  <!-- <th>Hash</th> -->
+                  <th>Proposer</th>
+                  <th>Timestamp (UTC)</th>
                 </tr>
                 <tr routerLink="/block/{{block.height}}" class="clickable" *ngFor="let block of blocks">
-                  <td>{{block.hash}}</td>
-                  <td>{{block.height}}</td>
-                  <td>{{block.time}}</td>
+                  <td class="td-1">{{block.height}}</td>
+                  <td class="td-2">{{block.txs}}</td>
+                  <td class="td-1">{{block.proposer}}</td>
+                  <td class="td-2">{{block.time}}</td>
                   <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
                 </tr>
               </tbody>

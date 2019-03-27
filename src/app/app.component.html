@@ -4,6 +4,7 @@
 <html lang="en">
   <head>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- <title>Demo</title> -->
   </head>
   <body>
@@ -11,7 +12,7 @@
       <!-- --------------------- NAV BAR --------------------- -->
         <nav>
           <div class="row">
-            <a href="http://cyphercore.io" target=" "><img src="assets/img/logo.png" class="logo"></a>
+            <a href="http://cyphercore.io" target=" "><img src="assets/img/Coris_logo.png" class="logo"></a>
             <ul class="main-nav">
               <li><a routerLink="/dashboard">Dashboard</a></li>
               <li><a routerLink="/validators">Validators</a></li>
@@ -26,7 +27,7 @@
     <section>
       <div class="row header-row">
         <h1 class="title header-title">
-          Coris - Tendermint Explorer
+          Coris Explorer
         </h1>
         <h2 class="subtitle header-subtitle">Chain: {{(appState | async).blocks[0]?.header.chain_id}}</h2>
       </div>
@@ -72,20 +73,23 @@
     <div class="row">
       <div class="col span-1-of-2">
         <ul class="footer-nav">
-          <li><a href="#">Github</a></li>
-          <li><a href="#">Twitter</a></li>
-          <li><a href="#">Telegram</a></li>
+          <li><a href="http://cyphercore.io/team/" target=" ">About</a></li>
+          <li><a href="https://medium.com/cypher-core" target=" ">Blog</a></li>
+          <li><a href="http://cyphercore.io/validator/" target=" ">Staking</a></li>
         </ul>
       </div>
       <div class="col span-1-of-2">
         <ul class="social-links">
-          <li><a href="#"><i class="ion-social-facebook"></i></a></li>
+          <li><a href="#"><i class="ion-social-github" target=" "></i></a></li>
+          <li><a href="https://twitter.com/cypher_core" target=" "><i class="ion-social-twitter"></i></a></li>
+          <li><a href="https://t.me/cyphercore" target=" "><i class="ion-paper-airplane"></i></a></li>
+          <li><a href="https://www.linkedin.com/company/cypher-core/about/?viewAsMember=true" target=" "><i class="ion-social-linkedin"></i></a></li>
         </ul>
       </div>
     </div>
     <div class="row">
       <p>
-        Copyright &copy; 2019 - <a href="http://cyphercore.io" target=" ">Cypher Core LLC.</a>
+        Copyright &copy; 2019 - <a class="footer-brand" href="http://cyphercore.io" target=" ">Cypher Core LLC.</a>
       </p>
     </div>
   </footer>

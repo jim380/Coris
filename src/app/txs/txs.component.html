@@ -1,29 +1,29 @@
-<div class="card events-card">
-  <header class="card-header">
-    <p class="card-header-title"><i class="fas fa-exchange-alt"></i>Transactions</p>
-    <a routerLink="/new/tx" class="pagination-next button is-primary">New</a>
-  </header>
-  <div class="card-table">
-    <div class="content">
-      <table class="table is-fullwidth is-striped">
-        <tbody>
-          <tr>
-            <th>Hash</th>
-            <th>Gas Used</th>
-            <th>Gas Wanted</th>
-            <th>Height</th>
-          </tr>
-          <tr routerLink="/tx/{{tx.hash}}" class="clickable" *ngFor="let tx of txs">
-            <td>{{tx.hash}}</td>
-            <td>{{tx.gasUsed}}</td>
-            <td>{{tx.gasWanted}}</td>
-            <td>{{tx.height}}</td>
-          </tr>
-        </tbody>
-      </table>
+<div class="row">
+  <div class="card events-card">
+    <header class="card-header">
+      <p class="card-header-title"><i class="fas fa-exchange-alt"></i>Transactions</p>
+      <a routerLink="/new/tx" class="pagination-next button is-primary">New</a>
+    </header>
+    <div class="card-table">
+        <table class="table is-fullwidth">
+          <tbody>
+            <tr>
+              <th>Hash</th>
+              <th>Gas Used</th>
+              <th>Gas Wanted</th>
+              <th>Height</th>
+            </tr>
+            <tr routerLink="/tx/{{tx.hash}}" class="clickable" *ngFor="let tx of txs">
+              <td>{{tx.hash}}</td>
+              <td>{{tx.gasUsed}}</td>
+              <td>{{tx.gasWanted}}</td>
+              <td>{{tx.height}}</td>
+            </tr>
+          </tbody>
+        </table>
     </div>
   </div>
+  <nav class="pagination" role="navigation" aria-label="pagination">
+    <button (click)="displayOlderTxs()" id="btn-older" class="pagination-next button is-dark">Older</button>
+  </nav>
 </div>
-<nav class="pagination" role="navigation" aria-label="pagination">
-  <button (click)="displayOlderTxs()" id="btn-older" class="pagination-next button is-dark">Older</button>
-</nav>
