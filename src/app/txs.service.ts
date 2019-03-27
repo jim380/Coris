@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { nodeRpc, nodeWs, nodeRpcTest } from '../config.js'
 
 
@@ -9,22 +9,21 @@ import { nodeRpc, nodeWs, nodeRpcTest } from '../config.js'
 })
 export class TxsService {
 
-  constructor(private http: HttpClient) {
-    this.postData('cosmos1pjmngrwcsatsuyy8m3qrunaun67sr9x78qhlvr');
-  }
+  constructor(private http: HttpClient) { }
 
-  public postData(addr: string): void {
-  // public PostData(data: any): Observable<any> {
+
+  public postData(delegatorAddr: string) {
+    
+    return new Promise(resolve => {
 
     const postOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
       })
     }
-
     const postBody =  {
       "base_req": {
-        "from": `${addr}`,
+        "from": `${delegatorAddr}`,
         "memo": "test",
         "chain_id": "gaia-13002",
         "account_number": "0",
@@ -39,7 +38,7 @@ export class TxsService {
         ],
         "simulate": false
       },
-      "delegator_address": `${addr}`,
+      "delegator_address": `${delegatorAddr}`,
       "validator_address": "cosmosvaloper1yds9h4lqn0xggm3kahn0vznhv59cljjlfh3sa2",
       "delegation": {
         "denom": "muon",
@@ -47,23 +46,18 @@ export class TxsService {
       }
     }
 
-    // this.http.post(`http://149.28.228.142:1317/staking/delegators/${addr}/delegations`, postBody, postOptions)
-    this.http.post(`https://aakatev.me/node_txs/staking/delegators/${addr}/delegations`, postBody, postOptions)
+    // this.http.post(`http://149.28.228.142:1317/staking/delegators/${delegatorAddr}/delegations`, postBody, postOptions)
+    this.http.post(`https://aakatev.me/node_txs/staking/delegators/${delegatorAddr}/delegations`, postBody, postOptions)
     .subscribe(
       (val) => {
-        console.log("POST call successful value returned in body", val);
+        // @aakatev debugging
+        console.log(val);
+        resolve(val);
       },
       error => {
-        console.log("POST call in error", error);
+        console.log(error);
       },
-      () => {
-        console.log("The POST observable is now completed.");
-      });
-    }
-
-  public newFunc() {
-    this.http.get(`${nodeRpc}/block?height=50`).subscribe(data => {
-      console.log(data);
+      () => {});
     });
   }
 }

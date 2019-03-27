@@ -1,36 +1,40 @@
 <div class="row">
+  <div class="tags">
+    <a class="button tag is-primary" (click)="sortByPower()">Sort By Power</a>
+    <a class="button tag is-primary" (click)="sortByPriority()">Sort By Priority</a>  
+  </div>
   <div
-  *ngFor="let validator of (appState | async).validators"
-  class="validator-card"
-  id="{{validator.keys?.Addres}}">
-    <article class="validator_body">
-      <div class="validator-card-header">
-        <i class="fab fa-codepen"></i>
-        <p>Validator</p>
-      </div>
-      <div class="validator-card-text">
-        <div class="validator__text--body">
-          <p>Moniker:</p>
-          <p>{{validator.data?.description.moniker}}</p>
+    *ngFor="let validator of (appState | async).validators"
+    class="validator-card"
+    id="{{validator.keys?.Addres}}">
+      <article class="validator_body">
+        <div class="validator-card-header">
+          <i class="fab fa-codepen"></i>
+          <p>Validator</p>
         </div>
-        <div class="validator__text--body">
-            <p>Power:</p>
-            <p>{{validator.voting_power}}</p>
+        <div class="validator-card-text">
+          <div class="validator__text--body">
+            <p>Moniker:</p>
+            <p>{{validator.data?.description.moniker}}</p>
+          </div>
+          <div class="validator__text--body">
+              <p>Power:</p>
+              <p>{{validator.voting_power}}</p>
+          </div>
+          <div class="validator__text--body">
+              <p>Priority:</p>
+              <p>{{validator.proposer_priority}}</p>
+          </div>
+          <table class="">
+            <tbody>
+              <tr>
+                <th><a routerLink="/validator/{{validator.keys?.Addres}}">Learn more</a></th>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="validator__text--body">
-            <p>Priority:</p>
-            <p>{{validator.proposer_priority}}</p>
-        </div>
-        <table class="">
-          <tbody>
-            <tr>
-              <th><a routerLink="/validator/{{validator.keys?.Addres}}">Learn more</a></th>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </article>
-</div>
+      </article>
+  </div>
 </div>
 
 

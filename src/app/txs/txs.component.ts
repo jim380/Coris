@@ -4,6 +4,7 @@ import { Inject }  from '@angular/core';
 import { DOCUMENT } from '@angular/common'; 
 import { Tx } from './tx';
 import { nodeRpc } from '../../config.js'
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,10 +18,14 @@ export class TxsComponent implements OnInit {
   lastBlock = 0;
   blocksToScan = 100;
 
-  constructor(private http: HttpClient, @Inject(DOCUMENT) document) { }
+  constructor(private http: HttpClient, @Inject(DOCUMENT) document, private router: Router) { }
 
   clearTxs() {
     this.txs = [];
+  }
+  clickButton(value) {
+    console.log(value);
+    this.router.navigate([`tx/${value}`]);
   }
 
   fetchTxs() {
@@ -57,4 +62,6 @@ export class TxsComponent implements OnInit {
     this.minHeight -= this.blocksToScan;
     this.fetchTxs();  
   }
+
+  
 }

@@ -1,31 +1,43 @@
 <div class="row">
-    <div class="card events-card">
-        <header class="card-header">
-          <p class="card-header-title"><i class="fas fa-vector-square"></i>Blocks</p>
-        </header>
-        <div class="card-table">
-            <table class="table is-fullwidth">
-              <tbody>
-                <tr>
-                  <th >Height</th>
-                  <th>Transactions</th>
-                  <!-- <th>Hash</th> -->
-                  <th>Proposer</th>
-                  <th>Timestamp (UTC)</th>
-                </tr>
-                <tr routerLink="/block/{{block.height}}" class="clickable" *ngFor="let block of blocks">
-                  <td class="td-1">{{block.height}}</td>
-                  <td class="td-2">{{block.txs}}</td>
-                  <td class="td-1">{{block.proposer}}</td>
-                  <td class="td-2">{{block.time}}</td>
-                  <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
-                </tr>
-              </tbody>
-            </table>
-        </div>
-      </div>
-      <nav class="pagination" role="navigation" aria-label="pagination">
-        <button disabled id="btn-newer" (click)="displayNewerBlocks()" class="pagination-previous button is-dark">Newer</button>
-        <button id="btn-older" (click)="displayOlderBlocks()" class="pagination-next button is-dark">Older</button>
-      </nav>
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" placeholder = "Enter block height" #queryInputRef >
+    </div>
+    <div class="control">
+      <a 
+        class = "button is-info" 
+        (click) = 'clickButton(queryInputRef.value)' >
+          Search
+      </a>
+    </div>
+  </div>
+  <div class="card events-card">
+    <header class="card-header">
+      <p class="card-header-title"><i class="fas fa-vector-square"></i>Blocks</p>
+    </header>
+    <div class="card-table">
+        <table class="table is-fullwidth">
+          <tbody>
+            <tr>
+              <th >Height</th>
+              <th>Transactions</th>
+              <!-- <th>Hash</th> -->
+              <th>Proposer</th>
+              <th>Timestamp (UTC)</th>
+            </tr>
+            <tr routerLink="/block/{{block.height}}" class="clickable" *ngFor="let block of blocks">
+              <td class="td-1">{{block.height}}</td>
+              <td class="td-2">{{block.txs}}</td>
+              <td class="td-1">{{block.proposer}}</td>
+              <td class="td-2">{{block.time}}</td>
+              <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+  <nav class="pagination" role="navigation" aria-label="pagination">
+    <button disabled id="btn-newer" (click)="displayNewerBlocks()" class="pagination-previous button is-dark">Newer</button>
+    <button id="btn-older" (click)="displayOlderBlocks()" class="pagination-next button is-dark">Older</button>
+  </nav>
 </div>

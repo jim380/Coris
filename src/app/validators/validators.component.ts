@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
+import { WsService } from '../ws.service';
 
 @Component({
   selector: 'app-validators',
@@ -13,7 +14,7 @@ export class ValidatorsComponent implements OnInit {
   appState: Observable<{blocks: [], txs:[], validators: []}>;
   fragment = null;
   
-  constructor(private store: Store<{App: { blocks: [], txs: [], validators:[] } }>, private route: ActivatedRoute) { }
+  constructor(private store: Store<{App: { blocks: [], txs: [], validators:[] } }>, private route: ActivatedRoute, private wsService: WsService) { }
 
   ngOnInit() {
     this.appState = this.store.select('App');
@@ -21,6 +22,14 @@ export class ValidatorsComponent implements OnInit {
     this.route.fragment.subscribe(fragment => { this.fragment = fragment; });
   }
 
+  sortByPower () {
+    this.wsService.sortValidators("voting_power");
+  }
+
+  sortByPriority () {
+    this.wsService.sortValidators("proposer_priority");
+  }
+  
   ngAfterViewInit(): void {
     try {
       if(this.fragment) {
