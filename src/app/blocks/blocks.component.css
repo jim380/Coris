@@ -1,3 +1,12 @@
+/*-------------------------------------------------*/
+/* Reusable Components */
+/*-------------------------------------------------*/
+.row {
+  max-width: 90%;
+  margin: 0 auto;
+
+}
+
 table {
   table-layout: fixed;
   /*width: 100px;*/
@@ -7,8 +16,34 @@ td {
   overflow: hidden; /* to hide anything that doesn't fit in the containing element. */
   white-space: nowrap; /* to make sure the line doesn't break when it is longer than the containing div. */
   text-overflow: ellipsis;
+  text-align: left;
 }
 
 button {
   margin: 15px;
+}
+
+.card-header {
+  background: #00796B;
+}
+
+.clickable:nth-child(odd){
+  background:#0D151F;
+}
+
+.clickable:nth-child(even){
+  background:#111923;
+}
+
+p,
+tbody {
+  color: white;
+}
+
+.td-1 {
+  color: #FC7D14;
+}
+
+.td-2 {
+  color: white;
 }
