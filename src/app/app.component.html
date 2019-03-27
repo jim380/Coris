@@ -1,69 +1,92 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <!-- START NAV -->
-<nav class="navbar">
-  <div class="container">
-    <div class="navbar-brand">
-      <a class="navbar-item" routerLink="/validators">Validators</a>
-      <a class="navbar-item brand-text" routerLink="/dashboard">Dashboard</a>
-      <a class="navbar-item" routerLink="/blocks">Blocks</a>
-      <a class="navbar-item" routerLink="/txs">Txs</a>
-    </div>
-  </div>
-</nav>
-<!-- END NAV -->
-<div class="container">
-  <div class="main-container column is-12">
-    <section class="hero is-info welcome is-small">
-      <div class="hero-body">
-        <div class="container">
-          <h1 class="title">
-            Coris - Tendermint Explorer
-          </h1>
-          <h2 class="subtitle">Chain: {{(appState | async).blocks[0]?.header.chain_id}}</h2>
-        </div>
-      </div>
-    </section>
-    <section class="is-info is-small">
-      <div class="hero-body">
-          <div class="container" style="cursor: pointer;" routerLink="/validator/{{(appState | async).round.proposer?.address}}">
-            <h2 class="subtitle" style="color: white;" >Proposer: {{(appState | async).round.proposer?.address}}</h2>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet">
+    <!-- <title>Demo</title> -->
+  </head>
+  <body>
+    <header>
+      <!-- --------------------- NAV BAR --------------------- -->
+        <nav>
+          <div class="row">
+            <a href="http://cyphercore.io" target=" "><img src="assets/img/logo.png" class="logo"></a>
+            <ul class="main-nav">
+              <li><a routerLink="/dashboard">Dashboard</a></li>
+              <li><a routerLink="/validators">Validators</a></li>
+              <li><a routerLink="/blocks">Blocks</a></li>
+              <li><a routerLink="/txs">Transactions</a></li>
+            </ul>
           </div>
-      </div>
-    </section>
-    <section class="info-tiles">
-      <div class="tile is-ancestor has-text-centered">
-        <div style="cursor: pointer;" routerLink="/last-block" class="tile is-parent">
-          <article class="tile is-child box">
-            <!-- <p class="title">{{(appState | async).round?.height}}</p> -->
-            <p
-              *ngFor="let block of (appState | async).blocks.reverse().slice(0,1)"
-              class="title"
-              [innerHTML]="block.header?.height !== null ? block.header.height : 0"></p>
-            <p class="subtitle">Last Block</p>
-          </article>
-        </div>
-        <div class="tile is-parent">
-          <article class="tile is-child box">
-            <p class="title">{{(appState | async).roundStep.step?.split('RoundStep')[1]}}</p>
-            <p class="subtitle">Round {{(appState | async).roundStep.round}}</p>
-          </article>
-        </div>
-         <div style="cursor: pointer;" routerLink="/validators" class="tile is-parent">
-          <article class="tile is-child box">
-            <p class="title">{{(appState | async).validators?.length}}</p>
-            <p class="subtitle">Validators</p>
-          </article>
-        </div>
-      </div>
-    </section>
-    <router-outlet></router-outlet>
-  </div>
-</div>
-<footer class="footer" style="background: #202225;">
-  <div class="content has-text-centered">
-    <p>
-      Coris - 2019
-    </p>
-  </div>
-</footer>
+        </nav>
+      <!-- --------------------- END NAV --------------------- -->
+    </header>
 
+    <section>
+      <div class="row header-row">
+        <h1 class="title header-title">
+          Coris - Tendermint Explorer
+        </h1>
+        <h2 class="subtitle header-subtitle">Chain: {{(appState | async).blocks[0]?.header.chain_id}}</h2>
+      </div>
+      <div class="row proposer-row">
+        <div style="cursor: pointer;" routerLink="/validator/{{(appState | async).round.proposer?.address}}">
+          <h2 class="title proposer-title">Proposer - {{(appState | async).round.proposer?.address}}</h2>
+        </div>
+      </div>
+      <div class="row chain-queries-row">
+        <div class="col span-1-of-3">
+          <div style="cursor: pointer;" routerLink="/last-block" class="is-parent">
+            <article class="box">
+              <!-- <p class="title">{{(appState | async).round?.height}}</p> -->
+              <h3
+                *ngFor="let block of (appState | async).blocks.reverse().slice(0,1)"
+                class="title chain-queries-title"
+                [innerHTML]="block.header?.height !== null ? block.header.height : 0">
+              </h3>
+              <p class="subtitle chain-queries-subtitle">Last Block</p>
+            </article>
+          </div>
+        </div>
+        <div class="col span-1-of-3">
+          <article class="box">
+            <h3 class="title chain-queries-title">{{(appState | async).roundStep.step?.split('RoundStep')[1]}}</h3>
+            <p class="subtitle chain-queries-subtitle">Round {{(appState | async).roundStep.round}}</p>
+          </article>
+        </div>
+        <div class="col span-1-of-3">
+          <div style="cursor: pointer;" routerLink="/validators" class="is-parent">
+            <article class="box">
+              <h3 class="title chain-queries-title">{{(appState | async).validators?.length}}</h3>
+              <p class="subtitle chain-queries-subtitle">Validators</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+        <router-outlet></router-outlet>
+  </body>
+
+  <footer>
+    <div class="row">
+      <div class="col span-1-of-2">
+        <ul class="footer-nav">
+          <li><a href="#">Github</a></li>
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">Telegram</a></li>
+        </ul>
+      </div>
+      <div class="col span-1-of-2">
+        <ul class="social-links">
+          <li><a href="#"><i class="ion-social-facebook"></i></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <p>
+        Copyright &copy; 2019 - <a href="http://cyphercore.io" target=" ">Cypher Core LLC.</a>
+      </p>
+    </div>
+  </footer>
+</html>

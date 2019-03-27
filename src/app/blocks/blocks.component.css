@@ -1,3 +1,12 @@
+/*-------------------------------------------------*/
+/* Reusable Components */
+/*-------------------------------------------------*/
+.row {
+  max-width: 1140px;
+  margin: 0 auto;
+
+}
+
 table {
   table-layout: fixed;
   /*width: 100px;*/
@@ -11,4 +20,21 @@ td {
 
 button {
   margin: 15px;
+}
+
+.card-header {
+  background: #00796B;
+}
+
+.clickable:nth-child(odd){
+  background:#0D151F;
+}
+
+.clickable:nth-child(even){
+  background:#111923;
+}
+
+p,
+tbody {
+  color: white;
 }

@@ -1,28 +1,28 @@
-<div class="card events-card">
-  <header class="card-header">
-    <p class="card-header-title"><i class="fas fa-vector-square"></i>Blocks</p>
-  </header>
-  <div class="card-table">
-    <div class="content">
-      <table class="table is-fullwidth is-striped">
-        <tbody>
-          <tr>
-            <th>Hash</th>
-            <th>Height</th>
-            <th>Time</th>
-          </tr>
-          <tr routerLink="/block/{{block.height}}" class="clickable" *ngFor="let block of blocks">
-            <td>{{block.hash}}</td>
-            <td>{{block.height}}</td>
-            <td>{{block.time}}</td>
-            <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<div class="row">
+    <div class="card events-card">
+        <header class="card-header">
+          <p class="card-header-title"><i class="fas fa-vector-square"></i>Blocks</p>
+        </header>
+        <div class="card-table">
+            <table class="table is-fullwidth">
+              <tbody>
+                <tr>
+                  <th>Hash</th>
+                  <th>Height</th>
+                  <th>Time</th>
+                </tr>
+                <tr routerLink="/block/{{block.height}}" class="clickable" *ngFor="let block of blocks">
+                  <td>{{block.hash}}</td>
+                  <td>{{block.height}}</td>
+                  <td>{{block.time}}</td>
+                  <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
+      <nav class="pagination" role="navigation" aria-label="pagination">
+        <button disabled id="btn-newer" (click)="displayNewerBlocks()" class="pagination-previous button is-dark">Newer</button>
+        <button id="btn-older" (click)="displayOlderBlocks()" class="pagination-next button is-dark">Older</button>
+      </nav>
 </div>
-<nav class="pagination" role="navigation" aria-label="pagination">
-  <button disabled id="btn-newer" (click)="displayNewerBlocks()" class="pagination-previous button is-dark">Newer</button>
-  <button id="btn-older" (click)="displayOlderBlocks()" class="pagination-next button is-dark">Older</button>
-</nav>

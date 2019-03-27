@@ -1,13 +1,13 @@
 <div
   *ngFor="let validator of (appState | async).validators"
-  class="validator_card"
+  class="validator-card"
   id="{{validator.keys?.Addres}}">
     <article class="validator_body">
-      <div class="validator_header">
+      <div class="validator-card-header">
         <i class="fab fa-codepen"></i>
         <p>Validator</p>
       </div>
-      <div class="validator__text">
+      <div class="validator-card-text">
         <div class="validator__text--body">
           <p>Moniker:</p>
           <p>{{validator.data?.description.moniker}}</p>
@@ -17,7 +17,7 @@
             <p>{{validator.voting_power}}</p>
         </div>
         <div class="validator__text--body">
-            <p>Priotrity:</p>
+            <p>Priority:</p>
             <p>{{validator.proposer_priority}}</p>
         </div>
         <table class="">
