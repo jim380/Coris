@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TxsService } from '../txs.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-new-tx',
@@ -7,10 +8,24 @@ import { TxsService } from '../txs.service';
   styleUrls: ['./new-tx.component.css']
 })
 export class NewTxComponent implements OnInit {
+  txData;
 
-  constructor(private txs:TxsService) { }
+  // @aakatev testing addr
+  // delegatorAddr = 'cosmos1pjmngrwcsatsuyy8m3qrunaun67sr9x78qhlvr';
+  delegatorAddr = '';
+
+  constructor(private txsService:TxsService, private route: ActivatedRoute) {
+    this.delegatorAddr  = this.route.snapshot.paramMap.get('delegator');
+  }  
+
+  initTx () {
+    this.txsService.postData(this.delegatorAddr).then(data => {
+      this.txData = data;
+    });
+  }
 
   ngOnInit() {
+    this.initTx();
   }
 
 }

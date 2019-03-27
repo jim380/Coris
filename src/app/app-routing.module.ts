@@ -15,14 +15,14 @@ import { NewTxComponent } from './new-tx/new-tx.component';
 const routes: Routes = [
   { path: '', redirectTo: '/validators', pathMatch: 'full'},
   { path: 'validators', component: ValidatorsComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  // { path: 'dashboard', component: DashboardComponent },
   { path: 'block/:height', component: BlockComponent },
   { path: 'last-block', component: LastBlockComponent },
   { path: 'blocks', component: BlocksComponent },
   { path: 'tx/:hash', component: TxComponent },
   { path: 'txs', component: TxsComponent },
   { path: 'validator/:address', component: ValidatorComponent },
-  { path: 'new/tx', component: NewTxComponent}
+  { path: 'new/tx/:delegator', component: NewTxComponent}
 ];
 
 @NgModule({
