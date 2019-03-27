@@ -223,10 +223,35 @@ export class WsService {
     });
   }
 
+  // @aakatev WiP TODO look through this mapping again
+  getValidatorAvatars(validator) {
+    return new Promise(resolve => {
+      this.http.get(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${validator.data.description.moniker.replace(/\s/g, '')}&fields=pictures`)
+        .subscribe(async data => {
+          // Debugging
+          // console.log(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${validator.data.description.moniker.replace(/\s/g, '')}&fields=pictures`);
+          // console.log(data['them']);
+          
+          if (data['status'].code === 0) {
+            validator.keybase = data['them']; 
+            if(data['them'][0] !== null && data['them'][0].pictures !== undefined) { 
+              validator.picture = data['them'][0].pictures.primary.url; 
+            }
+          } else {
+            validator.keybase = [null];
+          }
+          resolve();
+        });
+    });
+  }
   async initValidators() {
     await this.getValidatorsRanking();
     await this.getValidatorsDetails();
     await this.getValidatorsKeys();
+    this.wsValidatorsStore.forEach(async validator => {
+      await this.getValidatorAvatars(validator);
+    });
+    await this.updateValidators();
   };
   // End validators mapping
 
