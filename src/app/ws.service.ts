@@ -167,7 +167,8 @@ export class WsService {
       // Debugging
       // console.log(data);
       if(data !== null) {
-        this.setValidators(data['validators']);
+        this.mergeProperties(this.wsValidatorsStore, "consensus_pubkey", data['validators'], "pub_key", "ranking")
+            .then(() => {this.updateValidators()});
       } else {
         this.getValidatorsRanking();
       }
@@ -193,10 +194,12 @@ export class WsService {
     return new Promise(resolve => {
       // this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
         this.http.get(`https://aakatev.me/node_txs/staking/validators`).subscribe(async data => {
-        // console.log(data);
-        if(data !== null && this.wsValidatorsStore !== null) {
-          this.mergeProperties(this.wsValidatorsStore, "pub_key", data, "consensus_pubkey","data")
-            .then(() => {this.updateValidators()});
+        console.log(data);
+        if(data !== null) {
+          this.setValidators(data);
+          // @aakatev found bug in mapping
+          // this.mergeProperties(this.wsValidatorsStore, "pub_key", data, "consensus_pubkey","data")
+          //   .then(() => {this.updateValidators()});
           resolve();
         } else {
           await this.getValidatorsDetails();
@@ -212,7 +215,7 @@ export class WsService {
         if(data !== null) {
           // Debugging
           console.log(data);
-          this.mergeProperties(this.wsValidatorsStore, "pub_key", data, "Bech32 Validator Consensus", "keys")
+          this.mergeProperties(this.wsValidatorsStore, "consensus_pubkey", data, "Bech32 Validator Consensus", "keys")
             .then(() => {this.updateValidators()});
           resolve();  
         } else {
@@ -226,7 +229,7 @@ export class WsService {
   // @aakatev WiP TODO look through this mapping again
   getValidatorAvatars(validator) {
     return new Promise(async resolve => {
-      let regex = await validator.data.description.moniker.replace(/\s/g, '').match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]*/i)[0];
+      let regex = await validator.description.moniker.replace(/\s/g, '').match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]*/i)[0];
       this.http.get(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${regex}&fields=pictures`)
         .subscribe(async data => {
           // Debugging
@@ -248,8 +251,9 @@ export class WsService {
     });
   }
   async initValidators() {
-    await this.getValidatorsRanking();
+
     await this.getValidatorsDetails();
+    await this.getValidatorsRanking();
     await this.getValidatorsKeys();
     this.wsValidatorsStore.forEach(async validator => {
       await this.getValidatorAvatars(validator);
