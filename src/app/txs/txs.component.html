@@ -21,19 +21,21 @@
         <tbody>
           <tr>
             <th>Hash</th>
+            <th>Height</th>
             <th>Gas Used</th>
             <th>Gas Wanted</th>
-            <th>Height</th>
+            <th>Action</th>
           </tr>
+        </tbody>
           <tr *ngIf="!txs?.length">
             <td style="color: black">No recent txs</td>
           </tr>
-        </tbody>
           <tr routerLink="/tx/{{tx.hash}}" class="clickable" *ngFor="let tx of txs">
             <td>{{tx.hash}}</td>
             <td>{{tx.gasUsed}}</td>
             <td>{{tx.gasWanted}}</td>
             <td>{{tx.height}}</td>
+            <td>{{tx.tagsDecod[0].value | titlecase}}</td>
           </tr>
         </tbody>
       </table>

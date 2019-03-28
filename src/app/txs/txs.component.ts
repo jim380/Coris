@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Inject }  from '@angular/core';
 import { DOCUMENT } from '@angular/common'; 
-import { Tx } from './tx';
-import { nodeRpc } from '../../config.js'
 import { Router } from '@angular/router';
+
+import { nodeRpc } from '../../config.js'
+import { Tx, Tag, decodeTag } from '../interfaces/tx.interface';
 
 
 @Component({
@@ -16,9 +17,19 @@ export class TxsComponent implements OnInit {
   txs: Tx[];
   minHeight = 0;
   lastBlock = 0;
-  blocksToScan = 100;
+  blocksToScan = 500;
+
 
   constructor(private http: HttpClient, @Inject(DOCUMENT) document, private router: Router) { }
+
+  ngOnInit() {
+    this.http.get(`${nodeRpc}/status`).subscribe(data => {
+      this.lastBlock = data['result'].sync_info.latest_block_height;
+      this.minHeight = this.lastBlock - this.blocksToScan;
+      this.clearTxs();
+      this.fetchTxs();  
+    });
+  }
 
   clearTxs() {
     this.txs = [];
@@ -34,26 +45,36 @@ export class TxsComponent implements OnInit {
       // console.log(`${nodeRpc}/tx_search?query="tx.height>${this.minHeight}"`);
       let currTxs = data['result'].txs.reverse();
       
-      currTxs.forEach(tx => {
-        if(tx.height < this.minHeight + this.blocksToScan) {
+
+
+      currTxs.forEach(dataTx => {
+        if(dataTx.height < this.minHeight + this.blocksToScan) {
+          // const dataTx = await data['result'].txs[0];
+          let dataTagsDecod : Tag[] = [];
+
+          dataTx.tx_result.tags.forEach(tag => {
+            dataTagsDecod.push(decodeTag(tag));
+          });
+
+          // console.log(dataTagsDecod);
+          // console.log(this.decodeTag(dataTx.tx_result.tags[1]));
+          
           this.txs.push({
-            hash: tx.hash, 
-            height: tx.height,
-            gasUsed: tx.tx_result.gasUsed,
-            gasWanted: tx.tx_result.gasWanted
+            hash: dataTx.hash, 
+            height: dataTx.height,
+            gasUsed: dataTx.tx_result.gasUsed,
+            gasWanted: dataTx.tx_result.gasWanted,
+            txBase64: dataTx.tx,
+            txDecod: atob(dataTx.tx),
+            tagsBase64: dataTx.tx_result.tags,
+            tagsDecod: dataTagsDecod
           });        
         }
       });
+      if(this.txs.length > 0) {
+        console.log( this.txs );
+      }
       document.getElementById('btn-older').classList.remove('is-loading');
-    });
-  }
-
-  ngOnInit() {
-    this.http.get(`${nodeRpc}/status`).subscribe(data => {
-      this.lastBlock = data['result'].sync_info.latest_block_height;
-      this.minHeight = this.lastBlock - this.blocksToScan;
-      this.clearTxs();
-      this.fetchTxs();  
     });
   }
 
@@ -62,6 +83,4 @@ export class TxsComponent implements OnInit {
     this.minHeight -= this.blocksToScan;
     this.fetchTxs();  
   }
-
-  
 }
