@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { nodeRpc } from '../../config.js'
-import { Tx, Tag } from '../interfaces/tx.interface';
+import { Tx, Tag, decodeTag } from '../interfaces/tx.interface';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -46,11 +46,9 @@ export class TxComponent implements OnInit {
         let dataTagsDecod : Tag[] = [];
 
         dataTx.tx_result.tags.forEach(tag => {
-          dataTagsDecod.push(this.decodeTag(tag));
+          dataTagsDecod.push(decodeTag(tag));
         });
 
-        // console.log(dataTagsDecod);
-        // console.log(this.decodeTag(dataTx.tx_result.tags[1]));
         this.tx = {
           hash: dataTx.hash, 
           height: dataTx.height,
@@ -66,11 +64,6 @@ export class TxComponent implements OnInit {
     });
   }
 
-  decodeTag (tagsBase64) {
-    return ({
-      key: atob(tagsBase64.key),
-      value: atob(tagsBase64.value)
-    })
-  }
+  
 
 }

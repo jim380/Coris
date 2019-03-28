@@ -14,3 +14,10 @@ export interface Tx {
   tagsBase64: Array<Tag>;
   tagsDecod: Array<Tag>;
 }
+
+export function decodeTag (tagsBase64) {
+  return ({
+    key: atob(tagsBase64.key),
+    value: atob(tagsBase64.value)
+  })
+}

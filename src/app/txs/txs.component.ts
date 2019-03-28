@@ -5,7 +5,7 @@ import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { nodeRpc } from '../../config.js'
-import { Tx, Tag } from '../interfaces/tx.interface';
+import { Tx, Tag, decodeTag } from '../interfaces/tx.interface';
 
 
 @Component({
@@ -53,7 +53,7 @@ export class TxsComponent implements OnInit {
           let dataTagsDecod : Tag[] = [];
 
           dataTx.tx_result.tags.forEach(tag => {
-            dataTagsDecod.push(this.decodeTag(tag));
+            dataTagsDecod.push(decodeTag(tag));
           });
 
           // console.log(dataTagsDecod);
@@ -78,18 +78,9 @@ export class TxsComponent implements OnInit {
     });
   }
 
-  decodeTag (tagsBase64) {
-    return ({
-      key: atob(tagsBase64.key),
-      value: atob(tagsBase64.value)
-    })
-  }
-  
   // TODO: Double check whether this fxn is inclusive
   displayOlderTxs () {
     this.minHeight -= this.blocksToScan;
     this.fetchTxs();  
   }
-
-  
 }
