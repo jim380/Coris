@@ -3,8 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { Inject }  from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { nodeRpc } from '../../config.js'
-
+import { nodeRpc } from '../../config.js';
 
 @Component({
   selector: 'app-block',

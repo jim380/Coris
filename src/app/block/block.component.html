@@ -1,47 +1,68 @@
-<div class="field has-addons">
-  <div class="control">
-    <input class="input" placeholder = "Enter block height" #queryInputRef >
-  </div>
-  <div class="control">
-    <a 
-      class = "button is-info" 
-      (click) = 'clickButton(queryInputRef.value)' >
-        Search
-    </a>
-  </div>
-</div>
-<div *ngIf="(block?.last_commit); else elseBlock" class="card events-card">
-  <div class="card-table">
-    <div class="content">
-      <article class="message">
-        <div class="message-header">
-          <i class="fab fa-codepen"></i>
-          <p>Block</p>
+<div class="row search-box">
+    <div class="field has-addons">
+        <div class="control">
+          <input class="input" placeholder = "Enter block height" #queryInputRef >
         </div>
-        <div class="message-body">
-          <h3>Block at {{block.header.height}}</h3>
-          <h3>App-Hash: {{block.header.app_hash}}</h3>
-          <table class="table is-fullwidth is-striped">
-            <tbody>
-              <tr>
-                <th><a (click)="showHideElem()">Precommits ({{block.last_commit?.precommits?.length}})</a></th>
-              </tr>
-              <div [style.display]="displayCommits ? 'flex': 'none'" id="precommits">
-                <tr *ngFor="let validator of block.last_commit.precommits">
-                  <td *ngIf="(validator === null)">Abscent!</td>
-                  <td 
-                    *ngIf="(validator !== null)"
-                    routerLink="/validator/{{validator.validator_address}}" 
-                    class="clickable"
-                      >{{validator.validator_address}}
-                  </td>
-                </tr>
-              </div>
-            </tbody>
-          </table>
+        <div class="control">
+          <a 
+            class = "button is-info" 
+            (click) = 'clickButton(queryInputRef.value)' >
+              Search
+          </a>
         </div>
-      </article>
     </div>
-  </div>
 </div>
-<ng-template #elseBlock>No block found at {{queryHeight}}!</ng-template>
+
+<div class="row">
+  <div *ngIf="(block?.last_commit); else elseBlock" class="card events-card">
+          <div class="card-header">
+            <p class="card-header-title"><i class="fab fa-codepen"></i>Block&nbsp;&nbsp;&nbsp;#{{block.header.height}}</p>
+          </div>
+
+          <div class="row block-info">
+            <div class="col span-1-of-3">
+                <div class="card-table table-block">
+                    <table class="table is-fullwidth">
+                      <tbody>
+                        <tr class="query-name">Height</tr>
+                        <tr class="query-name">Hash</tr>
+                        <tr class="query-name">Proposer</tr>
+                        <tr><a (click)="showHideElem()">Precommits ({{block.last_commit?.precommits?.length}})</a></tr> 
+                      </tbody>
+                    </table>
+                  </div>
+            </div>
+            <div class="col span-2-of-3">
+                <div class="card-table table-block">
+                    <table class="table is-fullwidth">
+                      <tbody>
+                        <tr>{{block.header.height}}</tr>
+                        <tr>{{block.header.app_hash}}</tr>
+                        <tr>{{block.header.proposer_address}}</tr>
+                        <tr>{{block.header.time}}</tr>
+                      </tbody>
+                    </table>
+                  </div>
+            </div>
+          </div>
+
+          <div class="card-table table-precommits" [style.display]="displayCommits ? 'flex': 'none'" id="precommits">
+            <table class="table is-fullwidth">
+              <tbody>
+                  <tr *ngFor="let validator of block.last_commit.precommits">
+                     <td *ngIf="(validator === null)">Abscent!</td>
+                     <td 
+                       *ngIf="(validator !== null)"
+                       routerLink="/validator/{{validator.validator_address}}" 
+                       class="clickable"
+                         >{{validator.validator_address}}
+                     </td>
+                   </tr>
+              </tbody>
+            </table>
+          </div>
+  </div>
+
+  <ng-template #elseBlock>No block found at {{queryHeight}}!</ng-template>
+  
+</div>

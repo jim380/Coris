@@ -24,11 +24,13 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/app/vendors/normalize.css",
-              "src/app/vendors/grid.css",
+              "src/app/vendors/css/normalize.css",
+              "src/app/vendors/css/grid.css",
               "node_modules/ionicons/dist/scss/ionicons.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/app/vendors/js/app.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -83,11 +85,13 @@
             "karmaConfig": "src/karma.conf.js",
             "styles": [
               "src/styles.css",
-              "src/app/vendors/normalize.css",
-              "src/app/vendors/grid.css",
+              "src/app/vendors/css/normalize.css",
+              "src/app/vendors/css/grid.css",
               "node_modules/ionicons/dist/scss/ionicons.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/app/vendors/js/app.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"

@@ -11,10 +11,15 @@
     <header>
       <!-- --------------------- NAV BAR --------------------- -->
         <nav>
+          <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
           <div class="row">
-            <a href="http://cyphercore.io" target=" "><img src="assets/img/Coris_logo.png" class="logo"></a>
+            <a href="#"><img src="assets/img/Coris_logo.png" class="logo"></a>
             <ul class="main-nav">
-<!--               <li><a routerLink="/dashboard">Dashboard</a></li> -->
+      <!-- <li><a routerLink="/dashboard">Dashboard</a></li> -->
               <li><a routerLink="/validators">Validators</a></li>
               <li><a routerLink="/blocks">Blocks</a></li>
               <li><a routerLink="/txs">Transactions</a></li>
@@ -24,7 +29,7 @@
       <!-- --------------------- END NAV --------------------- -->
     </header>
 
-    <section>
+    <section class="landing">
       <div class="row header-row">
         <h1 class="title header-title">
           Coris Explorer
@@ -66,7 +71,7 @@
         </div>
       </div>
     </section>
-        <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
   </body>
 
   <footer>

@@ -1,10 +1,50 @@
+/*-------------------------------------------------*/
+/* Reusable Components */
+/*-------------------------------------------------*/
+
+.row {
+  max-width: 90%; /*1140px or in %*/
+  margin: 0 auto;
+}
+
+/*-------------------------------------------------*/
+/* Paragraphs */
+/*-------------------------------------------------*/
+p, tbody {
+  color: white;
+  text-align: left;
+}
+
 table {
   table-layout: fixed;
   /*width: 100px;*/
 }
 
-td, div, h1, h3, p {
+td, div {
   overflow: hidden; 
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.card-header {
+  background: #00796B;
+}
+
+tbody,
+.card,
+.card-table p {
+  background:#0D151F;
+}
+
+.search-box {
+  margin-bottom: 20px;
+}
+
+.query-name {
+  text-emphasis: bold;
+  color: #FC7D14;
+}
+
+.tx-info {
+  margin-left: 8px;
 }

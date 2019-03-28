@@ -16,7 +16,7 @@ export class TxsComponent implements OnInit {
   txs: Tx[];
   minHeight = 0;
   lastBlock = 0;
-  blocksToScan = 100;
+  blocksToScan = 3000;
 
   constructor(private http: HttpClient, @Inject(DOCUMENT) document, private router: Router) { }
 

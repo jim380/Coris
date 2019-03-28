@@ -21,9 +21,10 @@
         <tbody>
           <tr>
             <th>Hash</th>
-            <th>Gas Used</th>
-            <th>Gas Wanted</th>
+            <th>Type</th>
+            <th>Fee</th>
             <th>Height</th>
+            <th>Timestamp (UTC)</th>
           </tr>
           <tr *ngIf="!txs?.length">
             <td style="color: black">No recent txs</td>
@@ -33,6 +34,7 @@
             <td>{{tx.hash}}</td>
             <td>{{tx.gasUsed}}</td>
             <td>{{tx.gasWanted}}</td>
+            <td>{{tx.height}}</td>
             <td>{{tx.height}}</td>
           </tr>
         </tbody>

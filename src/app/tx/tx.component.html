@@ -1,31 +1,47 @@
-<div class="field has-addons">
-  <div class="control">
-    <input class="input" placeholder = "Enter tx hash" #queryInputRef >
-  </div>
-  <div class="control">
-    <a 
-      class = "button is-info" 
-      (click) = 'clickButton(queryInputRef.value)' >
-        Search
-    </a>
-  </div>
-</div>
-<div *ngIf="(tx?.hash); else elseBlock" class="card events-card">
-  <div class="card-table">
-    <div class="content">
-      <article class="message">
-        <div class="message-header">
-          <i class="fab fa-codepen"></i>
-          <p>Tx</p>
-        </div>
-        <div class="message-body">
-          <h3>Hash {{tx.hash}}</h3>
-          <h3>Height {{tx.height}}</h3>
-          <p>Gas: {{tx.tx_result.gasUsed}}/{{tx.tx_result.gasWanted}}</p>
-          <p>Msg: {{tx.tx}}</p>
-        </div>
-      </article>
+<div class="row search-box">
+  <div class="field has-addons">
+    <div class="control">
+      <input class="input" placeholder = "Enter tx hash" #queryInputRef >
+    </div>
+    <div class="control">
+      <a 
+        class = "button is-info" 
+        (click) = 'clickButton(queryInputRef.value)' >
+          Search
+      </a>
     </div>
   </div>
 </div>
-<ng-template #elseBlock>No tx found</ng-template>
+
+
+<div class="row">
+  <div *ngIf="(tx?.hash); else elseBlock" class="card events-card">
+          <div class="card-header">
+            <p class="card-header-title"><i class="fab fa-codepen"></i>Tx Height&nbsp;&nbsp;&nbsp;#{{tx.height}}</p>
+          </div>
+
+          <div class="row tx-info">
+              <div class="col span-1-of-3">
+                  <table class="table is-fullwidth">
+                    <tbody>
+                      <tr class="query-name">Hash</tr>
+                      <tr class="query-name">Height</tr>
+                      <tr class="query-name">Gas</tr>
+                    </tbody>
+                    </table>
+              </div>
+              <div class="col span-2-of-3">
+                  <div class="card-table table-tx">
+                      <table class="table is-fullwidth">
+                        <tbody>
+                          <tr>{{tx.hash}}</tr>
+                          <tr>{{tx.height}}</tr>
+                          <tr>{{tx.tx_result.gasUsed}}/{{tx.tx_result.gasWanted}}</tr>
+                        </tbody>
+                      </table>
+                    </div>
+              </div>
+          </div>
+  </div>
+  <ng-template #elseBlock>No tx found</ng-template>
+</div>
