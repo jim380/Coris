@@ -47,7 +47,7 @@ export class ValidatorComponent implements OnInit {
         && validators[validator_index].keys.Addres === this.route.snapshot.paramMap.get('address')) {
         this.selectedValidator = Number(validator_index);
         // Debugging @aakatev
-        this.getDelegations(validators[this.selectedValidator]['data'].operator_address);
+        this.getDelegations(validators[this.selectedValidator].operator_address);
         // console.log(this.delegationService.getDelegationInfo());
         // console.log(this.selectedValidator);
       }

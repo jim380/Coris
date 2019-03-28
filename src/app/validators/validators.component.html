@@ -1,7 +1,13 @@
 <div class="row">
-  <div class="tags">
-    <a class="button tag is-primary" (click)="sortByPower()">Sort By Power</a>
-    <a class="button tag is-primary" (click)="sortByPriority()">Sort By Priority</a>  
+  <div class="field is-grouped">
+    <p class="control">
+        <a 
+        class="button is-primary tag" 
+        (click)="sortByPower()"
+        style="font-size: 2rem;">
+          Sort By Power
+      </a>
+    </p>
   </div>
   <div
     *ngFor="let validator of (appState | async).validators"
@@ -10,7 +16,7 @@
       <article class="validator_body">
         <div class="validator-card-header">
           <i *ngIf="!validator.jailed" class="fas fa-user-check"></i>
-          <i *ngIf="validator.jailed" class="fas fa-skull-crossbones"></i>
+          <i *ngIf="validator.jailed" class="fas fa-skull-crossbones"><span style="padding-left: 5px;">jailed</span></i>
           <p>Validator</p>
         </div>
         <div class="validator-card-text">
@@ -28,12 +34,21 @@
             <p>{{validator.description.moniker}}</p>
           </div>
           <div class="validator__text--body">
-              <p>Power:</p>
-              <p>{{validator.ranking?.voting_power}}</p>
+              <p>Tokens:</p>
+              <p>{{validator.tokens}}</p>
+              <br>
           </div>
+          <!-- Hacky but might work for now @aakatev -->
+          <!-- TODO improve logic more depending on state -->
           <div class="validator__text--body">
-              <p>Priority:</p>
-              <p>{{validator.ranking?.proposer_priority}}</p>
+              <p>Commits:</p>
+              <p 
+                *ngFor="let block of (appState | async).blocks.slice(0,1)"
+                class="title chain-queries-title"
+                [innerHTML]=
+                  "block.header?.height !== null 
+                  ? (block.header.height-validator.slashing?.start_height-validator.slashing?.missed_blocks_counter) : 0">
+              </p>
           </div>
           <table class="">
             <tbody>

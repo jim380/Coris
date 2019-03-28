@@ -23,7 +23,7 @@ export class ValidatorsComponent implements OnInit {
   }
 
   sortByPower () {
-    this.wsService.sortValidators("voting_power");
+    this.wsService.sortValidators("tokens");
   }
 
   sortByPriority () {

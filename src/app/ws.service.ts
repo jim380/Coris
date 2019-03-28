@@ -250,11 +250,28 @@ export class WsService {
         });
     });
   }
+
+  getValidatorSlashing(validator) {
+    return new Promise(resolve => {
+      this.http.get(`https://aakatev.me/node_txs/slashing/validators/${validator.consensus_pubkey}/signing_info`)
+        .subscribe(data => {
+          // Debugging
+          // console.log(data);
+          validator.slashing = data;
+          resolve();
+        });
+    });
+  }
   async initValidators() {
 
     await this.getValidatorsDetails();
     await this.getValidatorsRanking();
     await this.getValidatorsKeys();
+
+    this.wsValidatorsStore.forEach(async validator => {
+      await this.getValidatorSlashing(validator);
+    });
+
     this.wsValidatorsStore.forEach(async validator => {
       await this.getValidatorAvatars(validator);
     });
