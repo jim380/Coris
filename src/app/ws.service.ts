@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import * as AppActions from './app.actions'
 import { nodeRpc, nodeWs, nodeRpcTest } from '../config.js'
-
+ 
 
 @Injectable({
   providedIn: 'root'
@@ -167,7 +167,8 @@ export class WsService {
       // Debugging
       // console.log(data);
       if(data !== null) {
-        this.setValidators(data['validators']);
+        this.mergeProperties(this.wsValidatorsStore, "consensus_pubkey", data['validators'], "pub_key", "ranking")
+            .then(() => {this.updateValidators()});
       } else {
         this.getValidatorsRanking();
       }
@@ -189,14 +190,18 @@ export class WsService {
     });
   }
 
+
+
   getValidatorsDetails() {
     return new Promise(resolve => {
       // this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
         this.http.get(`https://aakatev.me/node_txs/staking/validators`).subscribe(async data => {
-        // console.log(data);
-        if(data !== null && this.wsValidatorsStore !== null) {
-          this.mergeProperties(this.wsValidatorsStore, "pub_key", data, "consensus_pubkey","data")
-            .then(() => {this.updateValidators()});
+        console.log(data);
+        if(data !== null) {
+          this.setValidators(data);
+          // @aakatev found bug in mapping
+          // this.mergeProperties(this.wsValidatorsStore, "pub_key", data, "consensus_pubkey","data")
+          //   .then(() => {this.updateValidators()});
           resolve();
         } else {
           await this.getValidatorsDetails();
@@ -212,7 +217,7 @@ export class WsService {
         if(data !== null) {
           // Debugging
           console.log(data);
-          this.mergeProperties(this.wsValidatorsStore, "pub_key", data, "Bech32 Validator Consensus", "keys")
+          this.mergeProperties(this.wsValidatorsStore, "consensus_pubkey", data, "Bech32 Validator Consensus", "keys")
             .then(() => {this.updateValidators()});
           resolve();  
         } else {
@@ -225,12 +230,15 @@ export class WsService {
 
   // @aakatev WiP TODO look through this mapping again
   getValidatorAvatars(validator) {
-    return new Promise(resolve => {
-      this.http.get(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${validator.data.description.moniker.replace(/\s/g, '')}&fields=pictures`)
+    return new Promise(async resolve => {
+      let regex = await validator.description.moniker.replace(/\s/g, '').match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]*/i)[0];
+      this.http.get(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${regex}&fields=pictures`)
         .subscribe(async data => {
           // Debugging
           // console.log(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${validator.data.description.moniker.replace(/\s/g, '')}&fields=pictures`);
           // console.log(data['them']);
+          // Debugging regex to parse moniker
+          // console.log(validator.data.description.moniker.replace(/\s/g, '').match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]*/i)[0]);
           
           if (data['status'].code === 0) {
             validator.keybase = data['them']; 
@@ -244,10 +252,28 @@ export class WsService {
         });
     });
   }
+
+  getValidatorSlashing(validator) {
+    return new Promise(resolve => {
+      this.http.get(`https://aakatev.me/node_txs/slashing/validators/${validator.consensus_pubkey}/signing_info`)
+        .subscribe(data => {
+          // Debugging
+          // console.log(data);
+          validator.slashing = data;
+          resolve();
+        });
+    });
+  }
   async initValidators() {
-    await this.getValidatorsRanking();
+
     await this.getValidatorsDetails();
+    await this.getValidatorsRanking();
     await this.getValidatorsKeys();
+
+    this.wsValidatorsStore.forEach(async validator => {
+      await this.getValidatorSlashing(validator);
+    });
+
     this.wsValidatorsStore.forEach(async validator => {
       await this.getValidatorAvatars(validator);
     });

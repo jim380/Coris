@@ -26,16 +26,16 @@
             <th>Height</th>
             <th>Timestamp (UTC)</th>
           </tr>
+        </tbody>
           <tr *ngIf="!txs?.length">
             <td style="color: black">No recent txs</td>
           </tr>
-        </tbody>
           <tr routerLink="/tx/{{tx.hash}}" class="clickable" *ngFor="let tx of txs">
             <td>{{tx.hash}}</td>
+            <td>{{tx.tagsDecod[0].value | titlecase}}</td>
             <td>{{tx.gasUsed}}</td>
-            <td>{{tx.gasWanted}}</td>
             <td>{{tx.height}}</td>
-            <td>{{tx.height}}</td>
+            <td>{{'Add time'}}</td>
           </tr>
         </tbody>
       </table>

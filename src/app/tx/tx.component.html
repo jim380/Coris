@@ -1,3 +1,4 @@
+<!-- <<<<<<< j -->
 <div class="row search-box">
   <div class="field has-addons">
     <div class="control">
@@ -9,6 +10,40 @@
         (click) = 'clickButton(queryInputRef.value)' >
           Search
       </a>
+<!-- =======
+<div class="field has-addons">
+  <div class="control">
+    <input class="input" placeholder = "Enter tx hash" #queryInputRef >
+  </div>
+  <div class="control">
+    <a 
+      class = "button is-info" 
+      (click) = 'clickButton(queryInputRef.value)' >
+        Search
+    </a>
+  </div>
+</div>
+<div *ngIf="(tx?.hash); else elseBlock" class="card events-card">
+  <div class="card-table">
+    <div class="content">
+      <article class="message">
+        <div class="message-header">
+          <i class="fab fa-codepen"></i>
+          <p>Tx</p>
+        </div>
+        <div class="message-body">
+          <h3>Hash {{tx.hash}}</h3>
+          <h3>Height {{tx.height}}</h3>
+          <p>Gas: {{tx.gasUsed}}/{{tx.gasWanted}}</p>
+          <p>Tx Encode: {{tx.txBase64}}</p>
+          <p>Tx Decod: {{tx.txDecod}}</p>
+        </div>
+        <div *ngFor="let tag of tx.tagsDecod" class="message-body">
+          <h4>{{tag.key}}: {{tag.value}}</h4>
+          <!-- <h4>Height {{tx.height}}</h4> -->
+<!--         </div> -->
+<!--       </article> -->
+<!-- >>>>>>> master --> -->
     </div>
   </div>
 </div>
