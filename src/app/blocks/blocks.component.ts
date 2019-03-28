@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Block } from './block';
-import { nodeRpc } from '../../config.js'
+import { nodeRpc } from '../../config.js';
 import { Router } from '@angular/router';
-
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-blocks',
@@ -32,10 +32,12 @@ export class BlocksComponent implements OnInit {
       .subscribe(data => {
         this.clearBlocks();
         data['result'].block_metas.forEach(block => {
+          const datePipe = new DatePipe('en-US');
+          const formattedTime = datePipe.transform(block.header.time, 'h:mm:ss a, MMM d, y');
           this.blocks.push({
             hash: block.block_id.hash, 
             height: block.header.height, 
-            time: block.header.time,
+            time: formattedTime,
             txs: block.header.num_txs,
             proposer: block.header.proposer_address
           });

@@ -1,10 +1,59 @@
+/*-------------------------------------------------*/
+/* Reusable Components */
+/*-------------------------------------------------*/
+
+.row {
+  max-width: 90%; /*1140px or in %*/
+  margin: 0 auto;
+}
+
+/*-------------------------------------------------*/
+/* Paragraphs */
+/*-------------------------------------------------*/
+p, tbody {
+  color: white;
+  text-align: left;
+}
+
 table {
   table-layout: fixed;
   /*width: 100px;*/
 }
 
-td, div, h1, h3 {
+td, div {
   overflow: hidden; 
   white-space: nowrap;
   text-overflow: ellipsis;
+  text-align: left;
+}
+
+.card-header {
+  background: #00796B;
+}
+
+.clickable:nth-child(odd){
+  background:#0D151F;
+}
+
+.clickable:nth-child(even){
+  background:#111923;
+}
+
+tbody,
+.card,
+.card-table p {
+  background:#0D151F;
+}
+
+.search-box {
+  margin-bottom: 20px;
+}
+
+.query-name {
+  text-emphasis: bold;
+  color: #FC7D14;
+}
+
+.block-info {
+  margin-left: 8px;
 }

@@ -21,10 +21,10 @@
         <tbody>
           <tr>
             <th>Hash</th>
+            <th>Type</th>
+            <th>Fee</th>
             <th>Height</th>
-            <th>Gas Used</th>
-            <th>Gas Wanted</th>
-            <th>Action</th>
+            <th>Timestamp (UTC)</th>
           </tr>
         </tbody>
           <tr *ngIf="!txs?.length">
@@ -32,10 +32,10 @@
           </tr>
           <tr routerLink="/tx/{{tx.hash}}" class="clickable" *ngFor="let tx of txs">
             <td>{{tx.hash}}</td>
-            <td>{{tx.gasUsed}}</td>
-            <td>{{tx.gasWanted}}</td>
-            <td>{{tx.height}}</td>
             <td>{{tx.tagsDecod[0].value | titlecase}}</td>
+            <td>{{tx.gasUsed}}</td>
+            <td>{{tx.height}}</td>
+            <td>{{'Add time'}}</td>
           </tr>
         </tbody>
       </table>
