@@ -10,6 +10,9 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  navLinksAttr = ["","open"]
+  linksAttrs = ["", "fade"];
+
   appState: Observable<{blocks:[], txs:[], validators:[], round:{}, roundStep: {}}>;
 
   constructor(
@@ -32,5 +35,9 @@ export class AppComponent {
     this.ws.unsubscribe();
   }
 
+  onHamburgerClick() {
+    this.navLinksAttr.reverse();
+    this.linksAttrs.reverse();
+  }
 }
 

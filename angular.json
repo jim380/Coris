@@ -28,9 +28,7 @@
               "src/app/vendors/css/grid.css",
               "node_modules/ionicons/dist/scss/ionicons.scss"
             ],
-            "scripts": [
-              "src/app/vendors/js/app.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {

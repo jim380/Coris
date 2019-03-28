@@ -17,6 +17,7 @@ export class TxsComponent implements OnInit {
   txs: Tx[];
   minHeight = 0;
   lastBlock = 0;
+  // @aakatev TODO lookup how to query more than 30 txs at json
   blocksToScan = 3000;
   
   constructor(private http: HttpClient, @Inject(DOCUMENT) document, private router: Router) { }
