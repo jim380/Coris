@@ -21,8 +21,13 @@
         <div class="message-body">
           <h3>Hash {{tx.hash}}</h3>
           <h3>Height {{tx.height}}</h3>
-          <p>Gas: {{tx.tx_result.gasUsed}}/{{tx.tx_result.gasWanted}}</p>
-          <p>Msg: {{tx.tx}}</p>
+          <p>Gas: {{tx.gasUsed}}/{{tx.gasWanted}}</p>
+          <p>Tx Encode: {{tx.txBase64}}</p>
+          <p>Tx Decod: {{tx.txDecod}}</p>
+        </div>
+        <div *ngFor="let tag of tx.tagsDecod" class="message-body">
+          <h4>{{tag.key}}: {{tag.value}}</h4>
+          <!-- <h4>Height {{tx.height}}</h4> -->
         </div>
       </article>
     </div>

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DOCUMENT } from '@angular/common'; 
-import { Inject }  from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { nodeRpc } from '../../config.js'
+import { Tx, Tag } from '../interfaces/tx.interface';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class TxComponent implements OnInit {
   txHash;
-  tx = {};
+  tx:Tx;
 
   async clickButton(value) {
     // Debugging @aakatev
@@ -28,22 +27,50 @@ export class TxComponent implements OnInit {
 
   constructor(
     private http: HttpClient, 
-    @Inject(DOCUMENT) document, 
     private route: ActivatedRoute, 
     private router: Router ) {  
       this.initTxHash();
   }
 
-  queryTx () {
-    this.initTxHash();
-    this.http.get(`${nodeRpc}/tx_search?query="tx.hash='${this.txHash}'"`).subscribe(data => {
-      if (data['error'] === undefined) this.tx = data['result'].txs[0];
-      else this.tx = {};
-    });
-    console.log(this.tx);
-  }
-
   ngOnInit() {
     this.queryTx();
   }
+
+  queryTx () {
+    this.initTxHash();
+    this.http.get(`${nodeRpc}/tx_search?query="tx.hash='${this.txHash}'"`).subscribe(async data => {
+
+      if (data['error'] === undefined)  {
+      
+        const dataTx = await data['result'].txs[0];
+        let dataTagsDecod : Tag[] = [];
+
+        dataTx.tx_result.tags.forEach(tag => {
+          dataTagsDecod.push(this.decodeTag(tag));
+        });
+
+        // console.log(dataTagsDecod);
+        // console.log(this.decodeTag(dataTx.tx_result.tags[1]));
+        this.tx = {
+          hash: dataTx.hash, 
+          height: dataTx.height,
+          gasUsed: dataTx.tx_result.gasUsed,
+          gasWanted: dataTx.tx_result.gasWanted,
+          txBase64: dataTx.tx,
+          txDecod: atob(dataTx.tx),
+          tagsBase64: dataTx.tx_result.tags,
+          tagsDecod: dataTagsDecod
+        };
+        console.log(this.tx);
+      }
+    });
+  }
+
+  decodeTag (tagsBase64) {
+    return ({
+      key: atob(tagsBase64.key),
+      value: atob(tagsBase64.value)
+    })
+  }
+
 }
