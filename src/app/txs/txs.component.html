@@ -34,7 +34,7 @@
           </tr>
           <tr routerLink="/tx/{{tx.hash}}" class="clickable" *ngFor="let tx of txs">
             <td class="td-1">{{tx.hash}}</td>
-            <td class="td-2">{{tx.tagsDecod[0].value | titlecase}}</td>
+            <td *ngIf="tx.tagsDecod" class="td-2">{{tx.tagsDecod[0].value | titlecase}}</td>
             <td>{{tx.gasUsed}}</td>
             <td class="td-1">{{tx.height}}</td>
             <td>{{'Add time'}}</td>

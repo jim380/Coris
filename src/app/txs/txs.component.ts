@@ -44,7 +44,7 @@ export class TxsComponent implements OnInit {
     this.http.get(`${nodeRpc}/tx_search?query="tx.height>${this.minHeight}"`).subscribe(data => {
       // console.log(`${nodeRpc}/tx_search?query="tx.height>${this.minHeight}"`);
       let currTxs = data['result'].txs.reverse();
-      
+      console.log(data['result'].txs);
 
 
       currTxs.forEach(dataTx => {
@@ -52,9 +52,28 @@ export class TxsComponent implements OnInit {
           // const dataTx = await data['result'].txs[0];
           let dataTagsDecod : Tag[] = [];
 
-          dataTx.tx_result.tags.forEach(tag => {
-            dataTagsDecod.push(decodeTag(tag));
-          });
+          // Debugging
+          // console.log(dataTx);
+
+          if(dataTx.tx_result.tags) {
+            dataTx.tx_result.tags.forEach(tag => {
+              dataTagsDecod.push(decodeTag(tag));
+            });
+          } else {
+            // @aakatev TODO add handling to other faulty txs
+            let errValue = "faulty"
+            if (dataTx.tx_result.code === 12 ) {
+              errValue = `Out of gas(Wanted: ${dataTx.tx_result.gasWanted})`
+            }
+
+            // Debugging
+            // console.log("Faulty_tx", dataTx);
+            
+            dataTagsDecod.push({
+              key: "type",
+              value: errValue
+            })
+          }
 
           // console.log(dataTagsDecod);
           // console.log(this.decodeTag(dataTx.tx_result.tags[1]));
