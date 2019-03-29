@@ -11,13 +11,14 @@
       </a>
     </div>
   </div>
+  
   <div class="card events-card">
     <div class="card-header">
       <p class="card-header-title"><i class="fas fa-vector-square"></i>Blocks</p>
     </div>
     <div class="card-table">
         <table class="table is-fullwidth">
-          <tbody>
+          <thead>
             <tr>
               <th >Height</th>
               <th>Transactions</th>
@@ -25,6 +26,8 @@
               <th>Proposer</th>
               <th>Timestamp (UTC)</th>
             </tr>
+          </thead>
+          <tbody>
             <tr routerLink="/block/{{block.height}}" class="clickable" *ngFor="let block of blocks">
               <td class="td-1">{{block.height}}</td>
               <td class="td-2">{{block.txs}}</td>
