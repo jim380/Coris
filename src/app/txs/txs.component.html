@@ -18,7 +18,7 @@
     </header>
     <div class="card-table">
       <table class="table is-fullwidth">
-        <tbody>
+        <thead>
           <tr>
             <th>Hash</th>
             <th>Type</th>
@@ -26,15 +26,17 @@
             <th>Height</th>
             <th>Timestamp (UTC)</th>
           </tr>
+        </thead>
+        <tbody>
         </tbody>
           <tr *ngIf="!txs?.length">
             <td style="color: black">No recent txs</td>
           </tr>
           <tr routerLink="/tx/{{tx.hash}}" class="clickable" *ngFor="let tx of txs">
-            <td>{{tx.hash}}</td>
-            <td>{{tx.tagsDecod[0].value | titlecase}}</td>
+            <td class="td-1">{{tx.hash}}</td>
+            <td class="td-2">{{tx.tagsDecod[0].value | titlecase}}</td>
             <td>{{tx.gasUsed}}</td>
-            <td>{{tx.height}}</td>
+            <td class="td-1">{{tx.height}}</td>
             <td>{{'Add time'}}</td>
           </tr>
         </tbody>

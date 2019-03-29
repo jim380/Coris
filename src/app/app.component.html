@@ -34,7 +34,7 @@
         <h1 class="title header-title">
           Coris Explorer
         </h1>
-        <h2 class="subtitle header-subtitle">Chain: {{(appState | async).blocks[0]?.header.chain_id}}</h2>
+        <h2 class="subtitle header-subtitle">{{(appState | async).blocks[0]?.header.chain_id}}</h2>
       </div>
       <div class="row proposer-row">
         <div style="cursor: pointer;" routerLink="/validator/{{(appState | async).round.proposer?.address}}">
@@ -42,32 +42,45 @@
         </div>
       </div>
       <div class="row chain-queries-row">
-        <div class="col span-1-of-3">
+        <div class="col span-1-of-4">
           <div style="cursor: pointer;" routerLink="/last-block" class="is-parent">
             <article class="box">
               <!-- <p class="title">{{(appState | async).round?.height}}</p> -->
+              <p class="subtitle chain-queries-subtitle box-key"><i class="ion-cube"></i>&nbsp;Last Block</p>
               <h3
                 *ngFor="let block of (appState | async).blocks.reverse().slice(0,1)"
-                class="title chain-queries-title"
+                class="title chain-queries-title box-value"
                 [innerHTML]="block.header?.height !== null ? block.header.height : 0">
               </h3>
-              <p class="subtitle chain-queries-subtitle">Last Block</p>
+              <!-- <p class="subtitle chain-queries-subtitle">Last Block</p> -->
             </article>
           </div>
         </div>
-        <div class="col span-1-of-3">
+        <div class="col span-1-of-4">
           <article class="box">
-            <h3 class="title chain-queries-title">{{(appState | async).roundStep.step?.split('RoundStep')[1]}}</h3>
-            <p class="subtitle chain-queries-subtitle">Round {{(appState | async).roundStep.round}}</p>
+                <!-- <p class="subtitle chain-queries-subtitle box-key"><i class="ion-load-a"></i>&nbsp;Round {{(appState | async).roundStep.round}}</p> -->
+                <p class="subtitle chain-queries-subtitle box-key"><i class="ion-load-a"></i>&nbsp;Consensus</p>
+                <h3 class="title chain-queries-title box-value">{{(appState | async).roundStep.step?.split('RoundStep')[1]}}</h3>
+            <!-- <p class="subtitle chain-queries-subtitle">Round {{(appState | async).roundStep.round}}</p> -->
           </article>
         </div>
-        <div class="col span-1-of-3">
+        <div class="col span-1-of-4">
           <div style="cursor: pointer;" routerLink="/validators" class="is-parent">
             <article class="box">
-              <h3 class="title chain-queries-title">{{(appState | async).validators?.length}}</h3>
-              <p class="subtitle chain-queries-subtitle">Validators</p>
+              <p class="subtitle chain-queries-subtitle box-key"><i class="ion-person-stalker"></i>&nbsp;Validators</p>
+              <h3 class="title chain-queries-title box-value">{{(appState | async).validators?.length}}</h3>
+              <!-- <p class="subtitle chain-queries-subtitle">Validators</p> -->
             </article>
           </div>
+        </div>
+        <div class="col span-1-of-4">
+            <div style="cursor: pointer;" routerLink="/validators" class="is-parent">
+              <article class="box">
+                <p class="subtitle chain-queries-subtitle box-key"><i class="ion-soup-can"></i>&nbsp;Add staking pool</p>
+                <h3 class="title chain-queries-title box-value">{{(appState | async).validators?.length}}</h3>
+                <!-- <p class="subtitle chain-queries-subtitle">Validators</p> -->
+              </article>
+            </div>
         </div>
       </div>
     </section>

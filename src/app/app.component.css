@@ -1,10 +1,11 @@
 /*-------------------------------------------------*/
 /* Color HEX Codes */
 /*-------------------------------------------------*/
-/* orange: #FC7D14*/
-/* green: #00796B */
-/* backgroud: #111923 */
-
+/* orange-text: #FC7D14*/
+/* green-hero: #00796B */
+/* green-text: #00A58F */
+/* table-background-1: #111923 */
+/* table-background-2: #0D151F */
 
 /*-------------------------------------------------*/
 /* Basic Setup */
@@ -44,10 +45,21 @@ section {
 
 .box {
   padding: 1%;
+  /* box-shadow: 2px 2px 3px; */
+}
+
+.box-key {
+  text-align: left;
+  margin-left: 5px;
+}
+
+.box-value {
+  text-align: right;
+  margin-right: 5px;
 }
 
 .hero {
-  background: #00796B; /*#2461acb0*/
+  background: rgba(0, 121, 107, 0.8); /*#2461acb0*/
 }
 /*-------------------------------------------------*/
 /* Heading */
@@ -81,7 +93,7 @@ h2 {
 
 h3 {
   font-size: 120%;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
   text-align: center;
 }
 
@@ -181,7 +193,7 @@ article {
 
 .subtitle {
   font-weight: 400;
-  color:#FC7D14;
+  color:#111923;
 }
 
 
@@ -190,6 +202,9 @@ article {
   text-align: left;
 }
 
+.header-subtitle {
+ color: #FC7D14
+}
 
 .card .content {
   font-size: 14px;
