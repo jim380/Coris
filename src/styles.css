@@ -1,4 +1,8 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@viewport {
+  width: device-width ;
+  zoom: 1.0 ;
+}
 
 i {
   margin-right: 5px;
