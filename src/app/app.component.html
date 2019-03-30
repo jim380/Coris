@@ -32,13 +32,20 @@
     <section class="landing">
       <div class="row header-row">
         <h1 class="title header-title">
-          Coris Explorer
+          Coris Explorer 
         </h1>
         <h2 class="subtitle header-subtitle">{{(appState | async).blocks[0]?.header.chain_id}}</h2>
       </div>
       <div class="row proposer-row">
         <div style="cursor: pointer;" routerLink="/validator/{{(appState | async).round.proposer?.address}}">
-          <h2 class="title proposer-title">Proposer - {{(appState | async).round.proposer?.address}}</h2>
+          <h2 *ngIf="(appState | async).valsMap.size; else elseBlock" class="title proposer-title">
+            Proposer - {{(appState | async).valsMap.get((appState | async).round.proposer?.address)}} 
+          </h2>
+          <ng-template #elseBlock>
+              <h2 class="title proposer-title">
+                Proposer - loading 
+              </h2>
+          </ng-template>
         </div>
       </div>
       <div class="row chain-queries-row">

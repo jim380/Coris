@@ -22,6 +22,7 @@ export class WsService {
   wsBlockStore = [];
   wsTxStore = [];
   wsValidatorsStore = null;
+  wsValidatorsMapping: Map<string,string> = new Map;
 
   numOfValidators;
   MAX_STORE_INDEX = 10;
@@ -79,7 +80,7 @@ export class WsService {
     }
   };
   
-  constructor(private store: Store<{App: { blocks: [], txs: [], validators: [], round: {}, roundStep: {}} }>, private http: HttpClient) { 
+  constructor(private store: Store<{App: { blocks: [], txs: [], validators: [], round: {}, roundStep: {}, valsMap: Map<string,string>} }>, private http: HttpClient) { 
 
     this.http.get(`${nodeRpc}/status`).subscribe(data => {
       // Debugging
@@ -158,7 +159,9 @@ export class WsService {
   
   updateValidators() {
     this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
+    this.store.dispatch(new AppActions.UpdateValsMap(this.wsValidatorsMapping));
     console.log(this.wsValidatorsStore);
+    console.log(this.wsValidatorsMapping);
   }
   
   getValidatorsDetails() {
@@ -252,7 +255,9 @@ export class WsService {
 
   getValidatorHex(validator) {
     return new Promise(async resolve => {
-      validator['hex_address'] = await this.getHexAddress(validator['consensus_pubkey']);
+      let hexAddr = await this.getHexAddress(validator['consensus_pubkey']);
+      validator['hex_address'] = hexAddr;
+      this.wsValidatorsMapping.set(hexAddr, validator['description'].moniker);
       resolve();  
     });
   }

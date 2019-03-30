@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { WsService } from './ws.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -13,17 +12,17 @@ export class AppComponent {
   navLinksAttr = ["","open"]
   linksAttrs = ["", "fade"];
 
-  appState: Observable<{blocks:[], txs:[], validators:[], round:{}, roundStep: {}}>;
+  appState: Observable<{blocks:[], txs:[], validators:[], round:{}, roundStep: {}, valsMap: Map<string,string>}>;
 
   constructor(
-    private http: HttpClient, 
     private ws:WsService, 
     private store: Store <{App: {
       blocks:[], 
       txs:[], 
       validators:[], 
       round:{}, 
-      roundStep: {}  
+      roundStep: {},
+      valsMap: Map<string,string>,
     }
   }>) {  }
 

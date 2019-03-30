@@ -6,7 +6,8 @@ const initialState = {
   txs: [],
   validators: [],
   round: {},
-  roundStep: {}
+  roundStep: {},
+  valsMap: Map
 };
 
 export function appReducer(state = initialState, action: AppActions.AppActions) {
@@ -20,6 +21,7 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         validators: state.validators,
         round: state.round,
         roundStep: state.roundStep,
+        valsMap: state.valsMap,
       }
       break;
     
@@ -30,6 +32,7 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         validators: state.validators,
         round: state.round,
         roundStep: state.roundStep,
+        valsMap: state.valsMap,
       }
       break;
 
@@ -40,6 +43,7 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         validators: action.payload,
         round: state.round,
         roundStep: state.roundStep,
+        valsMap: state.valsMap,
       }
       break;
     
@@ -50,6 +54,7 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         validators: state.validators,
         round: action.payload,
         roundStep: state.roundStep,
+        valsMap: state.valsMap,
       }
       break;
 
@@ -60,11 +65,23 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         validators: state.validators,
         round: state.round,
         roundStep: action.payload,
+        valsMap: state.valsMap,
       }
       break;
 
-
+    case AppActions.UPDATE_VALS_MAP:
+      return {
+        txs: state.txs,
+        blocks: state.blocks,
+        validators: state.validators,
+        round: state.round,
+        roundStep: state.roundStep, 
+        valsMap: action.payload,
+      }
+      break;
+      
     default:
+      break;
   }
   return state;
 }
