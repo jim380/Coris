@@ -33,6 +33,11 @@ html, body {
 /*-------------------------------------------------*/
 /* Reusable Components */
 /*-------------------------------------------------*/
+nav {
+  height: 10vh;
+  background: #111923;
+}
+
 section {
   padding: 20px 0;
   margin-bottom: 50px;
@@ -147,6 +152,12 @@ header {
   float: right;
   list-style: none;
   margin-top: 55px;
+  display: flex;
+  list-style: none;
+  height: 100%;
+  align-items: center;
+  margin-left: auto;
+  justify-content: space-around;
 }
 
 .main-nav li {
@@ -154,6 +165,13 @@ header {
   margin-left: 40px;
 }
 
+.landing {
+  height: 90vh;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+
+}
 /*-------------------------------------------------*/
 /* Specific */
 /*-------------------------------------------------*/
@@ -322,6 +340,10 @@ footer p {
 /* Responsive Nav */
 /*-------------------------------------------------*/
 @media screen and (max-width: 768px) {
+  .row {
+    max-width: 100%;
+  }
+
   .line {
     width: 30px;
     height: 3px;
@@ -334,6 +356,7 @@ footer p {
   }
 
   .hamburger {
+    margin-top: 40px;
     position: absolute;
     cursor: pointer;
     right: 5%;
@@ -348,14 +371,15 @@ footer p {
     height: 100vh;
     width: 100%;
     flex-direction: column;
-    clip-path: circle(100px at 90% -10%);
-    -webkit-clip-path: circle(100px at 90% -10%);
-    transition: all 1s ease-out;
+    clip-path: circle(100px at 90% -13%);
+    -webkit-clip-path: circle(100px at 90% -13%);
+    transition: all 0.6s ease-out;
     pointer-events: none;
+    margin-top: 0;
   }
   .main-nav.open {
-    clip-path: circle(1000px at 90% -10%);
-    -webkit-clip-path: circle(1000px at 90% -10%);
+    clip-path: circle(1050px at 90% -13%);
+    -webkit-clip-path: circle(1050px at 90% -13%);
     pointer-events: all;
   }
   .landing {
