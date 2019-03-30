@@ -4,7 +4,9 @@ import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import * as AppActions from './app.actions'
 import { nodeRpc, nodeWs, nodeRpcTest } from '../config.js'
- 
+import { decodeBech32, fromWords } from './lib/bech32';
+import { hex } from './lib/hex';
+import { sha256 } from 'js-sha256'; 
 
 @Injectable({
   providedIn: 'root'
@@ -154,13 +156,23 @@ export class WsService {
     this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
   }
   
-
-  
   updateValidators() {
     this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
     console.log(this.wsValidatorsStore);
   }
   
+  getValidatorsDetails() {
+    return new Promise(resolve => {
+        this.http.get(`https://aakatev.me/node_txs/staking/validators`).subscribe(async data => {
+        // console.log(data);
+        if(data !== null) {
+          this.setValidators(data);
+        } 
+        resolve();
+      });
+    });
+  }
+
   getValidatorsRanking() {
     // this.http.get(`${nodeRpcTest}/validators_ranking`).subscribe(data => {
       this.http.get(`https://aakatev.me/node_txs/validatorsets/latest`).subscribe(data => {
@@ -168,9 +180,9 @@ export class WsService {
       // console.log(data);
       if(data !== null) {
         this.mergeProperties(this.wsValidatorsStore, "consensus_pubkey", data['validators'], "pub_key", "ranking")
-            .then(() => {this.updateValidators()});
-      } else {
-        this.getValidatorsRanking();
+          .then(() => {
+            this.updateValidators()
+          });
       }
     });
   }
@@ -190,45 +202,18 @@ export class WsService {
     });
   }
 
-
-
-  getValidatorsDetails() {
+  getValidatorSlashing(validator) {
     return new Promise(resolve => {
-      // this.http.get(`${nodeRpcTest}/validators_info`).subscribe(async data => {
-        this.http.get(`https://aakatev.me/node_txs/staking/validators`).subscribe(async data => {
-        console.log(data);
-        if(data !== null) {
-          this.setValidators(data);
-          // @aakatev found bug in mapping
-          // this.mergeProperties(this.wsValidatorsStore, "pub_key", data, "consensus_pubkey","data")
-          //   .then(() => {this.updateValidators()});
-          resolve();
-        } else {
-          await this.getValidatorsDetails();
-          resolve();
-        }
-      });
-    });
-  }
-
-  getValidatorsKeys() {
-    return new Promise(resolve => {
-      this.http.get(`${nodeRpcTest}/validators_keys`).subscribe(async data => {
-        if(data !== null) {
+      this.http.get(`https://aakatev.me/node_txs/slashing/validators/${validator.consensus_pubkey}/signing_info`)
+        .subscribe(data => {
           // Debugging
-          console.log(data);
-          this.mergeProperties(this.wsValidatorsStore, "consensus_pubkey", data, "Bech32 Validator Consensus", "keys")
-            .then(() => {this.updateValidators()});
-          resolve();  
-        } else {
-          await this.getValidatorsKeys();
+          // console.log(data);
+          validator.slashing = data;
           resolve();
-        }
-      });
+        });
     });
   }
 
-  // @aakatev WiP TODO look through this mapping again
   getValidatorAvatars(validator) {
     return new Promise(async resolve => {
       let regex = await validator.description.moniker.replace(/\s/g, '').match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]*/i)[0];
@@ -239,7 +224,6 @@ export class WsService {
           // console.log(data['them']);
           // Debugging regex to parse moniker
           // console.log(validator.data.description.moniker.replace(/\s/g, '').match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]*/i)[0]);
-          
           if (data['status'].code === 0) {
             validator.keybase = data['them']; 
             if(data['them'][0] !== null && data['them'][0].pictures !== undefined) { 
@@ -253,22 +237,30 @@ export class WsService {
     });
   }
 
-  getValidatorSlashing(validator) {
-    return new Promise(resolve => {
-      this.http.get(`https://aakatev.me/node_txs/slashing/validators/${validator.consensus_pubkey}/signing_info`)
-        .subscribe(data => {
-          // Debugging
-          // console.log(data);
-          validator.slashing = data;
-          resolve();
-        });
+  getHexAddress(pubKey) {
+    let decodedPubkey = decodeBech32(pubKey);  
+    let pubKeyHex = hex.bytesToHex(fromWords(decodedPubkey.words)).substr(10);
+    return this.hashSha256(pubKeyHex).substr(0, 40);
+  }
+
+  hashSha256(pubkey) {
+    let hash = sha256.create();
+    let bytes = hex.hexToBytes(pubkey);
+    hash.update(bytes); 
+    return hash.hex().toUpperCase(); 
+  }
+
+  getValidatorHex(validator) {
+    return new Promise(async resolve => {
+      validator['hex_address'] = await this.getHexAddress(validator['consensus_pubkey']);
+      resolve();  
     });
   }
-  async initValidators() {
+  
 
+  async initValidators() {
     await this.getValidatorsDetails();
     await this.getValidatorsRanking();
-    await this.getValidatorsKeys();
 
     this.wsValidatorsStore.forEach(async validator => {
       await this.getValidatorSlashing(validator);
@@ -277,6 +269,11 @@ export class WsService {
     this.wsValidatorsStore.forEach(async validator => {
       await this.getValidatorAvatars(validator);
     });
+
+    this.wsValidatorsStore.forEach(async validator => {
+      await this.getValidatorHex(validator);
+    });
+
     await this.updateValidators();
   };
   // End validators mapping
