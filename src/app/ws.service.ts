@@ -23,6 +23,7 @@ export class WsService {
   wsTxStore = [];
   wsValidatorsStore = null;
   wsValidatorsMapping: Map<string,string> = new Map;
+  wsDelegatorsMapping: Map<string,string> = new Map;
 
   numOfValidators;
   MAX_STORE_INDEX = 10;
@@ -161,7 +162,7 @@ export class WsService {
     this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
     this.store.dispatch(new AppActions.UpdateValsMap(this.wsValidatorsMapping));
     console.log(this.wsValidatorsStore);
-    console.log(this.wsValidatorsMapping);
+    // console.log(this.wsValidatorsMapping);
   }
   
   getValidatorsDetails() {
@@ -219,24 +220,29 @@ export class WsService {
 
   getValidatorAvatars(validator) {
     return new Promise(async resolve => {
-      let regex = await validator.description.moniker.replace(/\s/g, '').match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]*/i)[0];
-      this.http.get(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${regex}&fields=pictures`)
-        .subscribe(async data => {
-          // Debugging
-          // console.log(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${validator.data.description.moniker.replace(/\s/g, '')}&fields=pictures`);
-          // console.log(data['them']);
-          // Debugging regex to parse moniker
-          // console.log(validator.data.description.moniker.replace(/\s/g, '').match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]*/i)[0]);
-          if (data['status'].code === 0) {
-            validator.keybase = data['them']; 
-            if(data['them'][0] !== null && data['them'][0].pictures !== undefined) { 
-              validator.picture = data['them'][0].pictures.primary.url; 
-            }
-          } else {
-            validator.keybase = [null];
-          }
-          resolve();
-        });
+      // TODO @aakatev
+      // Comment out later after setting up keybase auth
+      // 
+      // let regex = await validator.description.moniker.replace(/\s/g, '').match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]*/i)[0];
+      // this.http.get(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${regex}&fields=pictures`)
+      //   .subscribe(async data => {
+      //     // Debugging
+      //     // console.log(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${validator.data.description.moniker.replace(/\s/g, '')}&fields=pictures`);
+      //     // console.log(data['them']);
+      //     // Debugging regex to parse moniker
+      //     // console.log(validator.data.description.moniker.replace(/\s/g, '').match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]*/i)[0]);
+      //     if (data['status'].code === 0) {
+      //       validator.keybase = data['them']; 
+      //       if(data['them'][0] !== null && data['them'][0].pictures !== undefined) { 
+      //         validator.picture = data['them'][0].pictures.primary.url; 
+      //       }
+      //     } else {
+      //       validator.keybase = [null];
+      //     }
+      //     resolve();
+      //   });
+      // End comment out later
+      validator.keybase = [null];
     });
   }
 
@@ -261,7 +267,46 @@ export class WsService {
       resolve();  
     });
   }
+
+  getValidatorDelegations(validator) {
+    return new Promise(resolve => {
+      this.http.get(`https://aakatev.me/node_txs/staking/validators/${validator.operator_address}/delegations`)
+        .subscribe(async data => {
+          // Debugging
+          // console.log(data);
+          validator.delegations = await data;
+          await this.getDelegations(this.wsValidatorsStore);
+          resolve();
+        });
+    });
+  }
+
+  getDelegations(validators) {
+    return new Promise(resolve => {
+      validators.forEach(async validator => {
+        if (validator.delegations) {
+          // console.log(validator.delegations);
+          await this.mapDelegations(validator.delegations);
+        }
+        // await this.mapDelegations(validator.delegations);
+      });
+      resolve();
+    });
+  }
   
+
+  mapDelegations(delegators) {
+    return new Promise(resolve => {
+      delegators.forEach(async delegator => {
+        await this.http.get(`https://aakatev.me/node_txs/staking/delegators/${delegator.delegator_address}/delegations`)
+        .subscribe(data => {
+          // Debugging
+          // console.log(data);
+        });
+      });
+      resolve();
+    });
+  }
 
   async initValidators() {
     await this.getValidatorsDetails();
@@ -278,6 +323,11 @@ export class WsService {
     this.wsValidatorsStore.forEach(async validator => {
       await this.getValidatorHex(validator);
     });
+
+    this.wsValidatorsStore.forEach(async validator => {
+      await this.getValidatorDelegations(validator);
+    });
+
 
     await this.updateValidators();
   };

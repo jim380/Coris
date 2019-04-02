@@ -166,7 +166,7 @@ header {
 }
 
 .landing {
-  height: 90vh;
+  /* height: 90vh; */
   /* display: flex; */
   justify-content: center;
   align-items: center;

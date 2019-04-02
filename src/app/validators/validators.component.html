@@ -104,7 +104,16 @@
                       {{validator.description.moniker}}
                   </div>
                 </td>
-                <td class="td-2">Jailed?<br>Uptime%</td>
+                <td class="td-2">
+                  <span *ngIf="validator.jailed">Jailed</span>
+                  <span *ngIf="!validator.jailed">Not-Jailed</span>
+                  <br>
+                  <span
+                    *ngFor="let block of (appState | async).blocks.slice(0,1)"
+                    [innerHTML]=
+                    "block.header?.height !== null
+                    ? 100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) : 0"></span>
+                </td>
                 <td class="td-1">{{validator.tokens}}<br>Weight%</td>
                 <td class="td-2"
                 *ngFor="let block of (appState | async).blocks.slice(0,1)"
@@ -114,7 +123,7 @@
                   ? (block.header.height-validator.slashing?.start_height-validator.slashing?.missed_blocks_counter) : 0">
                 </td>
                 <td class="td-2">in token<br>in %</td>
-                <td class="td-2">commission%</td>
+                <td class="td-2">{{validator.commission?.rate}}</td>
                 <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
               </tr>
             </tbody>

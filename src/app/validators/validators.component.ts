@@ -13,13 +13,27 @@ import { WsService } from '../ws.service';
 export class ValidatorsComponent implements OnInit {
   appState: Observable<{blocks: [], txs:[], validators: []}>;
   fragment = null;
-  
+  valsUptime: Map<string,string> = new Map;
+
   constructor(private store: Store<{App: { blocks: [], txs: [], validators:[] } }>, private route: ActivatedRoute, private wsService: WsService) { }
 
   ngOnInit() {
     this.appState = this.store.select('App');
 
     this.route.fragment.subscribe(fragment => { this.fragment = fragment; });
+    
+    // this.appState.subscribe(data => {
+    //   data.validators.forEach(validator => {
+    //     if(validator['slashing']) {
+    //       console.log(
+    //         validator['slashing']['missed_blocks_counter']/
+    //         (data.blocks.slice(0,1)[0]['header']['height'] - 
+    //         validator['slashing']['start_height'])
+    //       );
+    //     }
+    //   })
+    // })
+    
   }
 
   sortByPower () {
