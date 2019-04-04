@@ -271,11 +271,11 @@ export class WsService {
 
   getValidatorDelegations(validator) {
     return new Promise(resolve => {
-      this.http.get(`https://aakatev.me/node_txs/staking/validators/${validator.operator_address}/delegations`)
+      this.http.get(`https://aakatev.me/node_txs/staking/validators/${this.wsValidatorsStore[validator].operator_address}/delegations`)
         .subscribe(data => {
           // Debugging
-          // console.log(data);
-          validator.delegations = data;
+          console.log(data);
+          this.wsValidatorsStore[validator].delegations = data;
           resolve();
         });
     });
@@ -283,7 +283,7 @@ export class WsService {
 
 
   getDelegations(validators) {
-{}    return new Promise(resolve => {
+    return new Promise(resolve => {
       console.log(validators[0].delegations);
       validators.forEach(async validator => {
         // console.log(validator.delegations);
@@ -315,14 +315,6 @@ export class WsService {
     });
   }
 
-  getDelegationsWrapper(validators) {
-    return new Promise(async resolve => {
-      for (let validator in validators) {
-        await this.getValidatorDelegations(validator);
-      }
-      resolve();
-    }); 
-  }
   
   async initValidators() {
     await this.getValidatorsDetails();
@@ -340,17 +332,52 @@ export class WsService {
       await this.getValidatorHex(validator);
     });
 
-    // for (let validator in this.wsValidatorsStore) {
-    //   await this.getValidatorDelegations(validator);
-    // }
-    await this.getDelegationsWrapper(this.wsValidatorsStore);
+    await this.asyncGetDelegations();
+    await this.asyncGetDelegatorsMap();
+    console.log(3);
 
-    await this.getDelegations(this.wsValidatorsStore)
-      .then( () => this.updateValidators());
+    this.updateValidators();
   };
   // End validators mapping
-
   
+  asyncGetDelegations() {
+    return new Promise (async resolve => {
+      for (let validator in this.wsValidatorsStore) {
+        // Debugging
+        // console.log(this.wsValidatorsStore[validator]);
+        await this.getValidatorDelegations(validator);
+      }
+      resolve()
+    });
+  }
+
+  asyncGetDelegatorsMap() {
+    return new Promise (async resolve => {
+      for (let validator in this.wsValidatorsStore) {
+        // Debugging
+        // console.log(this.wsValidatorsStore[validator]);
+        if(this.wsValidatorsStore[validator].delegations !== null) {
+          for(let delegator of this.wsValidatorsStore[validator].delegations) {
+            console.log(delegator);
+            await this.wsDelegatorsMapping.set(delegator['delegator_address'], delegator);
+          }
+        }
+      }
+      resolve()
+    });
+  }
+  // asyncGetDelegations() {
+  //   return new Promise (async resolve => {
+  //     for (let validator in this.wsValidatorsStore) {
+  //       // Debugging
+  //       // console.log(this.wsValidatorsStore[validator]);
+  //       await this.getValidatorDelegations(validator);
+  //     }
+  //     resolve()
+  //   });
+  // }
+
+
   sortValidators(property) {
     this.wsValidatorsStore.sort((a, b) => parseFloat(b[property]) - parseFloat(a[property]));
     this.updateValidators();
