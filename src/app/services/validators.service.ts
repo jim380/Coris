@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-// import { Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import * as AppActions from '../app.actions'
 // import { nodeRpc, nodeWs, nodeRpcTest } from '../../config.js'
@@ -12,16 +12,20 @@ import { sha256 } from 'js-sha256';
   providedIn: 'root'
 })
 export class ValidatorsService {
+  totalStake = 0;  
   wsValidatorsStore = null;
   wsValidatorsMapping: Map<string,string> = new Map;
 
-  numOfValidators;
+  numOfValidators = 0;
   MAX_STORE_INDEX = 10;
 
-  constructor(private store: Store<{App: { blocks: [], txs: [], validators: [], round: {}, roundStep: {}, valsMap: Map<string,string>} }>, private http: HttpClient) { 
-
-    this.initValidators();
+  constructor(
+    private store: Store<{App: { blocks: [], txs: [], validators: [], round: {}, roundStep: {}, valsMap: Map<string,string>} }>, 
+    private http: HttpClient) { 
+      this.initValidators();
   }
+
+  getTotalStake() { return this.totalStake };
 
   // Validators mapping
   setValidators(validators) {
@@ -36,6 +40,7 @@ export class ValidatorsService {
     // console.log(this.wsValidatorsMapping);
   }
   
+
   getValidatorsDetails() {
     return new Promise(resolve => {
         this.http.get(`https://aakatev.me/node_txs/staking/validators`).subscribe(async data => {
@@ -150,6 +155,7 @@ export class ValidatorsService {
         .subscribe(data => {
           // Debugging
           console.log(data);
+          
           this.wsValidatorsStore[validator].delegations = data;
           resolve();
         });
@@ -172,6 +178,8 @@ export class ValidatorsService {
     this.wsValidatorsStore.forEach(async validator => {
       await this.getValidatorHex(validator);
     });
+
+    await this.calculateTotalVotingPower();
 
     // TODO @aakatev decide on version
     // Async version
@@ -211,6 +219,18 @@ export class ValidatorsService {
       resolve();
     });
   }
+
+  calculateTotalVotingPower() {
+    return new Promise (async resolve => {
+      for (let validator of this.wsValidatorsStore) {
+        this.totalStake += await Number(validator['tokens']);
+        this.store.dispatch(new AppActions.UpdateTotalStake(this.totalStake));
+        // console.log(this.totalStake);
+      }
+      resolve();
+    });
+  }
+
 
   sortValidators(property) {
     this.wsValidatorsStore.sort((a, b) => parseFloat(b[property]) - parseFloat(a[property]));

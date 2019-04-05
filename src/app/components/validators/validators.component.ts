@@ -14,6 +14,7 @@ export class ValidatorsComponent implements OnInit {
   appState: Observable<{blocks: [], txs:[], validators: []}>;
   fragment = null;
   valsUptime: Map<string,string> = new Map;
+  totalTokens = 0;
 
   constructor(
     private store: Store<{App: { blocks: [], txs: [], validators:[] } }>, 
@@ -26,7 +27,6 @@ export class ValidatorsComponent implements OnInit {
     this.appState = this.store.select('App');
 
     this.route.fragment.subscribe(fragment => { this.fragment = fragment; });
-    
     // this.appState.subscribe(data => {
     //   data.validators.forEach(validator => {
     //     if(validator['slashing']) {
