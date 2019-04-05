@@ -9,65 +9,6 @@
       </a>
     </p>
   </div>
-
-  <!-- <div
-    *ngFor="let validator of (appState | async).validators"
-    class="validator-card"
-    id="{{validator.keys?.Addres}}">
-      <article class="validator_body">
-
-        <div class="validator-card-header">
-          <i *ngIf="!validator.jailed" class="fas fa-user-check"></i>
-          <i *ngIf="validator.jailed" class="fas fa-skull-crossbones"><span style="padding-left: 5px;">jailed</span></i>
-          <p>Validator</p>
-        </div>
-
-        <div class="validator-card-text">
-          
-          <figure class="image is-128x128" *ngIf="validator.keybase">
-            <img  *ngIf="!validator.picture; else elseBlock" 
-              src="https://ui-avatars.com/api/?size=128&name={{validator.description.moniker}}" 
-              alt="avatar"
-            >
-            <ng-template #elseBlock>
-              <img src="{{validator.picture}}" alt="avatar">
-            </ng-template>
-          </figure>
-
-          <div class="validator__text--body">
-            <p>Moniker:</p>
-            <p>{{validator.description.moniker}}</p>
-          </div>
-
-          <div class="validator__text--body">
-              <p>Tokens:</p>
-              <p>{{validator.tokens}}</p>
-              <br>
-          </div>
-
-          <div class="validator__text--body">
-              <p>Commits:</p>
-              <p 
-                *ngFor="let block of (appState | async).blocks.slice(0,1)"
-                class="title chain-queries-title"
-                [innerHTML]=
-                  "block.header?.height !== null 
-                  ? (block.header.height-validator.slashing?.start_height-validator.slashing?.missed_blocks_counter) : 0">
-              </p>
-          </div>
-
-          <table class="">
-            <tbody>
-              <tr>
-                <th><a routerLink="/validator/{{validator.keys?.Addres}}">Learn more</a></th>
-              </tr>
-            </tbody>
-          </table>
-
-        </div>
-      </article>
-  </div> -->
-
   <div class="card events-card">
       <div class="card-header">
         <p class="card-header-title"><i class="fas fa-vector-square"></i>Validators</p>
@@ -115,7 +56,7 @@
                     "block.header?.height !== null
                     ? 100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) : 0"></span>
                 </td>
-                <td class="td-1">{{validator.tokens}}<br>{{100*(validator.tokens/(appState | async).totalStake)|number}}%</td>
+                <td class="td-1">{{validator.tokens | number}}<br>{{100*(validator.tokens/(appState | async).totalStake) | number}}%</td>
                 <td class="td-2"
                 *ngFor="let block of (appState | async).blocks.slice(0,1)"
                 class="title chain-queries-title"
@@ -127,7 +68,7 @@
                 <ng-template #otherBlock>
                     <td class="td-2">Loading</td>
                 </ng-template>
-                <td class="td-2">{{validator.commission?.rate|number}}</td>
+                <td class="td-2">{{validator.commission?.rate | number}}</td>
                 <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
               </tr>
             </tbody>
