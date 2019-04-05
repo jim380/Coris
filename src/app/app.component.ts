@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { WsService } from './services/ws.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { ValidatorsService } from './services/validators.service';
 
 @Component({
   selector: 'app-root',
@@ -19,9 +20,10 @@ export class AppComponent {
       validators:[], 
       round:{}, 
       roundStep: {},
-      valsMap: Map<string,string>,
-    }
-  }>) {  }
+      valsMap: Map<string,string>
+    }}>,
+    private vs:ValidatorsService
+  ) {  }
 
   ngOnInit() { 
     this.appState = this.store.select('App');

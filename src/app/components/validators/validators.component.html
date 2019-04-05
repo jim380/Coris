@@ -48,7 +48,7 @@
                 </td>
                 <td class="td-2">
                   <span *ngIf="validator.jailed">Jailed</span>
-                  <span *ngIf="!validator.jailed">Not-Jailed</span>
+                  <span *ngIf="!validator.jailed">Active</span>
                   <br>
                   <span
                     *ngFor="let block of (appState | async).blocks.slice(0,1)"
@@ -68,7 +68,7 @@
                 <ng-template #otherBlock>
                     <td class="td-2">Loading</td>
                 </ng-template>
-                <td class="td-2">{{validator.commission?.rate | number}}</td>
+                <td class="td-2">{{100*validator.commission?.rate | number}}%</td>
                 <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
               </tr>
             </tbody>
