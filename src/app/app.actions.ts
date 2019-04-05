@@ -6,6 +6,7 @@ export const UPDATE_VALIDATORS = 'UPDATE_VALIDATORS';
 export const UPDATE_ROUND = 'UPDATE_ROUND'
 export const UPDATE_ROUND_STEP = 'UPDATE_ROUND_STEP'
 export const UPDATE_VALS_MAP = 'UPDATE_VALS_MAP'
+export const UPDATE_TOTAL_STAKE = 'UPDATE_TOTAL_STAKE'
 
 export class UpdateBlocks implements Action {
   readonly type = UPDATE_BLOCKS;
@@ -39,4 +40,10 @@ export class UpdateValsMap implements Action {
   constructor(public payload: any) {};
 }
 
-export type AppActions = UpdateBlocks | UpdateTxs | UpdateValidators | UpdateRound | UpdateRoundStep | UpdateValsMap;
+
+export class UpdateTotalStake implements Action {
+  readonly type = UPDATE_TOTAL_STAKE;
+  constructor(public payload: any) {};
+}
+
+export type AppActions = UpdateBlocks | UpdateTxs | UpdateValidators | UpdateRound | UpdateRoundStep | UpdateValsMap | UpdateTotalStake;

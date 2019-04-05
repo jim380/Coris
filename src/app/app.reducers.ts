@@ -7,7 +7,8 @@ const initialState = {
   validators: [],
   round: {},
   roundStep: {},
-  valsMap: Map
+  valsMap: Map,
+  totalStake: 0
 };
 
 export function appReducer(state = initialState, action: AppActions.AppActions) {
@@ -22,6 +23,7 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         round: state.round,
         roundStep: state.roundStep,
         valsMap: state.valsMap,
+        totalStake: state.totalStake,
       }
       break;
     
@@ -33,6 +35,7 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         round: state.round,
         roundStep: state.roundStep,
         valsMap: state.valsMap,
+        totalStake: state.totalStake,
       }
       break;
 
@@ -44,6 +47,7 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         round: state.round,
         roundStep: state.roundStep,
         valsMap: state.valsMap,
+        totalStake: state.totalStake,
       }
       break;
     
@@ -55,6 +59,7 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         round: action.payload,
         roundStep: state.roundStep,
         valsMap: state.valsMap,
+        totalStake: state.totalStake,
       }
       break;
 
@@ -66,6 +71,7 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         round: state.round,
         roundStep: action.payload,
         valsMap: state.valsMap,
+        totalStake: state.totalStake,
       }
       break;
 
@@ -77,6 +83,20 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         round: state.round,
         roundStep: state.roundStep, 
         valsMap: action.payload,
+        totalStake: state.totalStake,
+      }
+      break;
+      
+
+    case AppActions.UPDATE_TOTAL_STAKE:
+      return {
+        txs: state.txs,
+        blocks: state.blocks,
+        validators: state.validators,
+        round: state.round,
+        roundStep: state.roundStep, 
+        valsMap: state.valsMap,
+        totalStake: action.payload,
       }
       break;
       

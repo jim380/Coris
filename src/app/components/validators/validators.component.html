@@ -115,7 +115,7 @@
                     "block.header?.height !== null
                     ? 100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) : 0"></span>
                 </td>
-                <td class="td-1">{{validator.tokens}}<br>Weight%</td>
+                <td class="td-1">{{validator.tokens}}<br>{{100*(validator.tokens/(appState | async).totalStake)|number}}%</td>
                 <td class="td-2"
                 *ngFor="let block of (appState | async).blocks.slice(0,1)"
                 class="title chain-queries-title"
@@ -127,7 +127,7 @@
                 <ng-template #otherBlock>
                     <td class="td-2">Loading</td>
                 </ng-template>
-                <td class="td-2">{{validator.commission?.rate}}</td>
+                <td class="td-2">{{validator.commission?.rate|number}}</td>
                 <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
               </tr>
             </tbody>
