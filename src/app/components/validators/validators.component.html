@@ -76,21 +76,23 @@
           <table class="table is-fullwidth">
             <thead>
               <tr>
+                <th>Index</th>
                 <th >Name</th>
                 <th>Status/Uptime</th>
                 <th>Voting Weight</th>
-                <th>Precommits</th>
+                <th>Rewards</th>
                 <!-- <th>Self-bond</th> -->
                 <th>Delegators</th>
                 <th>Commission</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let validator of (appState | async).validators"
+              <tr *ngFor="let validator of (appState | async).validators; index as i"
               class="validator-card"
               id="{{validator.keys?.Addres}}">
+                <td class="td-vertical">{{i}}</td>
                 <td class="td-1">
-                  <div class="col span-1-of-2">
+                  <div class="col span-1-of-2 col-avatar">
                       <figure class="validatoe-avatar is-128x128" *ngIf="validator.keybase">
                           <img  *ngIf="!validator.picture; else elseBlock" 
                             src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
@@ -101,33 +103,40 @@
                           </ng-template>
                       </figure>
                   </div>
-                  <div class="col span-1-of-2">
+                  <div class="col span-1-of-2 td-vertical col-moniker">
                       {{validator.description.moniker}}
                   </div>
                 </td>
-                <td class="td-2">
-                  <span *ngIf="validator.jailed">Jailed</span>
-                  <span *ngIf="!validator.jailed">Not-Jailed</span>
-                  <br>
+                <td class="td-2 td-vertical">
+                  <!-- <span *ngIf="validator.jailed">Jailed</span>
+                  <span *ngIf="!validator.jailed">Not-Jailed</span> -->
+                  <span *ngIf="validator.jailed"><i class="ion-record jailed"></i></span>
+                  <span *ngIf="!validator.jailed"><i class="ion-record jailedNot"></i></span>
+                  <!-- <br> -->
                   <span
                     *ngFor="let block of (appState | async).blocks.slice(0,1)"
                     [innerHTML]=
                     "block.header?.height !== null
-                    ? 100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) : 0"></span>
+                    ? 100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) : 0"
+                    >
+                  </span>
                 </td>
-                <td class="td-1">{{validator.tokens}}<br>Weight%</td>
-                <td class="td-2"
-                *ngFor="let block of (appState | async).blocks.slice(0,1)"
-                class="title chain-queries-title"
-                [innerHTML]=
-                  "block.header?.height !== null 
-                  ? (block.header.height-validator.slashing?.start_height-validator.slashing?.missed_blocks_counter) : 0">
+                <td class="td-1">{{validator.tokens/1e6 | number:'.0-0'}}<br>Add weight%</td>
+                <!-- <td class="td-2"
+                  *ngFor="let block of (appState | async).blocks.slice(0,1)"
+                  class="title chain-queries-title td-vertical"
+                  [innerHTML]=
+                    "block.header?.height !== null 
+                    ? (block.header.height-validator.slashing?.start_height-validator.slashing?.missed_blocks_counter) : 0">
+                </td> -->
+                <td class="td-2">
+                  Add<br>rewards
                 </td>
-                <td *ngIf="validator.delegations; else otherBlock" class="td-2">{{validator.delegations?.length}}</td>
+                <td *ngIf="validator.delegations; else otherBlock" class="td-2 td-vertical">{{validator.delegations?.length}}</td>
                 <ng-template #otherBlock>
-                    <td class="td-2">Loading</td>
+                    <td class="td-2 td-vertical">-</td>
                 </ng-template>
-                <td class="td-2">{{validator.commission?.rate}}</td>
+                <td class="td-2 td-vertical">{{validator.commission?.rate | percent}}</td>
                 <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
               </tr>
             </tbody>
