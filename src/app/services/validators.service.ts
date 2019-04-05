@@ -179,9 +179,9 @@ export class ValidatorsService {
     //   console.log('All delegators loaded');
     // });
     // Nonasync version
-    // this.getDelegations().then(data => {
-    //   console.log('333');
-    // });
+    this.getDelegations().then(data => {
+      console.log('333');
+    });
     
     // Debugging
     console.log("Validators init done!");

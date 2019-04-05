@@ -80,7 +80,8 @@
                 <th>Status/Uptime</th>
                 <th>Voting Weight</th>
                 <th>Precommits</th>
-                <th>Self-bond</th>
+                <!-- <th>Self-bond</th> -->
+                <th>Delegators</th>
                 <th>Commission</th>
               </tr>
             </thead>
@@ -122,7 +123,10 @@
                   "block.header?.height !== null 
                   ? (block.header.height-validator.slashing?.start_height-validator.slashing?.missed_blocks_counter) : 0">
                 </td>
-                <td class="td-2">in token<br>in %</td>
+                <td *ngIf="validator.delegations; else otherBlock" class="td-2">{{validator.delegations?.length}}</td>
+                <ng-template #otherBlock>
+                    <td class="td-2">Loading</td>
+                </ng-template>
                 <td class="td-2">{{validator.commission?.rate}}</td>
                 <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
               </tr>
