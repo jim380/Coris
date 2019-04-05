@@ -62,7 +62,11 @@
                     >
                   </span>
                 </td>
-                <td class="td-1">{{validator.tokens/1e6 | number:'.0-0'}}<br>Add weight%</td>
+                <td class="td-1">
+                  {{validator.tokens/1e6 | number:'.0-0'}}
+                  <!-- {{validator.tokens | number}} -->
+                  <br>
+                  {{100*(validator.tokens/(appState | async).totalStake) | number}}%</td>
                 <!-- <td class="td-2"
                   *ngFor="let block of (appState | async).blocks.slice(0,1)"
                   class="title chain-queries-title td-vertical"
