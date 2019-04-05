@@ -27,12 +27,12 @@ td {
   text-align: left;
 }
 
-/* thead th:nth-child(1) {
+thead th:nth-child(1) {
   width: 10%;
 }
 
 thead th:nth-child(2) {
-  width: 10%;
+  width: 20%;
 }
 
 thead th:nth-child(3) {
@@ -41,7 +41,18 @@ thead th:nth-child(3) {
 
 thead th:nth-child(4) {
   width: 20%;
-} */
+}
+thead th:nth-child(5) {
+  width: 10%;
+}
+
+thead th:nth-child(6) {
+  width: 10%;
+}
+
+thead th:nth-child(7) {
+  width: 10%;
+}
 
 th, td {
   padding: 20px;
@@ -91,6 +102,11 @@ tbody tr:nth-child(even){
   width: 25%;
 }
 
+.col-avatar {
+  width: 50px;
+  margin-right: 10px;
+}
+
 button {
   margin: 15px;
 }
@@ -118,4 +134,22 @@ tbody {
 
 .avatar {
   size: 50%;
+}
+
+.td-vertical {
+  /* margin-top: 0;
+  padding: 15px; */
+  vertical-align: middle; 
+}
+
+.col-moniker {
+  padding-top: 10px;
+}
+
+.jailed {
+  color: rgb(255, 0, 0);
+}
+
+.jailedNot {
+  color: green;/*#00796b;*/
 }
