@@ -1,5 +1,3 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<!-- START NAV -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,115 +5,126 @@
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- <title>Demo</title> -->
   </head>
-  <body>
-    <header>
-      <!-- --------------------- NAV BAR --------------------- -->
-        <nav>
-          <div class="hamburger">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-          </div>
-          <div class="row">
-            <a href="#"><img src="assets/img/Coris_logo.png" class="logo"></a>
-            <ul class="main-nav">
-              <!-- <li><a routerLink="/dashboard">Dashboard</a></li> -->
-              <li><a routerLink="/validators">Validators</a></li>
-              <li><a routerLink="/blocks">Blocks</a></li>
-              <li><a routerLink="/txs">Transactions</a></li>
-            </ul>
-          </div>
-        </nav>
-      <!-- --------------------- END NAV --------------------- -->
-    </header>
+<!--The content below is only a placeholder and can be replaced.-->
+<!-- START NAV -->
+<mat-sidenav-container>
+  <mat-sidenav #sidenavRef role="navigation">
+    <app-sidenav-list (sidenavClose)="sidenavRef.close()"></app-sidenav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>    
+    <app-header (sidenavToggle)="sidenavRef.toggle()"></app-header>
+    <main>
+      <body>
+        <!-- <header> -->
+          <!-- --------------------- NAV BAR --------------------- -->
+            <!-- <nav>
+              <div class="hamburger">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+              </div>
+              <div class="row">
+                <a href="#"><img src="assets/img/Coris_logo.png" class="logo"></a>
+                <ul class="main-nav">
+                  <li><a routerLink="/validators">Validators</a></li>
+                  <li><a routerLink="/blocks">Blocks</a></li>
+                  <li><a routerLink="/txs">Transactions</a></li>
+                </ul>
+              </div>
+            </nav> -->
+          <!-- --------------------- END NAV --------------------- -->
+        <!-- </header> -->
 
-    <section class="landing">
-      <div class="row header-row">
-        <h1 class="title header-title">
-          Coris Explorer 
-        </h1>
-        <h2 class="subtitle header-subtitle">{{(appState | async).blocks[0]?.header.chain_id}}</h2>
-      </div>
-      <div class="row proposer-row">
-        <div style="cursor: pointer;" routerLink="/validator/{{(appState | async).round.proposer?.address}}">
-          <h2 *ngIf="(appState | async).valsMap.size; else elseBlock" class="title proposer-title">
-            Proposer - {{(appState | async).valsMap.get((appState | async).round.proposer?.address)}} 
-          </h2>
-          <ng-template #elseBlock>
-              <h2 class="title proposer-title">
-                Proposer - loading 
+        <section class="landing">
+          <div class="row header-row">
+            <h1 class="title header-title">
+              Coris Explorer 
+            </h1>
+            <h2 class="subtitle header-subtitle">{{(appState | async).blocks[0]?.header.chain_id}}</h2>
+          </div>
+          <div class="row proposer-row">
+            <div style="cursor: pointer;" routerLink="/validator/{{(appState | async).round.proposer?.address}}">
+              <h2 *ngIf="(appState | async).valsMap.size; else elseBlock" class="title proposer-title">
+                Proposer - {{(appState | async).valsMap.get((appState | async).round.proposer?.address)}} 
               </h2>
-          </ng-template>
-        </div>
-      </div>
-      <div class="row chain-queries-row">
-        <div class="col span-1-of-4">
-          <div style="cursor: pointer;" routerLink="/last-block" class="is-parent">
-            <article class="box">
-              <!-- <p class="title">{{(appState | async).round?.height}}</p> -->
-              <p class="subtitle chain-queries-subtitle box-key"><i class="ion-cube"></i>&nbsp;Last Block</p>
-              <h3
-                *ngFor="let block of (appState | async).blocks.reverse().slice(0,1)"
-                class="title chain-queries-title box-value"
-                [innerHTML]="block.header?.height !== null ? block.header.height : 0">
-              </h3>
-              <!-- <p class="subtitle chain-queries-subtitle">Last Block</p> -->
-            </article>
+              <ng-template #elseBlock>
+                  <h2 class="title proposer-title">
+                    Proposer - loading 
+                  </h2>
+              </ng-template>
+            </div>
           </div>
-        </div>
-        <div class="col span-1-of-4">
-          <article class="box">
-                <!-- <p class="subtitle chain-queries-subtitle box-key"><i class="ion-load-a"></i>&nbsp;Round {{(appState | async).roundStep.round}}</p> -->
-                <p class="subtitle chain-queries-subtitle box-key"><i class="ion-load-a"></i>&nbsp;Consensus</p>
-                <h3 class="title chain-queries-title box-value">{{(appState | async).roundStep.step?.split('RoundStep')[1]}}</h3>
-            <!-- <p class="subtitle chain-queries-subtitle">Round {{(appState | async).roundStep.round}}</p> -->
-          </article>
-        </div>
-        <div class="col span-1-of-4">
-          <div style="cursor: pointer;" routerLink="/validators" class="is-parent">
-            <article class="box">
-              <p class="subtitle chain-queries-subtitle box-key"><i class="ion-person-stalker"></i>&nbsp;Validators</p>
-              <h3 class="title chain-queries-title box-value">{{(appState | async).validators?.length}}</h3>
-              <!-- <p class="subtitle chain-queries-subtitle">Validators</p> -->
-            </article>
-          </div>
-        </div>
-        <div class="col span-1-of-4">
-            <div style="cursor: pointer;" routerLink="/validators" class="is-parent">
+          <div class="row chain-queries-row">
+            <div class="col span-1-of-4">
+              <div style="cursor: pointer;" routerLink="/last-block" class="is-parent">
+                <article class="box">
+                  <!-- <p class="title">{{(appState | async).round?.height}}</p> -->
+                  <p class="subtitle chain-queries-subtitle box-key"><i class="ion-cube"></i>&nbsp;Last Block</p>
+                  <h3
+                    *ngFor="let block of (appState | async).blocks.reverse().slice(0,1)"
+                    class="title chain-queries-title box-value"
+                    [innerHTML]="block.header?.height !== null ? block.header.height : 0">
+                  </h3>
+                  <!-- <p class="subtitle chain-queries-subtitle">Last Block</p> -->
+                </article>
+              </div>
+            </div>
+            <div class="col span-1-of-4">
               <article class="box">
-                <p class="subtitle chain-queries-subtitle box-key"><i class="ion-soup-can"></i>&nbsp;Add staking pool</p>
-                <h3 class="title chain-queries-title box-value">{{(appState | async).validators?.length}}</h3>
-                <!-- <p class="subtitle chain-queries-subtitle">Validators</p> -->
+                    <!-- <p class="subtitle chain-queries-subtitle box-key"><i class="ion-load-a"></i>&nbsp;Round {{(appState | async).roundStep.round}}</p> -->
+                    <p class="subtitle chain-queries-subtitle box-key"><i class="ion-load-a"></i>&nbsp;Consensus</p>
+                    <h3 class="title chain-queries-title box-value">{{(appState | async).roundStep.step?.split('RoundStep')[1]}}</h3>
+                <!-- <p class="subtitle chain-queries-subtitle">Round {{(appState | async).roundStep.round}}</p> -->
               </article>
             </div>
-        </div>
-      </div>
-    </section>
-    <router-outlet></router-outlet>
-  </body>
+            <div class="col span-1-of-4">
+              <div style="cursor: pointer;" routerLink="/validators" class="is-parent">
+                <article class="box">
+                  <p class="subtitle chain-queries-subtitle box-key"><i class="ion-person-stalker"></i>&nbsp;Validators</p>
+                  <h3 class="title chain-queries-title box-value">{{(appState | async).validators?.length}}</h3>
+                  <!-- <p class="subtitle chain-queries-subtitle">Validators</p> -->
+                </article>
+              </div>
+            </div>
+            <div class="col span-1-of-4">
+                <div style="cursor: pointer;" routerLink="/validators" class="is-parent">
+                  <article class="box">
+                    <p class="subtitle chain-queries-subtitle box-key"><i class="ion-soup-can"></i>&nbsp;Add staking pool</p>
+                    <h3 class="title chain-queries-title box-value">{{(appState | async).validators?.length}}</h3>
+                    <!-- <p class="subtitle chain-queries-subtitle">Validators</p> -->
+                  </article>
+                </div>
+            </div>
+          </div>
+        </section>
+        <router-outlet></router-outlet>
+      </body>
 
-  <footer>
-    <div class="row">
-      <div class="col span-1-of-2">
-        <ul class="footer-nav">
-          <li><a href="http://cyphercore.io/team/" target=" ">About</a></li>
-          <li><a href="https://medium.com/cypher-core" target=" ">Blog</a></li>
-          <li><a href="http://cyphercore.io/validator/" target=" ">Staking</a></li>
-        </ul>
-      </div>
-      <div class="col span-1-of-2">
-        <ul class="social-links">
-          <li><a href="#"><i class="ion-social-github" target=" "></i></a></li>
-          <li><a href="https://twitter.com/cypher_core" target=" "><i class="ion-social-twitter"></i></a></li>
-          <li><a href="https://t.me/cyphercore" target=" "><i class="ion-paper-airplane"></i></a></li>
-          <li><a href="https://www.linkedin.com/company/cypher-core/about/?viewAsMember=true" target=" "><i class="ion-social-linkedin"></i></a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="row">
-      <p>
-        Copyright &copy; 2019 - <a class="footer-brand" href="http://cyphercore.io" target=" ">Cypher Core LLC.</a>
-      </p>
-    </div>
-  </footer>
+      <footer>
+        <div class="row">
+          <div class="col span-1-of-2">
+            <ul class="footer-nav">
+              <li><a href="http://cyphercore.io/team/" target=" ">About</a></li>
+              <li><a href="https://medium.com/cypher-core" target=" ">Blog</a></li>
+              <li><a href="http://cyphercore.io/validator/" target=" ">Staking</a></li>
+            </ul>
+          </div>
+          <div class="col span-1-of-2">
+            <ul class="social-links">
+              <li><a href="#"><i class="ion-social-github" target=" "></i></a></li>
+              <li><a href="https://twitter.com/cypher_core" target=" "><i class="ion-social-twitter"></i></a></li>
+              <li><a href="https://t.me/cyphercore" target=" "><i class="ion-paper-airplane"></i></a></li>
+              <li><a href="https://www.linkedin.com/company/cypher-core/about/?viewAsMember=true" target=" "><i class="ion-social-linkedin"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <p>
+            Copyright &copy; 2019 - <a class="footer-brand" href="http://cyphercore.io" target=" ">Cypher Core LLC.</a>
+          </p>
+        </div>
+      </footer>
+    </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </html>

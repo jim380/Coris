@@ -1,0 +1,35 @@
+a {
+  text-decoration: none;
+  color: white;
+}
+
+
+a:hover,
+a:active {
+  color: lightgray;
+}
+
+
+.nav-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-elem {
+  display: inline-block;
+  padding: 6px;
+}
+
+.logo {
+  padding: 10px; 
+  height: 120px;
+  width: auto;
+  float: left;
+  margin-top: 20px;
+}
+
+.mat-toolbar.mat-primary {
+  background: #111923;
+  height: 10vh;
+}
