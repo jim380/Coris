@@ -17,14 +17,16 @@
           <table class="table is-fullwidth">
             <thead>
               <tr>
-                <th>Index</th>
+                <th> </th>
                 <th >Name</th>
                 <th>Status/Uptime</th>
                 <th>Voting Weight</th>
-                <th>Rewards</th>
-                <!-- <th>Self-bond</th> -->
+                <th>Assets</th>
+                <th>Bond</th>
+                <th>Unbond</th>
                 <th>Delegators</th>
                 <th>Commission</th>
+                <th>Geolocation (or block time)</th>
               </tr>
             </thead>
             <tbody>
@@ -66,7 +68,7 @@
                   {{validator.tokens/1e6 | number:'.0-0'}}
                   <!-- {{validator.tokens | number}} -->
                   <br>
-                  {{100*(validator.tokens/(appState | async).totalStake) | number}}%</td>
+                  <span class="weightPerct">({{validator.tokens/(appState | async).totalStake| percent:'.2-2'}})</span></td>
                 <!-- <td class="td-2"
                   *ngFor="let block of (appState | async).blocks.slice(0,1)"
                   class="title chain-queries-title td-vertical"
@@ -75,14 +77,25 @@
                     ? (block.header.height-validator.slashing?.start_height-validator.slashing?.missed_blocks_counter) : 0">
                 </td> -->
                 <td class="td-2">
-                  Add<br>rewards
+                  - balances<br>- rewards
                 </td>
-                <td *ngIf="validator.delegations; else otherBlock" class="td-2 td-vertical">{{validator.delegations?.length}}</td>
+                <td class="td-2 td-vertical">
+                  self-bond<br>(in %)
+                </td>
+                <td class="td-2 td-vertical">
+                  - Un-bond<br>- completion time
+                  </td>
+                <td *ngIf="validator.delegations; else otherBlock" class="td-2 td-vertical">
+                  {{validator.delegations?.length}}
+                </td>
                 <ng-template #otherBlock>
                     <td class="td-2 td-vertical">-</td>
                 </ng-template>
-                <td class="td-2 td-vertical">{{validator.commission?.rate | percent}}</td>
+                <td class="td-2 td-vertical">{{validator.commission?.rate | percent}}-maxRate-maxChangeRate</td>
                 <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
+                <td>
+                  -
+                </td>
               </tr>
             </tbody>
           </table>
