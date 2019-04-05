@@ -18,3 +18,19 @@ body{
   background: #484C52;
   color: #F7F7F7;
 }
+
+/* Material navbar */
+.mat-drawer-inner-container {
+  background-color: #111923;
+}
+
+.mat-list-item-content {
+  color: #F7F7F7;
+  text-decoration: none;
+}
+
+.mat-list-item-content:hover,
+.mat-list-item-content:active {
+  color:#111923;
+  background-color: #F7F7F7;
+}
