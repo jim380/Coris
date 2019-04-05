@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { WsService } from './ws.service';
+import { WsService } from './services/ws.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -9,9 +9,6 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  navLinksAttr = ["","open"]
-  linksAttrs = ["", "fade"];
-
   appState: Observable<{blocks:[], txs:[], validators:[], round:{}, roundStep: {}, valsMap: Map<string,string>}>;
 
   constructor(
@@ -32,11 +29,6 @@ export class AppComponent {
 
   ngOnDestroy() {
     this.ws.unsubscribe();
-  }
-
-  onHamburgerClick() {
-    this.navLinksAttr.reverse();
-    this.linksAttrs.reverse();
   }
 }
 

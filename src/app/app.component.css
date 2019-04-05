@@ -367,7 +367,7 @@ footer p {
 
   .main-nav {
     position: fixed;
-    background: #5b78c7;
+    background: #111923;
     height: 100vh;
     width: 100%;
     flex-direction: column;
@@ -386,7 +386,7 @@ footer p {
     flex-direction: column;
   }
   .main-nav li {
-    opacity: 0;
+    opacity: 1;
   }
   .main-nav li a {
     font-size: 25px;

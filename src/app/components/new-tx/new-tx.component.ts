@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TxsService } from '../txs.service';
+import { TxsService } from '../../services/txs.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

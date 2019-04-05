@@ -6,16 +6,16 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ValidatorsComponent } from './validators/validators.component';
-import { BlocksComponent } from './blocks/blocks.component';
-import { TxsComponent } from './txs/txs.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { LastBlockComponent } from './last-block/last-block.component';
+import { ValidatorsComponent } from './components/validators/validators.component';
+import { BlocksComponent } from './components/blocks/blocks.component';
+import { TxsComponent } from './components/txs/txs.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { LastBlockComponent } from './components/last-block/last-block.component';
 import { appReducer } from './app.reducers';
-import { BlockComponent } from './block/block.component';
-import { TxComponent } from './tx/tx.component';
-import { ValidatorComponent } from './validator/validator.component';
-import { NewTxComponent } from './new-tx/new-tx.component';
+import { BlockComponent } from './components/block/block.component';
+import { TxComponent } from './components/tx/tx.component';
+import { ValidatorComponent } from './components/validator/validator.component';
+import { NewTxComponent } from './components/new-tx/new-tx.component';
 
 @NgModule({
   declarations: [

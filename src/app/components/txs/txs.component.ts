@@ -4,8 +4,8 @@ import { Inject }  from '@angular/core';
 import { DOCUMENT } from '@angular/common'; 
 import { Router } from '@angular/router';
 
-import { nodeRpc } from '../../config.js'
-import { Tx, Tag, decodeTag } from '../interfaces/tx.interface';
+import { nodeRpc } from '../../../config.js'
+import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
 
 
 @Component({

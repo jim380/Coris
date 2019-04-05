@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
-import { WsService } from '../ws.service';
+import { ValidatorsService } from '../../services/validators.service';
 
 @Component({
   selector: 'app-validators',
@@ -15,7 +15,12 @@ export class ValidatorsComponent implements OnInit {
   fragment = null;
   valsUptime: Map<string,string> = new Map;
 
-  constructor(private store: Store<{App: { blocks: [], txs: [], validators:[] } }>, private route: ActivatedRoute, private wsService: WsService) { }
+  constructor(
+    private store: Store<{App: { blocks: [], txs: [], validators:[] } }>, 
+    private route: ActivatedRoute, 
+    private validatorsService: ValidatorsService) { 
+
+    }
 
   ngOnInit() {
     this.appState = this.store.select('App');
@@ -37,11 +42,11 @@ export class ValidatorsComponent implements OnInit {
   }
 
   sortByPower () {
-    this.wsService.sortValidators("tokens");
+    this.validatorsService.sortValidators("tokens");
   }
 
   sortByPriority () {
-    this.wsService.sortValidators("proposer_priority");
+    this.validatorsService.sortValidators("proposer_priority");
   }
   
   ngAfterViewInit(): void {

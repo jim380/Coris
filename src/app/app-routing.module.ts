@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ValidatorsComponent } from './validators/validators.component';
-import { LastBlockComponent } from './last-block/last-block.component';
-import { BlockComponent } from './block/block.component';
-import { BlocksComponent } from './blocks/blocks.component';
-import { TxComponent } from './tx/tx.component';
-import { TxsComponent } from './txs/txs.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { ValidatorComponent } from './validator/validator.component';
-import { NewTxComponent } from './new-tx/new-tx.component';
+import { ValidatorsComponent } from './components/validators/validators.component';
+import { LastBlockComponent } from './components/last-block/last-block.component';
+import { BlockComponent } from './components/block/block.component';
+import { BlocksComponent } from './components/blocks/blocks.component';
+import { TxComponent } from './components/tx/tx.component';
+import { TxsComponent } from './components/txs/txs.component';
+// import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ValidatorComponent } from './components/validator/validator.component';
+import { NewTxComponent } from './components/new-tx/new-tx.component';
 
 
 const routes: Routes = [

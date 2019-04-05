@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { nodeRpc } from '../../config.js'
-import { Tx, Tag, decodeTag } from '../interfaces/tx.interface';
+import { nodeRpc } from '../../../config.js'
+import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
 
 import { ActivatedRoute, Router } from '@angular/router';
 

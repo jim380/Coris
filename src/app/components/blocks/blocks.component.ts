@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Block } from './block';
-import { nodeRpc } from '../../config.js';
+import { Block } from '../../interfaces/block.interface';
+import { nodeRpc } from '../../../config.js';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 

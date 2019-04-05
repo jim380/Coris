@@ -11,18 +11,18 @@
     <header>
       <!-- --------------------- NAV BAR --------------------- -->
         <nav>
-          <div (click)=onHamburgerClick() class="hamburger">
+          <div class="hamburger">
             <div class="line"></div>
             <div class="line"></div>
             <div class="line"></div>
           </div>
           <div class="row">
             <a href="#"><img src="assets/img/Coris_logo.png" class="logo"></a>
-            <ul class="main-nav {{navLinksAttr[0]}}">
+            <ul class="main-nav">
               <!-- <li><a routerLink="/dashboard">Dashboard</a></li> -->
-              <li><a class="{{linksAttrs[0]}}" routerLink="/validators">Validators</a></li>
-              <li><a class="{{linksAttrs[0]}}" routerLink="/blocks">Blocks</a></li>
-              <li><a class="{{linksAttrs[0]}}" routerLink="/txs">Transactions</a></li>
+              <li><a routerLink="/validators">Validators</a></li>
+              <li><a routerLink="/blocks">Blocks</a></li>
+              <li><a routerLink="/txs">Transactions</a></li>
             </ul>
           </div>
         </nav>
