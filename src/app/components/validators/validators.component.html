@@ -54,7 +54,12 @@
     <ng-container matColumnDef="delegators">
       <th mat-header-cell *matHeaderCellDef> Delegators </th>
       <td mat-cell *matCellDef="let validator"> 
-        {{validator.delegations?.length}}
+        <span *ngIf="validator.delegations; else otherBlock">
+          {{validator.delegations?.length}}
+        </span>
+        <ng-template #otherBlock>
+          <span>-</span>
+        </ng-template>
       </td>
     </ng-container>
 
