@@ -20,7 +20,7 @@
             <h2 class="subtitle header-subtitle" @fadeInAnimation>{{(appState | async).blocks[0]?.header.chain_id}}</h2>
           </div>
           <div class="row proposer-row">
-            <div style="cursor: pointer;" routerLink="/validator/{{(appState | async).round.proposer?.address}}">
+            <div style="cursor: pointer;" routerLink="/validators" fragment="{{(appState | async).round.proposer?.address}}">
               <h2 *ngIf="(appState | async).valsMap.size; else elseBlock" class="title proposer-title">
                 Proposer - {{(appState | async).valsMap.get((appState | async).round.proposer?.address)}} 
               </h2>
@@ -66,8 +66,12 @@
             <div class="col span-1-of-4">
                 <div style="cursor: pointer;" routerLink="/validators" class="is-parent">
                   <article class="box">
-                    <p class="subtitle chain-queries-subtitle box-key"><i class="ion-soup-can"></i>&nbsp;Add staking pool</p>
-                    <h3 class="title chain-queries-title box-value">{{(appState | async).validators?.length}}</h3>
+                    <p class="subtitle chain-queries-subtitle box-key"><i class="ion-soup-can"></i>&nbsp;Bonded/Unbonded</p>
+                    <h3 class="title chain-queries-title box-value" style="overflow: hidden; white-space: nowrap;">
+                      {{(appState | async).stakePool.bonded_tokens | number}}
+                      <br>
+                      {{(appState | async).stakePool.not_bonded_tokens | number}}
+                    </h3>
                     <!-- <p class="subtsitle chain-queries-subtitle">Validators</p> -->
                   </article>
                 </div>

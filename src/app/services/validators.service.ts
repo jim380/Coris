@@ -15,12 +15,20 @@ export class ValidatorsService {
   totalStake = 0;  
   wsValidatorsStore = null;
   wsValidatorsMapping: Map<string,string> = new Map;
+  // poolStake = null;
 
   numOfValidators = 0;
   MAX_STORE_INDEX = 10;
 
   constructor(
-    private store: Store<{App: { blocks: [], txs: [], validators: [], round: {}, roundStep: {}, valsMap: Map<string,string>} }>, 
+    private store: Store <{App: { 
+      blocks: [], 
+      txs: [], 
+      validators: [], 
+      round: {}, 
+      roundStep: {}, 
+      valsMap: Map<string,string>,
+      stakePool: {} }}>, 
     private http: HttpClient) { 
       this.initValidators();
   }
@@ -32,12 +40,25 @@ export class ValidatorsService {
     this.wsValidatorsStore = validators;
     this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
   }
+
+  // Validators mapping
+  setStakingPool() {
+    return new Promise(resolve => {
+        this.http.get(`https://aakatev.me/node_txs/staking/pool`).subscribe(async data => {
+        console.log(data);
+        if(data !== null) {
+          this.store.dispatch(new AppActions.UpdateStakePool(data));
+        } 
+        resolve();
+      });
+    });
+  }
   
   updateValidators() {
     this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
     this.store.dispatch(new AppActions.UpdateValsMap(this.wsValidatorsMapping));
     console.log(this.wsValidatorsStore);
-    // console.log(this.wsValidatorsMapping);
+    console.log(this.wsValidatorsMapping);
   }
   
 
@@ -187,6 +208,8 @@ export class ValidatorsService {
     //   console.log('All delegators loaded');
     // });
     // Nonasync version
+    await this.setStakingPool();
+
     this.getDelegations().then(data => {
       console.log('333');
     });

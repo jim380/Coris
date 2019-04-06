@@ -6,7 +6,7 @@
     </ng-container> -->
     <ng-container  matColumnDef="moniker">
       <th mat-sort-header="name" mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let validator"> 
+      <td mat-cell *matCellDef="let validator" id="{{validator.hex_address}}"> 
         <figure class="validator-avatar is-128x128" *ngIf="validator.keybase">
           <img  
             *ngIf="!validator.picture; else elseBlock" 

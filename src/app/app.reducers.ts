@@ -8,7 +8,8 @@ const initialState = {
   round: {},
   roundStep: {},
   valsMap: Map,
-  totalStake: 0
+  totalStake: 0,
+  stakePool: {}
 };
 
 export function appReducer(state = initialState, action: AppActions.AppActions) {
@@ -24,6 +25,7 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         roundStep: state.roundStep,
         valsMap: state.valsMap,
         totalStake: state.totalStake,
+        stakePool: state.stakePool,
       }
       break;
     
@@ -36,6 +38,7 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         roundStep: state.roundStep,
         valsMap: state.valsMap,
         totalStake: state.totalStake,
+        stakePool: state.stakePool,
       }
       break;
 
@@ -48,6 +51,7 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         roundStep: state.roundStep,
         valsMap: state.valsMap,
         totalStake: state.totalStake,
+        stakePool: state.stakePool,
       }
       break;
     
@@ -60,6 +64,7 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         roundStep: state.roundStep,
         valsMap: state.valsMap,
         totalStake: state.totalStake,
+        stakePool: state.stakePool,
       }
       break;
 
@@ -72,6 +77,7 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         roundStep: action.payload,
         valsMap: state.valsMap,
         totalStake: state.totalStake,
+        stakePool: state.stakePool,
       }
       break;
 
@@ -84,6 +90,7 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         roundStep: state.roundStep, 
         valsMap: action.payload,
         totalStake: state.totalStake,
+        stakePool: state.stakePool,
       }
       break;
       
@@ -97,9 +104,24 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
         roundStep: state.roundStep, 
         valsMap: state.valsMap,
         totalStake: action.payload,
+        stakePool: state.stakePool,
       }
       break;
       
+
+    case AppActions.UPDATE_STAKE_POOL:
+      return {
+        txs: state.txs,
+        blocks: state.blocks,
+        validators: state.validators,
+        round: state.round,
+        roundStep: state.roundStep, 
+        valsMap: state.valsMap,
+        totalStake: state.totalStake,
+        stakePool: action.payload,
+      }
+      break;
+    
     default:
       break;
   }
