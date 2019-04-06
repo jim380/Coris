@@ -1,4 +1,100 @@
 <div class="row">
+  <table  mat-table [dataSource]="(appState | async).validators" class="mat-elevation-z8">
+    <!-- <ng-container matColumnDef="index">
+      <th mat-header-cell *matHeaderCellDef> Index </th>
+      <td mat-cell *matCellDef="let validator"> {{0}} </td>
+    </ng-container> -->
+    <ng-container  matColumnDef="moniker">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let validator"> 
+        <figure class="validator-avatar is-128x128" *ngIf="validator.keybase">
+          <img  
+            *ngIf="!validator.picture; else elseBlock" 
+            src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
+            alt="avatar">
+          <ng-template #elseBlock>
+            <img src="{{validator.picture}}" alt="avatar">
+          </ng-template>
+        </figure>
+        {{validator.description.moniker}}
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status/Uptime </th>
+      <td mat-cell *matCellDef="let validator">  
+        <span *ngIf="validator.jailed"><i class="ion-record jailed"></i></span>
+        <span *ngIf="!validator.jailed"><i class="ion-record jailedNot"></i></span>
+        <span
+          *ngFor="let block of (appState | async).blocks.slice(0,1)"
+          [innerHTML]=
+          "block.header?.height !== null
+          ? 100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) : 0"
+          >
+        </span>
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef> Voting Weight </th>
+      <td mat-cell *matCellDef="let validator">
+        {{validator.tokens/1e6 | number:'.0-0'}}
+        <br>
+        <span class="weightPerct">({{validator.tokens/(appState | async).totalStake| percent:'.2-2'}})</span>
+      </td>
+    </ng-container>
+  
+    
+
+    <ng-container matColumnDef="assets">
+      <th mat-header-cell *matHeaderCellDef> Assets </th>
+      <td mat-cell *matCellDef="let validator">- balances<br>- rewards</td>
+    </ng-container>
+
+    <ng-container matColumnDef="delegators">
+      <th mat-header-cell *matHeaderCellDef> Delegators </th>
+      <td mat-cell *matCellDef="let validator"> 
+        {{validator.delegations?.length}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="unbond">
+      <th mat-header-cell *matHeaderCellDef> Unbond </th>
+      <td mat-cell *matCellDef="let validator">
+        - Un-bond<br>- completeion time
+      </td>
+    </ng-container>
+    
+
+    <ng-container matColumnDef="blockTime">
+      <th mat-header-cell *matHeaderCellDef> Block Time </th>
+      <td mat-cell *matCellDef="let validator">  
+        Add blocktime
+      </td>
+    </ng-container>
+  
+      <ng-container matColumnDef="bond">
+        <th mat-header-cell *matHeaderCellDef> Bond </th>
+        <td mat-cell *matCellDef="let validator">
+          - balances<br>- rewards
+        </td>
+      </ng-container>
+        
+
+    <ng-container matColumnDef="commission">
+      <th mat-header-cell *matHeaderCellDef> Commission </th>
+      <td mat-cell *matCellDef="let validator"> 
+        {{validator.commission?.rate | percent}}-maxRate-maxChangeRate
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+    
+      
+
+<!--   
   <div class="field is-grouped">
     <p class="control">
         <a 
@@ -51,11 +147,8 @@
                   </div>
                 </td>
                 <td class="td-2 td-vertical">
-                  <!-- <span *ngIf="validator.jailed">Jailed</span>
-                  <span *ngIf="!validator.jailed">Not-Jailed</span> -->
                   <span *ngIf="validator.jailed"><i class="ion-record jailed"></i></span>
                   <span *ngIf="!validator.jailed"><i class="ion-record jailedNot"></i></span>
-                  <!-- <br> -->
                   <span
                     *ngFor="let block of (appState | async).blocks.slice(0,1)"
                     [innerHTML]=
@@ -66,16 +159,8 @@
                 </td>
                 <td class="td-1">
                   {{validator.tokens/1e6 | number:'.0-0'}}
-                  <!-- {{validator.tokens | number}} -->
                   <br>
                   <span class="weightPerct">({{validator.tokens/(appState | async).totalStake| percent:'.2-2'}})</span></td>
-                <!-- <td class="td-2"
-                  *ngFor="let block of (appState | async).blocks.slice(0,1)"
-                  class="title chain-queries-title td-vertical"
-                  [innerHTML]=
-                    "block.header?.height !== null 
-                    ? (block.header.height-validator.slashing?.start_height-validator.slashing?.missed_blocks_counter) : 0">
-                </td> -->
                 <td class="td-2">
                   - balances<br>- rewards
                 </td>
@@ -92,7 +177,6 @@
                     <td class="td-2 td-vertical">-</td>
                 </ng-template>
                 <td class="td-2 td-vertical">{{validator.commission?.rate | percent}}-maxRate-maxChangeRate</td>
-                <!-- <td><a class="button is-small is-primary" href="#">{{validator.power}}</a></td> -->
                 <td>
                   -
                 </td>
@@ -100,8 +184,7 @@
             </tbody>
           </table>
       </div>
-  </div>
-  
+  </div> -->
 
 </div>
 

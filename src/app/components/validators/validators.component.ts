@@ -15,6 +15,17 @@ export class ValidatorsComponent implements OnInit {
   fragment = null;
   valsUptime: Map<string,string> = new Map;
   totalTokens = 0;
+  displayedColumns: string[] = [
+    'moniker', 
+    'status', 
+    'weight', 
+    'assets', 
+    'delegators',
+    'bond', 
+    'unbond', 
+    'blockTime',
+    'commission'
+  ];
 
   constructor(
     private store: Store<{App: { blocks: [], txs: [], validators:[] } }>, 
