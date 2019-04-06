@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { ValidatorsService } from '../../services/validators.service';
+import { Sort } from '@angular/material';
 
 @Component({
   selector: 'app-validators',
@@ -15,6 +16,8 @@ export class ValidatorsComponent implements OnInit {
   fragment = null;
   valsUptime: Map<string,string> = new Map;
   totalTokens = 0;
+
+  dataSource=[];
   displayedColumns: string[] = [
     'moniker', 
     'status', 
@@ -37,7 +40,11 @@ export class ValidatorsComponent implements OnInit {
   ngOnInit() {
     this.appState = this.store.select('App');
 
+    
     this.route.fragment.subscribe(fragment => { this.fragment = fragment; });
+    this.appState.subscribe(data => {
+      this.dataSource = [...data.validators];
+    });
     // this.appState.subscribe(data => {
     //   data.validators.forEach(validator => {
     //     if(validator['slashing']) {
@@ -51,23 +58,34 @@ export class ValidatorsComponent implements OnInit {
     // })
     
   }
+  sortData(sort: Sort) {
+    if (!sort.active || sort.direction === '') {
+      return;
+    }
 
-  sortByPower () {
-    this.validatorsService.sortValidators("tokens");
-  }
-
-  sortByPriority () {
-    this.validatorsService.sortValidators("proposer_priority");
-  }
-  
-  ngAfterViewInit(): void {
-    try {
-      if(this.fragment) {
-        document.querySelector('#' + this.fragment).scrollIntoView();
-      }
-    } catch (e) { 
-      // @aakatev hacky way of handling terminal errors dump
-      // TODO look for a better solution later
+    const isAsc = sort.direction === 'asc';
+    switch (sort.active) {
+      case 'weight': return this.sortBy('tokens', isAsc);
+      default: return 0;
     }
   }
+
+  sortBy(parameter, isAsc) {
+    this.validatorsService.sortValidators(parameter, isAsc);
+  }
+
+  // sortByPriority () {
+  //   this.validatorsService.sortValidators("proposer_priority");
+  // }
+  
+  // ngAfterViewInit(): void {
+  //   try {
+  //     if(this.fragment) {
+  //       document.querySelector('#' + this.fragment).scrollIntoView();
+  //     }
+  //   } catch (e) { 
+  //     // @aakatev hacky way of handling terminal errors dump
+  //     // TODO look for a better solution later
+  //   }
+  // }
 }

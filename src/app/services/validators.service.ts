@@ -232,8 +232,10 @@ export class ValidatorsService {
   }
 
 
-  sortValidators(property) {
-    this.wsValidatorsStore.sort((a, b) => parseFloat(b[property]) - parseFloat(a[property]));
+  sortValidators(property, direction) {
+    this.wsValidatorsStore.sort((a, b) => 
+      direction ? parseFloat(b[property]) - parseFloat(a[property]) : parseFloat(b[property]) + parseFloat(a[property])
+    );
     this.updateValidators();
   }
 

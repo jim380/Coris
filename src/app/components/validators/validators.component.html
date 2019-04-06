@@ -1,5 +1,5 @@
 <div class="row">
-  <table  mat-table [dataSource]="(appState | async).validators" class="mat-elevation-z8">
+  <table  mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- <ng-container matColumnDef="index">
       <th mat-header-cell *matHeaderCellDef> Index </th>
       <td mat-cell *matCellDef="let validator"> {{0}} </td>
@@ -36,7 +36,7 @@
     </ng-container>
   
     <ng-container matColumnDef="weight">
-      <th mat-header-cell *matHeaderCellDef> Voting Weight </th>
+      <th mat-sort-header="weight" mat-header-cell *matHeaderCellDef> Voting Weight </th>
       <td mat-cell *matCellDef="let validator">
         {{validator.tokens/1e6 | number:'.0-0'}}
         <br>
