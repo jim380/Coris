@@ -13,7 +13,7 @@ import { Sort } from '@angular/material';
 })
 export class ValidatorsComponent implements OnInit {
   appState: Observable<{blocks: [], txs:[], validators: []}>;
-  fragment = null;
+  // fragment = null;
   valsUptime: Map<string,string> = new Map;
   totalTokens = 0;
 
@@ -39,7 +39,7 @@ export class ValidatorsComponent implements OnInit {
 
   ngOnInit() {
     this.appState = this.store.select('App');
-    this.route.fragment.subscribe(fragment => { this.fragment = fragment; });
+    // this.route.fragment.subscribe(fragment => { this.fragment = fragment; });
     this.appState.subscribe(data => {
       this.dataSource = [...data.validators];
     });
@@ -57,11 +57,11 @@ export class ValidatorsComponent implements OnInit {
     
   }
 
-  ngAfterViewInit(): void {
-    try {
-      document.querySelector('#' + this.fragment).scrollIntoView();
-    } catch (e) { }
-  }
+  // ngAfterViewInit(): void {
+  //   try {
+  //     document.querySelector('#' + this.fragment).scrollIntoView();
+  //   } catch (e) { }
+  // }
   
   sortData(sort: Sort) {
     if (!sort.active || sort.direction === '') {

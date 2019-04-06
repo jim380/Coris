@@ -15,6 +15,14 @@ export class BlocksComponent implements OnInit {
   currentBlock = 0;
   startBlock = 0;
   blocksToDisplay = 20;
+  
+  dataSource=[];
+  displayedColumns: string[] = [
+    'height', 
+    'transactions', 
+    'proposer',
+    'timestamp'
+  ];
 
   constructor(private http: HttpClient, private router: Router) { }
 

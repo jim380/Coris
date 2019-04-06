@@ -12,9 +12,9 @@ import { ValidatorComponent } from './components/validator/validator.component';
 import { NewTxComponent } from './components/new-tx/new-tx.component';
 
 const routerOptions: ExtraOptions = {
-  useHash: false,
   anchorScrolling: 'enabled',
-  // ...any other options you'd like to use
+  onSameUrlNavigation: 'reload',
+  scrollPositionRestoration: 'enabled'
 };
 
 const routes: Routes = [
