@@ -65,13 +65,14 @@ export class ValidatorsComponent implements OnInit {
 
     const isAsc = sort.direction === 'asc';
     switch (sort.active) {
-      case 'weight': return this.sortBy('tokens', isAsc);
+      case 'weight': return this.validatorsService.sortValidatorsNumber('tokens', isAsc);;
+      case 'name': return this.validatorsService.sortValidatorsString('moniker',isAsc);
       default: return 0;
     }
   }
 
   sortBy(parameter, isAsc) {
-    this.validatorsService.sortValidators(parameter, isAsc);
+    this.validatorsService.sortValidatorsNumber(parameter, isAsc);
   }
 
   // sortByPriority () {
