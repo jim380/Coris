@@ -39,6 +39,11 @@ import { fadeInAnimation, fade } from './animations/animation';
 export class AppComponent {
   appState: Observable<{blocks:[], txs:[], validators:[], round:{}, roundStep: {}, valsMap: Map<string,string>}>;
 
+  networks = [
+    {id: 1, name: 'mainnet'},
+    {id: 2, name: 'testnet'},
+  ];
+
   constructor(
     private ws:WsService, 
     private store: Store <{App: {

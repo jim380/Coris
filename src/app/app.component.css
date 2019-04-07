@@ -53,8 +53,12 @@ section {
   /* box-shadow: 2px 2px 3px; */
 }
 
-.box-key {
+/* .box-key {
   text-align: left;
+  margin-left: 5px;
+} */
+
+.mat-card-header-text {
   margin-left: 5px;
 }
 
@@ -340,68 +344,7 @@ footer p {
 /*-------------------------------------------------*/
 /* Responsive Nav */
 /*-------------------------------------------------*/
-@media screen and (max-width: 768px) {
-  .row {
-    max-width: 100%;
-  }
-
-  .line {
-    width: 30px;
-    height: 3px;
-    background: white;
-    margin: 5px;
-  }
-  
-  nav {
-    position: relative;
-  }
-
-  .hamburger {
-    margin-top: 40px;
-    position: absolute;
-    cursor: pointer;
-    right: 5%;
-    top: 50%;
-    transform: translate(-5%, -50%);
-    z-index: 2;
-  }
-
-  .main-nav {
-    position: fixed;
-    background: #111923;
-    height: 100vh;
-    width: 100%;
-    flex-direction: column;
-    clip-path: circle(100px at 90% -13%);
-    -webkit-clip-path: circle(100px at 90% -13%);
-    transition: all 0.6s ease-out;
-    pointer-events: none;
-    margin-top: 0;
-  }
-  .main-nav.open {
-    clip-path: circle(1050px at 90% -13%);
-    -webkit-clip-path: circle(1050px at 90% -13%);
-    pointer-events: all;
-  }
-  .landing {
-    flex-direction: column;
-  }
-  .main-nav li {
-    opacity: 1;
-  }
-  .main-nav li a {
-    font-size: 25px;
-  }
-  .main-nav li:nth-child(1) {
-    transition: all 0.5s ease 0.2s;
-  }
-  .main-nav li:nth-child(2) {
-    transition: all 0.5s ease 0.4s;
-  }
-  .main-nav li:nth-child(3) {
-    transition: all 0.5s ease 0.6s;
-  }
-  li.fade {
-    opacity: 1;
-  }
+.example-card {
+  background: #00796B;
+  color: white;
 }
