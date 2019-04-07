@@ -1,10 +1,11 @@
+import { DummyComponent } from './../dummy/dummy.component';
 import { Component, OnInit } from '@angular/core';
 // import { Validator } from './validator';
-import { Observable } from 'rxjs';
+import { Observable, Subscriber } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { ValidatorsService } from '../../services/validators.service';
-import { Sort } from '@angular/material';
+import { Sort, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-validators',
@@ -33,9 +34,12 @@ export class ValidatorsComponent implements OnInit {
   constructor(
     private store: Store<{App: { blocks: [], txs: [], validators:[] } }>, 
     private route: ActivatedRoute, 
-    private validatorsService: ValidatorsService) { 
-
-    }
+    private validatorsService: ValidatorsService,
+    private dialog: MatDialog) { }
+  
+  openDialog() {
+    this.dialog.open(DummyComponent);
+  }
 
   ngOnInit() {
     this.appState = this.store.select('App');

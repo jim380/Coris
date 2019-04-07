@@ -20,6 +20,9 @@ import { NewTxComponent } from './components/new-tx/new-tx.component';
 import { MaterialModule } from './material.module';
 import { HeaderComponent } from './components/navigation/header/header.component';
 import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
+import { ProgressSpinnerComponent } from './components/progress-spinner/progress-spinner.component';
+import { MatTooltipModule, MatDialog, MatDialogModule } from '@angular/material';
+import { DummyComponent } from './components/dummy/dummy.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,12 @@ import { SidenavListComponent } from './components/navigation/sidenav-list/siden
     ValidatorComponent,
     NewTxComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    ProgressSpinnerComponent,
+    DummyComponent
+  ],
+  entryComponents: [
+    DummyComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +51,8 @@ import { SidenavListComponent } from './components/navigation/sidenav-list/siden
     FlexLayoutModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatTooltipModule,
+    MatDialogModule,
     StoreModule.forRoot({ App: appReducer }),
   ],
   providers: [],

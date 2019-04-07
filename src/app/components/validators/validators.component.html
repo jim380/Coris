@@ -1,4 +1,7 @@
 <div class="row">
+  <button
+  (click)="openDialog()"
+  mat-raised-button>open</button>
   <table  mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- <ng-container matColumnDef="index">
       <th mat-header-cell *matHeaderCellDef> Index </th>
