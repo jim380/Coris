@@ -4,43 +4,19 @@
     <!-- <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet"> -->
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   </head>
-<mat-sidenav-container>
-  <mat-sidenav #sidenavRef role="navigation">
-    <app-sidenav-list (sidenavClose)="sidenavRef.close()"></app-sidenav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>    
-    <app-header (sidenavToggle)="sidenavRef.toggle()"></app-header>
-    <main>
-      <body>
-        <app-status-bar></app-status-bar>
-        <router-outlet></router-outlet>
-      </body>
-
-      <footer>
-        <div class="row">
-          <div class="col span-1-of-2">
-            <ul class="footer-nav">
-              <li><a href="http://cyphercore.io/team/" target=" ">About</a></li>
-              <li><a href="https://medium.com/cypher-core" target=" ">Blog</a></li>
-              <li><a href="http://cyphercore.io/validator/" target=" ">Staking</a></li>
-            </ul>
-          </div>
-          <div class="col span-1-of-2">
-            <ul class="social-links">
-              <li><a href="#"><i class="ion-social-github" target=" "></i></a></li>
-              <li><a href="https://twitter.com/cypher_core" target=" "><i class="ion-social-twitter"></i></a></li>
-              <li><a href="https://t.me/cyphercore" target=" "><i class="ion-paper-airplane"></i></a></li>
-              <li><a href="https://www.linkedin.com/company/cypher-core/about/?viewAsMember=true" target=" "><i class="ion-social-linkedin"></i></a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="row">
-          <p>
-            Copyright &copy; 2019 - <a class="footer-brand" href="http://cyphercore.io" target=" ">Cypher Core LLC.</a>
-          </p>
-        </div>
-      </footer>
-    </main>
+  <mat-sidenav-container>
+    <mat-sidenav #sidenavRef role="navigation">
+      <app-sidenav-list (sidenavClose)="sidenavRef.close()"></app-sidenav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>    
+      <app-header (sidenavToggle)="sidenavRef.toggle()"></app-header>
+      <main>
+        <body>
+          <app-status-bar></app-status-bar>
+          <router-outlet></router-outlet>
+        </body>
+        <app-footer></app-footer>
+      </main>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </html>

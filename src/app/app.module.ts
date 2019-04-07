@@ -24,6 +24,7 @@ import { ProgressSpinnerComponent } from './components/progress-spinner/progress
 import { MatTooltipModule, MatDialog, MatDialogModule } from '@angular/material';
 import { DummyComponent } from './components/dummy/dummy.component';
 import { StatusBarComponent } from './components/status-bar/status-bar.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { StatusBarComponent } from './components/status-bar/status-bar.component
     SidenavListComponent,
     ProgressSpinnerComponent,
     DummyComponent,
-    StatusBarComponent
+    StatusBarComponent,
+    FooterComponent
   ],
   entryComponents: [
     DummyComponent
