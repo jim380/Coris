@@ -1,0 +1,80 @@
+<section class="landing">
+  <div class="row header-row" @dropDownAnimation>
+    <h1 class="title header-title">
+      Coris Explorer 
+    </h1>
+    <h2 class="subtitle header-subtitle" @fadeInAnimation>{{(appState | async).blocks[0]?.header.chain_id}}</h2>
+  </div>
+  <div class="row proposer-row">
+    <div style="cursor: pointer;" routerLink="/validators" fragment="{{(appState | async).round.proposer?.address}}">
+      <h2 *ngIf="(appState | async).valsMap.size; else elseBlock" class="title proposer-title">
+        Proposer - {{(appState | async).valsMap.get((appState | async).round.proposer?.address)}} 
+      </h2>
+      <ng-template #elseBlock>
+          <h2 class="title proposer-title">
+            Proposer - loading 
+          </h2>
+      </ng-template>
+    </div>
+  </div>
+  <div class="row chain-queries-row" @fadeInAnimation>
+    <div class="col span-1-of-4">
+      <div style="cursor: pointer;" routerLink="/last-block" class="is-parent">
+        <mat-card class="query-card" matTooltip="Latest Block Height" matTooltipPosition="above">
+          <mat-card-header>
+            <mat-card-title class="subtitle box-key" style="margin-left:-11px">
+              <i class="ion-cube"></i>&nbsp;Last Block
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <h3
+              *ngFor="let block of (appState | async).blocks.reverse().slice(0,1)"
+              class="title chain-queries-title box-value"
+              [innerHTML]="block.header?.height !== null ? block.header.height : 0">
+            </h3>
+          </mat-card-content>
+        </mat-card>                  
+      </div>
+    </div>
+    <div class="col span-1-of-4">
+      <mat-card class="query-card" matTooltip="Consensus State" matTooltipPosition="above">
+        <mat-card-header>
+          <mat-card-title class="subtitle box-key" style="margin-left:-11px">
+            <i class="ion-load-a"></i>&nbsp;Consensus
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <h3 class="title chain-queries-title box-value">{{(appState | async).roundStep.step?.split('RoundStep')[1]}}</h3>
+        </mat-card-content>
+      </mat-card>                  
+    </div>
+    <div class="col span-1-of-4">
+      <mat-card class="query-card" matTooltip="Total Active Validators" matTooltipPosition="above">
+        <mat-card-header>
+          <mat-card-title class="subtitle box-key" style="margin-left:-11px">
+            <i class="ion-person-stalker"></i>&nbsp;Validators
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <h3 class="title chain-queries-title box-value">{{(appState | async).validators?.length}}</h3>
+        </mat-card-content>
+      </mat-card>    
+    </div>
+    <div class="col span-1-of-4">
+      <div style="cursor: pointer;" routerLink="/validators" class="is-parent">
+        <mat-card class="query-card" matTooltip="Total Bonded Stake" matTooltipPosition="above">
+          <mat-card-header>
+            <mat-card-title class="subtitle box-key" style="margin-left:-11px">
+              <i class="ion-soup-can"></i>&nbsp;Bonded/Unbonded
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+              <h3 class="title box-value" style="overflow: hidden; white-space: nowrap;">
+                {{ (((appState | async).stakePool.bonded_tokens/(appState | async).stakePool.not_bonded_tokens)) * 100 | number:'.0-2'}}%
+              </h3>
+          </mat-card-content>
+        </mat-card>                  
+      </div>
+    </div>
+  </div>
+</section>

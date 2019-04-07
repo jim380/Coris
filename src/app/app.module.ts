@@ -23,6 +23,7 @@ import { SidenavListComponent } from './components/navigation/sidenav-list/siden
 import { ProgressSpinnerComponent } from './components/progress-spinner/progress-spinner.component';
 import { MatTooltipModule, MatDialog, MatDialogModule } from '@angular/material';
 import { DummyComponent } from './components/dummy/dummy.component';
+import { StatusBarComponent } from './components/status-bar/status-bar.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { DummyComponent } from './components/dummy/dummy.component';
     HeaderComponent,
     SidenavListComponent,
     ProgressSpinnerComponent,
-    DummyComponent
+    DummyComponent,
+    StatusBarComponent
   ],
   entryComponents: [
     DummyComponent
