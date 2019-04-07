@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet"> -->
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   </head>
 <mat-sidenav-container>
@@ -34,47 +34,63 @@
           <div class="row chain-queries-row" @fadeInAnimation>
             <div class="col span-1-of-4">
               <div style="cursor: pointer;" routerLink="/last-block" class="is-parent">
-                <article class="box">
-                  <!-- <p class="title">{{(appState | async).round?.height}}</p> -->
-                  <p class="subtitle chain-queries-subtitle box-key"><i class="ion-cube"></i>&nbsp;Last Block</p>
-                  <h3
-                    *ngFor="let block of (appState | async).blocks.reverse().slice(0,1)"
-                    class="title chain-queries-title box-value"
-                    [innerHTML]="block.header?.height !== null ? block.header.height : 0">
-                  </h3>
-                  <!-- <p class="subtitle chain-queries-subtitle">Last Block</p> -->
-                </article>
+                <mat-card class="query-card" matTooltip="Latest Block Height" matTooltipPosition="above">
+                  <mat-card-header>
+                    <mat-card-title class="subtitle box-key" style="margin-left:-11px">
+                      <i class="ion-cube"></i>&nbsp;Last Block
+                    </mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <h3
+                      *ngFor="let block of (appState | async).blocks.reverse().slice(0,1)"
+                      class="title chain-queries-title box-value"
+                      [innerHTML]="block.header?.height !== null ? block.header.height : 0">
+                    </h3>
+                  </mat-card-content>
+                </mat-card>                  
               </div>
             </div>
             <div class="col span-1-of-4">
-              <article class="box">
-                    <!-- <p class="subtitle chain-queries-subtitle box-key"><i class="ion-load-a"></i>&nbsp;Round {{(appState | async).roundStep.round}}</p> -->
-                    <p class="subtitle chain-queries-subtitle box-key"><i class="ion-load-a"></i>&nbsp;Consensus</p>
-                    <h3 class="title chain-queries-title box-value">{{(appState | async).roundStep.step?.split('RoundStep')[1]}}</h3>
-                <!-- <p class="subtitle chain-queries-subtitle">Round {{(appState | async).roundStep.round}}</p> -->
-              </article>
+              <mat-card class="query-card" matTooltip="Consensus State" matTooltipPosition="above">
+                <mat-card-header>
+                  <mat-card-title class="subtitle box-key" style="margin-left:-11px">
+                    <i class="ion-load-a"></i>&nbsp;Consensus
+                  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <h3 class="title chain-queries-title box-value">{{(appState | async).roundStep.step?.split('RoundStep')[1]}}</h3>
+                </mat-card-content>
+              </mat-card>                  
+            </div>
+            <div class="col span-1-of-4">
+              <mat-card class="query-card" matTooltip="Total Active Validators" matTooltipPosition="above">
+                <mat-card-header>
+                  <mat-card-title class="subtitle box-key" style="margin-left:-11px">
+                    <i class="ion-person-stalker"></i>&nbsp;Validators
+                  </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <h3 class="title chain-queries-title box-value">{{(appState | async).validators?.length}}</h3>
+                </mat-card-content>
+              </mat-card>    
             </div>
             <div class="col span-1-of-4">
               <div style="cursor: pointer;" routerLink="/validators" class="is-parent">
-                <article class="box">
-                  <p class="subtitle chain-queries-subtitle box-key"><i class="ion-person-stalker"></i>&nbsp;Validators</p>
-                  <h3 class="title chain-queries-title box-value">{{(appState | async).validators?.length}}</h3>
-                  <!-- <p class="subtitle chain-queries-subtitle">Validators</p> -->
-                </article>
+                <mat-card class="query-card" matTooltip="Total Bonded Stake" matTooltipPosition="above">
+                  <mat-card-header>
+                    <mat-card-title class="subtitle box-key" style="margin-left:-11px">
+                      <i class="ion-soup-can"></i>&nbsp;Bonded/Unbonded
+                    </mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                      <h3 class="title box-value" style="overflow: hidden; white-space: nowrap;">
+                        {{(appState | async).stakePool.bonded_tokens/1e6 | number:'.0-0'}} (in %)
+                        <!-- <br>
+                        {{(appState | async).stakePool.not_bonded_tokens/1e6 | number:'.0-0'}} -->
+                      </h3>
+                  </mat-card-content>
+                </mat-card>                  
               </div>
-            </div>
-            <div class="col span-1-of-4">
-                <div style="cursor: pointer;" routerLink="/validators" class="is-parent">
-                  <article class="box">
-                    <p class="subtitle chain-queries-subtitle box-key"><i class="ion-soup-can"></i>&nbsp;Bonded/Unbonded</p>
-                    <h3 class="title chain-queries-title box-value" style="overflow: hidden; white-space: nowrap;">
-                      {{(appState | async).stakePool.bonded_tokens | number}}
-                      <br>
-                      {{(appState | async).stakePool.not_bonded_tokens | number}}
-                    </h3>
-                    <!-- <p class="subtsitle chain-queries-subtitle">Validators</p> -->
-                  </article>
-                </div>
             </div>
           </div>
         </section>
