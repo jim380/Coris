@@ -12,36 +12,46 @@
     </div>
   </div>
   <div class="card events-card">
-    <header class="card-header">
-      <p class="card-header-title"><i class="fas fa-exchange-alt"></i>Transactions</p>
-<!--       <a routerLink="/new/tx" class="pagination-next button is-primary">New</a> -->
-    </header>
-    <div class="card-table">
-      <table class="table is-fullwidth">
-        <thead>
-          <tr>
-            <th>Hash</th>
-            <th>Type</th>
-            <th>Fee</th>
-            <th>Height</th>
-            <th>Timestamp (UTC)</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-          <tr *ngIf="!txs?.length">
-            <td style="color: black">No recent txs</td>
-          </tr>
-          <tr routerLink="/tx/{{tx.hash}}" class="clickable" *ngFor="let tx of txs">
-            <td class="td-1">{{tx.hash}}</td>
-            <td *ngIf="tx.tagsDecod" class="td-2">{{tx.tagsDecod[0].value | titlecase}}</td>
-            <td>{{tx.gasUsed}}</td>
-            <td class="td-1">{{tx.height}}</td>
-            <td>{{'Add time'}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <mat-table [dataSource]="txs" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="hash">
+        <mat-header-cell *matHeaderCellDef> Hash </mat-header-cell>
+        <mat-cell *matCellDef="let tx">
+          {{tx.hash}}
+        </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="type">
+        <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
+        <mat-cell *matCellDef="let tx">
+          {{tx.tagsDecod[0].value | titlecase}}
+        </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="fee">
+        <mat-header-cell *matHeaderCellDef> Fee </mat-header-cell>
+        <mat-cell *matCellDef="let tx">
+          {{tx.gasUsed}}
+        </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="height">
+        <mat-header-cell *matHeaderCellDef> Height </mat-header-cell>
+        <mat-cell *matCellDef="let tx">
+          {{tx.height}}
+        </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="timestamp">
+        <mat-header-cell *matHeaderCellDef> Timestamp </mat-header-cell>
+        <mat-cell *matCellDef="let tx">
+          add time
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
   </div>
   <nav class="pagination" role="navigation" aria-label="pagination">
     <button (click)="displayOlderTxs()" id="btn-older" class="pagination-next button is-dark">Older</button>

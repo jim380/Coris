@@ -4,7 +4,6 @@
 .row {
   max-width: 90%;
   margin: 0 auto;
-
 }
 
 p {
@@ -43,10 +42,6 @@ thead th:nth-child(4) {
   width: 20%;
 }
 
-th, td {
-  padding: 20px;
-}
-
 tbody tr:nth-child(odd){
   background:#0D151F;
 }
@@ -54,8 +49,6 @@ tbody tr:nth-child(odd){
 tbody tr:nth-child(even){
   background:#111923;
 }
-
-
 
 button {
   margin: 15px;
@@ -96,9 +89,12 @@ tbody {
   font-family: 'Lato', 'Arial', sans-serif;
   font-weight: 300;
   text-rendering: optimizeLegibility;
-  color: #111923;
+  vertical-align: middle;
 }
 
+.mat-header-cell {
+  color: #111923;
+}
 
 .mat-cell {
   color: #F7F7F7;

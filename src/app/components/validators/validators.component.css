@@ -9,7 +9,6 @@
 p {
   padding: 1px;
 }
-
 /*-------------------------------------------------*/
 /* Table */
 /*-------------------------------------------------*/
@@ -66,9 +65,6 @@ thead th:nth-child(10) {
   width: 10%;
 }
 
-th, td {
-  padding: 20px;
-}
 
 tbody tr:nth-child(odd){
   background:#0D151F;
@@ -78,57 +74,8 @@ tbody tr:nth-child(even){
   background:#111923;
 }
 
-.validator-card{
-  padding: 1rem;
-}
-
-.validator_body{
-  box-shadow: inset 0 0 10px rgb(24, 24, 24);
-}
-
-.validator-card-header{
-  background: #00796B;
-  color: #F7F7F7;
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-}
-
-.validator-card-text{
-  /* background: #36393F; */
-  color: #F7F7F7;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  
-}
-
-.validator__text--body{
-  display: flex;
-  width: 100%;
-}
-
-.validator__text--body :first-child{
-  font-weight: bold;
-  font-size: 105%;
-  width: 25%;
-}
-
-.col-avatar {
-  width: 50px;
-  margin-right: 10px;
-}
-
 button {
   margin: 15px;
-}
-
-.card-header {
-  background: #00796B;
-}
-
-.card-header p {
-  margin-left: 6px;
 }
 
 p,
@@ -148,16 +95,6 @@ tbody {
   size: 50%;
 }
 
-.td-vertical {
-  /* margin-top: 0;
-  padding: 15px; */
-  vertical-align: middle; 
-}
-
-.col-moniker {
-  padding-top: 10px;
-}
-
 .jailed {
   color: rgb(255, 0, 0);
 }
@@ -170,15 +107,7 @@ tbody {
   color: rgb(101, 170, 223);
 }
 
-.test {
-  background-color: #ff9800;
-  border: 1px;
-  width: 40px;
-  border-radius: 5px;
-}
-
-/* Material table */
-
+/* mat-table */
 .mat-row:nth-child(even){
   background-color:#0D151F;
 }
@@ -192,9 +121,12 @@ tbody {
   font-family: 'Lato', 'Arial', sans-serif;
   font-weight: 300;
   text-rendering: optimizeLegibility;
-  color: #111923;
+  vertical-align: middle;
 }
 
+.mat-header-cell {
+  color: #111923;
+}
 
 .mat-cell {
   color: #F7F7F7;
