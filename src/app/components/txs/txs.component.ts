@@ -19,17 +19,17 @@ export class TxsComponent implements OnInit {
   lastBlock = 0;
   // @aakatev TODO lookup how to query more than 30 txs at json
   blocksToScan = 3000;
-  
-  constructor(private http: HttpClient, @Inject(DOCUMENT) document, private router: Router) { }
 
-  ngOnInit() {
-    this.http.get(`${nodeRpc}/status`).subscribe(data => {
-      this.lastBlock = data['result'].sync_info.latest_block_height;
-      this.minHeight = this.lastBlock - this.blocksToScan;
-      this.clearTxs();
-      this.fetchTxs();  
-    });
-  }
+  dataSource=[];
+  displayedColumns: string[] = [
+    'hash', 
+    'type', 
+    'fee',
+    'height',
+    'timestamp'
+  ];
+
+  constructor(private http: HttpClient, @Inject(DOCUMENT) document, private router: Router) { }
 
   clearTxs() {
     this.txs = [];
@@ -41,7 +41,9 @@ export class TxsComponent implements OnInit {
 
   fetchTxs() {
     document.getElementById('btn-older').classList.add('is-loading');
-    this.http.get(`${nodeRpc}/tx_search?query="tx.height>${this.minHeight}"`).subscribe(data => {
+    this.http.get(`${nodeRpc}/tx_search?query="tx.height>${this.minHeight}"`)
+      .subscribe(data => {
+      this.clearTxs();
       // console.log(`${nodeRpc}/tx_search?query="tx.height>${this.minHeight}"`);
       let currTxs = data['result'].txs.reverse();
       console.log(data['result'].txs);
@@ -101,5 +103,14 @@ export class TxsComponent implements OnInit {
   displayOlderTxs () {
     this.minHeight -= this.blocksToScan;
     this.fetchTxs();  
+  }
+
+  ngOnInit() {
+    this.http.get(`${nodeRpc}/status`).subscribe(data => {
+      this.lastBlock = data['result'].sync_info.latest_block_height;
+      this.minHeight = this.lastBlock - this.blocksToScan;
+      // this.clearTxs();
+      this.fetchTxs();
+    });
   }
 }
