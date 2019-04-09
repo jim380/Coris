@@ -65,14 +65,17 @@
         <mat-card class="query-card" matTooltip="Total Bonded Stake" matTooltipPosition="above">
           <mat-card-header>
             <mat-card-title class="subtitle box-key" style="margin-left:-11px">
-              <i class="ion-soup-can"></i>&nbsp;Bonded (add %)
+              <i class="ion-soup-can"></i>&nbsp;Bonded
             </mat-card-title>
           </mat-card-header>
           <mat-card-content>
               <h3 class="title box-value" style="overflow: hidden; white-space: nowrap;">
-                <!-- {{ (((appState | async).stakePool.bonded_tokens/(appState | async).stakePool.not_bonded_tokens)) * 100 | number:'.0-2'}}%
-                 -->
-                 {{ (appState | async).stakePool.bonded_tokens/1e6 | number:'.0-0'}}
+                {{
+                  (appState | async).stakePool.bonded_tokens/1e6
+                  /((appState | async).stakePool.bonded_tokens/1e6 + (appState | async).stakePool.not_bonded_tokens/1e6) 
+                  * 100 | number
+                }}%
+                <!-- {{ (appState | async).stakePool.bonded_tokens/1e6 | number:'.0-0'}} -->
               </h3>
           </mat-card-content>
         </mat-card>                  
