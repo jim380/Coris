@@ -1,18 +1,8 @@
-// import {Action} from '@ngrx/store';
 import * as AppActions from './app.actions';
+import { State } from '../interfaces/state.interface';
 
-export interface State {
-  blocks:any;
-  txs: any;
-  validators: any
-  round: any;
-  roundStep: any;
-  valsMap: any;
-  totalStake: any;
-  stakePool: any;
-}
 
-const initialState: State= {
+const initialState: State = {
   blocks:[],
   txs: [],
   validators: [],
@@ -27,8 +17,6 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
   switch(action.type) {
     case AppActions.UPDATE_BLOCKS:
       return {
-        // ...state,
-        // blocks:[...state.blocks, action.payload]
         blocks: action.payload,
         txs: state.txs,
         validators: state.validators,
