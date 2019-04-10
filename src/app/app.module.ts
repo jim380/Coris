@@ -12,7 +12,7 @@ import { BlocksComponent } from './components/blocks/blocks.component';
 import { TxsComponent } from './components/txs/txs.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LastBlockComponent } from './components/last-block/last-block.component';
-import { appReducer } from './app.reducers';
+import { appReducer } from './state/app.reducers';
 import { BlockComponent } from './components/block/block.component';
 import { TxComponent } from './components/tx/tx.component';
 import { ValidatorComponent } from './components/validator/validator.component';
