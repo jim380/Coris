@@ -15,65 +15,63 @@ const initialState: State = {
 
 export function appReducer(state = initialState, action: AppActions.AppActions) {
   switch(action.type) {
-    case AppActions.UPDATE_BLOCKS:
+    case AppActions.UPDATE_BLOCKS: {
       return {
         ...state,
         blocks: action.payload,
       }
-      break;
+    }
     
-    case AppActions.UPDATE_TXS:
+    case AppActions.UPDATE_TXS: {
       return {
         ...state,
         txs: action.payload,
       }
-      break;
+    }
 
-    case AppActions.UPDATE_VALIDATORS:
+    case AppActions.UPDATE_VALIDATORS: {
       return {
         ...state,
         validators: action.payload,
       }
-      break;
+    }
     
-    case AppActions.UPDATE_ROUND:
+    case AppActions.UPDATE_ROUND: {
       return {
         ...state,
         round: action.payload,
       }
-      break;
+    }
 
-    case AppActions.UPDATE_ROUND_STEP:
+    case AppActions.UPDATE_ROUND_STEP: {
       return {
         ...state,
         roundStep: action.payload,
       }
-      break;
+    }
 
-    case AppActions.UPDATE_VALS_MAP:
+    case AppActions.UPDATE_VALS_MAP: {
       return {
         ...state, 
         valsMap: action.payload,
       }
-      break;
+    }
       
-    case AppActions.UPDATE_TOTAL_STAKE:
+    case AppActions.UPDATE_TOTAL_STAKE: {
       return {
         ...state,
         totalStake: action.payload,
       }
-      break;
-      
+    }      
 
-    case AppActions.UPDATE_STAKE_POOL:
+    case AppActions.UPDATE_STAKE_POOL: {
       return {
         ...state,
         stakePool: action.payload,
       }
-      break;
+    }
     
-    default:
-      break;
+    default: 
+      return state;;
   }
-  return state;
 }
