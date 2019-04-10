@@ -17,106 +17,57 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
   switch(action.type) {
     case AppActions.UPDATE_BLOCKS:
       return {
+        ...state,
         blocks: action.payload,
-        txs: state.txs,
-        validators: state.validators,
-        round: state.round,
-        roundStep: state.roundStep,
-        valsMap: state.valsMap,
-        totalStake: state.totalStake,
-        stakePool: state.stakePool,
       }
       break;
     
     case AppActions.UPDATE_TXS:
       return {
-        blocks: state.blocks,
+        ...state,
         txs: action.payload,
-        validators: state.validators,
-        round: state.round,
-        roundStep: state.roundStep,
-        valsMap: state.valsMap,
-        totalStake: state.totalStake,
-        stakePool: state.stakePool,
       }
       break;
 
     case AppActions.UPDATE_VALIDATORS:
       return {
-        txs: state.txs,
-        blocks: state.blocks,
+        ...state,
         validators: action.payload,
-        round: state.round,
-        roundStep: state.roundStep,
-        valsMap: state.valsMap,
-        totalStake: state.totalStake,
-        stakePool: state.stakePool,
       }
       break;
     
     case AppActions.UPDATE_ROUND:
       return {
-        txs: state.txs,
-        blocks: state.blocks,
-        validators: state.validators,
+        ...state,
         round: action.payload,
-        roundStep: state.roundStep,
-        valsMap: state.valsMap,
-        totalStake: state.totalStake,
-        stakePool: state.stakePool,
       }
       break;
 
     case AppActions.UPDATE_ROUND_STEP:
       return {
-        txs: state.txs,
-        blocks: state.blocks,
-        validators: state.validators,
-        round: state.round,
+        ...state,
         roundStep: action.payload,
-        valsMap: state.valsMap,
-        totalStake: state.totalStake,
-        stakePool: state.stakePool,
       }
       break;
 
     case AppActions.UPDATE_VALS_MAP:
       return {
-        txs: state.txs,
-        blocks: state.blocks,
-        validators: state.validators,
-        round: state.round,
-        roundStep: state.roundStep, 
+        ...state, 
         valsMap: action.payload,
-        totalStake: state.totalStake,
-        stakePool: state.stakePool,
       }
       break;
       
-
     case AppActions.UPDATE_TOTAL_STAKE:
       return {
-        txs: state.txs,
-        blocks: state.blocks,
-        validators: state.validators,
-        round: state.round,
-        roundStep: state.roundStep, 
-        valsMap: state.valsMap,
+        ...state,
         totalStake: action.payload,
-        stakePool: state.stakePool,
       }
       break;
       
 
     case AppActions.UPDATE_STAKE_POOL:
       return {
-        txs: state.txs,
-        blocks: state.blocks,
-        validators: state.validators,
-        round: state.round,
-        roundStep: state.roundStep, 
-        valsMap: state.valsMap,
-        totalStake: state.totalStake,
+        ...state,
         stakePool: action.payload,
       }
       break;
