@@ -13,9 +13,8 @@ import { sha256 } from 'js-sha256';
 })
 export class ValidatorsService {
   totalStake = 0;  
-  wsValidatorsStore = null;
-  wsValidatorsMapping: Map<string,string> = new Map;
-  // poolStake = null;
+  validatorsStore = null;
+  validatorsMap: Map<string,string> = new Map;
 
   numOfValidators = 0;
   MAX_STORE_INDEX = 10;
@@ -35,13 +34,11 @@ export class ValidatorsService {
 
   getTotalStake() { return this.totalStake };
 
-  // Validators mapping
   setValidators(validators) {
-    this.wsValidatorsStore = validators;
-    this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
+    this.validatorsStore = validators;
+    this.store.dispatch(new AppActions.UpdateValidators(this.validatorsStore));
   }
 
-  // Validators mapping
   setStakingPool() {
     return new Promise(resolve => {
         this.http.get(`https://aakatev.me/node_txs/staking/pool`).subscribe(async data => {
@@ -55,10 +52,10 @@ export class ValidatorsService {
   }
   
   updateValidators() {
-    this.store.dispatch(new AppActions.UpdateValidators(this.wsValidatorsStore));
-    this.store.dispatch(new AppActions.UpdateValsMap(this.wsValidatorsMapping));
-    console.log(this.wsValidatorsStore);
-    console.log(this.wsValidatorsMapping);
+    this.store.dispatch(new AppActions.UpdateValidators(this.validatorsStore));
+    this.store.dispatch(new AppActions.UpdateValsMap(this.validatorsMap));
+    console.log(this.validatorsStore);
+    console.log(this.validatorsMap);
   }
   
 
@@ -81,7 +78,7 @@ export class ValidatorsService {
         // Debugging
         // console.log(data);
         if(data !== null) {
-          this.mergeProperties(this.wsValidatorsStore, "consensus_pubkey", data['validators'], "pub_key", "ranking")
+          this.mergeProperties(this.validatorsStore, "consensus_pubkey", data['validators'], "pub_key", "ranking")
             .then(() => {
               this.updateValidators();
               resolve();
@@ -165,19 +162,19 @@ export class ValidatorsService {
     return new Promise(async resolve => {
       let hexAddr = await this.getHexAddress(validator['consensus_pubkey']);
       validator['hex_address'] = hexAddr;
-      this.wsValidatorsMapping.set(hexAddr, validator['description'].moniker);
+      this.validatorsMap.set(hexAddr, validator['description'].moniker);
       resolve();  
     });
   }
 
   getValidatorDelegations(validator) {
     return new Promise(resolve => {
-      this.http.get(`https://aakatev.me/node_txs/staking/validators/${this.wsValidatorsStore[validator].operator_address}/delegations`)
+      this.http.get(`https://aakatev.me/node_txs/staking/validators/${this.validatorsStore[validator].operator_address}/delegations`)
         .subscribe(data => {
           // Debugging
           console.log(data);
           
-          this.wsValidatorsStore[validator].delegations = data;
+          this.validatorsStore[validator].delegations = data;
           resolve();
         });
     });
@@ -188,15 +185,15 @@ export class ValidatorsService {
     await this.getValidatorsDetails();
     await this.getValidatorsRanking();
 
-    this.wsValidatorsStore.forEach(async validator => {
+    this.validatorsStore.forEach(async validator => {
       await this.getValidatorSlashing(validator);
     });
 
-    this.wsValidatorsStore.forEach(async validator => {
+    this.validatorsStore.forEach(async validator => {
       await this.getValidatorAvatars(validator);
     });
 
-    this.wsValidatorsStore.forEach(async validator => {
+    this.validatorsStore.forEach(async validator => {
       await this.getValidatorHex(validator);
     });
 
@@ -223,9 +220,9 @@ export class ValidatorsService {
   
   asyncGetDelegations() {
     return new Promise (async resolve => {
-      for (let validator in this.wsValidatorsStore) {
+      for (let validator in this.validatorsStore) {
         // Debugging
-        // console.log(this.wsValidatorsStore[validator]);
+        // console.log(this.validatorsStore[validator]);
         await this.getValidatorDelegations(validator);
       }
       resolve()
@@ -234,9 +231,9 @@ export class ValidatorsService {
 
   getDelegations() {
     return new Promise (async resolve => {
-      for (let validator in this.wsValidatorsStore) {
+      for (let validator in this.validatorsStore) {
         // Debugging
-        // console.log(this.wsValidatorsStore[validator]);
+        // console.log(this.validatorsStore[validator]);
         this.getValidatorDelegations(validator);
       }
       resolve();
@@ -245,7 +242,7 @@ export class ValidatorsService {
 
   calculateTotalVotingPower() {
     return new Promise (async resolve => {
-      for (let validator of this.wsValidatorsStore) {
+      for (let validator of this.validatorsStore) {
         this.totalStake += await Number(validator['tokens']);
         this.store.dispatch(new AppActions.UpdateTotalStake(this.totalStake));
         // console.log(this.totalStake);
@@ -256,7 +253,7 @@ export class ValidatorsService {
 
 
   sortValidatorsNumber(property, direction) {
-    this.wsValidatorsStore.sort((a, b) => 
+    this.validatorsStore.sort((a, b) => 
       direction ? parseFloat(b[property]) - parseFloat(a[property]) : parseFloat(b[property]) + parseFloat(a[property])
     );
     this.updateValidators();
@@ -264,8 +261,10 @@ export class ValidatorsService {
 
 
   sortValidatorsString(property, direction) {
-    this.wsValidatorsStore.sort((a, b) => 
-      direction ? b['description'][property] > a['description'][property] : b['description'][property] < a['description'][property]
+    this.validatorsStore.sort((a, b) => 
+      direction ?
+      b['description'][property] > a['description'][property] :
+      b['description'][property] < a['description'][property]
     );
     this.updateValidators();
   }
