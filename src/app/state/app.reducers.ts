@@ -1,7 +1,18 @@
 // import {Action} from '@ngrx/store';
 import * as AppActions from './app.actions';
 
-const initialState = {
+export interface State {
+  blocks:any;
+  txs: any;
+  validators: any
+  round: any;
+  roundStep: any;
+  valsMap: any;
+  totalStake: any;
+  stakePool: any;
+}
+
+const initialState: State= {
   blocks:[],
   txs: [],
   validators: [],
