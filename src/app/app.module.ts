@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -57,6 +58,7 @@ import { FooterComponent } from './components/footer/footer.component';
     BrowserAnimationsModule,
     MatTooltipModule,
     MatDialogModule,
+    ChartsModule,
     StoreModule.forRoot({ App: appReducer }),
   ],
   providers: [],

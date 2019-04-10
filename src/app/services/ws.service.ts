@@ -28,23 +28,35 @@ export class WsService {
 
   MAX_STORE_INDEX = 10;
 
-  constructor(private store: Store<{App: { blocks: [], txs: [], validators: [], round: {}, roundStep: {}, valsMap: Map<string,string>} }>, private http: HttpClient) { 
+  constructor(
+    private store: Store<{App: { 
+      blocks: [], 
+      txs: [], 
+      validators: [], 
+      round: {}, 
+      roundStep: {}, 
+      valsMap: Map<string,string>
+    }}>, 
+    private http: HttpClient ) { 
 
-    this.http.get(`${nodeRpc}/status`).subscribe(data => {
-      // Debugging
-      // let currValidators = data['result'].genesis.validators;
-      let lastBlock = data['result'].sync_info.latest_block_height;
+    // TODO @aakatev remove with next commits
+    // Code to preload some txs and blocks
+    // ***
+    // this.http.get(`${nodeRpc}/status`).subscribe(data => {
+    //   // Debugging
+    //   // let currValidators = data['result'].genesis.validators;
+    //   let lastBlock = data['result'].sync_info.latest_block_height;
 
-      this.http.get(`${nodeRpc}/tx_search?query="tx.height>${lastBlock-100}"`).subscribe(data => {
-        this.txsStore = data['result'].txs.reverse();
-        this.store.dispatch(new AppActions.UpdateTxs(this.txsStore));
-      });
+    //   this.http.get(`${nodeRpc}/tx_search?query="tx.height>${lastBlock-100}"`).subscribe(data => {
+    //     this.txsStore = data['result'].txs.reverse();
+    //     this.store.dispatch(new AppActions.UpdateTxs(this.txsStore));
+    //   });
 
-      this.http.get(`${nodeRpc}/blockchain?minHeight=${lastBlock-50}&maxHeight=${lastBlock}`).subscribe(data => {
-        this.blocksStore = data['result'].block_metas.reverse();
-        this.store.dispatch(new AppActions.UpdateBlocks(this.blocksStore));
-      });
-    });
+    //   this.http.get(`${nodeRpc}/blockchain?minHeight=${lastBlock-50}&maxHeight=${lastBlock}`).subscribe(data => {
+    //     this.blocksStore = data['result'].block_metas.reverse();
+    //     this.store.dispatch(new AppActions.UpdateBlocks(this.blocksStore));
+    //   });
+    // });
 
      // WS handlers
     this.newWebSocket.onopen = (event) => {
@@ -56,24 +68,26 @@ export class WsService {
       if (Object.keys(json.result).length !== 0) {
         if(json.result.data.type === 'tendermint/event/NewBlock') {
           // Debugging
-          // console.log('NewBlock!');
+          console.log('NewBlock!');
+          console.log(json.result.data.value);
+          
           if(Object.keys(this.blocksStore).length >= this.MAX_STORE_INDEX) {
             this.blocksStore.shift();
           }
           this.blocksStore.push(json.result.data.value.block);
-          // Debugging
-          // console.log(json.result.data.value);
+          
           this.store.dispatch(new AppActions.UpdateBlocks(this.blocksStore));
         } else if(json.result.data.type === 'tendermint/event/Tx') {
           // Debugging
-          // console.log('NewTx!');
+          console.log('NewTx!');
+          
           this.http.get(`${nodeRpc}/tx_search?query="tx.height=${json.result.data.value.TxResult.height}"`).subscribe(data => {
             if(Object.keys(this.txsStore).length >= this.MAX_STORE_INDEX) {
               this.txsStore.shift();
             }
             // Debugging
-            // console.log('Data', data);
-            // console.log('Json', json.result);
+            console.log('Data', data);
+            console.log('Json', json.result);
             this.txsStore.unshift(data['result'].txs[json.result.data.value.TxResult.index]);
             this.store.dispatch(new AppActions.UpdateTxs(this.txsStore));
           });
