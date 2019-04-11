@@ -4,19 +4,11 @@
     <!-- <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet"> -->
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   </head>
-  <mat-sidenav-container>
-    <mat-sidenav #sidenavRef role="navigation">
-      <app-sidenav-list (sidenavClose)="sidenavRef.close()"></app-sidenav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>    
-      <app-header (sidenavToggle)="sidenavRef.toggle()"></app-header>
-      <main>
-        <body>
-          <app-status-bar></app-status-bar>
-          <router-outlet></router-outlet>
-        </body>
-        <app-footer></app-footer>
-      </main>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+  <app-main-nav>
+    <body>
+      <app-status-bar></app-status-bar>
+      <router-outlet></router-outlet>
+    </body>
+    <app-footer></app-footer>      
+  </app-main-nav>
 </html>
