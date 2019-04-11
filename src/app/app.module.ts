@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,7 +13,7 @@ import { BlocksComponent } from './components/blocks/blocks.component';
 import { TxsComponent } from './components/txs/txs.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LastBlockComponent } from './components/last-block/last-block.component';
-import { appReducer } from './app.reducers';
+import { appReducer } from './state/app.reducers';
 import { BlockComponent } from './components/block/block.component';
 import { TxComponent } from './components/tx/tx.component';
 import { ValidatorComponent } from './components/validator/validator.component';
@@ -56,6 +57,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     BrowserAnimationsModule,
     MatTooltipModule,
     MatDialogModule,
+    ChartsModule,
     StoreModule.forRoot({ App: appReducer }),
     LayoutModule,
     MatToolbarModule,
