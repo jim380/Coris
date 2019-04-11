@@ -18,13 +18,13 @@ import { TxComponent } from './components/tx/tx.component';
 import { ValidatorComponent } from './components/validator/validator.component';
 import { NewTxComponent } from './components/new-tx/new-tx.component';
 import { MaterialModule } from './material.module';
-import { HeaderComponent } from './components/navigation/header/header.component';
-import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
 import { ProgressSpinnerComponent } from './components/progress-spinner/progress-spinner.component';
-import { MatTooltipModule, MatDialog, MatDialogModule } from '@angular/material';
+import { MatTooltipModule, MatDialog, MatDialogModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
 import { DummyComponent } from './components/dummy/dummy.component';
 import { StatusBarComponent } from './components/status-bar/status-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { MainNavComponent } from './components/navigation/main-nav/main-nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
@@ -38,12 +38,11 @@ import { FooterComponent } from './components/footer/footer.component';
     TxComponent,
     ValidatorComponent,
     NewTxComponent,
-    HeaderComponent,
-    SidenavListComponent,
     ProgressSpinnerComponent,
     DummyComponent,
     StatusBarComponent,
-    FooterComponent
+    FooterComponent,
+    MainNavComponent
   ],
   entryComponents: [
     DummyComponent
@@ -58,6 +57,12 @@ import { FooterComponent } from './components/footer/footer.component';
     MatTooltipModule,
     MatDialogModule,
     StoreModule.forRoot({ App: appReducer }),
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
