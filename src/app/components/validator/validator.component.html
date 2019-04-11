@@ -1,61 +1,11 @@
-<div 
-  *ngIf="selectedValidator!==-1"
-  class="card events-card">
-    <div class="card-table">
-      <div class="content">
-        <article class="message">
-          <div class="message-header">
-            <i class="fab fa-codepen"></i>
-            <p>Validator</p>
-          </div>
-          <div class="message-body">
-            <!-- <h3>Validator {{(appState | async).validators[selectedValidator].data?.description.moniker}}</h3>
-            <h4>Address: {{(appState | async).validators[selectedValidator].address}}</h4>
-            <h4>Operator: Address {{(appState | async).validators[selectedValidator].data?.operator_address}}</h4>
-            <h4>Description</h4>
-            <p>Details {{(appState | async).validators[selectedValidator].data?.description.details}}</p>
-            <p>Website {{(appState | async).validators[selectedValidator].data?.description.website}}</p>
-            <h4>Info</h4>
-            <p>Tokens {{(appState | async).validators[selectedValidator].data?.tokens}}</p>
-            <p>Jailed? {{(appState | async).validators[selectedValidator].data?.jailed}}</p>
-            <h4>Comission</h4>
-            <p>Max. change rate {{(appState | async).validators[selectedValidator].data?.commission.max_change_rate}}</p>
-            <p>Max. rate {{(appState | async).validators[selectedValidator].data?.commission.max_rate}}</p>
-            <p>Rate {{(appState | async).validators[selectedValidator].data?.commission.rate}}</p>
-            <h3>Delegations</h3>
-            <div *ngFor="let deleg of delegationInfo; let i = index">
-              <h4>{{i+1}}. Accounts</h4> 
-              <p>{{deleg.delegator_address}}</p>  
-              <p>Shares {{deleg.shares}}</p>  
-              <a class="button is-dark" routerLink="/new/tx/{{deleg.delegator_address}}">Delegate</a>
-              <h5>Txs</h5>
-              <div *ngFor="let tx of deleg.txs; let i2 = index">
-                <p>Hash {{tx.txhash}}</p>
-                <p>Height {{tx.height}}</p>
-                <a routerLink="/tx/{{tx.txhash}}">View</a>
-              </div>
-              <br>
-            </div> -->
-            <table class="table is-fullwidth is-striped">
-              <tbody>
-                <tr>
-                  <th><a (click)="showHideElem()">Pub Keys</a></th>
-                </tr>  
-                <div *ngIf="(appState | async).validators[selectedValidator].keys!==undefined" [style.display]="displayKeys ? 'flex': 'none'" id="precommits">
-                  <tr><td>ADDRESS {{(appState | async).validators[selectedValidator].keys?.Addres}}</td></tr>
-                  <tr><td>BECH32 ACC {{(appState | async).validators[selectedValidator].keys['Bech32 Acc']}}</td></tr>
-                  <tr><td>BECH32 VAL CONSEN {{(appState | async).validators[selectedValidator].keys['Bech32 Validator Consensus']}}</td></tr>
-                  <tr><td>BECH32 VAL OPERATOR {{(appState | async).validators[selectedValidator].keys['Bech32 Validator Operator']}}</td></tr>
-                  <tr><td>HEX {{(appState | async).validators[selectedValidator].keys['Hex']}}</td></tr>
-                  <tr><td>Tendermint ed25519 {{(appState | async).validators[selectedValidator].keys['JSON (base64)'].value}}</td></tr>
-                </div>
-                <tr>
-                  <th routerLink="/validators" fragment="{{(appState | async).validators[selectedValidator].keys?.Addres}}"><a>Back</a></th>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </article>
-      </div>
+<div>
+  <div>
+    <div style="display: block">
+      <canvas baseChart
+        [data]="doughnutChartData"
+        [labels]="doughnutChartLabels"
+        [chartType]="doughnutChartType">
+      </canvas>
     </div>
+  </div>
 </div>

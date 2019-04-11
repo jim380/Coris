@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { ValidatorsService } from '../../services/validators.service';
 import { Sort, MatDialog } from '@angular/material';
+import { ValidatorComponent } from '../validator/validator.component';
 
 @Component({
   selector: 'app-validators',
@@ -33,12 +34,26 @@ export class ValidatorsComponent implements OnInit {
 
   constructor(
     private store: Store<{App: { blocks: [], txs: [], validators:[] } }>, 
-    private route: ActivatedRoute, 
+    // private route: ActivatedRoute, 
     private validatorsService: ValidatorsService,
     private dialog: MatDialog) { }
   
-  openDialog() {
-    this.dialog.open(DummyComponent);
+  openDialog(validator) {
+    // @aakatev TODO 
+    // create service to get this data 
+    let totalTokens = 0;
+    // Debugging
+    // console.log(validator);
+    this.dataSource.forEach(val => {
+      totalTokens += Number(val.tokens);
+    })
+    // console.log(tokens);
+    this.dialog.open( ValidatorComponent,  {
+      data: { 
+        validator,
+        totalTokens
+      }
+    });
   }
 
   ngOnInit() {
