@@ -333,19 +333,17 @@ footer p {
 }
 
 /*-------------------------------------------------*/
-/* Responsive Nav */
+/* Material */
 /*-------------------------------------------------*/
 .query-card {
   background: #00796B;
   color: white;
 }
 
-
-/* Material navbar */
+/* navbar */
 .mat-drawer-inner-container {
   background-color: #0D151F;
 }
-
 
 .mat-list-item-content {
   color: #F7F7F7;
@@ -354,10 +352,14 @@ footer p {
 
 .mat-list-item-content:hover,
 .mat-list-item-content:active {
-  color:#111923;
-  background-color: #F7F7F7;
+  color:white;
+  background-color: #00796B;
 }
-/* End moved from app.components.css */
+
 .mat-dialog-container {
   padding: 0 !important;
+}
+
+.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #00796B;
 }

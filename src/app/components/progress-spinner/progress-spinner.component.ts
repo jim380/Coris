@@ -10,7 +10,7 @@ export class ProgressSpinnerComponent implements OnInit {
 
   isLoading = false;
 
-  constructor() { 
+  constructor() {
     this.isLoading = true;
     this.getRPCData()
       .subscribe(x => this.isLoading = false);
