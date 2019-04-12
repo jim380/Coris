@@ -358,3 +358,6 @@ footer p {
   background-color: #F7F7F7;
 }
 /* End moved from app.components.css */
+.mat-dialog-container {
+  padding: 0 !important;
+}

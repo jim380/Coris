@@ -7,17 +7,12 @@
   </div>
   <div class="row proposer-row">
     <div style="cursor: pointer;" routerLink="/validators" fragment="{{(appState | async).round.proposer?.address}}">
-      <h2 *ngIf="(appState | async).valsMap.size; else elseBlock" class="title proposer-title">
+      <h2 *ngIf="(appState | async).valsMap.size" class="title proposer-title">
         Proposer - {{(appState | async).valsMap.get((appState | async).round.proposer?.address)}} 
       </h2>
-      <ng-template #elseBlock>
-          <h2 class="title proposer-title">
-            Proposer - loading 
-          </h2>
-      </ng-template>
     </div>
   </div>
-  <div class="row chain-queries-row" @fadeInAnimation>
+  <div class="row chain-queries-row" @fadeInAnimation *ngIf="(appState | async).blocks.length; else elseBlock">
     <div class="col span-1-of-4">
       <div style="cursor: pointer;" routerLink="/last-block" class="is-parent">
         <mat-card class="query-card" matTooltip="Latest Block Height" matTooltipPosition="above">
@@ -83,4 +78,9 @@
       </div>
     </div>
   </div>
+  <ng-template #elseBlock>
+    <div style="display: flex; justify-content: center;">
+      <mat-spinner [diameter]="30"></mat-spinner>
+    </div> 
+  </ng-template>
 </section>
