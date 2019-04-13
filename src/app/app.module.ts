@@ -26,6 +26,8 @@ import { StatusBarComponent } from './components/status-bar/status-bar.component
 import { FooterComponent } from './components/footer/footer.component';
 import { MainNavComponent } from './components/navigation/main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { DropdownDirective } from './Directives/dropdown.directive';
+import { BgHighlightDirective } from './Directives/bg-highlight.directive';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { LayoutModule } from '@angular/cdk/layout';
     DummyComponent,
     StatusBarComponent,
     FooterComponent,
-    MainNavComponent
+    MainNavComponent,
+    DropdownDirective,
+    BgHighlightDirective
   ],
   entryComponents: [
     DummyComponent

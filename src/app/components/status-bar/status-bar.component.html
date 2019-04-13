@@ -1,6 +1,6 @@
 <section class="landing">
   <div class="row header-row" @dropDownAnimation>
-    <h1 class="title header-title">
+    <h1 class="title header-title" [appBgHighlight]="'orange'" defaultColor="transparent">
       Coris Explorer 
     </h1>
     <h2 class="subtitle header-subtitle" @fadeInAnimation>{{(appState | async).blocks[0]?.header.chain_id}}</h2>

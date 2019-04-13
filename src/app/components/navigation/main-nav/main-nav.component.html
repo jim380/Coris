@@ -33,6 +33,14 @@
           <a routerLink="/validators">Validators</a>
           <a routerLink="/blocks">Blocks</a>
           <a routerLink="/txs">Transactions</a>
+          <a routerLink="/txs">Governance</a>
+            <li class="dropdown" appDropdown>
+              <a class="dropdown-toggle" role="button">Network<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Mainnet</a></li>
+                <li><a href="#">Testnet</a></li>
+              </ul>
+            </li>
         </span>
       </mat-toolbar>
       <ng-content></ng-content>
