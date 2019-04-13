@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { nodeRpc } from '../../../config.js'
+import { nodeRpc2 } from '../../../config.js'
 import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -38,7 +38,7 @@ export class TxComponent implements OnInit {
 
   queryTx () {
     this.initTxHash();
-    this.http.get(`${nodeRpc}/tx_search?query="tx.hash='${this.txHash}'"`).subscribe(async data => {
+    this.http.get(`${nodeRpc2}/tx_search?query="tx.hash='${this.txHash}'"`).subscribe(async data => {
 
       if (data['error'] === undefined)  {
       

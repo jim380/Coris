@@ -28,7 +28,9 @@ Open http://localhost:4200 in your browser to see the app in action.
 
 After install you need to create config file, to point explorer to running RPC client
 ```bash
-echo "export const nodeRpc = '<rpc_addr>:<rpc_port>';" > src/config.js 
+echo "export const nodeRpc1 = 'http://localhost:1317';" > src/config.js 
+echo "export const nodeRpc2 = 'http://localhost:26657';" >> src/config.js 
+echo "export const nodeWs = 'http://localhost:26657/websocket';" >> src/config.js 
 ```
 
 ## Bundle project

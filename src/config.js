@@ -1,3 +1,3 @@
-export const nodeRpc = 'https://aakatev.me/node';
+export const nodeRpc1 = 'https://aakatev.me/node_test';
+export const nodeRpc2 = 'https://aakatev.me/node';
 export const nodeWs = 'wss://aakatev.me/node/websocket';
-export const nodeRpcTest = 'https://aakatev.me/node_test';

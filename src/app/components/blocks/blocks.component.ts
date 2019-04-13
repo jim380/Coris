@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Block } from '../../interfaces/block.interface';
-import { nodeRpc } from '../../../config.js';
+import { nodeRpc2 } from '../../../config.js';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
@@ -36,7 +36,7 @@ export class BlocksComponent implements OnInit {
   }
 
   fetchBlocks() {
-    this.http.get(`${nodeRpc}/blockchain?minHeight=${this.currentBlock-this.blocksToDisplay+1}&maxHeight=${this.currentBlock}`)
+    this.http.get(`${nodeRpc2}/blockchain?minHeight=${this.currentBlock-this.blocksToDisplay+1}&maxHeight=${this.currentBlock}`)
       .subscribe(data => {
         this.clearBlocks();
         data['result'].block_metas.forEach(block => {
@@ -72,7 +72,7 @@ export class BlocksComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get(`${nodeRpc}/status`).subscribe(data => {
+    this.http.get(`${nodeRpc2}/status`).subscribe(data => {
       this.startBlock = data['result'].sync_info.latest_block_height;
       this.currentBlock = this.startBlock;
       this.fetchBlocks();

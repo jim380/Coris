@@ -3,7 +3,7 @@ import { DOCUMENT } from '@angular/common';
 import { Inject }  from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { nodeRpc } from '../../../config.js';
+import { nodeRpc2 } from '../../../config.js';
 
 @Component({
   selector: 'app-block',
@@ -31,7 +31,7 @@ export class BlockComponent implements OnInit {
   fetchBlock() {
     this.queryHeight = Number(this.route.snapshot.paramMap.get('height'));
 
-    this.http.get(`${nodeRpc}//block?height=${this.queryHeight}`).subscribe(data => {
+    this.http.get(`${nodeRpc2}//block?height=${this.queryHeight}`).subscribe(data => {
       if (data['error'] === undefined) this.block = data['result'].block;
       else this.block = {};
     });

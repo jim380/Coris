@@ -4,7 +4,7 @@ import { Inject }  from '@angular/core';
 import { DOCUMENT } from '@angular/common'; 
 import { Router } from '@angular/router';
 
-import { nodeRpc } from '../../../config.js'
+import { nodeRpc2 } from '../../../config.js'
 import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
 
 
@@ -41,10 +41,10 @@ export class TxsComponent implements OnInit {
 
   fetchTxs() {
     document.getElementById('btn-older').classList.add('is-loading');
-    this.http.get(`${nodeRpc}/tx_search?query="tx.height>${this.minHeight}"`)
+    this.http.get(`${nodeRpc2}/tx_search?query="tx.height>${this.minHeight}"`)
       .subscribe(data => {
       this.clearTxs();
-      // console.log(`${nodeRpc}/tx_search?query="tx.height>${this.minHeight}"`);
+      // console.log(`${nodeRpc2}/tx_search?query="tx.height>${this.minHeight}"`);
       let currTxs = data['result'].txs.reverse();
       console.log(data['result'].txs);
 
@@ -106,7 +106,7 @@ export class TxsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get(`${nodeRpc}/status`).subscribe(data => {
+    this.http.get(`${nodeRpc2}/status`).subscribe(data => {
       this.lastBlock = data['result'].sync_info.latest_block_height;
       this.minHeight = this.lastBlock - this.blocksToScan;
       // this.clearTxs();

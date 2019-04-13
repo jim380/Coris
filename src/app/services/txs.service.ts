@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import { Observable, of } from 'rxjs';
-// import { nodeRpc, nodeWs, nodeRpcTest } from '../../config.js'
+import { nodeRpc1 } from '../../config.js'
 
 
 @Injectable({
@@ -46,8 +46,7 @@ export class TxsService {
       }
     }
 
-    // this.http.post(`http://149.28.228.142:1317/staking/delegators/${delegatorAddr}/delegations`, postBody, postOptions)
-    this.http.post(`https://aakatev.me/node_txs/staking/delegators/${delegatorAddr}/delegations`, postBody, postOptions)
+    this.http.post(`${nodeRpc1}/staking/delegators/${delegatorAddr}/delegations`, postBody, postOptions)
     .subscribe(
       (val) => {
         // @aakatev debugging

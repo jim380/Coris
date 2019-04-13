@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import * as AppActions from '../state/app.actions'
-import { nodeRpc, nodeWs, nodeRpcTest } from '../../config.js'
+import { nodeRpc2, nodeWs } from '../../config.js'
 import { 
   unsubBlockMsg, 
   subBlockMsg, 
@@ -42,17 +42,17 @@ export class WsService {
     // TODO @aakatev remove with next commits
     // Code to preload some txs and blocks
     // ***
-    // this.http.get(`${nodeRpc}/status`).subscribe(data => {
+    // this.http.get(`${nodeRpc2}/status`).subscribe(data => {
     //   // Debugging
     //   // let currValidators = data['result'].genesis.validators;
     //   let lastBlock = data['result'].sync_info.latest_block_height;
 
-    //   this.http.get(`${nodeRpc}/tx_search?query="tx.height>${lastBlock-100}"`).subscribe(data => {
+    //   this.http.get(`${nodeRpc2}/tx_search?query="tx.height>${lastBlock-100}"`).subscribe(data => {
     //     this.txsStore = data['result'].txs.reverse();
     //     this.store.dispatch(new AppActions.UpdateTxs(this.txsStore));
     //   });
 
-    //   this.http.get(`${nodeRpc}/blockchain?minHeight=${lastBlock-50}&maxHeight=${lastBlock}`).subscribe(data => {
+    //   this.http.get(`${nodeRpc2}/blockchain?minHeight=${lastBlock-50}&maxHeight=${lastBlock}`).subscribe(data => {
     //     this.blocksStore = data['result'].block_metas.reverse();
     //     this.store.dispatch(new AppActions.UpdateBlocks(this.blocksStore));
     //   });
@@ -81,7 +81,7 @@ export class WsService {
           // Debugging
           console.log('NewTx!');
           
-          this.http.get(`${nodeRpc}/tx_search?query="tx.height=${json.result.data.value.TxResult.height}"`).subscribe(data => {
+          this.http.get(`${nodeRpc2}/tx_search?query="tx.height=${json.result.data.value.TxResult.height}"`).subscribe(data => {
             if(Object.keys(this.txsStore).length >= this.MAX_STORE_INDEX) {
               this.txsStore.shift();
             }

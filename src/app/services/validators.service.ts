@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import * as AppActions from '../state/app.actions';
-// import { nodeRpc, nodeWs, nodeRpcTest } from '../../config.js'
+import { nodeRpc1 } from '../../config.js'
 import { decodeBech32, fromWords } from '../lib/bech32';
 import { hex } from '../lib/hex';
 import { sha256 } from 'js-sha256';
@@ -41,7 +41,7 @@ export class ValidatorsService {
 
   setStakingPool() {
     return new Promise(resolve => {
-        this.http.get(`https://aakatev.me/node_txs/staking/pool`).subscribe(async data => {
+        this.http.get(`${nodeRpc1}/staking/pool`).subscribe(async data => {
         console.log(data);
         if (data !== null) {
           this.store.dispatch(new AppActions.UpdateStakePool(data));
@@ -61,7 +61,7 @@ export class ValidatorsService {
 
   getValidatorsDetails() {
     return new Promise(resolve => {
-        this.http.get(`https://aakatev.me/node_txs/staking/validators`).subscribe(async data => {
+        this.http.get(`${nodeRpc1}/staking/validators`).subscribe(async data => {
         // console.log(data);
         if (data !== null) {
           this.setValidators(data);
@@ -73,8 +73,7 @@ export class ValidatorsService {
 
   getValidatorsRanking() {
     return new Promise(resolve => {
-      // this.http.get(`${nodeRpcTest}/validators_ranking`).subscribe(data => {
-      this.http.get(`https://aakatev.me/node_txs/validatorsets/latest`).subscribe(data => {
+      this.http.get(`${nodeRpc1}/validatorsets/latest`).subscribe(data => {
         // Debugging
         // console.log(data);
         if (data !== null) {
@@ -107,7 +106,7 @@ export class ValidatorsService {
 
   getValidatorSlashing(validator) {
     return new Promise(resolve => {
-      this.http.get(`https://aakatev.me/node_txs/slashing/validators/${validator.consensus_pubkey}/signing_info`)
+      this.http.get(`${nodeRpc1}/slashing/validators/${validator.consensus_pubkey}/signing_info`)
         .subscribe(data => {
           // Debugging
           // console.log(data);
@@ -169,7 +168,7 @@ export class ValidatorsService {
 
   getValidatorDelegations(validator) {
     return new Promise(resolve => {
-      this.http.get(`https://aakatev.me/node_txs/staking/validators/${this.validatorsStore[validator].operator_address}/delegations`)
+      this.http.get(`${nodeRpc1}/staking/validators/${this.validatorsStore[validator].operator_address}/delegations`)
         .subscribe(data => {
           // Debugging
           console.log(data);
