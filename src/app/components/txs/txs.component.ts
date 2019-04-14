@@ -4,7 +4,7 @@ import { Inject }  from '@angular/core';
 import { DOCUMENT } from '@angular/common'; 
 import { Router } from '@angular/router';
 
-import { nodeRpc2 } from '../../../config.js'
+import { nodeRpc1, nodeRpc2 } from '../../../config.js'
 import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
 
 
@@ -20,7 +20,6 @@ export class TxsComponent implements OnInit {
   // @aakatev TODO lookup how to query more than 30 txs at json
   blocksToScan = 3000;
 
-  dataSource=[];
   displayedColumns: string[] = [
     'hash', 
     'type', 
@@ -31,6 +30,16 @@ export class TxsComponent implements OnInit {
 
   constructor(private http: HttpClient, @Inject(DOCUMENT) document, private router: Router) { }
 
+  ngOnInit() {
+    this.http.get(`${nodeRpc2}/status`).subscribe(data => {
+      this.lastBlock = data['result'].sync_info.latest_block_height;
+      this.minHeight = this.lastBlock - this.blocksToScan;
+      // this.clearTxs();
+      this.fetchTxs();
+    });
+  }
+
+
   clearTxs() {
     this.txs = [];
   }
@@ -39,15 +48,16 @@ export class TxsComponent implements OnInit {
     this.router.navigate([`tx/${value}`]);
   }
 
+  
   fetchTxs() {
     document.getElementById('btn-older').classList.add('is-loading');
     this.http.get(`${nodeRpc2}/tx_search?query="tx.height>${this.minHeight}"`)
       .subscribe(data => {
       this.clearTxs();
-      // console.log(`${nodeRpc2}/tx_search?query="tx.height>${this.minHeight}"`);
       let currTxs = data['result'].txs.reverse();
-      console.log(data['result'].txs);
-
+      
+      // Debugging
+      // console.log(data['result'].txs);
 
       currTxs.forEach(dataTx => {
         if(dataTx.height < this.minHeight + this.blocksToScan) {
@@ -93,7 +103,14 @@ export class TxsComponent implements OnInit {
         }
       });
       if(this.txs.length > 0) {
-        console.log( this.txs );
+        this.txs.forEach(tx => {
+          this.getTxDetails(tx)
+            .subscribe(data => {
+              // Debugging
+              console.log(data['tx'].value);
+              tx.details = data;
+            });
+        })
       }
       document.getElementById('btn-older').classList.remove('is-loading');
     });
@@ -105,12 +122,7 @@ export class TxsComponent implements OnInit {
     this.fetchTxs();  
   }
 
-  ngOnInit() {
-    this.http.get(`${nodeRpc2}/status`).subscribe(data => {
-      this.lastBlock = data['result'].sync_info.latest_block_height;
-      this.minHeight = this.lastBlock - this.blocksToScan;
-      // this.clearTxs();
-      this.fetchTxs();
-    });
+  getTxDetails(tx: Tx) {
+    return this.http.get(`${nodeRpc1}/txs/${tx.hash}`);
   }
 }
