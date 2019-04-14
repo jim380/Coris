@@ -62,8 +62,8 @@ export class WsService {
       if (Object.keys(json.result).length !== 0) {
         if(json.result.data.type === 'tendermint/event/NewBlock') {
           // Debugging
-          console.log('NewBlock!');
-          console.log(json.result.data.value);
+          // console.log('NewBlock!');
+          // console.log(json.result.data.value);
           
           if(Object.keys(this.blocksStore).length >= this.MAX_STORE_INDEX) {
             this.blocksStore.shift();
@@ -73,15 +73,15 @@ export class WsService {
           this.store.dispatch(new AppActions.UpdateBlocks(this.blocksStore));
         } else if(json.result.data.type === 'tendermint/event/Tx') {
           // Debugging
-          console.log('NewTx!');
+          // console.log('NewTx!');
           
           this.http.get(`${nodeRpc2}/tx_search?query="tx.height=${json.result.data.value.TxResult.height}"`).subscribe(data => {
             if(Object.keys(this.txsStore).length >= this.MAX_STORE_INDEX) {
               this.txsStore.shift();
             }
-            // Debugging
-            console.log('Data', data);
-            console.log('Json', json.result);
+            // TODO remove debugging
+            // console.log('Data', data);
+            // console.log('Json', json.result);
             this.txsStore.unshift(data['result'].txs[json.result.data.value.TxResult.index]);
             this.store.dispatch(new AppActions.UpdateTxs(this.txsStore));
           });
@@ -90,11 +90,11 @@ export class WsService {
         //   // TODO check if this logic is sufficient
         //   this.initValidators();
         } else if (json.result.data.type === 'tendermint/event/NewRound') {
-          // Debugging
+          // TODO remove debugging
           // console.log(json.result.data.value);
           this.store.dispatch(new AppActions.UpdateRound(json.result.data.value));
         } else if (json.result.data.type === 'tendermint/event/RoundState') {
-          // Debugging
+          // TODO remove debugging
           // console.log(json.result.data.value);
           this.store.dispatch(new AppActions.UpdateRoundStep(json.result.data.value));
         }

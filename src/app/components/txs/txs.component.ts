@@ -42,7 +42,8 @@ export class TxsComponent implements OnInit {
     this.txs = [];
   }
   clickButton(value) {
-    console.log(value);
+    // TODO remove debugging
+    // console.log(value);
     this.router.navigate([`tx/${value}`]);
   }
 
@@ -54,7 +55,7 @@ export class TxsComponent implements OnInit {
       this.clearTxs();
       let currTxs = data['result'].txs.reverse();
       
-      // Debugging
+      // TODO remove debugging
       // console.log(data['result'].txs);
 
       currTxs.forEach(dataTx => {
@@ -62,7 +63,7 @@ export class TxsComponent implements OnInit {
           // const dataTx = await data['result'].txs[0];
           let dataTagsDecod : Tag[] = [];
 
-          // Debugging
+          // TODO remove debugging
           // console.log(dataTx);
 
           if(dataTx.tx_result.tags) {
@@ -76,7 +77,7 @@ export class TxsComponent implements OnInit {
               errValue = `Out of gas(Wanted: ${dataTx.tx_result.gasWanted})`
             }
 
-            // Debugging
+            // TODO remove debugging
             // console.log("Faulty_tx", dataTx);
             
             dataTagsDecod.push({
@@ -84,7 +85,7 @@ export class TxsComponent implements OnInit {
               value: errValue
             })
           }
-
+          // TODO remove debugging
           // console.log(dataTagsDecod);
           // console.log(this.decodeTag(dataTx.tx_result.tags[1]));
           
@@ -104,8 +105,8 @@ export class TxsComponent implements OnInit {
         this.txs.forEach(tx => {
           this.getTxDetails(tx)
             .subscribe(data => {
-              // Debugging
-              console.log(data);
+              // TODO remove debugging
+              // console.log(data);
               tx.details = data;
             });
         })

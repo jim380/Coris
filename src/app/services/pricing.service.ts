@@ -17,6 +17,7 @@ export class PricingService {
       })
         .subscribe(
           (response: any) => {
+            // TODO remove debugging
             // console.log(response);
             return this.results = response;
           }

@@ -44,6 +44,7 @@ export class BlocksComponent implements OnInit, OnDestroy {
       )
       .subscribe( data => { 
         this.initBlocks();
+        // TODO remove debugging
         // console.log(data)
       });
   }
@@ -65,7 +66,8 @@ export class BlocksComponent implements OnInit, OnDestroy {
   }
 
   clickButton(value) {
-    console.log(value);
+    // TODO remove debugging
+    // console.log(value);
     this.router.navigate([`block/${value}`]);
   }
 

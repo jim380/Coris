@@ -29,7 +29,8 @@ export class GovernanceComponent implements OnInit {
   fetchProposals() {
     this.http.get(`${nodeRpc1}/gov/proposals`)
       .subscribe(data => {
-        console.log(data);
+        // TODO remove debugging
+        // console.log(data);
         this.clearProposals();
         (data as Proposal[]).forEach(proposal => {
           this.proposals.push(proposal);

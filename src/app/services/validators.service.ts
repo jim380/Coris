@@ -36,7 +36,8 @@ export class ValidatorsService {
   setStakingPool() {
     return new Promise(resolve => {
         this.http.get(`${nodeRpc1}/staking/pool`).subscribe(async data => {
-        console.log(data);
+        // TODO remove debugging
+        // console.log(data);
         if (data !== null) {
           this.store.dispatch(new AppActions.UpdateStakePool(data));
         }
@@ -48,14 +49,16 @@ export class ValidatorsService {
   updateValidators() {
     this.store.dispatch(new AppActions.UpdateValidators(this.validatorsStore));
     this.store.dispatch(new AppActions.UpdateValsMap(this.validatorsMap));
-    console.log(this.validatorsStore);
-    console.log(this.validatorsMap);
+    // TODO remove debugging
+    // console.log(this.validatorsStore);
+    // console.log(this.validatorsMap);
   }
 
 
   getValidatorsDetails() {
     return new Promise(resolve => {
         this.http.get(`${nodeRpc1}/staking/validators`).subscribe(async data => {
+        // TODO remove debugging
         // console.log(data);
         if (data !== null) {
           this.setValidators(data);
@@ -68,7 +71,7 @@ export class ValidatorsService {
   getValidatorsRanking() {
     return new Promise(resolve => {
       this.http.get(`${nodeRpc1}/validatorsets/latest`).subscribe(data => {
-        // Debugging
+        // TODO remove debugging
         // console.log(data);
         if (data !== null) {
           this.mergeProperties(this.validatorsStore, 'consensus_pubkey', data['validators'], 'pub_key', 'ranking')
@@ -89,7 +92,7 @@ export class ValidatorsService {
         for (const propertyIndex in propertyArray) {
           if (propertyArray[propertyIndex][propertyArrayProperty] === targetArray[targetIndex][targetArrayProperty]) {
             targetArray[targetIndex][propertyName] = propertyArray[propertyIndex];
-            // Debugging
+            // TODO remove debugging
             // console.log(targetArray[targetIndex]);
           }
         }
@@ -102,7 +105,7 @@ export class ValidatorsService {
     return new Promise(resolve => {
       this.http.get(`${nodeRpc1}/slashing/validators/${validator.consensus_pubkey}/signing_info`)
         .subscribe(data => {
-          // Debugging
+          // TODO remove debugging
           // console.log(data);
           validator.slashing = data;
           resolve();
@@ -164,8 +167,8 @@ export class ValidatorsService {
     return new Promise(resolve => {
       this.http.get(`${nodeRpc1}/staking/validators/${this.validatorsStore[validator].operator_address}/delegations`)
         .subscribe(data => {
-          // Debugging
-          console.log(data);
+          // TODO remove debugging
+          // console.log(data);
           this.validatorsStore[validator].delegations = data;
           resolve();
         });
@@ -198,12 +201,10 @@ export class ValidatorsService {
     // Nonasync version
     await this.setStakingPool();
 
-    this.getDelegations().then(data => {
-      console.log('333');
-    });
+    this.getDelegations();
 
-    // Debugging
-    console.log('Validators init done!');
+    // TODO remove debugging
+    console.log('Validators init completed!');
 
     this.updateValidators();
   }
@@ -212,7 +213,7 @@ export class ValidatorsService {
   asyncGetDelegations() {
     return new Promise (async resolve => {
       for (const validator in this.validatorsStore) {
-        // Debugging
+        // TODO remove debugging
         // console.log(this.validatorsStore[validator]);
         await this.getValidatorDelegations(validator);
       }
@@ -223,7 +224,7 @@ export class ValidatorsService {
   getDelegations() {
     return new Promise (async resolve => {
       for (const validator in this.validatorsStore) {
-        // Debugging
+        // TODO remove debugging
         // console.log(this.validatorsStore[validator]);
         this.getValidatorDelegations(validator);
       }
@@ -236,6 +237,7 @@ export class ValidatorsService {
       for (const validator of this.validatorsStore) {
         this.totalStake += await Number(validator['tokens']);
         this.store.dispatch(new AppActions.UpdateTotalStake(this.totalStake));
+        // TODO remove debugging
         // console.log(this.totalStake);
       }
       resolve();

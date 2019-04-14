@@ -49,12 +49,13 @@ export class TxsService {
     this.http.post(`${nodeRpc1}/staking/delegators/${delegatorAddr}/delegations`, postBody, postOptions)
     .subscribe(
       (val) => {
-        // @aakatev debugging
-        console.log(val);
+        // TODO remove debugging
+        // console.log(val);
         resolve(val);
       },
       error => {
-        console.log(error);
+        // TODO remove debugging
+        // console.log(error);
       },
       () => {});
     });

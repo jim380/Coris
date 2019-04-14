@@ -15,7 +15,7 @@ export class TxComponent implements OnInit {
   tx:Tx;
 
   async clickButton(value) {
-    // Debugging @aakatev
+    // TODO remove debugging
     // console.log(value);
     await this.router.navigate([`tx/${value}`]);
     this.queryTx();
@@ -59,7 +59,8 @@ export class TxComponent implements OnInit {
           tagsBase64: dataTx.tx_result.tags,
           tagsDecod: dataTagsDecod
         };
-        console.log(this.tx);
+        // TODO remove debugging
+        // console.log(this.tx);
       }
     });
   }
