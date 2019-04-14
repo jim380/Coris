@@ -54,8 +54,7 @@ export class StatusBarComponent implements OnInit {
       roundStep: {},
       valsMap: Map<string,string>
     }}>,
-    private vs:ValidatorsService
-  ) {  }
+    private vs:ValidatorsService ) { }
 
   ngOnInit() { 
     this.appState = this.store.select('App');

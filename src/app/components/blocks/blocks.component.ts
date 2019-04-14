@@ -4,6 +4,8 @@ import { Block } from '../../interfaces/block.interface';
 import { nodeRpc2 } from '../../../config.js';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-blocks',
@@ -11,12 +13,12 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./blocks.component.css']
 })
 export class BlocksComponent implements OnInit {
+  appState: Observable<{blocks:[], txs:[], validators:[], round:{}, roundStep: {}, valsMap: Map<string,string>}>;
   blocks: Block[];
   currentBlock = 0;
   startBlock = 0;
   blocksToDisplay = 20;
   
-  dataSource=[];
   displayedColumns: string[] = [
     'height', 
     'transactions', 
@@ -24,7 +26,25 @@ export class BlocksComponent implements OnInit {
     'timestamp'
   ];
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private store: Store <{App: {
+      blocks:[], 
+      txs:[], 
+      validators:[], 
+      round:{}, 
+      roundStep: {},
+      valsMap: Map<string,string> }}> ) { }
+
+  ngOnInit() {
+    this.http.get(`${nodeRpc2}/status`).subscribe(data => {
+      this.startBlock = data['result'].sync_info.latest_block_height;
+      this.currentBlock = this.startBlock;
+      this.fetchBlocks();
+    });
+    this.appState = this.store.select('App');
+  }
 
   clearBlocks() {
     this.blocks = [];
@@ -69,13 +89,5 @@ export class BlocksComponent implements OnInit {
       this.currentBlock += this.blocksToDisplay;
     }
     this.fetchBlocks();
-  }
-
-  ngOnInit() {
-    this.http.get(`${nodeRpc2}/status`).subscribe(data => {
-      this.startBlock = data['result'].sync_info.latest_block_height;
-      this.currentBlock = this.startBlock;
-      this.fetchBlocks();
-    });
   }
 }
