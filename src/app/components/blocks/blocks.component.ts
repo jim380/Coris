@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { debounceTime, map } from "rxjs/operators";
 
 @Component({
   selector: 'app-blocks',
@@ -41,10 +42,15 @@ export class BlocksComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initBlocks();
     this.appState = this.store.select('App');
-    this.blocks$ = this.appState.subscribe( data => { 
-      this.initBlocks();
-      console.log(data.blocks)
-    });
+    this.blocks$ = this.appState.
+      pipe(
+        map(data => data.blocks),
+        debounceTime(1000)
+      )
+      .subscribe( data => { 
+        this.initBlocks();
+        // console.log(data)
+      });
   }
 
   ngOnDestroy() {
