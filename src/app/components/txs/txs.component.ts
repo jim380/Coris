@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Inject }  from '@angular/core';
-import { DOCUMENT } from '@angular/common'; 
 import { Router } from '@angular/router';
 
 import { nodeRpc1, nodeRpc2 } from '../../../config.js'
@@ -28,7 +26,7 @@ export class TxsComponent implements OnInit {
     'timestamp'
   ];
 
-  constructor(private http: HttpClient, @Inject(DOCUMENT) document, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
     this.http.get(`${nodeRpc2}/status`).subscribe(data => {

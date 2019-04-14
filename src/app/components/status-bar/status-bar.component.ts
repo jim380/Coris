@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { ValidatorsService } from 'src/app/services/validators.service';
 import { trigger, state, query, transition, animate, style, keyframes, animation, useAnimation, animateChild, group, stagger } from '@angular/animations';
 import { fadeInAnimation, fade } from '../../animations/animation';
+import { State } from 'src/app/interfaces/state.interface';
 
 @Component({
   selector: 'app-status-bar',
@@ -37,7 +38,7 @@ import { fadeInAnimation, fade } from '../../animations/animation';
   ]
 })
 export class StatusBarComponent implements OnInit {
-  appState: Observable<{blocks:[], txs:[], validators:[], round:{}, roundStep: {}, valsMap: Map<string,string>}>;
+  appState: Observable<State>;
 
   networks = [
     {id: 1, name: 'mainnet'},
@@ -46,14 +47,7 @@ export class StatusBarComponent implements OnInit {
 
   constructor(
     private ws:WsService, 
-    private store: Store <{App: {
-      blocks:[], 
-      txs:[], 
-      validators:[], 
-      round:{}, 
-      roundStep: {},
-      valsMap: Map<string,string>
-    }}>,
+    private store: Store <State>,
     private vs:ValidatorsService ) { }
 
   ngOnInit() { 

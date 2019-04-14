@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DOCUMENT } from '@angular/common'; 
-import { Inject }  from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { nodeRpc2 } from '../../../config.js';
@@ -16,8 +14,10 @@ export class BlockComponent implements OnInit {
   queryHeight = 0;
   displayCommits = false;
 
-  constructor(private http: HttpClient, @Inject(DOCUMENT) document, private route: ActivatedRoute, private router: Router) { 
-  }
+  constructor(
+    private http: HttpClient, 
+    private route: ActivatedRoute, 
+    private router: Router) { }
 
   async clickButton(value) {
     await this.router.navigate([`block/${value}`]);

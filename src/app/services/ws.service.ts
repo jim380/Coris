@@ -11,6 +11,7 @@ import {
   subValMsg, 
   subRoundMsg, 
   subRoundStepMsg } from './ws.messages'
+import { State } from '../interfaces/state.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -29,14 +30,7 @@ export class WsService {
   MAX_STORE_INDEX = 1;
 
   constructor(
-    private store: Store<{App: { 
-      blocks: [], 
-      txs: [], 
-      validators: [], 
-      round: {}, 
-      roundStep: {}, 
-      valsMap: Map<string,string>
-    }}>, 
+    private store: Store<State>, 
     private http: HttpClient ) { 
 
     // TODO @aakatev remove with next commits

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 // import { Block } from '../../interfaces/block.interface';
 import { Observable } from 'rxjs';
+import { State } from 'src/app/interfaces/state.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,9 +10,10 @@ import { Observable } from 'rxjs';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  appState: Observable<{blocks: [], txs: []}>;
+  appState: Observable<State>;
 
-  constructor(private store: Store<{App: { blocks: [], txs: []} }>) { }
+  constructor(
+    private store: Store<State>) { }
 
   ngOnInit() { 
     this.appState = this.store.select('App');

@@ -7,6 +7,7 @@ import { nodeRpc1 } from '../../config.js'
 import { decodeBech32, fromWords } from '../lib/bech32';
 import { hex } from '../lib/hex';
 import { sha256 } from 'js-sha256';
+import { State } from '../interfaces/state.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,14 +21,7 @@ export class ValidatorsService {
   MAX_STORE_INDEX = 10;
 
   constructor(
-    private store: Store <{App: {
-      blocks: [],
-      txs: [],
-      validators: [],
-      round: {},
-      roundStep: {},
-      valsMap: Map<string, string>,
-      stakePool: {} }}>,
+    private store: Store <State>,
     private http: HttpClient) {
       this.initValidators();
   }

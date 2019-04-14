@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ValidatorsService } from '../../services/validators.service';
 import { Sort, MatDialog } from '@angular/material';
 import { ValidatorComponent } from '../validator/validator.component';
+import { State } from 'src/app/interfaces/state.interface';
 
 @Component({
   selector: 'app-validators',
@@ -14,7 +15,7 @@ import { ValidatorComponent } from '../validator/validator.component';
   styleUrls: ['./validators.component.css']
 })
 export class ValidatorsComponent implements OnInit {
-  appState: Observable<{blocks: [], txs:[], validators: []}>;
+  appState: Observable<State>;
   // fragment = null;
   valsUptime: Map<string,string> = new Map;
   totalTokens = 0;
@@ -33,7 +34,7 @@ export class ValidatorsComponent implements OnInit {
   ];
 
   constructor(
-    private store: Store<{App: { blocks: [], txs: [], validators:[] } }>, 
+    private store: Store<State>, 
     // private route: ActivatedRoute, 
     private validatorsService: ValidatorsService,
     private dialog: MatDialog) { }

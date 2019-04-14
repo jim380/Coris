@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { debounceTime, map } from "rxjs/operators";
+import { State } from 'src/app/interfaces/state.interface';
 
 @Component({
   selector: 'app-blocks',
@@ -14,7 +15,7 @@ import { debounceTime, map } from "rxjs/operators";
   styleUrls: ['./blocks.component.css']
 })
 export class BlocksComponent implements OnInit, OnDestroy {
-  appState: Observable<{blocks:[], txs:[], validators:[], round:{}, roundStep: {}, valsMap: Map<string,string>}>;
+  appState: Observable<State>;
   blocks: Block[];
   currentBlock = 0;
   startBlock = 0;
@@ -31,13 +32,7 @@ export class BlocksComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private store: Store <{App: {
-      blocks:[], 
-      txs:[], 
-      validators:[], 
-      round:{}, 
-      roundStep: {},
-      valsMap: Map<string,string> }}> ) { }
+    private store: Store <State> ) { }
 
   ngOnInit() {
     this.initBlocks();
