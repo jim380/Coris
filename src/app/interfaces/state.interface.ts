@@ -7,4 +7,4 @@ export interface State {
   valsMap: any;
   totalStake: any;
   stakePool: any;
-  }
+}

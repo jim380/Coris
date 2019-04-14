@@ -35,17 +35,20 @@ export class BlocksComponent implements OnInit, OnDestroy {
     private store: Store <State> ) { }
 
   ngOnInit() {
-    this.initBlocks();
     this.appState = this.store.select('App');
     this.blocks$ = this.appState.
       pipe(
         map(data => data.blocks),
-        debounceTime(1000)
+        debounceTime(300)
       )
       .subscribe( data => { 
-        this.initBlocks();
-        // TODO remove debugging
-        // console.log(data)
+        if( data.length === 1 && this.currentBlock !== data[0].header.height) {
+          this.startBlock = data[0].header.height;
+          this.initBlocks();
+          // TODO remove debugging
+          // console.log(data[0].header.height);
+          // console.log(this.currentBlock);
+        }
       });
   }
 
@@ -54,11 +57,8 @@ export class BlocksComponent implements OnInit, OnDestroy {
   }
 
   initBlocks() {
-    this.http.get(`${nodeRpc2}/status`).subscribe(data => {
-      this.startBlock = data['result'].sync_info.latest_block_height;
-      this.currentBlock = this.startBlock;
-      this.fetchBlocks();
-    });
+    this.currentBlock = this.startBlock;
+    this.fetchBlocks();
   }
 
   clearBlocks() {
