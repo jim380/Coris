@@ -28,6 +28,7 @@ import { MainNavComponent } from './components/navigation/main-nav/main-nav.comp
 import { LayoutModule } from '@angular/cdk/layout';
 import { DropdownDirective } from './Directives/dropdown.directive';
 import { BgHighlightDirective } from './Directives/bg-highlight.directive';
+import { GovernanceComponent } from './components/governance/governance.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { BgHighlightDirective } from './Directives/bg-highlight.directive';
     FooterComponent,
     MainNavComponent,
     DropdownDirective,
-    BgHighlightDirective
+    BgHighlightDirective,
+    GovernanceComponent
   ],
   entryComponents: [
     DummyComponent

@@ -10,6 +10,7 @@ import { TxsComponent } from './components/txs/txs.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ValidatorComponent } from './components/validator/validator.component';
 import { NewTxComponent } from './components/new-tx/new-tx.component';
+import { GovernanceComponent } from './components/governance/governance.component';
 
 const routerOptions: ExtraOptions = {
   anchorScrolling: 'enabled',
@@ -27,7 +28,8 @@ const routes: Routes = [
   { path: 'tx/:hash', component: TxComponent },
   { path: 'txs', component: TxsComponent },
   { path: 'validator/:address', component: ValidatorComponent },
-  { path: 'new/tx/:delegator', component: NewTxComponent}
+  { path: 'new/tx/:delegator', component: NewTxComponent},
+  { path: 'gov', component: GovernanceComponent }
 ];
 
 @NgModule({
