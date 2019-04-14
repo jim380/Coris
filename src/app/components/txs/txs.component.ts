@@ -107,7 +107,7 @@ export class TxsComponent implements OnInit {
           this.getTxDetails(tx)
             .subscribe(data => {
               // Debugging
-              console.log(data['tx'].value);
+              console.log(data);
               tx.details = data;
             });
         })

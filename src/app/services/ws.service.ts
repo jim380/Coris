@@ -26,7 +26,7 @@ export class WsService {
   blocksStore = [];
   txsStore = [];
 
-  MAX_STORE_INDEX = 10;
+  MAX_STORE_INDEX = 1;
 
   constructor(
     private store: Store<{App: { 

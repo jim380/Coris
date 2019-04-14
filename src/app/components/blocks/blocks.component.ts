@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Block } from '../../interfaces/block.interface';
 import { nodeRpc2 } from '../../../config.js';
@@ -12,13 +12,14 @@ import { Observable } from 'rxjs';
   templateUrl: './blocks.component.html',
   styleUrls: ['./blocks.component.css']
 })
-export class BlocksComponent implements OnInit {
+export class BlocksComponent implements OnInit, OnDestroy {
   appState: Observable<{blocks:[], txs:[], validators:[], round:{}, roundStep: {}, valsMap: Map<string,string>}>;
   blocks: Block[];
   currentBlock = 0;
   startBlock = 0;
   blocksToDisplay = 20;
-  
+  blocks$;
+
   displayedColumns: string[] = [
     'height', 
     'transactions', 
@@ -38,12 +39,24 @@ export class BlocksComponent implements OnInit {
       valsMap: Map<string,string> }}> ) { }
 
   ngOnInit() {
+    this.initBlocks();
+    this.appState = this.store.select('App');
+    this.blocks$ = this.appState.subscribe( data => { 
+      this.initBlocks();
+      console.log(data.blocks)
+    });
+  }
+
+  ngOnDestroy() {
+    this.blocks$.unsubscribe();
+  }
+
+  initBlocks() {
     this.http.get(`${nodeRpc2}/status`).subscribe(data => {
       this.startBlock = data['result'].sync_info.latest_block_height;
       this.currentBlock = this.startBlock;
       this.fetchBlocks();
     });
-    this.appState = this.store.select('App');
   }
 
   clearBlocks() {

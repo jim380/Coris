@@ -7,7 +7,7 @@ import { BlockComponent } from './components/block/block.component';
 import { BlocksComponent } from './components/blocks/blocks.component';
 import { TxComponent } from './components/tx/tx.component';
 import { TxsComponent } from './components/txs/txs.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+// import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ValidatorComponent } from './components/validator/validator.component';
 import { NewTxComponent } from './components/new-tx/new-tx.component';
 import { GovernanceComponent } from './components/governance/governance.component';
@@ -21,7 +21,7 @@ const routerOptions: ExtraOptions = {
 const routes: Routes = [
   { path: '', redirectTo: '/validators', pathMatch: 'full'},
   { path: 'validators', component: ValidatorsComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  // { path: 'dashboard', component: DashboardComponent },
   { path: 'block/:height', component: BlockComponent },
   { path: 'last-block', component: LastBlockComponent },
   { path: 'blocks', component: BlocksComponent },
