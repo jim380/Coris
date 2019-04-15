@@ -8,19 +8,16 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { debounceTime, map } from "rxjs/operators";
 import { State } from 'src/app/interfaces/state.interface';
+import { rowsAnimation, expandableRow } from 'src/app/animations/animation';
+import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-blocks',
   templateUrl: './blocks.component.html',
-  styleUrls: ['./blocks.component.css']
+  styleUrls: ['./blocks.component.css'],
+  animations: [rowsAnimation, expandableRow]
 })
 export class BlocksComponent implements OnInit, OnDestroy {
-  appState: Observable<State>;
-  blocks: Block[];
-  currentBlock = 0;
-  startBlock = 0;
-  blocksToDisplay = 20;
-  blocks$;
 
   displayedColumns: string[] = [
     'height', 
@@ -28,11 +25,24 @@ export class BlocksComponent implements OnInit, OnDestroy {
     'proposer',
     'timestamp'
   ];
+  
+  // dataSource: MatTableDataSource<Block>;
+
+  appState: Observable<State>;
+  
+  blocks: Block[];
+  currentBlock = 0;
+  startBlock = 0;
+  blocksToDisplay = 20;
+  blocks$;
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private store: Store <State> ) { }
+    private store: Store <State> ) {
+      // const blocks: Block[] = [];
+      // this.dataSource = new MatTableDataSource(blocks);
+     }
 
   ngOnInit() {
     this.appState = this.store.select('App');
