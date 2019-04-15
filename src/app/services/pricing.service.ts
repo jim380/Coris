@@ -1,4 +1,9 @@
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root'
+})
 
 // see reference: https://coinmarketcap.com/api/documentation/v1/
 export class PricingService {
@@ -11,14 +16,14 @@ export class PricingService {
         observe: 'body',
         responseType: 'json',
         headers: {
-            'X-CMC_PRO_API_KEY': '' // API key removed for obv reasons
+          'X-CMC_PRO_API_KEY': '568f2fe9-29d5-415b-b806-03aaa6bbab2a' // API key removed for obv reasons
         },
         params: new HttpParams().set('symbol', 'ATOM')
       })
         .subscribe(
           (response: any) => {
             // TODO remove debugging
-            // console.log(response);
+            console.log(response);
             return this.results = response;
           }
         );

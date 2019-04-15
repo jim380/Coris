@@ -18,12 +18,53 @@ export class ValidatorsService {
   validatorsMap: Map<string, string> = new Map;
 
   numOfValidators = 0;
-  MAX_STORE_INDEX = 10;
 
   constructor(
     private store: Store <State>,
     private http: HttpClient) {
       this.initValidators();
+  }
+
+  async initValidators() {
+    await this.getValidatorsDetails();
+    await this.getValidatorsRanking();
+
+    this.validatorsStore.forEach(async validator => {
+      await this.getValidatorSlashing(validator);
+    });
+
+    this.validatorsStore.forEach(async validator => {
+      await this.getValidatorAvatars(validator);
+    });
+
+    this.validatorsStore.forEach(async validator => {
+      await this.getValidatorHex(validator);
+    });
+
+    this.validatorsStore.forEach(async validator => {
+      await this.getValidatorDistribution(validator);
+    });
+
+    this.validatorsStore.forEach(async validator => {
+      await this.getValidatorOutstandingRewards(validator);
+    });
+    
+    await this.calculateTotalVotingPower();
+
+    // TODO @aakatev decide on version
+    // Async version
+    // await this.asyncGetDelegations().then(done => {
+    //   console.log('All delegators loaded');
+    // });
+    // Nonasync version
+    await this.setStakingPool();
+
+    this.getDelegations();
+
+    // TODO remove debugging
+    console.log('Validators init completed!');
+
+    this.updateValidators();
   }
 
   getTotalStake() { return this.totalStake; }
@@ -50,7 +91,7 @@ export class ValidatorsService {
     this.store.dispatch(new AppActions.UpdateValidators(this.validatorsStore));
     this.store.dispatch(new AppActions.UpdateValsMap(this.validatorsMap));
     // TODO remove debugging
-    // console.log(this.validatorsStore);
+    console.log(this.validatorsStore);
     // console.log(this.validatorsMap);
   }
 
@@ -110,6 +151,52 @@ export class ValidatorsService {
           validator.slashing = data;
           resolve();
         });
+    });
+  }
+
+  getValidatorDistribution(validator) {
+    return new Promise(resolve => {
+      this.http.get(`${nodeRpc1}/distribution/validators/${validator.operator_address}`)
+        .subscribe(
+          (data) => {
+            // TODO remove debugging
+            // console.log(data);
+            validator.distribution = data;
+
+            this.http.get(`${nodeRpc1}/auth/accounts/${data['operator_address']}`)
+              .subscribe(data => {
+                validator.account = data;
+                resolve();
+              })
+      
+          },
+          (error) => {
+            // TODO remove debugging
+            // console.log(error);
+            validator.distribution = null;
+            resolve();
+          }
+        );
+    });
+  }
+  
+  getValidatorOutstandingRewards(validator) {
+    return new Promise(resolve => {
+      this.http.get(`${nodeRpc1}/distribution/validators/${validator.operator_address}/outstanding_rewards`)
+        .subscribe(
+          (data) => {
+            // TODO remove debugging
+            // console.log(data);
+            validator.outstandning_rewards = data;
+            resolve();
+          },
+          (error) => {
+            // TODO remove debugging
+            // console.log(error);
+            validator.outstandning_rewards = null;
+            resolve();
+          }
+        );
     });
   }
 
@@ -174,41 +261,6 @@ export class ValidatorsService {
         });
     });
   }
-
-  async initValidators() {
-    await this.getValidatorsDetails();
-    await this.getValidatorsRanking();
-
-    this.validatorsStore.forEach(async validator => {
-      await this.getValidatorSlashing(validator);
-    });
-
-    this.validatorsStore.forEach(async validator => {
-      await this.getValidatorAvatars(validator);
-    });
-
-    this.validatorsStore.forEach(async validator => {
-      await this.getValidatorHex(validator);
-    });
-
-    await this.calculateTotalVotingPower();
-
-    // TODO @aakatev decide on version
-    // Async version
-    // await this.asyncGetDelegations().then(done => {
-    //   console.log('All delegators loaded');
-    // });
-    // Nonasync version
-    await this.setStakingPool();
-
-    this.getDelegations();
-
-    // TODO remove debugging
-    console.log('Validators init completed!');
-
-    this.updateValidators();
-  }
-  // End validators mapping
 
   asyncGetDelegations() {
     return new Promise (async resolve => {
