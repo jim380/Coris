@@ -63,6 +63,7 @@ export class ValidatorsService {
 
     // TODO remove debugging
     console.log('Validators init completed!');
+    this.validatorsStore.serviceLoaded = 1;
 
     this.updateValidators();
   }

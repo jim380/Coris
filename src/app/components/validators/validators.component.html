@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="(appState | async).validators.serviceLoaded; else elseBlock">
   <!-- <button
     (click)="openDialog()"
     mat-raised-button>open
@@ -196,6 +196,8 @@
   </div> -->
 
 </div>
-
-
-
+<ng-template #elseBlock>
+  <div style="display: flex; justify-content: center;">
+    <mat-spinner [diameter]="30"></mat-spinner>
+  </div> 
+</ng-template>
