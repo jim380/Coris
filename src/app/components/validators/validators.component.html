@@ -11,16 +11,19 @@
     <ng-container  matColumnDef="moniker">
       <th mat-sort-header="name" mat-header-cell *matHeaderCellDef> Name </th>
       <td mat-cell *matCellDef="let validator" id="{{validator.hex_address}}"> 
-        <figure style="cursor: pointer;" (click)="openDialog(validator)" class="validator-avatar is-128x128" *ngIf="validator.keybase">
-          <img  
-            *ngIf="!validator.picture; else elseBlock" 
-            src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
-            alt="avatar">
-          <ng-template #elseBlock>
-            <img src="{{validator.picture}}" alt="avatar">
-          </ng-template>
-        </figure>
-        {{validator.description.moniker}}
+        <span>
+          <figure style="cursor: pointer;" (click)="openDialog(validator)" class="validator-avatar is-128x128" *ngIf="validator.keybase">
+            <img  
+              *ngIf="!validator.picture; else elseBlock" 
+              src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
+              alt="avatar">
+            <ng-template #elseBlock>
+              <img src="{{validator.picture}}" alt="avatar">
+            </ng-template>
+            {{validator.description.moniker}}
+          </figure>
+        </span>
+        <!-- <span class="moniker">{{validator.description.moniker}}</span> -->
       </td>
     </ng-container>
   

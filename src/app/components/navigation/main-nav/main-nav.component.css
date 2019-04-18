@@ -21,10 +21,14 @@
 }
 
 .logo {
-  height: 100px;
+  height: 65px;
   width: auto;
   float: left;
-  margin-top: 20px;
+  margin-top: 10px;
+}
+
+.nav-links {
+  font-weight: 250;
 }
 
 @media screen and (max-width: 760px) {
@@ -48,14 +52,43 @@
 }
 
 .mat-toolbar {
-  background: #111923;
-  margin-top: 20px;
+  /* background: #111923; */
+  background: #00796B;
+  /* margin-top: 20px; */
   display: flex;
   list-style: none;
   align-items: center;
-  margin-left: auto;
+  margin: 0 auto;
+  height: 70px;
+}
+
+.row-nav {
+  max-width: 100%;
 }
 
 .mat-sidenav-content {
   background: #111923;
+  /* background: #00796B; */
+}
+
+.brand-title {
+  font-size: 150%;
+  /* margin-top: 15px; */
+  font-weight: 300;
+}
+
+.brand-subtitle {
+  font-size: 100%;
+  /* margin-top: 10px; */
+  font-weight: 300;
+  color: #B2DFDB;
+}
+
+.crm-navigation-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: inherit;
+  background: #00796B;
 }

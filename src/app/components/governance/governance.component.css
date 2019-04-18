@@ -93,9 +93,13 @@ tbody {
 }
 
 .mat-header-cell {
-  color: #111923;
+  color: #ffffff;
 }
 
 .mat-cell {
   color: #F7F7F7;
+}
+
+.mat-header-row {
+  background-color: #00796B;
 }

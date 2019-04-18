@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row row-nav">
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav 
         #drawer 
@@ -17,33 +17,39 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <mat-toolbar color="primary">
-        <button
-          type="button"
-          aria-label="Toggle sidenav"
-          mat-icon-button
-          (click)="drawer.toggle()"
-          *ngIf="isHandset$ | async">
-          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-        </button>
-        <span>
-          <a href="#"><img src="../../../../assets/img/Coris_logo.png" class="logo"></a>
-        </span>
-        <span class="spacer"></span>
-        <span class="nav-links">
-          <a routerLink="/validators">Validators</a>
-          <a routerLink="/blocks">Blocks</a>
-          <a routerLink="/txs">Transactions</a>
-          <a routerLink="/gov">Governance</a>
-            <li class="dropdown" appDropdown>
-              <a class="dropdown-toggle" role="button">Network<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Mainnet</a></li>
-                <li><a href="#">Testnet</a></li>
-              </ul>
-            </li>
-        </span>
-      </mat-toolbar>
+      <div class="crm-navigation-bar">
+          <mat-toolbar color="primary">
+              <button
+                type="button"
+                aria-label="Toggle sidenav"
+                mat-icon-button
+                (click)="drawer.toggle()"
+                *ngIf="isHandset$ | async">
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+              </button>
+                <span>
+                  <a href="#"><img src="../../../../assets/img/Coris_logo.png" class="logo"></a>
+                </span>
+                <span>
+                  <h1 class="brand-title">Coris</h1>
+                  <h5 class="brand-subtitle">by cypher core</h5>
+                </span>
+              <span class="spacer"></span>
+              <span class="nav-links">
+                <a routerLink="/validators">Validators</a>
+                <a routerLink="/blocks">Blocks</a>
+                <a routerLink="/txs">Transactions</a>
+                <a routerLink="/gov">Governance</a>
+                  <li class="dropdown" appDropdown>
+                    <a class="dropdown-toggle" role="button">Network<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">Mainnet</a></li>
+                      <li><a href="#">Testnet</a></li>
+                    </ul>
+                  </li>
+              </span>
+            </mat-toolbar>
+      </div>
       <ng-content></ng-content>
     </mat-sidenav-content>
   </mat-sidenav-container>
