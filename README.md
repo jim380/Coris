@@ -50,18 +50,7 @@ location /node/websocket {
   proxy_set_header Connection "Upgrade";
 }
 # rpc1
-location /node/ {
-  add_header "Access-Control-Allow-Origin"  * always;
-
-  if ($request_method = OPTIONS ) {
-    add_header "Access-Control-Allow-Methods" "GET, POST, OPTIONS, HEAD";
-    add_header "Access-Control-Allow-Headers" "Authorization, Origin, X-Requested-With, Content-Type, Accept";
-    return 200;
-  }
-  proxy_pass http://localhost:26657/;
-}
-# rpc2
-location /node_txs/ {
+location /node/rpc1 {
   add_header "Access-Control-Allow-Origin"  * always;
 
   if ($request_method = OPTIONS ) {
@@ -70,6 +59,17 @@ location /node_txs/ {
     return 200;
   }
   proxy_pass http://localhost:1317/;
+}
+# rpc2
+location /node/rpc2 {
+  add_header "Access-Control-Allow-Origin"  * always;
+
+  if ($request_method = OPTIONS ) {
+    add_header "Access-Control-Allow-Methods" "GET, POST, OPTIONS, HEAD";
+    add_header "Access-Control-Allow-Headers" "Authorization, Origin, X-Requested-With, Content-Type, Accept";
+    return 200;
+  }
+  proxy_pass http://localhost:26657/;
 }
 ```
 
