@@ -26,7 +26,7 @@ github_username:  jim380
 
 # Build settings
 markdown: kramdown
-theme: just-the-docs #minima
+# theme: just-the-docs #minima
 plugins:
   - jekyll-feed
 remote_theme: pmarsceill/just-the-docs
