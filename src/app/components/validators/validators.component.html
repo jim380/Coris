@@ -86,9 +86,9 @@
     </ng-container>
   
       <ng-container matColumnDef="bond">
-        <th mat-header-cell *matHeaderCellDef> Bond </th>
+        <th mat-header-cell *matHeaderCellDef> Self-Bond </th>
         <td mat-cell *matCellDef="let validator">
-          - balances<br>- rewards
+          {{validator.self_bond/1e6 | number:'.0-0'}}
         </td>
       </ng-container>
         

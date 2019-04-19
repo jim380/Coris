@@ -251,13 +251,41 @@ export class ValidatorsService {
     });
   }
 
-  getValidatorDelegations(validator) {
+  getValidatorDelegations(validatorIndex) {
     return new Promise(resolve => {
-      this.http.get(`${nodeRpc1}/staking/validators/${this.validatorsStore[validator].operator_address}/delegations`)
-        .subscribe(data => {
-          // TODO remove debugging
-          // console.log(data);
-          this.validatorsStore[validator].delegations = data;
+      this.http.get(`${nodeRpc1}/staking/validators/${this.validatorsStore[validatorIndex].operator_address}/delegations`)
+        .subscribe((data: Array<any>) => {
+          let validator = this.validatorsStore[validatorIndex];
+          validator.delegations = data;
+          validator.self_bond = 0;
+          
+          if(data && validator.account) {
+            data.forEach(delegation => {
+              switch (validator.account.type) {
+                case "auth/Account": {
+                  if(delegation.delegator_address === validator.account.value.address) {
+                    // TODO remove debugging
+                    // console.log('triggered auth: ', delegation.shares);
+                    validator.self_bond += Number(delegation.shares);
+                  } 
+                  break;
+                }
+                case "auth/DelayedVestingAccount": {
+                  if(delegation.delegator_address === validator.account.value.address) {
+                    // TODO remove debugging
+                    // console.log('triggered vest', delegation.shares);
+                    validator.self_bond += Number(delegation.shares);
+                  } 
+                  break;
+                }
+                default:{
+                  // TODO remove debugging
+                  console.log('Unknown account type: ', validator.account.type);
+                  break;
+                }
+              }
+            });  
+          }
           resolve();
         });
     });
