@@ -29,6 +29,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { DropdownDirective } from './Directives/dropdown.directive';
 import { BgHighlightDirective } from './Directives/bg-highlight.directive';
 import { GovernanceComponent } from './components/governance/governance.component';
+import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { GovernanceComponent } from './components/governance/governance.componen
     MainNavComponent,
     DropdownDirective,
     BgHighlightDirective,
-    GovernanceComponent
+    GovernanceComponent,
+    ScrollTopComponent
   ],
   entryComponents: [
     DummyComponent
