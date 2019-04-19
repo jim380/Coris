@@ -29,6 +29,7 @@ markdown: kramdown
 # theme: just-the-docs #minima
 plugins:
   - jekyll-feed
+  - jekyll-include-cache
 remote_theme: pmarsceill/just-the-docs
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
