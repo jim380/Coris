@@ -6,6 +6,7 @@ import { ValidatorsService } from 'src/app/services/validators.service';
 import { trigger, state, query, transition, animate, style, keyframes, animation, useAnimation, animateChild, group, stagger } from '@angular/animations';
 import { fadeInAnimation, fade } from '../../animations/animation';
 import { State } from 'src/app/interfaces/state.interface';
+import { PricingService } from 'src/app/services/pricing.service';
 
 @Component({
   selector: 'app-status-bar',
@@ -39,6 +40,7 @@ import { State } from 'src/app/interfaces/state.interface';
 })
 export class StatusBarComponent implements OnInit {
   appState: Observable<State>;
+  atomData = null;
 
   networks = [
     {id: 1, name: 'mainnet'},
@@ -48,10 +50,15 @@ export class StatusBarComponent implements OnInit {
   constructor(
     private ws:WsService, 
     private store: Store <State>,
-    private vs:ValidatorsService ) { }
+    private vs:ValidatorsService,
+    private ps:PricingService) { }
 
   ngOnInit() { 
     this.appState = this.store.select('App');
+    this.ps.getPrice().subscribe(data => {
+      this.atomData =  data.data.ATOM;
+      console.log(data.data.ATOM);
+    });
   }
 
   ngOnDestroy() {

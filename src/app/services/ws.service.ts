@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import * as AppActions from '../state/app.actions'
-import { nodeRpc2, nodeWs } from '../../config.js'
+import * as AppActions from '../state/app.actions';
+import { nodeRpc2, nodeWs } from '../../config.js';
 import { 
   unsubBlockMsg, 
   subBlockMsg, 
