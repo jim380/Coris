@@ -56,8 +56,9 @@ export class StatusBarComponent implements OnInit {
   ngOnInit() { 
     this.appState = this.store.select('App');
     this.ps.getPrice().subscribe(data => {
-      this.atomData =  data.data.ATOM;
-      console.log(data.data.ATOM);
+      // TODO remove debugging
+      // console.log(data.data['3794']);
+      this.atomData = data.data['3794'];
     });
   }
 
