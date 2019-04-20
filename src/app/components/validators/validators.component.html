@@ -47,7 +47,7 @@
       <td mat-cell *matCellDef="let validator">
         {{validator.tokens/1e6 | number:'.0-0'}}
         <br>
-        <span class="weightPerct">({{validator.tokens/(appState | async).totalStake| percent:'.2-2'}})</span>
+        <span class="table-subtitle">({{validator.tokens/(appState | async).totalStake| percent:'.2-2'}})</span>
       </td>
     </ng-container>
   
@@ -89,6 +89,8 @@
         <th mat-header-cell *matHeaderCellDef> Self-Bond </th>
         <td mat-cell *matCellDef="let validator">
           {{validator.self_bond/1e6 | number:'.0-0'}}
+          <br>
+          <span class="table-subtitle">({{ validator.self_bond / validator.tokens | percent:'.2-2' }})</span>
         </td>
       </ng-container>
         
