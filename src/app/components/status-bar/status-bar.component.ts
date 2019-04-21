@@ -7,6 +7,8 @@ import { trigger, state, query, transition, animate, style, keyframes, animation
 import { fadeInAnimation, fade } from '../../animations/animation';
 import { State } from 'src/app/interfaces/state.interface';
 import { PricingService } from 'src/app/services/pricing.service';
+import { BlocksService } from 'src/app/services/blocks.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-status-bar',
@@ -41,6 +43,7 @@ import { PricingService } from 'src/app/services/pricing.service';
 export class StatusBarComponent implements OnInit {
   appState: Observable<State>;
   atomData = null;
+  avgBlockTime = 0;
 
   networks = [
     {id: 1, name: 'mainnet'},
@@ -51,7 +54,8 @@ export class StatusBarComponent implements OnInit {
     private ws:WsService, 
     private store: Store <State>,
     private vs:ValidatorsService,
-    private ps:PricingService) { }
+    private ps:PricingService,
+    private bs:BlocksService) { }
 
   ngOnInit() { 
     this.appState = this.store.select('App');
@@ -60,8 +64,12 @@ export class StatusBarComponent implements OnInit {
       // console.log(data.data['3794']);
       this.atomData = data.data['3794'];
     });
-  }
 
+    this.bs.getBlockTime$()
+      .subscribe(data => {
+        this.avgBlockTime = data/1000;
+      })
+  }
   ngOnDestroy() {
     this.ws.unsubscribe();
   }

@@ -19,10 +19,10 @@ import { State } from '../interfaces/state.interface';
 export class WsService {
   newWebSocket = new WebSocket(nodeWs);
 
-  blocksState: Observable<{blocks: []}>;
-  txsState: Observable<{txs: []}>;
-  roundState: Observable<{round: []}>;
-  roundStepState: Observable<{roundStep: []}>;
+  // blocksState: Observable<{blocks: []}>;
+  // txsState: Observable<{txs: []}>;
+  // roundState: Observable<{round: []}>;
+  // roundStepState: Observable<{roundStep: []}>;
 
   blocksStore = [];
   txsStore = [];
