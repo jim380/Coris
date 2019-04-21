@@ -261,6 +261,7 @@ export class ValidatorsService {
       this.http.get(`${nodeRpc1}/staking/validators/${this.validatorsStore[validatorIndex].operator_address}/delegations`)
         .subscribe((data: Array<any>) => {
           let validator = this.validatorsStore[validatorIndex];
+          validator.delegations = data;
           validator.self_bond = 0;
           
           if(data && validator.account) {
