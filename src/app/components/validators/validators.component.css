@@ -105,6 +105,7 @@ tbody {
 
 .table-subtitle {
   color: rgb(101, 170, 223);
+  font-size: 80%;
 }
 
 /* mat-table */
@@ -134,4 +135,9 @@ tbody {
 
 .mat-header-row {
   background-color: #00796B;
+}
+
+.ticker {
+  font-size: 80%;
+  color: #B2DFDB;
 }
