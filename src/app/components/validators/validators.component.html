@@ -55,7 +55,15 @@
 
     <ng-container matColumnDef="assets">
       <th mat-header-cell *matHeaderCellDef> Assets </th>
-      <td mat-cell *matCellDef="let validator">balance<br>
+      <td mat-cell *matCellDef="let validator">
+        <span *ngIf="validator.account?.tokens; else accountElseBlock">
+          {{validator.account?.tokens/1e6 | number:'.0-0'}}
+        </span>
+        <ng-template #accountElseBlock>
+          0
+        </ng-template>
+        <span class="ticker"> ATOM</span>
+        <br>
         <span class="table-subtitle" matTooltip="Rewards" matTooltipPosition="above"><i class="ion-ios-pricetags"></i>&nbsp;rewards</span>
       </td>
     </ng-container>

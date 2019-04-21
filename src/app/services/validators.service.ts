@@ -261,13 +261,17 @@ export class ValidatorsService {
       this.http.get(`${nodeRpc1}/staking/validators/${this.validatorsStore[validatorIndex].operator_address}/delegations`)
         .subscribe((data: Array<any>) => {
           let validator = this.validatorsStore[validatorIndex];
-          validator.delegations = data;
           validator.self_bond = 0;
           
           if(data && validator.account) {
             data.forEach(delegation => {
               switch (validator.account.type) {
                 case "auth/Account": {
+                  if(!validator.account.tokens && validator.account.value.coins) {
+                    // TODO remove debugging
+                    // console.log(validator.account.value.coins[0].amount);
+                    validator.account.tokens = validator.account.value.coins[0].amount;
+                  }
                   if(delegation.delegator_address === validator.account.value.address) {
                     // TODO remove debugging
                     // console.log('triggered auth: ', delegation.shares);
@@ -276,6 +280,12 @@ export class ValidatorsService {
                   break;
                 }
                 case "auth/DelayedVestingAccount": {
+                  if(!validator.account.tokens && validator.account.value.BaseVestingAccount.BaseAccount.coins) {
+                    // TODO remove debugging
+                    // console.log(validator.account.value.BaseVestingAccount.BaseAccount.coins);
+                    validator.account.tokens = validator.account.value.BaseVestingAccount.BaseAccount.coins[0].amount;
+                  }
+
                   if(delegation.delegator_address === validator.account.value.address) {
                     // TODO remove debugging
                     // console.log('triggered vest', delegation.shares);
@@ -307,7 +317,6 @@ export class ValidatorsService {
         });
     });
   }
-
 
   asyncGetDelegations() {
     return new Promise (async resolve => {
