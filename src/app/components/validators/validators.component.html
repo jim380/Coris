@@ -47,7 +47,7 @@
       <td mat-cell *matCellDef="let validator">
         {{validator.tokens/1e6 | number:'.0-0'}}
         <br>
-        <span class="table-subtitle">({{validator.tokens/(appState | async).totalStake| percent:'.2-2'}})</span>
+        <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;({{validator.tokens/(appState | async).totalStake| percent:'.2-2'}})</span>
       </td>
     </ng-container>
   
@@ -88,24 +88,23 @@
       <ng-container matColumnDef="bond">
         <th mat-header-cell *matHeaderCellDef> Self-Bond </th>
         <td mat-cell *matCellDef="let validator">
-          {{validator.self_bond/1e6 | number:'.0-0'}}
+          {{validator.self_bond/1e6 | number:'.0-0'}} <span class="ticker">ATOM</span>
           <br>
-          <span class="table-subtitle">({{ validator.self_bond / validator.tokens | percent:'.2-2' }})</span>
+          <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;({{ validator.self_bond / validator.tokens | percent:'.2-2' }})</span>
         </td>
       </ng-container>
         
 
     <ng-container matColumnDef="commission">
       <th mat-header-cell *matHeaderCellDef> Commission </th>
-      <td mat-cell *matCellDef="let validator"> 
-        {{validator.commission?.rate | percent}}-
-        {{validator.commission?.max_rate | percent}}- 
-        {{validator.commission?.max_change_rate | percent}}
+      <td mat-cell *matCellDef="let validator">
+        <span matTooltip="Current Rate" matTooltipPosition="above">{{validator.commission?.rate | percent}}</span><br>
+        <span class="table-subtitle" matTooltip="Max Rate - Max Change Rate" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;({{validator.commission?.max_rate | percent}} - {{validator.commission?.max_change_rate | percent}})</span>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [appBgHighlight]="'#383D4C'" defaultColor="#111923"></tr>
   </table>
     
       
