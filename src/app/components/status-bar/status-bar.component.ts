@@ -44,6 +44,7 @@ export class StatusBarComponent implements OnInit {
   appState: Observable<State>;
   atomData = null;
   avgBlockTime = 0;
+  inflation = 0;
 
   networks = [
     {id: 1, name: 'mainnet'},
@@ -59,12 +60,25 @@ export class StatusBarComponent implements OnInit {
 
   ngOnInit() { 
     this.appState = this.store.select('App');
-    this.ps.getPrice().subscribe(data => {
+    this.ps.getAtomPrice().subscribe(data => {
       // TODO remove debugging
       // console.log(data.data['3794']);
       this.atomData = data.data['3794'];
     });
-
+    
+    /* 
+      TODO @aakatev uncomment when 
+      /minting rpc becomes available
+    */ 
+    // this.ps.getMinting().subscribe(data => {
+    //   // TODO remove debugging
+    //   console.log(data);
+    //   this.inflation = data['mint_denom'];
+    // });
+    /* 
+      End uncomment
+    */ 
+    
     this.bs.getBlockTime$()
       .subscribe(data => {
         this.avgBlockTime = data/1000;
