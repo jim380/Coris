@@ -65,15 +65,6 @@ thead th:nth-child(10) {
   width: 10%;
 }
 
-
-tbody tr:nth-child(odd){
-  background:#0D151F;
-}
-
-tbody tr:nth-child(even){
-  background:#111923;
-}
-
 button {
   margin: 15px;
 }

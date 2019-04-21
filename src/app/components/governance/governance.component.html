@@ -40,7 +40,7 @@
     <ng-container matColumnDef="deposit">
       <th mat-header-cell *matHeaderCellDef> Deposit </th>
       <td mat-cell *matCellDef="let proposal">  
-        {{proposal.value.total_deposit[0].amount/1e6 | number:".2-2"}} ATOM
+        {{proposal.value.total_deposit[0].amount/1e6 | number:".2-2"}} <span class="ticker">ATOM</span>
       </td>
     </ng-container>
 

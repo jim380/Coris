@@ -35,32 +35,15 @@ thead th:nth-child(4) {
   width: 20%;
 } */
 
-th, td {
-  width: 30%;
+td {
   overflow: hidden; /* to hide anything that doesn't fit in the containing element. */
   white-space: nowrap; /* to make sure the line doesn't break when it is longer than the containing div. */
   text-overflow: ellipsis;
-  /* flex: 20%; */
+  text-align: left;
 }
 
 button {
   margin: 15px;
-}
-
-.card-header {
-  background: #00796B;
-}
-
-.card-header p {
-  margin-left: 6px;
-}
-
-tbody tr:nth-child(odd){
-  background:#0D151F;
-}
-
-tbody tr:nth-child(even){
-  background:#111923;
 }
 
 p,
@@ -103,4 +86,9 @@ tbody {
 
 .mat-header-row {
   background-color: #00796B;
+}
+
+.ticker {
+  font-size: 80%;
+  color: #B2DFDB;
 }
