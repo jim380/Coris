@@ -32,7 +32,8 @@ export class BlocksService {
         this.fetchBlocks(data[0].header.height)
           .subscribe(data => {
             let blocks = data['result'].block_metas;
-            console.log(blocks);
+            // TODO remove debugging
+            // console.log(blocks);
 
             for(let i = 0; (i < blocks.length-1); i++) {
               if(this.avgBlockTime == 0) {

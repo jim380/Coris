@@ -48,7 +48,12 @@ export class ValidatorsService {
     this.validatorsStore.forEach(async validator => {
       await this.getValidatorOutstandingRewards(validator);
     });
-    
+
+
+    this.validatorsStore.forEach(async validator => {
+      await this.getValidatorUnbondDelegations(validator);
+    });
+        
     await this.calculateTotalVotingPower();
 
     // TODO @aakatev decide on version
@@ -290,6 +295,19 @@ export class ValidatorsService {
         });
     });
   }
+
+  getValidatorUnbondDelegations(validator) {
+    return new Promise(resolve => {
+      this.http.get(`${nodeRpc1}/staking/validators/${validator.operator_address}/unbonding_delegations`)
+        .subscribe(data => {
+          // TODO remove debugging
+          // console.log(data);
+          validator.unbonding_delegations = data;
+          resolve();
+        });
+    });
+  }
+
 
   asyncGetDelegations() {
     return new Promise (async resolve => {
