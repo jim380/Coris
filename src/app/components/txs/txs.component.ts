@@ -108,6 +108,11 @@ export class TxsComponent implements OnInit {
               // TODO remove debugging
               // console.log(data);
               tx.details = data;
+            },
+            err => {
+              // @aakatev some txs cause 500 errors
+              // otherwise would dump code in console
+              // console.log(err);
             });
         })
       }
