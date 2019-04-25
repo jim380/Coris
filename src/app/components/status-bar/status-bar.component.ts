@@ -66,18 +66,11 @@ export class StatusBarComponent implements OnInit {
       this.atomData = data.data['3794'];
     });
     
-    /* 
-      TODO @aakatev uncomment when 
-      /minting rpc becomes available
-    */ 
-    // this.ps.getMinting().subscribe(data => {
-    //   // TODO remove debugging
-    //   console.log(data);
-    //   this.inflation = data['mint_denom'];
-    // });
-    /* 
-      End uncomment
-    */ 
+    this.ps.getInflation().subscribe(data => {
+      // TODO remove debugging
+      // console.log(data);
+      this.inflation = data;
+    });
     
     this.bs.getBlockTime$()
       .subscribe(data => {

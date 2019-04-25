@@ -13,8 +13,11 @@ export class PricingService {
   getAtomPrice():Observable<any> {
     return this.httpClient.get(appApi);
   }
-  getMinting():Observable<any> {
-    return this.httpClient.get(`${nodeRpc1}/minting/parameters`);
+  getInflation():Observable<any> {
+    // @aakatev inflation using stargate enpoint,
+    // TODO figuire out why our node doesnt expose endpoint
+    // return this.httpClient.get(`${nodeRpc1}/minting/parameters`);
+    return this.httpClient.get(`https://stargate.cosmos.network/minting/inflation`);
   }
 
 }
