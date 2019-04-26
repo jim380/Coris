@@ -1,8 +1,15 @@
 <div class="row" *ngIf="(appState | async).validators.serviceLoaded; else elseBlock">
-  <!-- <button
-    (click)="openDialog()"
-    mat-raised-button>open
-  </button> -->
+  <!-- @aakatev	
+    https://github.com/cosmos/cosmos-sdk/blob/9a16e2675f392b083dd1074ff92ff1f9fbda750d/types/staking.go
+    Unbonded  BondStatus = 0x00
+    Unbonding BondStatus = 0x01
+    Bonded BondStatus = 0x02 
+  -->
+  <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+    <mat-button-toggle (click)="statusFilter(2)">Bonded</mat-button-toggle>
+    <mat-button-toggle (click)="statusFilter(0)">Unbonded</mat-button-toggle>
+    <mat-button-toggle (click)="statusFilter(1)">Uhnbonding</mat-button-toggle>
+  </mat-button-toggle-group>
   <table  mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- <ng-container matColumnDef="index">
       <th mat-header-cell *matHeaderCellDef> Index </th>
@@ -117,100 +124,6 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" [appBgHighlight]="'#383D4C'" defaultColor="#111923"></tr>
   </table>
-    
-      
-
-<!--   
-  <div class="field is-grouped">
-    <p class="control">
-        <a 
-        class="button is-primary tag" 
-        (click)="sortByPower()"
-        style="font-size: 2rem;">
-          Sort By Power
-      </a>
-    </p>
-  </div>
-  <div class="card events-card">
-      <div class="card-header">
-        <p class="card-header-title"><i class="fas fa-vector-square"></i>Validators</p>
-      </div>
-      <div class="card-table">
-          <table class="table is-fullwidth">
-            <thead>
-              <tr>
-                <th> </th>
-                <th >Name</th>
-                <th>Status/Uptime</th>
-                <th>Voting Weight</th>
-                <th>Assets</th>
-                <th>Bond</th>
-                <th>Unbond</th>
-                <th>Delegators</th>
-                <th>Commission</th>
-                <th>Geolocation (or block time)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let validator of (appState | async).validators; index as i"
-              class="validator-card"
-              id="{{validator.keys?.Addres}}">
-                <td class="td-vertical">{{i}}</td>
-                <td class="td-1">
-                  <div class="col span-1-of-2 col-avatar">
-                      <figure class="validatoe-avatar is-128x128" *ngIf="validator.keybase">
-                          <img  *ngIf="!validator.picture; else elseBlock" 
-                            src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
-                            alt="avatar"
-                          >
-                          <ng-template #elseBlock>
-                            <img src="{{validator.picture}}" alt="avatar">
-                          </ng-template>
-                      </figure>
-                  </div>
-                  <div class="col span-1-of-2 td-vertical col-moniker">
-                      {{validator.description.moniker}}
-                  </div>
-                </td>
-                <td class="td-2 td-vertical">
-                  <span *ngIf="validator.jailed"><i class="ion-record jailed"></i></span>
-                  <span *ngIf="!validator.jailed"><i class="ion-record jailedNot"></i></span>
-                  <span
-                    *ngFor="let block of (appState | async).blocks.slice(0,1)"
-                    [innerHTML]=
-                    "block.header?.height !== null
-                    ? 100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) : 0"
-                    >
-                  </span>
-                </td>
-                <td class="td-1">
-                  {{validator.tokens/1e6 | number:'.0-0'}}
-                  <br>
-                  <span class="weightPerct">({{validator.tokens/(appState | async).totalStake| percent:'.2-2'}})</span></td>
-                <td class="td-2">
-                  - balances<br>- rewards
-                </td>
-                <td class="td-2 td-vertical">
-                  self-bond<br>(in %)
-                </td>
-                <td class="td-2 td-vertical">
-                  - Un-bond<br>- completion time
-                  </td>
-                <td *ngIf="validator.delegations; else otherBlock" class="td-2 td-vertical">
-                  {{validator.delegations?.length}}
-                </td>
-                <ng-template #otherBlock>
-                    <td class="td-2 td-vertical">-</td>
-                </ng-template>
-                <td class="td-2 td-vertical">{{validator.commission?.rate | percent}}-maxRate-maxChangeRate</td>
-                <td>
-                  -
-                </td>
-              </tr>
-            </tbody>
-          </table>
-      </div>
-  </div> -->
 
 </div>
 <ng-template #elseBlock>

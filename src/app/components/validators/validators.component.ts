@@ -1,6 +1,4 @@
-import { DummyComponent } from './../dummy/dummy.component';
 import { Component, OnInit } from '@angular/core';
-// import { Validator } from './validator';
 import { Observable, Subscriber } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
@@ -8,6 +6,7 @@ import { ValidatorsService } from '../../services/validators.service';
 import { Sort, MatDialog } from '@angular/material';
 import { ValidatorComponent } from '../validator/validator.component';
 import { State } from 'src/app/interfaces/state.interface';
+import { DataSource } from '@angular/cdk/table';
 
 @Component({
   selector: 'app-validators',
@@ -16,11 +15,12 @@ import { State } from 'src/app/interfaces/state.interface';
 })
 export class ValidatorsComponent implements OnInit {
   appState: Observable<State>;
-  // fragment = null;
   valsUptime: Map<string,string> = new Map;
   totalTokens = 0;
 
+  validators$;
   dataSource=[];
+  swapDataSource=[];
   displayedColumns: string[] = [
     'moniker', 
     'status', 
@@ -35,7 +35,6 @@ export class ValidatorsComponent implements OnInit {
 
   constructor(
     private store: Store<State>, 
-    // private route: ActivatedRoute, 
     private validatorsService: ValidatorsService,
     private dialog: MatDialog) { }
   
@@ -60,30 +59,14 @@ export class ValidatorsComponent implements OnInit {
 
   ngOnInit() {
     this.appState = this.store.select('App');
-    // this.route.fragment.subscribe(fragment => { this.fragment = fragment; });
-    this.appState.subscribe(data => {
+    this.validators$ = this.appState.subscribe(data => {
       this.dataSource = [...data.validators];
+      if(this.validators$ && data.validators.length > 0) {
+        this.validators$.unsubscribe();
+      }
     });
-    // this.appState.subscribe(data => {
-    //   data.validators.forEach(validator => {
-    //     if(validator['slashing']) {
-    //       console.log(
-    //         validator['slashing']['missed_blocks_counter']/
-    //         (data.blocks.slice(0,1)[0]['header']['height'] - 
-    //         validator['slashing']['start_height'])
-    //       );
-    //     }
-    //   })
-    // })
-    
   }
 
-  // ngAfterViewInit(): void {
-  //   try {
-  //     document.querySelector('#' + this.fragment).scrollIntoView();
-  //   } catch (e) { }
-  // }
-  
   sortData(sort: Sort) {
     if (!sort.active || sort.direction === '') {
       return;
@@ -101,18 +84,26 @@ export class ValidatorsComponent implements OnInit {
     this.validatorsService.sortValidatorsNumber(parameter, isAsc);
   }
 
-  // sortByPriority () {
-  //   this.validatorsService.sortValidators("proposer_priority");
-  // }
-  
-  // ngAfterViewInit(): void {
-  //   try {
-  //     if(this.fragment) {
-  //       document.querySelector('#' + this.fragment).scrollIntoView();
-  //     }
-  //   } catch (e) { 
-  //     // @aakatev hacky way of handling terminal errors dump
-  //     // TODO look for a better solution later
-  //   }
-  // }
+  statusFilter(status) {
+    this.appState.subscribe(data => {
+      console.log(data.validators);
+      this.dataSource = [];
+
+      data.validators.forEach(validator => {
+        if(validator.status === status) {
+          this.dataSource.push(validator);
+        }
+      });
+
+    }).unsubscribe();
+
+    
+    // this.swapDataSource = this.dataSource;
+    // this.dataSource = [];
+    // this.swapDataSource.forEach(data => {
+    //   if(data.status === status) {
+    //     this.dataSource.push(data);
+    //   }
+    // });
+  }
 }
