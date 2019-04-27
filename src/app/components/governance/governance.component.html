@@ -4,28 +4,28 @@
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> Proposal ID </th>
       <td mat-cell *matCellDef="let proposal">
-        {{proposal.value.proposal_id}}
+        {{proposal.proposal_id}}
       </td>
     </ng-container>
   
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef> Title </th>
       <td mat-cell *matCellDef="let proposal">
-        {{proposal.value.title}}
+        {{proposal.proposal_content.value.title}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef> Status </th>
       <td mat-cell *matCellDef="let proposal"> 
-        {{proposal.value.proposal_status}}
+        {{proposal.proposal_status}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="submitted">
       <th mat-header-cell *matHeaderCellDef> Submitted </th>
       <td mat-cell *matCellDef="let proposal">  
-        {{proposal.value.submit_time | date:"h:mm:ss a, MMM d, y"}}
+        {{proposal.submit_time | date:"h:mm:ss a, MMM d, y"}}
       </td>
     </ng-container>
   
@@ -33,14 +33,14 @@
     <ng-container matColumnDef="voting">
       <th mat-header-cell *matHeaderCellDef> Voting Started </th>
       <td mat-cell *matCellDef="let proposal">  
-        {{proposal.value.voting_start_time | date:"h:mm:ss a, MMM d, y"}}
+        {{proposal.voting_start_time | date:"h:mm:ss a, MMM d, y"}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="deposit">
       <th mat-header-cell *matHeaderCellDef> Deposit </th>
       <td mat-cell *matCellDef="let proposal">  
-        {{proposal.value.total_deposit[0].amount/1e6 | number:".2-2"}} <span class="ticker">ATOM</span>
+        {{proposal.total_deposit[0].amount/1e6 | number:".2-2"}} <span class="ticker">ATOM</span>
       </td>
     </ng-container>
 
