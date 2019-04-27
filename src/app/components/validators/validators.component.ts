@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
@@ -7,6 +7,7 @@ import { Sort, MatDialog } from '@angular/material';
 import { ValidatorComponent } from '../validator/validator.component';
 import { State } from 'src/app/interfaces/state.interface';
 import { DataSource } from '@angular/cdk/table';
+import {MatTable} from '@angular/material';
 
 @Component({
   selector: 'app-validators',
@@ -14,13 +15,12 @@ import { DataSource } from '@angular/cdk/table';
   styleUrls: ['./validators.component.css']
 })
 export class ValidatorsComponent implements OnInit {
+  @ViewChild(MatTable) table: MatTable<any>;
   appState: Observable<State>;
   valsUptime: Map<string,string> = new Map;
   totalTokens = 0;
-
   validators$;
   dataSource=[];
-  swapDataSource=[];
   displayedColumns: string[] = [
     'moniker', 
     'status', 
@@ -74,14 +74,36 @@ export class ValidatorsComponent implements OnInit {
 
     const isAsc = sort.direction === 'asc';
     switch (sort.active) {
-      case 'weight': return this.validatorsService.sortValidatorsNumber('tokens', isAsc);;
-      case 'name': return this.validatorsService.sortValidatorsString('moniker',isAsc);
-      default: return 0;
+      case 'weight': { 
+        this.sortValidatorsNumber('tokens', isAsc); 
+        this.table.renderRows();
+        break;
+      }
+      case 'name': {
+        this.sortValidatorsString('moniker',isAsc);
+        this.table.renderRows();
+        break;        
+      } 
+      default: 0;
     }
   }
 
-  sortBy(parameter, isAsc) {
-    this.validatorsService.sortValidatorsNumber(parameter, isAsc);
+  sortValidatorsNumber(property, direction) {
+    this.dataSource.sort((a, b) =>
+      direction ? parseFloat(b[property]) - parseFloat(a[property]) : parseFloat(b[property]) + parseFloat(a[property])
+    );
+    // @aakatev remove debugging
+    // console.log(this.dataSource);
+  }
+
+  sortValidatorsString(property, direction) {
+    this.dataSource.sort((a, b) =>
+      direction ?
+      b['description'][property] - a['description'][property] :
+      a['description'][property] - b['description'][property]
+    );
+    // @aakatev remove debugging
+    // console.log(this.dataSource);
   }
 
   statusFilter(status) {
@@ -94,16 +116,6 @@ export class ValidatorsComponent implements OnInit {
           this.dataSource.push(validator);
         }
       });
-
     }).unsubscribe();
-
-    
-    // this.swapDataSource = this.dataSource;
-    // this.dataSource = [];
-    // this.swapDataSource.forEach(data => {
-    //   if(data.status === status) {
-    //     this.dataSource.push(data);
-    //   }
-    // });
   }
 }
