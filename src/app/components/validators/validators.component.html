@@ -5,11 +5,13 @@
     Unbonding BondStatus = 0x01
     Bonded BondStatus = 0x02 
   -->
-  <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-    <mat-button-toggle (click)="statusFilter(2)">Bonded</mat-button-toggle>
-    <mat-button-toggle (click)="statusFilter(0)">Unbonded</mat-button-toggle>
-    <mat-button-toggle (click)="statusFilter(1)">Uhnbonding</mat-button-toggle>
-  </mat-button-toggle-group>
+  <div style="display: flex; justify-content: center; padding: 10px;">
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+      <mat-button-toggle (click)="statusFilter(2)">Bonded</mat-button-toggle>
+      <mat-button-toggle (click)="statusFilter(0)">Unbonded</mat-button-toggle>
+      <mat-button-toggle (click)="statusFilter(1)">Uhnbonding</mat-button-toggle>
+    </mat-button-toggle-group>    
+  </div>
   <table  mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- <ng-container matColumnDef="index">
       <th mat-header-cell *matHeaderCellDef> Index </th>
@@ -95,14 +97,14 @@
       </td>
     </ng-container>
     
-
+<!-- 
     <ng-container matColumnDef="blockTime">
       <th mat-header-cell *matHeaderCellDef> Block Time </th>
       <td mat-cell *matCellDef="let validator">  
         Add blocktime
       </td>
     </ng-container>
-  
+   -->
       <ng-container matColumnDef="bond">
         <th mat-header-cell *matHeaderCellDef> Self-Bond </th>
         <td mat-cell *matCellDef="let validator">

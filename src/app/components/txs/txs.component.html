@@ -15,22 +15,22 @@
     <mat-table [dataSource]="txs" class="mat-elevation-z8">
 
       <ng-container matColumnDef="hash">
-        <mat-header-cell *matHeaderCellDef> Hash </mat-header-cell>
-        <mat-cell *matCellDef="let tx">
+        <mat-header-cell [ngClass]="'txHashColumn'" *matHeaderCellDef> Hash </mat-header-cell>
+        <mat-cell [ngClass]="'txHashColumn'" *matCellDef="let tx">
           {{tx.hash}}
         </mat-cell>
       </ng-container>
   
       <ng-container matColumnDef="type">
-        <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
-        <mat-cell *matCellDef="let tx">
+        <mat-header-cell [ngClass]="'columnRightAlign'" *matHeaderCellDef> Type </mat-header-cell>
+        <mat-cell [ngClass]="'columnRightAlign'" *matCellDef="let tx">
           {{tx.tagsDecod[0].value | titlecase}}
         </mat-cell>
       </ng-container>
   
       <ng-container matColumnDef="fee">
-        <mat-header-cell *matHeaderCellDef> Fee </mat-header-cell>
-        <mat-cell *matCellDef="let tx">
+        <mat-header-cell [ngClass]="'columnRightAlign'" *matHeaderCellDef> Fee </mat-header-cell>
+        <mat-cell [ngClass]="'columnRightAlign'" *matCellDef="let tx">
           <!-- {{ 
             tx.details?.tx.value.fee.amount ?
             tx.details.tx.value.fee.amount[0].amount
@@ -46,18 +46,18 @@
       </ng-container>
   
       <ng-container matColumnDef="height">
-        <mat-header-cell *matHeaderCellDef> Height </mat-header-cell>
-        <mat-cell *matCellDef="let tx">
+        <mat-header-cell [ngClass]="'columnRightAlign'" *matHeaderCellDef> Height </mat-header-cell>
+        <mat-cell [ngClass]="'columnRightAlign'" *matCellDef="let tx">
           {{tx.height}}
         </mat-cell>
       </ng-container>
   
-      <ng-container matColumnDef="timestamp">
+      <!-- <ng-container matColumnDef="timestamp">
         <mat-header-cell *matHeaderCellDef> Timestamp </mat-header-cell>
         <mat-cell *matCellDef="let tx">
           add time
         </mat-cell>
-      </ng-container>
+      </ng-container> -->
   
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

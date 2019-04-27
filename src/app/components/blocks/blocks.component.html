@@ -18,7 +18,10 @@
     <ng-container matColumnDef="proposer">
       <th mat-header-cell *matHeaderCellDef> Proposer </th>
       <td mat-cell *matCellDef="let block"> 
-        {{ (appState | async).valsMap.size ? (appState | async).valsMap.get(block.proposer) : '-'}}
+        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has(block.proposer) : false; else elseBlockProposer">
+          {{ (appState | async).valsMap.get(block.proposer)}}
+        </span>
+        <ng-template #elseBlockProposer>{{block.proposer}}</ng-template>
       </td>
     </ng-container>
 

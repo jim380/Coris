@@ -29,7 +29,7 @@ export class ValidatorsComponent implements OnInit {
     'delegators',
     'bond', 
     'unbond', 
-    'blockTime',
+    // 'blockTime',
     'commission'
   ];
 
@@ -96,6 +96,8 @@ export class ValidatorsComponent implements OnInit {
     // console.log(this.dataSource);
   }
 
+  // @aakatev FIX
+  // sorting by string(aka text) doesnt work
   sortValidatorsString(property, direction) {
     this.dataSource.sort((a, b) =>
       direction ?

@@ -92,3 +92,15 @@ tbody {
   font-size: 80%;
   color: #B2DFDB;
 }
+
+.txHashColumn {
+  flex: 0 0 500px;
+  text-overflow: ellipsis;
+  /* overflow: hidden;  */
+  white-space: nowrap;
+ }
+
+ .columnRightAlign {
+  display:flex;
+  justify-content:flex-end;
+ }

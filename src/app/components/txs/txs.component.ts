@@ -23,7 +23,7 @@ export class TxsComponent implements OnInit {
     'type', 
     'fee',
     'height',
-    'timestamp'
+    // 'timestamp'
   ];
 
   constructor(private http: HttpClient, private router: Router) { }
