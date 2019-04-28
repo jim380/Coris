@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Block } from '../../interfaces/block.interface';
 import { nodeRpc2 } from '../../../config.js';
@@ -9,7 +9,8 @@ import { Observable } from 'rxjs';
 import { debounceTime, map } from "rxjs/operators";
 import { State } from 'src/app/interfaces/state.interface';
 import { rowsAnimation, expandableRow } from 'src/app/animations/animation';
-import {MatTableDataSource} from '@angular/material';
+import { MatTable } from '@angular/material';
+// import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-blocks',
@@ -18,6 +19,7 @@ import {MatTableDataSource} from '@angular/material';
   animations: [rowsAnimation, expandableRow]
 })
 export class BlocksComponent implements OnInit, OnDestroy {
+  @ViewChild(MatTable) table: MatTable<any>;
 
   displayedColumns: string[] = [
     'height', 
@@ -53,10 +55,16 @@ export class BlocksComponent implements OnInit, OnDestroy {
       )
       .subscribe( data => { 
         if( data.length === 1 && this.currentBlock !== data[0].header.height) {
-          this.startBlock = data[0].header.height;
-          this.initBlocks();
+          if(!this.blocks) {
+            this.startBlock = data[0].header.height;
+            this.initBlocks();  
+          } else if (this.blocks[0].height !== data[0].header.height) {
+            this.addBlock(data[0].header.height);
+            this.blocks.pop();
+            this.table.renderRows();
+          }
           // TODO remove debugging
-          // console.log(data[0].header.height);
+          // console.log(data[0]);
           // console.log(this.currentBlock);
         }
       });
@@ -69,6 +77,27 @@ export class BlocksComponent implements OnInit, OnDestroy {
   initBlocks() {
     this.currentBlock = this.startBlock;
     this.fetchBlocks();
+  }
+
+  addBlock(height) {
+    this.http.get(`${nodeRpc2}/blockchain?minHeight=${height}&maxHeight=${height}`)
+      .subscribe(data => {
+        // TODO remove debugging
+        // console.log(data);
+        data['result'].block_metas.forEach(block => {
+          const datePipe = new DatePipe('en-US');
+          const formattedTime = datePipe.transform(block.header.time, 'h:mm:ss a, MMM d, y');
+          this.blocks.unshift({
+            hash: block.block_id.hash, 
+            height: block.header.height, 
+            time: formattedTime,
+            txs: block.header.num_txs,
+            proposer: block.header.proposer_address
+          });
+        });
+        // TODO remove debugging
+        // console.log(this.blocks);
+      });
   }
 
   clearBlocks() {
@@ -99,21 +128,21 @@ export class BlocksComponent implements OnInit, OnDestroy {
       });
   }
 
-  displayOlderBlocks() {
-    if(this.currentBlock - this.blocksToDisplay > 20) {
-      document.getElementById('btn-newer').removeAttribute('disabled');
-      this.currentBlock -= this.blocksToDisplay;
-    }
-    this.fetchBlocks();
-  }
+  // displayOlderBlocks() {
+  //   if(this.currentBlock - this.blocksToDisplay > 20) {
+  //     document.getElementById('btn-newer').removeAttribute('disabled');
+  //     this.currentBlock -= this.blocksToDisplay;
+  //   }
+  //   this.fetchBlocks();
+  // }
 
-  displayNewerBlocks() {
-    if(this.currentBlock + this.blocksToDisplay == this.startBlock) {
-      document.getElementById('btn-newer').setAttribute('disabled', 'true');
-      this.currentBlock += this.blocksToDisplay;
-    } else if(this.currentBlock + this.blocksToDisplay < this.startBlock) {
-      this.currentBlock += this.blocksToDisplay;
-    }
-    this.fetchBlocks();
-  }
+  // displayNewerBlocks() {
+  //   if(this.currentBlock + this.blocksToDisplay == this.startBlock) {
+  //     document.getElementById('btn-newer').setAttribute('disabled', 'true');
+  //     this.currentBlock += this.blocksToDisplay;
+  //   } else if(this.currentBlock + this.blocksToDisplay < this.startBlock) {
+  //     this.currentBlock += this.blocksToDisplay;
+  //   }
+  //   this.fetchBlocks();
+  // }
 }
