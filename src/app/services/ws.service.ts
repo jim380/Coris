@@ -59,7 +59,7 @@ export class WsService {
 
     this.newWebSocket.onmessage = (event) => {
       let json = JSON.parse(event.data);
-      if (Object.keys(json.result).length !== 0) {
+      if (json.result &&  Object.keys(json.result).length !== 0) {
         if(json.result.data.type === 'tendermint/event/NewBlock') {
           // Debugging
           // console.log('NewBlock!');
