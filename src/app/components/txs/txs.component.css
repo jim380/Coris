@@ -105,6 +105,11 @@ tbody {
 }
 
  /* Expandable rows */
- tr.tx-detail-row {
+tr {
+  cursor: pointer;
+}
+
+tr.tx-detail-row {
   height: 0;
+  cursor: default;
 }
