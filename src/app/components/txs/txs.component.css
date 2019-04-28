@@ -96,11 +96,15 @@ tbody {
 .txHashColumn {
   flex: 0 0 500px;
   text-overflow: ellipsis;
-  /* overflow: hidden;  */
   white-space: nowrap;
- }
+}
 
- .columnRightAlign {
+.columnRightAlign {
   display:flex;
   justify-content:flex-end;
- }
+}
+
+ /* Expandable rows */
+ tr.tx-detail-row {
+  height: 0;
+}

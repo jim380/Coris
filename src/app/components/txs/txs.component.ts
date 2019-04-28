@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { nodeRpc1, nodeRpc2 } from '../../../config.js'
 import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
@@ -9,22 +10,29 @@ import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
 @Component({
   selector: 'app-txs',
   templateUrl: './txs.component.html',
-  styleUrls: ['./txs.component.css']
+  styleUrls: ['./txs.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class TxsComponent implements OnInit {
   txs: Tx[];
-  minHeight = 0;
-  lastBlock = 0;
-  // @aakatev TODO lookup how to query more than 30 txs at json
-  blocksToScan = 3000;
-
   displayedColumns: string[] = [
     'hash', 
     'type', 
     'fee',
     'height',
-    // 'timestamp'
   ];
+  expandedElement: Tx | null;
+
+  minHeight = 0;
+  lastBlock = 0;
+  // @aakatev TODO lookup how to query more than 30 txs at json
+  blocksToScan = 3000;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -36,7 +44,6 @@ export class TxsComponent implements OnInit {
       this.fetchTxs();
     });
   }
-
 
   clearTxs() {
     this.txs = [];
@@ -124,6 +131,7 @@ export class TxsComponent implements OnInit {
   displayOlderTxs () {
     this.minHeight -= this.blocksToScan;
     this.fetchTxs();  
+    console.log(this.txs);
   }
 
   getTxDetails(tx: Tx) {
