@@ -5,7 +5,7 @@
     Unbonding BondStatus = 0x01
     Bonded BondStatus = 0x02 
   -->
-  <div style="display: flex; justify-content: center; padding: 10px;">
+  <div class="bond-status">
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
       <mat-button-toggle (click)="statusFilter(2)">Bonded</mat-button-toggle>
       <mat-button-toggle (click)="statusFilter(0)">Unbonded</mat-button-toggle>
@@ -65,8 +65,8 @@
     <ng-container matColumnDef="assets">
       <th mat-header-cell *matHeaderCellDef> Assets </th>
       <td mat-cell *matCellDef="let validator">
-        <span *ngIf="validator.account?.tokens; else accountElseBlock">
-          {{validator.account?.tokens/1e6 | number:'.0-0'}}
+        <span *ngIf="validator.account?.tokens; else accountElseBlock" matTooltip="Balance" matTooltipPosition="above">
+          {{validator.account?.tokens/1e6 | number:'.2-2'}}
         </span>
         <ng-template #accountElseBlock>
           0
@@ -76,7 +76,8 @@
         <span class="table-subtitle" matTooltip="Rewards" matTooltipPosition="above">
           <i class="ion-ios-pricetags"></i>&nbsp;
           <span *ngIf="validator.rewards">
-            {{validator.rewards[0].amount | number:'.0-0'}} {{validator.rewards[0].denom}}
+            {{validator.rewards[0].amount/1e6 | number:'.2-2'}}<span class="ticker-small"> ATOM</span>
+            <!-- {{validator.rewards[0].denom}} -->
           </span>
         </span>
       </td>

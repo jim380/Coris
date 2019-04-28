@@ -118,6 +118,9 @@ tbody {
 
 .mat-header-cell {
   color: #ffffff;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-color: white;
 }
 
 .mat-cell {
@@ -125,10 +128,21 @@ tbody {
 }
 
 .mat-header-row {
-  background-color: #00796B;
+  background-color: #111923;
 }
 
 .ticker {
   font-size: 80%;
   color: #B2DFDB;
+}
+
+.ticker-small {
+  font-size: 70%;
+  /* color: #B2DFDB; */
+}
+
+.bond-status {
+  display: flex;
+  justify-content: left;
+  padding: 10px;
 }
