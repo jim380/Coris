@@ -73,7 +73,12 @@
         </ng-template>
         <span class="ticker"> ATOM</span>
         <br>
-        <span class="table-subtitle" matTooltip="Rewards" matTooltipPosition="above"><i class="ion-ios-pricetags"></i>&nbsp;rewards</span>
+        <span class="table-subtitle" matTooltip="Rewards" matTooltipPosition="above">
+          <i class="ion-ios-pricetags"></i>&nbsp;
+          <span *ngIf="validator.rewards">
+            {{validator.rewards[0].amount | number:'.0-0'}} {{validator.rewards[0].denom}}
+          </span>
+        </span>
       </td>
     </ng-container>
 

@@ -49,6 +49,9 @@ export class ValidatorsService {
       await this.getValidatorOutstandingRewards(validator);
     });
 
+    this.validatorsStore.forEach(async validator => {
+      await this.getValidatorRewards(validator);
+    });
 
     this.validatorsStore.forEach(async validator => {
       await this.getValidatorUnbondDelegations(validator);
@@ -186,6 +189,26 @@ export class ValidatorsService {
     });
   }
   
+  getValidatorRewards(validator) {
+    return new Promise(resolve => {
+      this.http.get(`${nodeRpc1}/distribution/validators/${validator.operator_address}/rewards`)
+        .subscribe(
+          (data) => {
+            // TODO remove debugging
+            // console.log(data);
+            validator.rewards = data;
+            resolve();
+          },
+          (error) => {
+            // TODO remove debugging
+            // console.log(error);
+            validator.rewards = null;
+            resolve();
+          }
+        );
+    });
+  }
+
   getValidatorOutstandingRewards(validator) {
     return new Promise(resolve => {
       this.http.get(`${nodeRpc1}/distribution/validators/${validator.operator_address}/outstanding_rewards`)
