@@ -48,10 +48,10 @@
           <div
               class="tx-detail"
               [@detailExpand]="tx == expandedElement ? 'expanded' : 'collapsed'">
-            <div *ngIf="tx.tagsDecod[1].key">
+            <div *ngIf="tx.tagsDecod[1]">
               {{tx.tagsDecod[1].key}} {{tx.tagsDecod[1].value}}
             </div>
-            <div *ngIf="tx.tagsDecod[1].value">
+            <div *ngIf="tx.tagsDecod[1]">
               {{tx.tagsDecod[2].key}} {{tx.tagsDecod[2].value}}
             </div>
           </div>
