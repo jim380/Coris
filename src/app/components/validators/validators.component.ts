@@ -105,19 +105,56 @@ export class ValidatorsComponent implements OnInit {
       a['description'][property] - b['description'][property]
     );
     // @aakatev remove debugging
-    // console.log(this.dataSource);
+    console.log(this.dataSource);
   }
 
-  statusFilter(status) {
+  validatorsFilter(bondStatus, isJailed) {
     this.appState.subscribe(data => {
-      console.log(data.validators);
+      // @aakatev remove debugging
+      // console.log(data.validators);
       this.dataSource = [];
 
       data.validators.forEach(validator => {
-        if(validator.status === status) {
+        if(validator.status === bondStatus && validator.jailed === isJailed) {
           this.dataSource.push(validator);
         }
       });
+    }).unsubscribe();
+  }
+
+  validatorsJailedFilter(isJailed) {
+    this.appState.subscribe(data => {
+      // @aakatev remove debugging
+      // console.log(data.validators);
+      this.dataSource = [];
+
+      data.validators.forEach(validator => {
+        if(validator.jailed === isJailed) {
+          this.dataSource.push(validator);
+        }
+      });
+    }).unsubscribe();
+  }
+
+  validatorsBondFilter(bondStatus) {
+    this.appState.subscribe(data => {
+      // @aakatev remove debugging
+      // console.log(data.validators);
+      this.dataSource = [];
+
+      data.validators.forEach(validator => {
+        if(validator.status === bondStatus) {
+          this.dataSource.push(validator);
+        }
+      });
+    }).unsubscribe();
+  }
+
+  validatorsNoFilter() {
+    this.appState.subscribe(data => {
+      // @aakatev remove debugging
+      // console.log(data.validators);
+      this.dataSource = data.validators;
     }).unsubscribe();
   }
 }
