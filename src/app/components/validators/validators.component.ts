@@ -63,6 +63,7 @@ export class ValidatorsComponent implements OnInit {
       this.dataSource = [...data.validators];
       if(this.validators$ && data.validators.length > 0) {
         this.validators$.unsubscribe();
+        this.validatorsBondFilter(2);
       }
     });
   }
