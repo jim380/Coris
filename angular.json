@@ -26,7 +26,8 @@
               "src/styles.css",
               "src/app/vendors/css/normalize.css",
               "src/app/vendors/css/grid.css",
-              "node_modules/ionicons/dist/scss/ionicons.scss"
+              "node_modules/ionicons/dist/scss/ionicons.scss",
+              "src/app/theme.scss"
             ],
             "scripts": []
           },
@@ -85,7 +86,8 @@
               "src/styles.css",
               "src/app/vendors/css/normalize.css",
               "src/app/vendors/css/grid.css",
-              "node_modules/ionicons/dist/scss/ionicons.scss"
+              "node_modules/ionicons/dist/scss/ionicons.scss",
+              "src/app/theme.scss"
             ],
             "scripts": [
               "src/app/vendors/js/app.js"

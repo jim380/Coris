@@ -6,15 +6,15 @@
     Bonded BondStatus = 0x02 
   -->
   <div class="bond-status">
-    <!-- <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-      <mat-button-toggle (click)="validatorsBondFilter(2)">Bonded</mat-button-toggle>
-      <mat-button-toggle (click)="validatorsJailedFilter(true)">Jailed</mat-button-toggle>
-      <mat-button-toggle (click)="validatorsFilter(0, false)">Unbonded</mat-button-toggle>
-      <mat-button-toggle (click)="validatorsBondFilter(1)">Unbonding</mat-button-toggle>
-      <mat-button-toggle (click)="validatorsNoFilter()">All</mat-button-toggle>
-    </mat-button-toggle-group> -->
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" color="primary" value="bonded">
+      <mat-button-toggle (click)="validatorsBondFilter(2)" value="bonded">Bonded</mat-button-toggle>
+      <mat-button-toggle (click)="validatorsJailedFilter(true)" value="jailed">Jailed</mat-button-toggle>
+      <mat-button-toggle (click)="validatorsFilter(0, false)" value="unbonded">Unbonded</mat-button-toggle>
+      <mat-button-toggle (click)="validatorsBondFilter(1)" value="unbonding">Unbonding</mat-button-toggle>
+      <mat-button-toggle (click)="validatorsNoFilter()" value="all">All</mat-button-toggle>
+    </mat-button-toggle-group>
     
-    <li class="dropdown" appDropdown>
+    <!-- <li class="dropdown" appDropdown>
       <a class="dropdown-toggle" role="button">Options<span class="caret"></span></a>
       <ul class="dropdown-menu">
         <li style="cursor: pointer;" (click)="validatorsBondFilter(2)">Bonded</li>
@@ -23,7 +23,8 @@
         <li style="cursor: pointer;" (click)="validatorsBondFilter(1)">Unbonding</li>
         <li style="cursor: pointer;" (click)="validatorsNoFilter()">All</li>
       </ul>
-    </li>
+    </li> -->
+
   </div>
   <table  mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- <ng-container matColumnDef="index">

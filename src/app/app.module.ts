@@ -20,7 +20,7 @@ import { ValidatorComponent } from './components/validator/validator.component';
 import { NewTxComponent } from './components/new-tx/new-tx.component';
 import { MaterialModule } from './material.module';
 import { ProgressSpinnerComponent } from './components/progress-spinner/progress-spinner.component';
-import { MatTooltipModule, MatDialog, MatDialogModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatChipsModule } from '@angular/material';
+import { MatTooltipModule, MatDialog, MatDialogModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatChipsModule, MatRadioModule } from '@angular/material';
 import { DummyComponent } from './components/dummy/dummy.component';
 import { StatusBarComponent } from './components/status-bar/status-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -73,7 +73,8 @@ import { ScrollTopComponent } from './components/scroll-top/scroll-top.component
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatChipsModule
+    MatChipsModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent],
