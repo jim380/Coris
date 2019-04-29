@@ -19,6 +19,6 @@ export interface Tx {
 export function decodeTag (tagsBase64) {
   return ({
     key: atob(tagsBase64.key),
-    value: atob(tagsBase64.value)
+    value: atob(tagsBase64.value).replace(/_/g, ' ')
   })
 }

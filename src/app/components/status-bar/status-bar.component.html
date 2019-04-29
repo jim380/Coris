@@ -8,7 +8,11 @@
   <div class="row proposer-row">
     <div style="cursor: pointer;" routerLink="/validators" fragment="{{(appState | async).round.proposer?.address}}">
       <h2 *ngIf="(appState | async).valsMap.size" class="title proposer-title">
-        <i class="ion-person"></i>&nbsp;Proposer - {{(appState | async).valsMap.get((appState | async).round.proposer?.address)}} 
+        <i class="ion-person"></i>&nbsp; Proposer - 
+        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( (appState | async).round.proposer?.address ) : false; else elseBlockProposer">
+            {{ (appState | async).valsMap.get( (appState | async).round.proposer?.address )}}
+        </span>
+        <ng-template #elseBlockProposer>{{ (appState | async).round.proposer?.address }}</ng-template> 
       </h2>
     </div>
   </div>
