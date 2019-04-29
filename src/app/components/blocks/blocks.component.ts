@@ -60,8 +60,6 @@ export class BlocksComponent implements OnInit, OnDestroy {
             this.initBlocks();  
           } else if (this.blocks[0].height !== data[0].header.height) {
             this.addBlock(data[0].header.height);
-            this.blocks.pop();
-            this.table.renderRows();
           }
           // TODO remove debugging
           // console.log(data[0]);
@@ -94,6 +92,8 @@ export class BlocksComponent implements OnInit, OnDestroy {
             txs: block.header.num_txs,
             proposer: block.header.proposer_address
           });
+          this.blocks.pop();
+          this.table.renderRows();
         });
         // TODO remove debugging
         // console.log(this.blocks);
