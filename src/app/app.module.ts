@@ -38,7 +38,7 @@ import { GovernanceComponent } from './components/governance/governance.componen
 import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
 import { SearchService } from './services/search.service';
 import { AgoPipe } from './pipes/ago.pipe';
-import {TimeAgoPipe} from 'time-ago-pipe';
+// import {TimeAgoPipe} from 'time-ago-pipe';
 
 @NgModule({
   declarations: [
@@ -62,7 +62,7 @@ import {TimeAgoPipe} from 'time-ago-pipe';
     GovernanceComponent,
     ScrollTopComponent,
     AgoPipe,
-    TimeAgoPipe
+    // TimeAgoPipe
     // UniversalSearchBarComponent,
   ],
   entryComponents: [
