@@ -37,6 +37,8 @@ import { BgHighlightDirective } from './Directives/bg-highlight.directive';
 import { GovernanceComponent } from './components/governance/governance.component';
 import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
 import { SearchService } from './services/search.service';
+import { AgoPipe } from './pipes/ago.pipe';
+import {TimeAgoPipe} from 'time-ago-pipe';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { SearchService } from './services/search.service';
     BgHighlightDirective,
     GovernanceComponent,
     ScrollTopComponent,
+    AgoPipe,
+    TimeAgoPipe
     // UniversalSearchBarComponent,
   ],
   entryComponents: [

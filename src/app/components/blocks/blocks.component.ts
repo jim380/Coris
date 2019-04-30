@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { debounceTime, map } from "rxjs/operators";
 import { State } from 'src/app/interfaces/state.interface';
-import { rowsAnimation, expandableRow } from 'src/app/animations/animation';
+import { rowsAnimation, expandableRow, staggerAnimation} from 'src/app/animations/animation';
 import { MatTable } from '@angular/material';
 // import {MatTableDataSource} from '@angular/material';
 
@@ -16,7 +16,7 @@ import { MatTable } from '@angular/material';
   selector: 'app-blocks',
   templateUrl: './blocks.component.html',
   styleUrls: ['./blocks.component.css'],
-  animations: [rowsAnimation, expandableRow]
+  animations: [rowsAnimation, expandableRow, staggerAnimation]
 })
 export class BlocksComponent implements OnInit, OnDestroy {
   @ViewChild(MatTable) table: MatTable<any>;

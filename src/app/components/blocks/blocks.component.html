@@ -30,7 +30,7 @@
     <ng-container matColumnDef="timestamp">
       <th mat-header-cell *matHeaderCellDef> Timestamp </th>
       <td mat-cell *matCellDef="let block">  
-        {{block.time}}
+        {{block.time | ago }}
       </td>
     </ng-container>
   

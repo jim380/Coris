@@ -23,9 +23,11 @@ export class TxsComponent implements OnInit {
   txs: Tx[];
   displayedColumns: string[] = [
     'hash', 
-    'type', 
+    'type',
+    'status',
     'fee',
     'height',
+    'timestamp'
   ];
   expandedElement: Tx | null;
 

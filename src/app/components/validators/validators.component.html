@@ -24,7 +24,6 @@
         <li style="cursor: pointer;" (click)="validatorsNoFilter()">All</li>
       </ul>
     </li> -->
-
   </div>
   <table multiTemplateDataRows mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- <ng-container matColumnDef="index">
@@ -152,7 +151,10 @@
             class="validator-detail"
             [@detailExpand]="validator == expandedElement ? 'expanded' : 'collapsed'">
           <div>
-            Address {{validator.operator_address}}
+            Operator address: {{validator.operator_address}}
+            <br>Delegator address: to-add
+            <br>Website: to-add
+            <br>Detail: to-add
           </div>
         </div>
       </td>
@@ -162,7 +164,7 @@
     <tr mat-row *matRowDef="let validator; columns: displayedColumns;"
         [appBgHighlight]="'#383D4C'" defaultColor="#111923"
         [class.example-expanded-row]="expandedElement === validator"
-        (click)="expandedElement = expandedElement === validator ? null : validator">
+        (click)="expandedElement = expandedElement === validator ? null : validator" matTooltip="Click to see more" matTooltipPosition="above">
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="validator-detail-row"></tr>
   </table>
