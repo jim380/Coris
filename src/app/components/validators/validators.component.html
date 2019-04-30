@@ -151,10 +151,10 @@
             class="validator-detail"
             [@detailExpand]="validator == expandedElement ? 'expanded' : 'collapsed'">
           <div>
-            Operator address: {{validator.operator_address}}
-            <br>Delegator address: to-add
-            <br>Website: to-add
-            <br>Detail: to-add
+            <p class="overflowed-text">Operator address: {{validator.operator_address}}</p>
+            <p class="overflowed-text">Delegator address: {{validator.account?.value.address}}</p>
+            <p class="overflowed-text">Website: {{validator.description?.website}}</p>
+            <p class="overflowed-text">Details: {{validator.description?.details}}</p> 
           </div>
         </div>
       </td>
