@@ -173,3 +173,13 @@ tbody {
 .dropdown-toggle:active {
     color: #FC7D14;
 }
+
+/* Expandable rows */
+tr {
+  cursor: pointer;
+}
+
+tr.validator-detail-row {
+  height: 0;
+  cursor: default;
+}

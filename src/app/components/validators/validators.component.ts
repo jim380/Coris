@@ -8,11 +8,19 @@ import { ValidatorComponent } from '../validator/validator.component';
 import { State } from 'src/app/interfaces/state.interface';
 import { DataSource } from '@angular/cdk/table';
 import {MatTable} from '@angular/material';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-validators',
   templateUrl: './validators.component.html',
-  styleUrls: ['./validators.component.css']
+  styleUrls: ['./validators.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class ValidatorsComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<any>;
@@ -28,10 +36,13 @@ export class ValidatorsComponent implements OnInit {
     'assets', 
     'delegators',
     'bond', 
-    'unbond', 
+    // 'unbond', 
     // 'blockTime',
     'commission'
   ];
+
+  expandedElement: any | null;
+  
 
   constructor(
     private store: Store<State>, 
@@ -55,6 +66,31 @@ export class ValidatorsComponent implements OnInit {
         totalTokens
       }
     });
+  }
+
+  displayUnbondColumn() {
+    this.displayedColumns = [
+      'moniker', 
+      'status', 
+      'weight', 
+      'assets', 
+      'delegators',
+      'bond', 
+      'unbond', 
+      'commission'
+    ];  
+  }
+
+  hideUnbondColumn() {
+    this.displayedColumns = [
+      'moniker', 
+      'status', 
+      'weight', 
+      'assets', 
+      'delegators',
+      'bond', 
+      'commission'
+    ];  
   }
 
   ngOnInit() {
@@ -110,6 +146,8 @@ export class ValidatorsComponent implements OnInit {
   }
 
   validatorsFilter(bondStatus, isJailed) {
+    this.hideUnbondColumn();
+
     this.appState.subscribe(data => {
       // @aakatev remove debugging
       // console.log(data.validators);
@@ -124,6 +162,8 @@ export class ValidatorsComponent implements OnInit {
   }
 
   validatorsJailedFilter(isJailed) {
+    this.hideUnbondColumn();
+
     this.appState.subscribe(data => {
       // @aakatev remove debugging
       // console.log(data.validators);
@@ -142,7 +182,8 @@ export class ValidatorsComponent implements OnInit {
       // @aakatev remove debugging
       // console.log(data.validators);
       this.dataSource = [];
-
+      bondStatus === 1 ? this.displayUnbondColumn() : this.hideUnbondColumn();
+      
       data.validators.forEach(validator => {
         if(validator.status === bondStatus) {
           this.dataSource.push(validator);
@@ -153,6 +194,8 @@ export class ValidatorsComponent implements OnInit {
 
   validatorsNoFilter() {
     this.appState.subscribe(data => {
+      this.hideUnbondColumn();
+
       // @aakatev remove debugging
       // console.log(data.validators);
       this.dataSource = data.validators;
