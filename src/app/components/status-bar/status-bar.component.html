@@ -5,6 +5,7 @@
     </h1> -->
     <h2 class="subtitle header-subtitle" @fadeInAnimation>{{(appState | async).blocks[0]?.header.chain_id}}</h2>
   </div>
+  <!-- <app-universal-search-bar (onSelectedOption)="onSelectedFilter($event)"></app-universal-search-bar> -->
   <div class="row proposer-row">
     <div style="cursor: pointer;" routerLink="/validators" fragment="{{(appState | async).round.proposer?.address}}">
       <h2 *ngIf="(appState | async).valsMap.size" class="title proposer-title">

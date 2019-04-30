@@ -99,10 +99,10 @@ tbody {
   white-space: nowrap;
 }
 
-.columnRightAlign {
+/* .columnRightAlign {
   display:flex;
   justify-content:flex-end;
-}
+} */
 
  /* Expandable rows */
 tr {

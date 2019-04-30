@@ -1,3 +1,4 @@
+// import { UniversalSearchBarComponent } from './components/universal-search-bar/universal-search-bar.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -5,6 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChartsModule } from 'ng2-charts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,7 +22,11 @@ import { ValidatorComponent } from './components/validator/validator.component';
 import { NewTxComponent } from './components/new-tx/new-tx.component';
 import { MaterialModule } from './material.module';
 import { ProgressSpinnerComponent } from './components/progress-spinner/progress-spinner.component';
-import { MatTooltipModule, MatDialog, MatDialogModule, MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatChipsModule, MatRadioModule } from '@angular/material';
+import { 
+  MatTooltipModule, MatDialog, MatDialogModule, MatToolbarModule, MatButtonModule, 
+  MatSidenavModule, MatIconModule, MatListModule, MatChipsModule, MatRadioModule, 
+  MatInputModule, MatAutocompleteModule, MatFormFieldModule
+  } from '@angular/material';
 import { DummyComponent } from './components/dummy/dummy.component';
 import { StatusBarComponent } from './components/status-bar/status-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -30,6 +36,7 @@ import { DropdownDirective } from './Directives/dropdown.directive';
 import { BgHighlightDirective } from './Directives/bg-highlight.directive';
 import { GovernanceComponent } from './components/governance/governance.component';
 import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
+import { SearchService } from './services/search.service';
 
 @NgModule({
   declarations: [
@@ -51,7 +58,8 @@ import { ScrollTopComponent } from './components/scroll-top/scroll-top.component
     DropdownDirective,
     BgHighlightDirective,
     GovernanceComponent,
-    ScrollTopComponent
+    ScrollTopComponent,
+    // UniversalSearchBarComponent,
   ],
   entryComponents: [
     DummyComponent
@@ -74,9 +82,15 @@ import { ScrollTopComponent } from './components/scroll-top/scroll-top.component
     MatIconModule,
     MatListModule,
     MatChipsModule,
-    MatRadioModule
+    MatRadioModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatFormFieldModule
+
   ],
-  providers: [],
+  providers: [SearchService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
