@@ -113,9 +113,11 @@
         Unbond 
       </th>
       <td  mat-cell *matCellDef="let validator">
-        Unbonding stake
+        {{ validator.unbonding_total/1e6 | number:'.0-0'}} <span class="ticker">ATOM</span>
         <br>
-        <span class="table-subtitle" matTooltip="Completion Time" matTooltipPosition="above"><i class="ion-android-time"></i>&nbsp;completion time</span>
+        <span class="table-subtitle" matTooltip="Completion Time" matTooltipPosition="above"><i class="ion-android-time"></i>&nbsp;
+          {{validator.unbonding_time}}
+        </span>
       </td>
     </ng-container>
     

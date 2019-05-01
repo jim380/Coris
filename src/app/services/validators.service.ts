@@ -331,12 +331,22 @@ export class ValidatorsService {
   }
 
   getValidatorUnbondDelegations(validator) {
+    validator.unbonding_total = 0;
     return new Promise(resolve => {
       this.http.get(`${nodeRpc1}/staking/validators/${validator.operator_address}/unbonding_delegations`)
         .subscribe(data => {
           // TODO remove debugging
           // console.log(data);
           validator.unbonding_delegations = data;
+          if(data) {
+            (<any[]>data).forEach(delegation => {
+              (<any[]>delegation.entries).forEach(entry => {
+                // TODO remove debugging
+                // console.log(parseInt(entry.balance));
+                validator.unbonding_total += parseInt(entry.balance, 10);
+              })
+            });
+          }
           resolve();
         });
     });
