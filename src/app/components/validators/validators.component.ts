@@ -6,9 +6,9 @@ import { ValidatorsService } from '../../services/validators.service';
 import { Sort, MatDialog } from '@angular/material';
 import { ValidatorComponent } from '../validator/validator.component';
 import { State } from 'src/app/interfaces/state.interface';
-import { DataSource } from '@angular/cdk/table';
 import {MatTable} from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import {MatPaginator, MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-validators',
@@ -24,11 +24,13 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 })
 export class ValidatorsComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  
   appState: Observable<State>;
   valsUptime: Map<string,string> = new Map;
   totalTokens = 0;
   validators$;
-  dataSource=[];
+  dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = [
     'moniker', 
     'status', 
@@ -93,103 +95,117 @@ export class ValidatorsComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.dataSource) {
+      this.dataSource.paginator = this.paginator;
+    }
+    
     this.appState = this.store.select('App');
     this.validators$ = this.appState.subscribe(data => {
-      this.dataSource = [...data.validators];
+      this.dataSource = new MatTableDataSource<any>([...data.validators]);
+      // console.log(this.dataSource);
+
       if(this.validators$ && data.validators.length > 0) {
+        this.dataSource.paginator = this.paginator;
+        // this.validatorsBondFilter(2);
+      }
+      if(data['serviceLoaded']) {
+        console.log('Unsubscribed');
         this.validators$.unsubscribe();
-        this.validatorsBondFilter(2);
       }
+      // if(this.dataSource.paginator) {
+      //   this.validators$.unsubscribe();
+      // }
     });
+    
   }
 
-  sortData(sort: Sort) {
-    if (!sort.active || sort.direction === '') {
-      return;
-    }
+  // sortData(sort: Sort) {
+  //   if (!sort.active || sort.direction === '') {
+  //     return;
+  //   }
 
-    const isAsc = sort.direction === 'asc';
-    switch (sort.active) {
-      case 'weight': { 
-        this.sortValidatorsNumber('tokens', isAsc); 
-        this.table.renderRows();
-        break;
-      }
-      case 'name': {
-        this.sortValidatorsString('moniker',isAsc);
-        this.table.renderRows();
-        break;        
-      } 
-      default: 0;
-    }
-  }
+  //   const isAsc = sort.direction === 'asc';
+  //   switch (sort.active) {
+  //     case 'weight': { 
+  //       this.sortValidatorsNumber('tokens', isAsc); 
+  //       this.table.renderRows();
+  //       break;
+  //     }
+  //     case 'name': {
+  //       this.sortValidatorsString('moniker',isAsc);
+  //       this.table.renderRows();
+  //       break;        
+  //     } 
+  //     default: 0;
+  //   }
+  // }
 
-  sortValidatorsNumber(property, direction) {
-    this.dataSource.sort((a, b) =>
-      direction ? parseFloat(b[property]) - parseFloat(a[property]) : parseFloat(b[property]) + parseFloat(a[property])
-    );
-    // @aakatev remove debugging
-    // console.log(this.dataSource);
-  }
+  // sortValidatorsNumber(property, direction) {
+  //   this.dataSource.sort((a, b) =>
+  //     direction ? parseFloat(b[property]) - parseFloat(a[property]) : parseFloat(b[property]) + parseFloat(a[property])
+  //   );
+  //   // @aakatev remove debugging
+  //   // console.log(this.dataSource);
+  // }
 
-  // @aakatev FIX
-  // sorting by string(aka text) doesnt work
-  sortValidatorsString(property, direction) {
-    this.dataSource.sort((a, b) =>
-      direction ?
-      b['description'][property] - a['description'][property] :
-      a['description'][property] - b['description'][property]
-    );
-    // @aakatev remove debugging
-    console.log(this.dataSource);
-  }
+  // // @aakatev FIX
+  // // sorting by string(aka text) doesnt work
+  // sortValidatorsString(property, direction) {
+  //   this.dataSource.sort((a, b) =>
+  //     direction ?
+  //     b['description'][property] - a['description'][property] :
+  //     a['description'][property] - b['description'][property]
+  //   );
+  //   // @aakatev remove debugging
+  //   console.log(this.dataSource);
+  // }
 
-  validatorsFilter(bondStatus, isJailed) {
-    this.hideUnbondColumn();
+  // validatorsFilter(bondStatus, isJailed) {
+  //   this.hideUnbondColumn();
 
-    this.appState.subscribe(data => {
-      // @aakatev remove debugging
-      // console.log(data.validators);
-      this.dataSource = [];
+  //   this.appState.subscribe(data => {
+  //     // @aakatev remove debugging
+  //     // console.log(data.validators);
+  //     this.dataSource = [];
 
-      data.validators.forEach(validator => {
-        if(validator.status === bondStatus && validator.jailed === isJailed) {
-          this.dataSource.push(validator);
-        }
-      });
-    }).unsubscribe();
-  }
+  //     data.validators.forEach(validator => {
+  //       if(validator.status === bondStatus && validator.jailed === isJailed) {
+  //         this.dataSource.push(validator);
+  //       }
+  //     });
+  //   }).unsubscribe();
+  // }
 
-  validatorsJailedFilter(isJailed) {
-    this.hideUnbondColumn();
+  // validatorsJailedFilter(isJailed) {
+  //   this.hideUnbondColumn();
 
-    this.appState.subscribe(data => {
-      // @aakatev remove debugging
-      // console.log(data.validators);
-      this.dataSource = [];
+  //   this.appState.subscribe(data => {
+  //     // @aakatev remove debugging
+  //     // console.log(data.validators);
+  //     this.dataSource = [];
 
-      data.validators.forEach(validator => {
-        if(validator.jailed === isJailed) {
-          this.dataSource.push(validator);
-        }
-      });
-    }).unsubscribe();
-  }
+  //     data.validators.forEach(validator => {
+  //       if(validator.jailed === isJailed) {
+  //         this.dataSource.push(validator);
+  //       }
+  //     });
+  //   }).unsubscribe();
+  // }
 
-  validatorsBondFilter(bondStatus) {
-    this.appState.subscribe(data => {
-      // @aakatev remove debugging
-      // console.log(data.validators);
-      this.dataSource = [];
-      bondStatus === 1 ? this.displayUnbondColumn() : this.hideUnbondColumn();
+  // validatorsBondFilter(bondStatus) {
+  //   this.appState.subscribe(data => {
+  //     // @aakatev remove debugging
+  //     // console.log(data.validators);
+  //     this.dataSource = [];
+  //     bondStatus === 1 ? this.displayUnbondColumn() : this.hideUnbondColumn();
       
-      data.validators.forEach(validator => {
-        if(validator.status === bondStatus) {
-          this.dataSource.push(validator);
-        }
-      });
-    }).unsubscribe();
-  }
+  //     data.validators.forEach(validator => {
+  //       if(validator.status === bondStatus) {
+  //         this.dataSource.push(validator);
+  //       }
+  //     });
+  //   }).unsubscribe();
+  // }
 
   validatorsNoFilter() {
     this.appState.subscribe(data => {
