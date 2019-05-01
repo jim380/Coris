@@ -39,6 +39,9 @@ import { ScrollTopComponent } from './components/scroll-top/scroll-top.component
 import { SearchService } from './services/search.service';
 import { AgoPipe } from './pipes/ago.pipe';
 // import {TimeAgoPipe} from 'time-ago-pipe';
+import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
+import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -91,10 +94,12 @@ import { AgoPipe } from './pipes/ago.pipe';
     ReactiveFormsModule,
     MatInputModule,
     MatAutocompleteModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MDBBootstrapModulesPro.forRoot(),
+    AgmCoreModule.forRoot({ apiKey: 'ULKdG4NuUxzJcpQFspxF' })
 
   ],
-  providers: [SearchService],
+  providers: [SearchService, MDBSpinningPreloader],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
