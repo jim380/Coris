@@ -54,12 +54,12 @@
       <td mat-cell *matCellDef="let validator">  
         <span *ngIf="validator.jailed"><i class="ion-record jailed"></i></span>
         <span *ngIf="!validator.jailed"><i class="ion-record jailedNot"></i></span>
-        <span
-          *ngFor="let block of (appState | async).blocks.slice(0,1)"
-          [innerHTML]=
-          "block.header?.height !== null
-          ? 100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) : 0"
-          >
+        <span *ngFor="let block of (appState | async).blocks.slice(0,1)">
+        {{
+          block.header?.height !== null
+          ? (100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) | number:'.2')
+          : 0
+        }}
         </span>
       </td>
     </ng-container>
@@ -68,8 +68,8 @@
       <th mat-sort-header="weight" mat-header-cell *matHeaderCellDef> Voting Weight </th>
       <td mat-cell *matCellDef="let validator">
         {{validator.tokens/1e6 | number:'.0-0'}}
-        <br>
-        <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{validator.tokens/(appState | async).totalStake| percent:'.2-2'}}</span>
+        <!-- <br>
+        <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{validator.tokens/(appState | async).totalStake| percent:'.2-2'}}</span> -->
       </td>
     </ng-container>
   
@@ -85,14 +85,13 @@
           0
         </ng-template>
         <span class="ticker"> ATOM</span>
-        <br>
+        <!-- <br>
         <span class="table-subtitle" matTooltip="Rewards" matTooltipPosition="above">
           <i class="ion-ios-pricetags"></i>&nbsp;
           <span *ngIf="validator.rewards">
             {{validator.rewards[0].amount/1e6 | number:'.2-2'}}<span class="ticker-small"> ATOM</span>
-            <!-- {{validator.rewards[0].denom}} -->
           </span>
-        </span>
+        </span> -->
       </td>
     </ng-container>
 
@@ -129,21 +128,20 @@
       </td>
     </ng-container>
    -->
-      <ng-container matColumnDef="bond">
-        <th mat-header-cell *matHeaderCellDef> Self-Bond </th>
-        <td mat-cell *matCellDef="let validator">
-          {{validator.self_bond/1e6 | number:'.0-0'}} <span class="ticker">ATOM</span>
-          <br>
-          <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{ validator.self_bond / validator.tokens | percent:'.2-2' }}</span>
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="bond">
+      <th mat-header-cell *matHeaderCellDef> Self-Bond </th>
+      <td mat-cell *matCellDef="let validator">
+        {{validator.self_bond/1e6 | number:'.0-0'}} <span class="ticker">ATOM</span>
+        <!-- <br> -->
+        <!-- <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{ validator.self_bond / validator.tokens | percent:'.2-2' }}</span> -->
+      </td>
+    </ng-container>
         
-
     <ng-container matColumnDef="commission">
       <th mat-header-cell *matHeaderCellDef> Commission </th>
       <td mat-cell *matCellDef="let validator">
         <span matTooltip="Current Rate" matTooltipPosition="above">{{validator.commission?.rate | percent}}</span><br>
-        <span class="table-subtitle" matTooltip="Max Rate - Max Change Rate" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{validator.commission?.max_rate | percent}} - {{validator.commission?.max_change_rate | percent}}</span>
+        <!-- <span class="table-subtitle" matTooltip="Max Rate - Max Change Rate" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{validator.commission?.max_rate | percent}} - {{validator.commission?.max_change_rate | percent}}</span> -->
       </td>
     </ng-container>
 
@@ -152,11 +150,36 @@
         <div
             class="validator-detail"
             [@detailExpand]="validator == expandedElement ? 'expanded' : 'collapsed'">
-          <div>
-            <p class="overflowed-text">Operator address: {{validator.operator_address}}</p>
+          <div class="expanded-table-container">
+            <td class="expanded-column" mat-cell> 
+              <!-- dummy placeholder to align columns -->
+              {{''}}
+            </td>
+            <td class="expanded-column" mat-cell>  
+              <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{validator.tokens/(appState | async).totalStake| percent:'.2-2'}}</span>
+            </td>
+            <td class="expanded-column" mat-cell>  
+              <span class="table-subtitle" matTooltip="Rewards" matTooltipPosition="above">
+                <i class="ion-ios-pricetags"></i>&nbsp;
+                <span *ngIf="validator.rewards">
+                  {{validator.rewards[0].amount/1e6 | number:'.2-2'}}<span class="ticker-small"> ATOM</span>
+                </span>
+              </span>
+            </td>
+            <td class="expanded-column" mat-cell>  
+              <!-- dummy placeholder to align columns -->
+              {{''}}
+            </td>
+            <td class="expanded-column" mat-cell>  
+              <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{ validator.self_bond / validator.tokens | percent:'.2-2' }}</span>
+            </td>
+            <td class="expanded-column" mat-cell>  
+              <span class="table-subtitle" matTooltip="Max Rate - Max Change Rate" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{validator.commission?.max_rate | percent}} - {{validator.commission?.max_change_rate | percent}}</span>
+            </td>
+            <!-- <p class="overflowed-text">Operator address: {{validator.operator_address}}</p>
             <p class="overflowed-text">Delegator address: {{validator.account?.value.address}}</p>
             <p class="overflowed-text">Website: {{validator.description?.website}}</p>
-            <p class="overflowed-text">Details: {{validator.description?.details}}</p> 
+            <p class="overflowed-text">Details: {{validator.description?.details}}</p>  -->
           </div>
         </div>
       </td>

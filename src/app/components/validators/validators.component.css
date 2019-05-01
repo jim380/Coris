@@ -191,3 +191,15 @@ tr.validator-detail-row {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+
+
+.expanded-column {
+  flex: 1;
+  text-align: right;
+}
+
+.expanded-table-container {
+  display: flex; 
+  width: 100%;
+}
