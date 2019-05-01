@@ -52,18 +52,17 @@ export class ValidatorsComponent implements OnInit {
   openDialog(validator) {
     // @aakatev TODO 
     // create service to get this data 
-    let totalTokens = 0;
+    // let totalTokens = 0;
     // TODO remove debugging
     // console.log(validator);
-    this.dataSource.forEach(val => {
-      totalTokens += Number(val.tokens);
-    })
+    // this.dataSource.forEach(val => {
+    //   totalTokens += Number(val.tokens);
+    // })
     // TODO remove debugging
     // console.log(tokens);
     this.dialog.open( ValidatorComponent,  {
       data: { 
-        validator,
-        totalTokens
+        validator
       }
     });
   }

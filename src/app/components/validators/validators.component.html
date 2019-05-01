@@ -34,7 +34,7 @@
       <th mat-sort-header="name" mat-header-cell *matHeaderCellDef> Name </th>
       <td mat-cell *matCellDef="let validator" id="{{validator.hex_address}}"> 
         <span>
-          <figure style="cursor: pointer;" (click)="openDialog(validator)" class="validator-avatar is-128x128" *ngIf="validator.keybase">
+          <figure class="validator-avatar is-128x128" *ngIf="validator.keybase">
             <img  
               *ngIf="!validator.picture; else elseBlock" 
               src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
@@ -151,9 +151,8 @@
             class="validator-detail"
             [@detailExpand]="validator == expandedElement ? 'expanded' : 'collapsed'">
           <div class="expanded-table-container">
-            <td class="expanded-column" mat-cell> 
-              <!-- dummy placeholder to align columns -->
-              {{''}}
+            <td style="text-align: left;" class="expanded-column" mat-cell> 
+              <a style="cursor: pointer; text-align: left;" (click)="openDialog(validator)">Details</a>
             </td>
             <td class="expanded-column" mat-cell>  
               <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{validator.tokens/(appState | async).totalStake| percent:'.2-2'}}</span>
