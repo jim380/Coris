@@ -12,7 +12,7 @@ import { State } from 'src/app/interfaces/state.interface';
 @Component({
   selector: 'app-validator',
   templateUrl: './validator.component.html',
-  styleUrls: ['./validator.component.css']
+  styleUrls: ['./validator.component.scss']
 })
 
 export class ValidatorComponent implements OnInit {

@@ -13,7 +13,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 @Component({
   selector: 'app-validators',
   templateUrl: './validators.component.html',
-  styleUrls: ['./validators.component.css'],
+  styleUrls: ['./validators.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
