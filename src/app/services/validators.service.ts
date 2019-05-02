@@ -183,6 +183,7 @@ export class ValidatorsService {
             // TODO remove debugging
             // console.log(error);
             validator.distribution = null;
+            validator.account = { tokens: 0 };
             resolve();
           }
         );

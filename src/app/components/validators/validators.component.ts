@@ -3,7 +3,7 @@ import { Observable, Subscriber } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { ValidatorsService } from '../../services/validators.service';
-import { Sort, MatDialog } from '@angular/material';
+import { Sort, MatDialog, MatSort } from '@angular/material';
 import { ValidatorComponent } from '../validator/validator.component';
 import { State } from 'src/app/interfaces/state.interface';
 import {MatTable} from '@angular/material';
@@ -23,45 +23,69 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
   ],
 })
 export class ValidatorsComponent implements OnInit {
+  // Mat-table
+  private dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+  private displayedColumns: string[] = [];
+  private paginator: MatPaginator;
+  private sort: MatSort;
+  private expandedElement: any | null;
+
+
   @ViewChild(MatTable) table: MatTable<any>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.setDataSourceAttributes();
+  }
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setDataSourceAttributes();
+  }
   
   appState: Observable<State>;
   valsUptime: Map<string,string> = new Map;
   totalTokens = 0;
   validators$;
-  dataSource: MatTableDataSource<any>;
-  displayedColumns: string[] = [
-    'moniker', 
-    'status', 
-    'weight', 
-    'assets', 
-    'delegators',
-    'bond', 
-    // 'unbond', 
-    // 'blockTime',
-    'commission'
-  ];
-
-  expandedElement: any | null;
   
+  setDataSourceAttributes() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (data, sortHeaderId: any) => {
+      return this.getPropertyByPath(data, sortHeaderId);
+    };
+  }
+
+  getPropertyByPath(obj: Object, pathString: string) {
+    return pathString.split('.').reduce((o, i) => o[i], obj);
+  }
 
   constructor(
     private store: Store<State>, 
     private validatorsService: ValidatorsService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog
+  ) { 
+    this.hideUnbondColumn();
+  }
+
+  ngOnInit() {
+    if(this.dataSource) {
+      this.dataSource.paginator = this.paginator;
+    }
+    
+    this.appState = this.store.select('App');
+    this.validators$ = this.appState.subscribe(data => {
+      this.dataSource = new MatTableDataSource<any>([...data.validators]);
+      // @aakatev remove debugging
+      // console.log(this.dataSource);
+
+      if(this.validators$ && data.validators.length > 0) {
+        // console.log('Unsubscribed');
+        this.validators$.unsubscribe();
+      }
+    });
+    
+  }
   
   openDialog(validator) {
-    // @aakatev TODO 
-    // create service to get this data 
-    // let totalTokens = 0;
-    // TODO remove debugging
-    // console.log(validator);
-    // this.dataSource.forEach(val => {
-    //   totalTokens += Number(val.tokens);
-    // })
-    // TODO remove debugging
-    // console.log(tokens);
     this.dialog.open( ValidatorComponent,  {
       data: { 
         validator
@@ -92,31 +116,6 @@ export class ValidatorsComponent implements OnInit {
       'bond', 
       'commission'
     ];  
-  }
-
-  ngOnInit() {
-    if(this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-    }
-    
-    this.appState = this.store.select('App');
-    this.validators$ = this.appState.subscribe(data => {
-      this.dataSource = new MatTableDataSource<any>([...data.validators]);
-      // console.log(this.dataSource);
-
-      if(this.validators$ && data.validators.length > 0) {
-        this.dataSource.paginator = this.paginator;
-        // this.validatorsBondFilter(2);
-      }
-      if(data['serviceLoaded']) {
-        console.log('Unsubscribed');
-        this.validators$.unsubscribe();
-      }
-      // if(this.dataSource.paginator) {
-      //   this.validators$.unsubscribe();
-      // }
-    });
-    
   }
 
   // sortData(sort: Sort) {
