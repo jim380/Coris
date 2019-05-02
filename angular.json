@@ -27,17 +27,17 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "src/app/vendors/css/normalize.scss",
-              "src/app/vendors/css/grid.scss",
               "node_modules/ionicons/dist/scss/ionicons.scss",
-              "src/app/theme.scss",
               "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
               "node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
               "node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
               "node_modules/@fortawesome/fontawesome-free/scss/brands.scss",
               "node_modules/ng-uikit-pro-standard/assets/scss/bootstrap/bootstrap.scss",
-              "node_modules/ng-uikit-pro-standard/assets/scss/mdb.scss"
+              "node_modules/ng-uikit-pro-standard/assets/scss/mdb.scss",
+              "src/app/vendors/css/normalize.scss",
+              "src/app/vendors/css/grid.scss",
+              "src/styles.scss",
+              "src/app/theme.scss"
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js",
