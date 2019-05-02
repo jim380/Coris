@@ -37,6 +37,8 @@ import { AgoPipe } from './pipes/ago.pipe';
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { AgmCoreModule } from '@agm/core';
+import { TestComponent } from './components/test/test.component';
+import { SidenavComponent } from './components/navigation/sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { AgmCoreModule } from '@agm/core';
     GovernanceComponent,
     ScrollTopComponent,
     AgoPipe,
+    TestComponent,
+    SidenavComponent,
     // TimeAgoPipe
     // UniversalSearchBarComponent,
   ],
