@@ -35,18 +35,19 @@
                   <h5 class="brand-subtitle">by Cypher Core</h5>
                 </span>
               <span class="spacer"></span>
+              
               <span class="nav-links">
                 <a routerLink="/validators" routerLinkActive="active-list-item">Validators</a>
                 <a routerLink="/blocks" routerLinkActive="active-list-item">Blocks</a>
                 <a routerLink="/txs" routerLinkActive="active-list-item">Transactions</a>
                 <a routerLink="/gov" routerLinkActive="active-list-item">Governance</a>
-                  <li class="dropdown" appDropdown>
-                    <a class="dropdown-toggle" role="button">Network<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">MainNet</a></li>
-                      <li><a href="#">TestNet</a></li>
-                    </ul>
-                  </li>
+                <li class="dropdown" mdbDropdown>
+                  <a mdbDropdownToggle class="dropdown-toggle" role="button">Network<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">MainNet</a></li>
+                    <li><a href="#">TestNet</a></li>
+                  </ul>
+                </li>
               </span>
             </mat-toolbar>
       </div>
