@@ -21,7 +21,7 @@
     <div class="row" *ngIf="(appState | async).blocks.length; else elseBlock">
       <div class="col span-1-of-4">
         <div style="cursor: pointer;" routerLink="/last-block" class="is-parent">
-          <mat-card class="query-card" matTooltip="Latest Block Height" matTooltipPosition="above">
+          <mat-card class="query-card" mdbTooltip="Latest Block Height" placement="top">
             <mat-card-header>
               <mat-card-title class="subtitle box-key" style="margin-left:-11px">
                 <i class="ion-cube"></i>&nbsp;Last Block
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="col span-1-of-4">
-        <mat-card class="query-card" matTooltip="Consensus State" matTooltipPosition="above">
+        <mat-card class="query-card" mdbTooltip="Consensus State" placement="top">
           <mat-card-header>
             <mat-card-title class="subtitle box-key" style="margin-left:-11px">
               <i class="ion-load-a"></i>&nbsp;Consensus
@@ -50,7 +50,7 @@
         </mat-card>                  
       </div>
       <div class="col span-1-of-4">
-        <mat-card class="query-card" matTooltip="Total Active Validators" matTooltipPosition="above">
+        <mat-card class="query-card" mdbTooltip="Total Active Validators" placement="top">
           <mat-card-header>
             <mat-card-title class="subtitle box-key" style="margin-left:-11px">
               <i class="ion-person-stalker"></i>&nbsp;Validators
@@ -62,7 +62,7 @@
         </mat-card>    
       </div>
       <div class="col span-1-of-4">
-          <mat-card class="query-card" matTooltip="Total Bonded Stake" matTooltipPosition="above">
+          <mat-card class="query-card" mdbTooltip="Total Bonded Stake" placement="top">
             <mat-card-header>
               <mat-card-title class="subtitle box-key" style="margin-left:-11px">
                 <i class="ion-soup-can"></i>&nbsp;Bonded
@@ -85,7 +85,7 @@
     <div class="row" *ngIf="(appState | async).blocks.length; else elseBlock">
       <div class="col span-1-of-4">
         <div style="cursor: pointer;" routerLink="/last-block" class="is-parent">
-          <mat-card class="query-card" matTooltip="Block Interval" matTooltipPosition="above">
+          <mat-card class="query-card" mdbTooltip="Block Interval" placement="top">
             <mat-card-header>
               <mat-card-title class="subtitle box-key" style="margin-left:-11px">
                 <i class="ion-ios-clock"></i>&nbsp;Block Time
@@ -100,7 +100,7 @@
         </div>
       </div>
       <div class="col span-1-of-4">
-        <mat-card class="query-card" matTooltip="Global Average Commission Rate" matTooltipPosition="above">
+        <mat-card class="query-card" mdbTooltip="Global Average Commission Rate" placement="top">
           <mat-card-header>
             <mat-card-title class="subtitle box-key" style="margin-left:-11px">
               <i class="ion-cash"></i>&nbsp;Commission
@@ -112,7 +112,7 @@
         </mat-card>                  
       </div>
       <div class="col span-1-of-4">
-        <mat-card class="query-card" matTooltip="Inflation Rate" matTooltipPosition="above">
+        <mat-card class="query-card" mdbTooltip="Inflation Rate" placement="top">
           <mat-card-header>
             <mat-card-title class="subtitle box-key" style="margin-left:-11px">
               <i class="ion-android-arrow-up"></i>&nbsp;Inflation
@@ -124,7 +124,7 @@
         </mat-card>    
       </div>
       <div class="col span-1-of-4">
-          <mat-card class="query-card" matTooltip="ATOM USD Price" matTooltipPosition="above">
+          <mat-card class="query-card" mdbTooltip="ATOM USD Price" placement="top">
             <mat-card-header>
               <mat-card-title class="subtitle box-key" style="margin-left:-11px">
                 <i class="ion-social-usd"></i>&nbsp;Price

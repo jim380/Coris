@@ -81,7 +81,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let tx; columns: displayedColumns;"
           [class.example-expanded-row]="expandedElement === tx"
-          (click)="expandedElement = expandedElement === tx ? null : tx" matTooltip="Click to see more" matTooltipPosition="above">
+          (click)="expandedElement = expandedElement === tx ? null : tx" mdbTooltip="Click to see more" placement="top">
       </tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="tx-detail-row"></tr>
     </table>

@@ -5,7 +5,7 @@
     Unbonding BondStatus = 0x01
     Bonded BondStatus = 0x02 
   -->
-  <div class="bond-status">
+  <div class="row bond-status">
     <mat-button-toggle-group name="fontStyle" aria-label="Font Style" color="primary" value="bonded">
       <mat-button-toggle (click)="validatorsBondFilter(2)" value="bonded">Bonded</mat-button-toggle>
       <mat-button-toggle (click)="validatorsJailedFilter(true)" value="jailed">Jailed</mat-button-toggle>
@@ -65,9 +65,9 @@
         <span *ngFor="let block of (appState | async).blocks.slice(0,1)">
         {{
           block.header?.height !== null
-          ? (100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) | number:'.2')
+          ? (100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) | number:'.0')
           : 0
-        }}
+        }} %
         </span>
       </td>
     </ng-container>
@@ -75,7 +75,7 @@
     <ng-container matColumnDef="weight">
       <th mat-sort-header="tokens" mat-header-cell *matHeaderCellDef> Voting Weight </th>
       <td mat-cell *matCellDef="let validator">
-        {{validator.tokens/1e6 | number:'.0-0'}}
+        {{validator.tokens/1e6 | number:'.0-0'}}&nbsp;<span class="table-subtitle">({{validator.tokens/(appState | async).totalStake| percent:'.2-2'}})</span>
         <!-- <br>
         <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{validator.tokens/(appState | async).totalStake| percent:'.2-2'}}</span> -->
       </td>
@@ -148,7 +148,8 @@
     <ng-container matColumnDef="commission">
       <th mat-header-cell *matHeaderCellDef> Commission </th>
       <td mat-cell *matCellDef="let validator">
-        <span matTooltip="Current Rate" matTooltipPosition="above">{{validator.commission?.rate | percent}}</span><br>
+        <span matTooltip="Current Rate" matTooltipPosition="above">{{validator.commission?.rate | percent}}</span>
+        <span class="table-subtitle">&nbsp;({{validator.commission?.max_rate | percent}} - {{validator.commission?.max_change_rate | percent}})</span>
         <!-- <span class="table-subtitle" matTooltip="Max Rate - Max Change Rate" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{validator.commission?.max_rate | percent}} - {{validator.commission?.max_change_rate | percent}}</span> -->
       </td>
     </ng-container>
@@ -159,34 +160,38 @@
             class="validator-detail"
             [@detailExpand]="validator == expandedElement ? 'expanded' : 'collapsed'">
           <div class="expanded-table-container">
-            <td style="text-align: left;" class="expanded-column" mat-cell> 
+            <!-- <td style="text-align: left;" class="expanded-column" mat-cell> 
               <a style="cursor: pointer; text-align: left;" (click)="openDialog(validator)">Details</a>
-            </td>
-            <td class="expanded-column" mat-cell>  
-              <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{validator.tokens/(appState | async).totalStake| percent:'.2-2'}}</span>
-            </td>
-            <td class="expanded-column" mat-cell>  
-              <span class="table-subtitle" matTooltip="Rewards" matTooltipPosition="above">
-                <i class="ion-ios-pricetags"></i>&nbsp;
-                <span *ngIf="validator.rewards">
-                  {{validator.rewards[0].amount/1e6 | number:'.2-2'}}<span class="ticker-small"> ATOM</span>
-                </span>
-              </span>
-            </td>
-            <td class="expanded-column" mat-cell>  
-              <!-- dummy placeholder to align columns -->
-              {{''}}
-            </td>
-            <td class="expanded-column" mat-cell>  
-              <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{ validator.self_bond / validator.tokens | percent:'.2-2' }}</span>
-            </td>
-            <td class="expanded-column" mat-cell>  
-              <span class="table-subtitle" matTooltip="Max Rate - Max Change Rate" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{validator.commission?.max_rate | percent}} - {{validator.commission?.max_change_rate | percent}}</span>
-            </td>
+            </td> -->
             <!-- <p class="overflowed-text">Operator address: {{validator.operator_address}}</p>
             <p class="overflowed-text">Delegator address: {{validator.account?.value.address}}</p>
             <p class="overflowed-text">Website: {{validator.description?.website}}</p>
             <p class="overflowed-text">Details: {{validator.description?.details}}</p>  -->
+            <ul class="list-group list-group-horizontal-lg">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Precommits
+                <span class="badge badge-primary badge-pill" *ngIf="validator.rewards">add</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Self-bond%
+                <span class="badge badge-primary badge-pill">{{ validator.self_bond / validator.tokens | percent:'.2-2' }}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Rewards
+                <span class="badge badge-primary badge-pill" *ngIf="validator.rewards">add</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Outstanding Rewards
+                <span class="badge badge-primary badge-pill" *ngIf="validator.rewards">{{validator.rewards[0].amount/1e6 | number:'.2-2'}} <span class="badge-ticker">ATOM</span></span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;">
+                <a href="{{validator.description?.website}}" target=" ">Website<span class="badge badge-primary badge-pill"><i class="fa fa-globe"></i></span></a>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" (click)="openDialog(validator)">
+                Details
+                <span class="badge badge-primary badge-pill"><i class="fa fa-ellipsis-v"></i></span>
+              </li>
+            </ul>
           </div>
         </div>
       </td>
@@ -196,11 +201,15 @@
     <tr mat-row *matRowDef="let validator; columns: displayedColumns;"
         [appBgHighlight]="'#383D4C'" defaultColor="#111923"
         [class.example-expanded-row]="expandedElement === validator"
-        (click)="expandedElement = expandedElement === validator ? null : validator" matTooltip="Click to see more" matTooltipPosition="above">
+        (click)="expandedElement = expandedElement === validator ? null : validator" mdbTooltip="Click to see more" placement="top">
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="validator-detail-row"></tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
+
+  <div class="row paginator">
+    <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+  
 
 </div>
 <ng-template #elseBlock>
