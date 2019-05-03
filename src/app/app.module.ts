@@ -39,6 +39,7 @@ import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { AgmCoreModule } from '@agm/core';
 import { TestComponent } from './components/test/test.component';
 import { SidenavComponent } from './components/navigation/sidenav/sidenav.component';
+import { ValidatorProfileComponent } from './components/validator-profile/validator-profile.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { SidenavComponent } from './components/navigation/sidenav/sidenav.compon
     AgoPipe,
     TestComponent,
     SidenavComponent,
+    ValidatorProfileComponent,
     // TimeAgoPipe
     // UniversalSearchBarComponent,
   ],

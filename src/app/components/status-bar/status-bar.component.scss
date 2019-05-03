@@ -23,3 +23,8 @@
     color: white !important;
     border-radius: 5px;
 }
+
+.container {
+    max-width: 95%; /*1140px or in %*/
+    margin: 0 auto;
+}
