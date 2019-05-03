@@ -6,7 +6,7 @@ import { nodeRpc1 } from '../../../config.js';
 @Component({
   selector: 'app-governance',
   templateUrl: './governance.component.html',
-  styleUrls: ['./governance.component.css']
+  styleUrls: ['./governance.component.scss']
 })
 export class GovernanceComponent implements OnInit {
   proposals: Proposal[];

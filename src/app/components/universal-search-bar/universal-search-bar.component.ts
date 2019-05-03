@@ -8,7 +8,7 @@
 // @Component({
 //   selector: 'app-universal-search-bar',
 //   templateUrl: './universal-search-bar.component.html',
-//   styleUrls: ['./universal-search-bar.component.css']
+//   styleUrls: ['./universal-search-bar.component.scss']
 // })
 // export class UniversalSearchBarComponent implements OnInit {
 

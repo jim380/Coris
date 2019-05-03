@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-status-bar',
   templateUrl: './status-bar.component.html',
-  styleUrls: ['./status-bar.component.css'],
+  styleUrls: ['./status-bar.component.scss'],
   animations: [
     trigger('dropDownAnimation', [
       transition(':enter',[

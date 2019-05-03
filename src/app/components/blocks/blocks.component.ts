@@ -15,7 +15,7 @@ import { MatTable } from '@angular/material';
 @Component({
   selector: 'app-blocks',
   templateUrl: './blocks.component.html',
-  styleUrls: ['./blocks.component.css'],
+  styleUrls: ['./blocks.component.scss'],
   animations: [rowsAnimation, expandableRow, staggerAnimation]
 })
 export class BlocksComponent implements OnInit, OnDestroy {

@@ -10,7 +10,7 @@ import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
 @Component({
   selector: 'app-txs',
   templateUrl: './txs.component.html',
-  styleUrls: ['./txs.component.css'],
+  styleUrls: ['./txs.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),

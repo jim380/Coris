@@ -14,7 +14,6 @@ import {
   MatCardModule,
   MatOptionModule,
   MatSelectModule,
-  MatProgressSpinnerModule,
   MatDialogModule,
   MatTableModule,
   MatSortModule,
@@ -40,7 +39,6 @@ import {
     MatCardModule,
     MatOptionModule,
     MatSelectModule,
-    MatProgressSpinnerModule,
     MatDialogModule,
     MatTableModule,
     MatSortModule,
@@ -64,12 +62,12 @@ import {
     MatCardModule,
     MatOptionModule,
     MatSelectModule,
-    MatProgressSpinnerModule,
     MatDialogModule,
     MatTableModule,
     MatSortModule,
     MatButtonToggleModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatChipsModule
   ]
 }) 
 export class MaterialModule { }

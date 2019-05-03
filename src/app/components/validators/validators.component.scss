@@ -193,7 +193,6 @@ tr.validator-detail-row {
 }
 
 
-
 .expanded-column {
   flex: 1;
   text-align: right;
@@ -202,4 +201,11 @@ tr.validator-detail-row {
 .expanded-table-container {
   display: flex; 
   width: 100%;
+}
+
+.validator-avatar {
+  vertical-align: middle;
+  margin-bottom: 0;
+  background-color: #3F51B5;
+  color: white;
 }

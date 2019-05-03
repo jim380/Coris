@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-tx',
   templateUrl: './tx.component.html',
-  styleUrls: ['./tx.component.css']
+  styleUrls: ['./tx.component.scss']
 })
 export class TxComponent implements OnInit {
   txHash;

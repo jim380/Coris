@@ -8,7 +8,11 @@
       "sourceRoot": "src",
       "projectType": "application",
       "prefix": "app",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -23,13 +27,24 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "src/app/vendors/css/normalize.css",
-              "src/app/vendors/css/grid.css",
               "node_modules/ionicons/dist/scss/ionicons.scss",
+              "src/app/vendors/css/normalize.scss",
+              "src/app/vendors/css/grid.scss",
+              "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
+              "node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
+              "node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
+              "node_modules/@fortawesome/fontawesome-free/scss/brands.scss",
+              "node_modules/ng-uikit-pro-standard/assets/scss/bootstrap/bootstrap.scss",
+              "node_modules/ng-uikit-pro-standard/assets/scss/mdb.scss",
+              "src/styles.scss",
               "src/app/theme.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/chart.js/dist/Chart.js",
+              "node_modules/easy-pie-chart/dist/easypiechart.js",
+              "node_modules/screenfull/dist/screenfull.js",
+              "node_modules/hammerjs/hammer.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -83,9 +98,9 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.css",
-              "src/app/vendors/css/normalize.css",
-              "src/app/vendors/css/grid.css",
+              "src/styles.scss",
+              "src/app/vendors/css/normalize.scss",
+              "src/app/vendors/css/grid.scss",
               "node_modules/ionicons/dist/scss/ionicons.scss",
               "src/app/theme.scss"
             ],

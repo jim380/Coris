@@ -36,7 +36,7 @@
       <th mat-sort-header="description.moniker" mat-header-cell *matHeaderCellDef> Name </th>
       <td mat-cell *matCellDef="let validator" id="{{validator.hex_address}}"> 
         <span>
-          <figure class="validator-avatar is-128x128" *ngIf="validator.keybase">
+          <!-- <figure style="cursor: pointer;" (click)="openDialog(validator)" class="validator-avatar is-128x128" *ngIf="validator.keybase">
             <img  
               *ngIf="!validator.picture; else elseBlock" 
               src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
@@ -45,7 +45,13 @@
               <img src="{{validator.picture}}" alt="avatar">
             </ng-template>
             {{validator.description.moniker}}
-          </figure>
+          </figure> -->
+          <div class="chip validator-avatar is-128x128" *ngIf="validator.keybase">
+              <img  
+              *ngIf="!validator.picture; else elseBlock" 
+              src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
+              alt="avatar"> {{validator.description.moniker | slice:0:12 }}
+            </div>
         </span>
         <!-- <span class="moniker">{{validator.description.moniker}}</span> -->
       </td>
@@ -199,6 +205,6 @@
 </div>
 <ng-template #elseBlock>
   <div style="display: flex; justify-content: center;">
-    <mat-spinner [diameter]="30"></mat-spinner>
+    <mdb-spinner spinnerColor="blue"></mdb-spinner>
   </div> 
 </ng-template>

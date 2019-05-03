@@ -7,7 +7,7 @@ import { State } from 'src/app/interfaces/state.interface';
 @Component({
   selector: 'app-last-block',
   templateUrl: './last-block.component.html',
-  styleUrls: ['./last-block.component.css']
+  styleUrls: ['./last-block.component.scss']
 })
 export class LastBlockComponent implements OnInit {
   appState: Observable<State>;

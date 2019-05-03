@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-new-tx',
   templateUrl: './new-tx.component.html',
-  styleUrls: ['./new-tx.component.css']
+  styleUrls: ['./new-tx.component.scss']
 })
 export class NewTxComponent implements OnInit {
   txData;

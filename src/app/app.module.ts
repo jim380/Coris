@@ -21,12 +21,7 @@ import { TxComponent } from './components/tx/tx.component';
 import { ValidatorComponent } from './components/validator/validator.component';
 import { NewTxComponent } from './components/new-tx/new-tx.component';
 import { MaterialModule } from './material.module';
-import { ProgressSpinnerComponent } from './components/progress-spinner/progress-spinner.component';
-import { 
-  MatTooltipModule, MatDialog, MatDialogModule, MatToolbarModule, MatButtonModule, 
-  MatSidenavModule, MatIconModule, MatListModule, MatChipsModule, MatRadioModule, 
-  MatInputModule, MatAutocompleteModule, MatFormFieldModule
-  } from '@angular/material';
+
 import { DummyComponent } from './components/dummy/dummy.component';
 import { StatusBarComponent } from './components/status-bar/status-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -39,6 +34,11 @@ import { ScrollTopComponent } from './components/scroll-top/scroll-top.component
 import { SearchService } from './services/search.service';
 import { AgoPipe } from './pipes/ago.pipe';
 // import {TimeAgoPipe} from 'time-ago-pipe';
+import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
+import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
+import { AgmCoreModule } from '@agm/core';
+import { TestComponent } from './components/test/test.component';
+import { SidenavComponent } from './components/navigation/sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +52,6 @@ import { AgoPipe } from './pipes/ago.pipe';
     TxComponent,
     ValidatorComponent,
     NewTxComponent,
-    ProgressSpinnerComponent,
     DummyComponent,
     StatusBarComponent,
     FooterComponent,
@@ -62,6 +61,8 @@ import { AgoPipe } from './pipes/ago.pipe';
     GovernanceComponent,
     ScrollTopComponent,
     AgoPipe,
+    TestComponent,
+    SidenavComponent,
     // TimeAgoPipe
     // UniversalSearchBarComponent,
   ],
@@ -75,26 +76,16 @@ import { AgoPipe } from './pipes/ago.pipe';
     FlexLayoutModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatTooltipModule,
-    MatDialogModule,
     ChartsModule,
     StoreModule.forRoot({ App: appReducer }),
     LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatChipsModule,
-    MatRadioModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    MatFormFieldModule
+    MDBBootstrapModulesPro.forRoot(),
+    AgmCoreModule.forRoot({ apiKey: 'ULKdG4NuUxzJcpQFspxF' })
 
   ],
-  providers: [SearchService],
+  providers: [SearchService, MDBSpinningPreloader],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

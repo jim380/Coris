@@ -1,6 +1,7 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import '~bootstrap/dist/css/bootstrap.min.css';
-@import "https://fonts.googleapis.com/css?family=Lato:100,300,300i,400";
+// @import '~bootstrap/dist/css/bootstrap.min.css';
+// @import "https://fonts.googleapis.com/css?family=Lato:100,300,300i,400";
+@import url(https://fonts.googleapis.com/css?family=Lato:100,300,300i,400);
 
 @viewport {
   width: device-width ;
@@ -38,14 +39,14 @@ html, body {
   margin: 0;
 }
 
-.clearfix {zoom: 1;}
-.clearfix:after {
-    content: '.';
-    clear: both;
-    display: block;
-    height: 0;
-    visibility: hidden;
-}
+// .clearfix {zoom: 1;}
+// .clearfix:after {
+//     content: '.';
+//     clear: both;
+//     display: block;
+//     height: 0;
+//     visibility: hidden;
+// }
 
 /*-------------------------------------------------*/
 /* Reusable Components */
@@ -336,7 +337,7 @@ footer p {
 /* Material */
 /*-------------------------------------------------*/
 .query-card {
-  background: #00796B;
+  background: #3F51B5;
   color: white;
 }
 

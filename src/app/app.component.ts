@@ -9,7 +9,7 @@ import { fadeInAnimation, fade } from './animations/animation';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.scss'],
   animations: [
     trigger('dropDownAnimation', [
       transition(':enter',[
