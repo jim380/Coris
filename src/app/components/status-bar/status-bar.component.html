@@ -17,9 +17,9 @@
       </h2>
     </div>
   </div>
-  <div @fadeInAnimation class="row-queries">
+  <div @fadeInAnimation class="row-queries container">
     <div class="row" *ngIf="(appState | async).blocks.length; else elseBlock">
-      <div class="col span-1-of-4">
+      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
         <div style="cursor: pointer;" routerLink="/last-block" class="is-parent">
           <mat-card class="query-card" mdbTooltip="Latest Block Height" placement="top">
             <mat-card-header>
@@ -83,7 +83,7 @@
       </div>
     </div>
     <div class="row" *ngIf="(appState | async).blocks.length; else elseBlock">
-      <div class="col span-1-of-4">
+      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
         <div style="cursor: pointer;" routerLink="/last-block" class="is-parent">
           <mat-card class="query-card" mdbTooltip="Block Interval" placement="top">
             <mat-card-header>
@@ -103,11 +103,13 @@
         <mat-card class="query-card" mdbTooltip="Global Average Commission Rate" placement="top">
           <mat-card-header>
             <mat-card-title class="subtitle box-key" style="margin-left:-11px">
-              <i class="ion-cash"></i>&nbsp;Commission
+              <i class="ion-cash"></i>&nbsp;Community Pool
             </mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <h3 class="title chain-queries-title box-value">Add commission</h3>
+            <h3 class="title chain-queries-title box-value">
+              {{ (appState | async).stakePool.community_pool?.amount/1e6 | number:'.0-0'}}
+            </h3>
           </mat-card-content>
         </mat-card>                  
       </div>
