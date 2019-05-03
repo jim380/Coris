@@ -81,6 +81,7 @@ export class ValidatorsComponent implements OnInit {
         // console.log('Unsubscribed');
         this.validators$.unsubscribe();
       }
+      this.validatorsBondFilter(2);
     });
     
   }
@@ -118,101 +119,63 @@ export class ValidatorsComponent implements OnInit {
     ];  
   }
 
-  // sortData(sort: Sort) {
-  //   if (!sort.active || sort.direction === '') {
-  //     return;
-  //   }
 
-  //   const isAsc = sort.direction === 'asc';
-  //   switch (sort.active) {
-  //     case 'weight': { 
-  //       this.sortValidatorsNumber('tokens', isAsc); 
-  //       this.table.renderRows();
-  //       break;
-  //     }
-  //     case 'name': {
-  //       this.sortValidatorsString('moniker',isAsc);
-  //       this.table.renderRows();
-  //       break;        
-  //     } 
-  //     default: 0;
-  //   }
-  // }
+  validatorsFilter(bondStatus, isJailed) {
+    this.hideUnbondColumn();
 
-  // sortValidatorsNumber(property, direction) {
-  //   this.dataSource.sort((a, b) =>
-  //     direction ? parseFloat(b[property]) - parseFloat(a[property]) : parseFloat(b[property]) + parseFloat(a[property])
-  //   );
-  //   // @aakatev remove debugging
-  //   // console.log(this.dataSource);
-  // }
+    this.appState.subscribe(data => {
+      // @aakatev remove debugging
+      // console.log(data.validators);
+      let filterSource = [];
 
-  // // @aakatev FIX
-  // // sorting by string(aka text) doesnt work
-  // sortValidatorsString(property, direction) {
-  //   this.dataSource.sort((a, b) =>
-  //     direction ?
-  //     b['description'][property] - a['description'][property] :
-  //     a['description'][property] - b['description'][property]
-  //   );
-  //   // @aakatev remove debugging
-  //   console.log(this.dataSource);
-  // }
+      data.validators.forEach(validator => {
+        if(validator.status === bondStatus && validator.jailed === isJailed) {
+          filterSource.push(validator);
+        }
+      });
+      this.dataSource = new MatTableDataSource<any>([...filterSource]);
+    }).unsubscribe();
+  }
 
-  // validatorsFilter(bondStatus, isJailed) {
-  //   this.hideUnbondColumn();
+  validatorsJailedFilter(isJailed) {
+    this.hideUnbondColumn();
 
-  //   this.appState.subscribe(data => {
-  //     // @aakatev remove debugging
-  //     // console.log(data.validators);
-  //     this.dataSource = [];
+    this.appState.subscribe(data => {
+      // @aakatev remove debugging
+      // console.log(data.validators);
+      let filterSource = [];
 
-  //     data.validators.forEach(validator => {
-  //       if(validator.status === bondStatus && validator.jailed === isJailed) {
-  //         this.dataSource.push(validator);
-  //       }
-  //     });
-  //   }).unsubscribe();
-  // }
+      data.validators.forEach(validator => {
+        if(validator.jailed === isJailed) {
+          filterSource.push(validator);
+        }
+      });
+      this.dataSource = new MatTableDataSource<any>([...filterSource]);
+    }).unsubscribe();
+  }
 
-  // validatorsJailedFilter(isJailed) {
-  //   this.hideUnbondColumn();
-
-  //   this.appState.subscribe(data => {
-  //     // @aakatev remove debugging
-  //     // console.log(data.validators);
-  //     this.dataSource = [];
-
-  //     data.validators.forEach(validator => {
-  //       if(validator.jailed === isJailed) {
-  //         this.dataSource.push(validator);
-  //       }
-  //     });
-  //   }).unsubscribe();
-  // }
-
-  // validatorsBondFilter(bondStatus) {
-  //   this.appState.subscribe(data => {
-  //     // @aakatev remove debugging
-  //     // console.log(data.validators);
-  //     this.dataSource = [];
-  //     bondStatus === 1 ? this.displayUnbondColumn() : this.hideUnbondColumn();
+  validatorsBondFilter(bondStatus) {
+    this.appState.subscribe(data => {
+      // @aakatev remove debugging
+      // console.log(data.validators);
+      let filterSource = [];
+      bondStatus === 1 ? this.displayUnbondColumn() : this.hideUnbondColumn();
       
-  //     data.validators.forEach(validator => {
-  //       if(validator.status === bondStatus) {
-  //         this.dataSource.push(validator);
-  //       }
-  //     });
-  //   }).unsubscribe();
-  // }
+      data.validators.forEach(validator => {
+        if(validator.status === bondStatus) {
+          filterSource.push(validator);
+        }
+      });
+      this.dataSource = new MatTableDataSource<any>([...filterSource]);
+    }).unsubscribe();
+  }
 
   validatorsNoFilter() {
     this.appState.subscribe(data => {
       this.hideUnbondColumn();
-
       // @aakatev remove debugging
       // console.log(data.validators);
-      this.dataSource = data.validators;
+      this.dataSource = new MatTableDataSource<any>([...data.validators]);
     }).unsubscribe();
   }
 }
