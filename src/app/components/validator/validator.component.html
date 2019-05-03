@@ -1,11 +1,8 @@
 <mat-card>
   <div>
-    <div style="display: block">
-      <canvas baseChart
-        [data]="doughnutChartData"
-        [labels]="doughnutChartLabels"
-        [chartType]="doughnutChartType">
-      </canvas>
-    </div>
+    <p class="overflowed-text">Operator address: {{validator.operator_address}}</p>
+    <p class="overflowed-text">Delegator address: {{validator.account?.value.address}}</p>
+    <p class="overflowed-text">Website: {{validator.description?.website}}</p>
+    <p class="overflowed-text">Details: {{validator.description?.details}}</p> 
   </div>
 </mat-card>

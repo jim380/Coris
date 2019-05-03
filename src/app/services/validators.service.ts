@@ -109,13 +109,31 @@ export class ValidatorsService {
     return new Promise(resolve => {
         this.http.get(`${nodeRpc1}/staking/validators`).subscribe(async data => {
         // TODO remove debugging
-        // console.log(data);
+        // console.log( data );
         if (data !== null) {
-          this.setValidators(data);
+          (<any[]>data).sort((obj1, obj2) => {
+            if ( Number(obj1.tokens) < Number(obj2.tokens) ) {
+              return 1;
+            }
+            if ( Number(obj1.cognome) > Number(obj2.cognome) ) {
+              return -1;
+            }
+            return 0;
+          })
+          this.validatorsStore = data;
+          this.rankValidators(this.validatorsStore);
+          resolve();
         }
-        resolve();
       });
     });
+  }
+
+  rankValidators(validators,) {
+    validators.forEach( (validator, index) => {
+      console.log(validator);
+      validator.tokens = Number(validator.tokens);
+      validator.rank = (index+1);
+    })
   }
 
   getValidatorsRanking() {
@@ -126,7 +144,7 @@ export class ValidatorsService {
         if (data !== null) {
           this.mergeProperties(this.validatorsStore, 'consensus_pubkey', data['validators'], 'pub_key', 'ranking')
             .then(() => {
-              this.updateValidators();
+              // this.updateValidators();
               resolve();
             });
         } else {
@@ -183,6 +201,7 @@ export class ValidatorsService {
             // TODO remove debugging
             // console.log(error);
             validator.distribution = null;
+            validator.account = { tokens: 0 };
             resolve();
           }
         );

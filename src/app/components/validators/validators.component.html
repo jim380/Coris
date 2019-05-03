@@ -25,13 +25,15 @@
       </ul>
     </li> -->
   </div>
-  <table multiTemplateDataRows mat-table matSort (matSortChange)="sortData($event)" [dataSource]="dataSource" class="mat-elevation-z8">
-    <!-- <ng-container matColumnDef="index">
-      <th mat-header-cell *matHeaderCellDef> Index </th>
-      <td mat-cell *matCellDef="let validator"> {{0}} </td>
-    </ng-container> -->
+  <table multiTemplateDataRows mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+    
+    <ng-container matColumnDef="rank">
+      <th mat-sort-header="rank" mat-header-cell *matHeaderCellDef> Rank </th>
+      <td mat-cell *matCellDef="let validator"> {{validator.rank}} </td>
+    </ng-container>
+
     <ng-container  matColumnDef="moniker">
-      <th mat-sort-header="name" mat-header-cell *matHeaderCellDef> Name </th>
+      <th mat-sort-header="description.moniker" mat-header-cell *matHeaderCellDef> Name </th>
       <td mat-cell *matCellDef="let validator" id="{{validator.hex_address}}"> 
         <span>
           <!-- <figure style="cursor: pointer;" (click)="openDialog(validator)" class="validator-avatar is-128x128" *ngIf="validator.keybase">
@@ -44,7 +46,7 @@
             </ng-template>
             {{validator.description.moniker}}
           </figure> -->
-          <div class="chip validator-avatar is-128x128" style="cursor: pointer;" (click)="openDialog(validator)" *ngIf="validator.keybase">
+          <div class="chip validator-avatar is-128x128" *ngIf="validator.keybase">
               <img  
               *ngIf="!validator.picture; else elseBlock" 
               src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
@@ -71,7 +73,7 @@
     </ng-container>
   
     <ng-container matColumnDef="weight">
-      <th mat-sort-header="weight" mat-header-cell *matHeaderCellDef> Voting Weight </th>
+      <th mat-sort-header="tokens" mat-header-cell *matHeaderCellDef> Voting Weight </th>
       <td mat-cell *matCellDef="let validator">
         {{validator.tokens/1e6 | number:'.0-0'}}
         <!-- <br>
@@ -82,7 +84,7 @@
     
 
     <ng-container matColumnDef="assets">
-      <th mat-header-cell *matHeaderCellDef> Assets </th>
+      <th mat-sort-header="account.tokens" mat-header-cell *matHeaderCellDef> Assets </th>
       <td mat-cell *matCellDef="let validator">
         <span *ngIf="validator.account?.tokens; else accountElseBlock" matTooltip="Balance" matTooltipPosition="above">
           {{validator.account?.tokens/1e6 | number:'.2-2'}}
@@ -135,7 +137,7 @@
     </ng-container>
    -->
     <ng-container matColumnDef="bond">
-      <th mat-header-cell *matHeaderCellDef> Self-Bond </th>
+      <th mat-sort-header="self_bond" mat-header-cell *matHeaderCellDef> Self-Bond </th>
       <td mat-cell *matCellDef="let validator">
         {{validator.self_bond/1e6 | number:'.0-0'}} <span class="ticker">ATOM</span>
         <!-- <br> -->
@@ -157,9 +159,8 @@
             class="validator-detail"
             [@detailExpand]="validator == expandedElement ? 'expanded' : 'collapsed'">
           <div class="expanded-table-container">
-            <td class="expanded-column" mat-cell> 
-              <!-- dummy placeholder to align columns -->
-              {{''}}
+            <td style="text-align: left;" class="expanded-column" mat-cell> 
+              <a style="cursor: pointer; text-align: left;" (click)="openDialog(validator)">Details</a>
             </td>
             <td class="expanded-column" mat-cell>  
               <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{validator.tokens/(appState | async).totalStake| percent:'.2-2'}}</span>
@@ -199,6 +200,7 @@
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="validator-detail-row"></tr>
   </table>
+  <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
 
 </div>
 <ng-template #elseBlock>
