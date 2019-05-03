@@ -85,11 +85,26 @@ export class ValidatorsService {
 
   setStakingPool() {
     return new Promise(resolve => {
-        this.http.get(`${nodeRpc1}/staking/pool`).subscribe(async data => {
+      this.http.get(`${nodeRpc1}/staking/pool`).subscribe(async data => {
         // TODO remove debugging
         // console.log(data);
         if (data !== null) {
-          this.store.dispatch(new AppActions.UpdateStakePool(data));
+          this.setCommunityPool(data);
+        }
+        resolve();
+      });
+    });
+  }
+
+  setCommunityPool(stakingPool) {
+    return new Promise(resolve => {
+      this.http.get(`${nodeRpc1}/distribution/community_pool`).subscribe(async data => {
+        // TODO remove debugging
+        // console.log(data);
+        if (data !== null) {
+          stakingPool.community_pool = data[0];
+          this.store.dispatch(new AppActions.UpdateStakePool(stakingPool));
+          console.log(stakingPool);
         }
         resolve();
       });
@@ -100,7 +115,7 @@ export class ValidatorsService {
     this.store.dispatch(new AppActions.UpdateValidators(this.validatorsStore));
     this.store.dispatch(new AppActions.UpdateValsMap(this.validatorsMap));
     // TODO remove debugging
-    console.log(this.validatorsStore);
+    // console.log(this.validatorsStore);
     // console.log(this.validatorsMap);
   }
 
@@ -130,7 +145,8 @@ export class ValidatorsService {
 
   rankValidators(validators,) {
     validators.forEach( (validator, index) => {
-      console.log(validator);
+      // TODO remove debugging
+      // console.log(validator);
       validator.tokens = Number(validator.tokens);
       validator.rank = (index+1);
     })
@@ -338,7 +354,7 @@ export class ValidatorsService {
                 }
                 default:{
                   // TODO remove debugging
-                  console.log('Unknown account type: ', validator.account.type);
+                  // console.log('Unknown account type: ', validator.account.type);
                   break;
                 }
               }
