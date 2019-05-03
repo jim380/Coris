@@ -115,7 +115,7 @@ export class ValidatorsService {
     this.store.dispatch(new AppActions.UpdateValidators(this.validatorsStore));
     this.store.dispatch(new AppActions.UpdateValsMap(this.validatorsMap));
     // TODO remove debugging
-    // console.log(this.validatorsStore);
+    console.log(this.validatorsStore);
     // console.log(this.validatorsMap);
   }
 
@@ -251,7 +251,7 @@ export class ValidatorsService {
           (data) => {
             // TODO remove debugging
             // console.log(data);
-            validator.outstandning_rewards = data;
+            validator.outstanding_rewards = data;
             resolve();
           },
           (error) => {
