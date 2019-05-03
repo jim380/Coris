@@ -104,7 +104,7 @@ export class ValidatorsService {
         if (data !== null) {
           stakingPool.community_pool = data[0];
           this.store.dispatch(new AppActions.UpdateStakePool(stakingPool));
-          console.log(stakingPool);
+          // console.log(stakingPool);
         }
         resolve();
       });
