@@ -21,7 +21,7 @@
     <div class="row" *ngIf="(appState | async).blocks.length; else elseBlock">
       <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
         <div style="cursor: pointer;" routerLink="/last-block" class="is-parent">
-          <mat-card class="query-card" matTooltip="Latest Block Height" matTooltipPosition="above">
+          <mat-card class="query-card" mdbTooltip="Latest Block Height" placement="top">
             <mat-card-header>
               <mat-card-title class="subtitle box-key" style="margin-left:-11px">
                 <i class="ion-cube"></i>&nbsp;Last Block
@@ -37,8 +37,8 @@
           </mat-card>                  
         </div>
       </div>
-      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
-        <mat-card class="query-card" matTooltip="Consensus State" matTooltipPosition="above">
+      <div class="col span-1-of-4">
+        <mat-card class="query-card" mdbTooltip="Consensus State" placement="top">
           <mat-card-header>
             <mat-card-title class="subtitle box-key" style="margin-left:-11px">
               <i class="ion-load-a"></i>&nbsp;Consensus
@@ -49,8 +49,8 @@
           </mat-card-content>
         </mat-card>                  
       </div>
-      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
-        <mat-card class="query-card" matTooltip="Total Active Validators" matTooltipPosition="above">
+      <div class="col span-1-of-4">
+        <mat-card class="query-card" mdbTooltip="Total Active Validators" placement="top">
           <mat-card-header>
             <mat-card-title class="subtitle box-key" style="margin-left:-11px">
               <i class="ion-person-stalker"></i>&nbsp;Validators
@@ -61,31 +61,31 @@
           </mat-card-content>
         </mat-card>    
       </div>
-      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
-        <mat-card class="query-card" matTooltip="Total Bonded Stake" matTooltipPosition="above">
-          <mat-card-header>
-            <mat-card-title class="subtitle box-key" style="margin-left:-11px">
-              <i class="ion-soup-can"></i>&nbsp;Bonded
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-              <h3 class="title box-value" style="overflow: hidden; white-space: nowrap;">
-                {{ (appState | async).stakePool.bonded_tokens/1e6 | number:'.0-0'}}
-                ({{
-                  (appState | async).stakePool.bonded_tokens/1e6
-                  /((appState | async).stakePool.bonded_tokens/1e6 + (appState | async).stakePool.not_bonded_tokens/1e6) 
-                  | percent: '.2-2'
-                }})
-                <!-- {{ (appState | async).stakePool.bonded_tokens/1e6 | number:'.0-0'}} -->
-              </h3>
-          </mat-card-content>
-        </mat-card>                  
+      <div class="col span-1-of-4">
+          <mat-card class="query-card" mdbTooltip="Total Bonded Stake" placement="top">
+            <mat-card-header>
+              <mat-card-title class="subtitle box-key" style="margin-left:-11px">
+                <i class="ion-soup-can"></i>&nbsp;Bonded
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <h3 class="title box-value" style="overflow: hidden; white-space: nowrap;">
+                  {{ (appState | async).stakePool.bonded_tokens/1e6 | number:'.0-0'}}
+                  ({{
+                    (appState | async).stakePool.bonded_tokens/1e6
+                    /((appState | async).stakePool.bonded_tokens/1e6 + (appState | async).stakePool.not_bonded_tokens/1e6) 
+                    | percent: '.2-2'
+                  }})
+                  <!-- {{ (appState | async).stakePool.bonded_tokens/1e6 | number:'.0-0'}} -->
+                </h3>
+            </mat-card-content>
+          </mat-card>                  
       </div>
     </div>
     <div class="row" *ngIf="(appState | async).blocks.length; else elseBlock">
       <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
         <div style="cursor: pointer;" routerLink="/last-block" class="is-parent">
-          <mat-card class="query-card" matTooltip="Block Interval" matTooltipPosition="above">
+          <mat-card class="query-card" mdbTooltip="Block Interval" placement="top">
             <mat-card-header>
               <mat-card-title class="subtitle box-key" style="margin-left:-11px">
                 <i class="ion-ios-clock"></i>&nbsp;Block Time
@@ -99,8 +99,8 @@
           </mat-card>                  
         </div>
       </div>
-      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
-        <mat-card class="query-card" matTooltip="Global Average Commission Rate" matTooltipPosition="above">
+      <div class="col span-1-of-4">
+        <mat-card class="query-card" mdbTooltip="Global Average Commission Rate" placement="top">
           <mat-card-header>
             <mat-card-title class="subtitle box-key" style="margin-left:-11px">
               <i class="ion-cash"></i>&nbsp;Community Pool
@@ -113,8 +113,8 @@
           </mat-card-content>
         </mat-card>                  
       </div>
-      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
-        <mat-card class="query-card" matTooltip="Inflation Rate" matTooltipPosition="above">
+      <div class="col span-1-of-4">
+        <mat-card class="query-card" mdbTooltip="Inflation Rate" placement="top">
           <mat-card-header>
             <mat-card-title class="subtitle box-key" style="margin-left:-11px">
               <i class="ion-android-arrow-up"></i>&nbsp;Inflation
@@ -125,8 +125,8 @@
           </mat-card-content>
         </mat-card>    
       </div>
-      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
-          <mat-card class="query-card" matTooltip="ATOM USD Price" matTooltipPosition="above">
+      <div class="col span-1-of-4">
+          <mat-card class="query-card" mdbTooltip="ATOM USD Price" placement="top">
             <mat-card-header>
               <mat-card-title class="subtitle box-key" style="margin-left:-11px">
                 <i class="ion-social-usd"></i>&nbsp;Price

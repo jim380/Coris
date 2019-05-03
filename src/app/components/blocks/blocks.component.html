@@ -20,7 +20,7 @@
       <td mat-cell *matCellDef="let block">
         <mat-chip-list><mat-chip color = "primary" selected>
           <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has(block.proposer) : false; else elseBlockProposer">
-              {{ (appState | async).valsMap.get(block.proposer)}}
+              {{ (appState | async).valsMap.get(block.proposer) }}
           </span>
         </mat-chip></mat-chip-list>
         <ng-template #elseBlockProposer>{{block.proposer}}</ng-template>
