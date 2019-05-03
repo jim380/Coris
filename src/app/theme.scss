@@ -2,7 +2,7 @@
 
 @include mat-core();
 
-$app-primary: mat-palette($mat-teal, 500, 100, 700);
+$app-primary: mat-palette($mat-indigo, 500, 100, 700);
 $app-accent:  mat-palette($mat-amber, A200, A100, A400);
 
 $app-theme: mat-light-theme($app-primary, $app-accent);
@@ -12,7 +12,7 @@ $app-theme: mat-light-theme($app-primary, $app-accent);
   $accent: map-get($app-theme, accent);
 
   .mat-button-toggle {
-    background-color: mat-color($primary, 700);
+    background-color: mat-color($primary, 500);
     color: mat-color($primary, default-contrast);
   }
 

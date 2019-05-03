@@ -1,15 +1,30 @@
 .logo {
-    height: 30px;
-    width: auto;
-    float: left;
-    margin-top: 10px;
-  }
+  height: 30px;
+  width: auto;
+  float: left;
+  margin-top: 10px;
+}
 
-  .brand-nav {
-    vertical-align: middle;
-    margin-bottom: 0;
-  }
+.brand-nav {
+  vertical-align: middle;
+  margin-bottom: 0;
+}
 
-  .active-list-item {
-    color:#FFC107;
-  }
+.d-sm-inline-block {
+  margin-bottom: 0;
+  color: white;
+  padding-left: 5px;
+  font-size: 120%;
+}
+
+h5 .mb-0 {
+  padding-left: 0;
+}
+
+.active-list-item {
+  color:#FFC107;
+}
+
+mdb-accordion-item-head h5 {
+  padding: 0;
+}
