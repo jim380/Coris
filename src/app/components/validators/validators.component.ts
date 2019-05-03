@@ -96,6 +96,7 @@ export class ValidatorsComponent implements OnInit {
 
   displayUnbondColumn() {
     this.displayedColumns = [
+      'rank',
       'moniker', 
       'status', 
       'weight', 
@@ -109,6 +110,7 @@ export class ValidatorsComponent implements OnInit {
 
   hideUnbondColumn() {
     this.displayedColumns = [
+      'rank',
       'moniker', 
       'status', 
       'weight', 
