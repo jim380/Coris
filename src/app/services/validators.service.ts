@@ -13,6 +13,8 @@ import { State } from '../interfaces/state.interface';
   providedIn: 'root'
 })
 export class ValidatorsService {
+  appState: Observable<State>;
+
   totalStake = 0;
   validatorsStore = null;
   validatorsMap: Map<string, string> = new Map;
@@ -25,7 +27,16 @@ export class ValidatorsService {
       this.initValidators();
   }
 
-  async initValidators() {
+  async initValidators() { 
+    this.appState = this.store.select('App');
+    let block$ = this.appState.subscribe(data => {
+      if( block$ && data.validators.length > 0) {
+        // console.log(data.blocks[0].header.height);
+        this.validatorsStore.blockStamp = Number(data.blocks[0].header.height);
+        block$.unsubscribe();
+      }
+    });
+
     await this.getValidatorsDetails();
     await this.getValidatorsRanking();
 

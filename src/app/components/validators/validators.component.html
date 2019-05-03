@@ -170,7 +170,24 @@
             <ul class="list-group list-group-horizontal-lg">
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Precommits
-                <span class="badge badge-primary badge-pill" *ngIf="validator.rewards">add</span>
+                <span class="badge badge-primary badge-pill" *ngIf="validator.slashing">
+                  <span *ngIf="!validator.jailed; else elseCommitsBlock">
+                    <span *ngFor="let block of (appState | async).blocks.slice(0,1)">
+                      {{
+                        block.header?.height !== null
+                        ? block.header?.height - validator.slashing.start_height - validator.slashing.missed_blocks_counter
+                        : 0
+                      }}
+                    </span>
+                  </span>
+                  <ng-template #elseCommitsBlock>
+                    {{
+                      validators?.blockStamp
+                      ? validators?.blockStamp - validator.slashing.start_height - validator.slashing.missed_blocks_counter
+                      : 0
+                    }}
+                  </ng-template>
+                </span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Self-bond%
