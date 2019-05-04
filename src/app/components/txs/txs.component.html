@@ -16,7 +16,7 @@
   <div class="card events-card">
 
     <table mat-table
-          [dataSource]="txs" 
+          [dataSource]="dataSource" 
           multiTemplateDataRows
           class="mat-elevation-z8">
 
@@ -84,9 +84,6 @@
       </tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="tx-detail-row"></tr>
     </table>
-
+    <mat-paginator [pageSizeOptions]="[30]"></mat-paginator>
   </div>
-  <nav class="pagination" role="navigation" aria-label="pagination">
-    <button (click)="displayOlderTxs()" id="btn-older" class="pagination-next button is-dark">Older</button>
-  </nav>
 </div>

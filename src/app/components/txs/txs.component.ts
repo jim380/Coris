@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { nodeRpc1, nodeRpc2 } from '../../../config.js'
 import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
+import { MatTableDataSource, MatPaginator, MatTable, MatSort } from '@angular/material';
 
 
 @Component({
@@ -20,6 +21,25 @@ import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
   ],
 })
 export class TxsComponent implements OnInit {
+  private dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+  private paginator: MatPaginator;
+  @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.setDataSourceAttributes();
+  }
+
+  setDataSourceAttributes() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator.nextPage = () => { this.displayOlderTxs(); }
+    this.dataSource.paginator.hasNextPage = () => { return true; }
+    this.dataSource.paginator.hasPreviousPage = () => { return true; }
+    this.dataSource.paginator._intl.getRangeLabel = 
+      (page: number, pageSize: number, length: number) => { 
+        return `0 of ${Math.ceil(this.totalTxsCount/30)}`;  
+      }
+  }
+
   txs: Tx[];
   displayedColumns: string[] = [
     'hash', 
@@ -27,7 +47,7 @@ export class TxsComponent implements OnInit {
     'status',
     'fee',
     'height',
-    'timestamp'
+    // 'timestamp'
   ];
   expandedElement: Tx | null;
 
@@ -35,16 +55,20 @@ export class TxsComponent implements OnInit {
   lastBlock = 0;
   // @aakatev TODO lookup how to query more than 30 txs at json
   blocksToScan = 3000;
+  totalTxsCount = 0;
 
   constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
-    this.http.get(`${nodeRpc2}/status`).subscribe(data => {
-      this.lastBlock = data['result'].sync_info.latest_block_height;
+    this.http.get(`${nodeRpc1}/blocks/latest`).subscribe( (data:any) => {
+      // @aakatev remove debugging
+      this.totalTxsCount = data.block.header.total_txs;
+      this.lastBlock = data.block.header.height;
       this.minHeight = this.lastBlock - this.blocksToScan;
-      // this.clearTxs();
       this.fetchTxs();
     });
+    // @aakatev remove debugging
+    // console.log(this.dataSource.paginator);
   }
 
   clearTxs() {
@@ -56,9 +80,7 @@ export class TxsComponent implements OnInit {
     this.router.navigate([`tx/${value}`]);
   }
 
-  
   fetchTxs() {
-    document.getElementById('btn-older').classList.add('is-loading');
     this.http.get(`${nodeRpc2}/tx_search?query="tx.height>${this.minHeight}"`)
       .subscribe(data => {
       this.clearTxs();
@@ -134,9 +156,10 @@ export class TxsComponent implements OnInit {
               // otherwise would dump code in console
               // console.log(err);
             });
-        })
+        });
+        this.dataSource = new MatTableDataSource<any>([...this.txs]);
+        this.setDataSourceAttributes();
       }
-      document.getElementById('btn-older').classList.remove('is-loading');
     });
   }
 
