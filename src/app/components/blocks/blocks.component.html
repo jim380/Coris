@@ -1,83 +1,56 @@
 <div class="row">
-  <table  mat-table [dataSource]="blocks" class="mat-elevation-z8">
-    
-    <ng-container matColumnDef="height">
-      <th mat-header-cell *matHeaderCellDef> Height </th>
-      <td mat-cell *matCellDef="let block">
-        {{block.height}}
-      </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="transactions">
-      <th mat-header-cell *matHeaderCellDef> Transactions </th>
-      <td mat-cell *matCellDef="let block">
-        {{block.txs}}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="proposer">
-      <th mat-header-cell *matHeaderCellDef> Proposer </th>
-      <td mat-cell *matCellDef="let block">
-        <mat-chip-list><mat-chip color = "primary" selected>
-          <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has(block.proposer) : false; else elseBlockProposer">
-              {{ (appState | async).valsMap.get(block.proposer) }}
-          </span>
-        </mat-chip></mat-chip-list>
-        <ng-template #elseBlockProposer>{{block.proposer}}</ng-template>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="timestamp">
-      <th mat-header-cell *matHeaderCellDef> Timestamp </th>
-      <td mat-cell *matCellDef="let block">  
-        {{block.time | ago }}
-      </td>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row @rowsAnimation *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-      
-  <!-- <div class="field has-addons">
-    <div class="control">
-      <input class="input" placeholder = "Enter block height" #queryInputRef >
-    </div>
-    <div class="control">
-      <a 
-        class = "button is-info" 
-        (click) = 'clickButton(queryInputRef.value)' >
-          Search
-      </a>
+  <div class="container">
+    <div class="row">
+      <div class="col-8">
+        <mat-form-field>
+          <input #queryInputRef matInput placeholder="Enter block height">
+        </mat-form-field>
+      </div>
+      <div class="col-4">
+        <button (click) = "queryBlock(queryInputRef.value)" mat-raised-button color="accent">Search</button>    
+      </div>
     </div>
   </div>
-  
   <div class="card events-card">
-    <div class="card-header">
-      <p class="card-header-title"><i class="fas fa-vector-square"></i>Blocks</p>
-    </div>
-    <div class="card-table">
-        <table class="table is-fullwidth">
-          <thead>
-            <tr>
-              <th >Height</th>
-              <th>Transactions</th>
-              <th>Proposer</th>
-              <th>Timestamp (UTC)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr routerLink="/block/{{block.height}}" class="clickable" *ngFor="let block of blocks">
-              <td class="td-1">{{block.height}}</td>
-              <td class="td-2">{{block.txs}}</td>
-              <td class="td-1">{{block.proposer}}</td>
-              <td class="td-2">{{block.time}}</td>
-             </tr>
-          </tbody>
-        </table>
-    </div>
+
+    <table  mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      
+      <ng-container matColumnDef="height">
+        <th mat-header-cell *matHeaderCellDef> Height </th>
+        <td mat-cell *matCellDef="let block">
+          {{block.height}}
+        </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="transactions">
+        <th mat-header-cell *matHeaderCellDef> Transactions </th>
+        <td mat-cell *matCellDef="let block">
+          {{block.txs}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="proposer">
+        <th mat-header-cell *matHeaderCellDef> Proposer </th>
+        <td mat-cell *matCellDef="let block">
+          <mat-chip-list><mat-chip color = "primary" selected>
+            <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has(block.proposer) : false; else elseBlockProposer">
+                {{ (appState | async).valsMap.get(block.proposer) }}
+            </span>
+          </mat-chip></mat-chip-list>
+          <ng-template #elseBlockProposer>{{block.proposer}}</ng-template>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="timestamp">
+        <th mat-header-cell *matHeaderCellDef> Timestamp </th>
+        <td mat-cell *matCellDef="let block">  
+          {{block.time | ago }}
+        </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row @rowsAnimation *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[100]"></mat-paginator>
   </div>
-  <nav class="pagination" role="navigation" aria-label="pagination">
-    <button disabled id="btn-newer" (click)="displayNewerBlocks()" class="pagination-previous button is-dark">Newer</button>
-    <button id="btn-older" (click)="displayOlderBlocks()" class="pagination-next button is-dark">Older</button>
-  </nav> -->
 </div>

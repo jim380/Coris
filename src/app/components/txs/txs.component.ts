@@ -82,7 +82,7 @@ export class TxsComponent implements OnInit {
       this.fetchTxs();
     });
     // @aakatev remove debugging
-    console.log(this.dataSource.paginator);
+    // console.log(this.dataSource.paginator);
   }
 
   clearTxs() {

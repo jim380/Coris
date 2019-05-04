@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { debounceTime, map } from "rxjs/operators";
 import { State } from 'src/app/interfaces/state.interface';
 import { rowsAnimation, expandableRow, staggerAnimation} from 'src/app/animations/animation';
-import { MatTable } from '@angular/material';
+import { MatTable, MatTableDataSource, MatPaginator } from '@angular/material';
 // import {MatTableDataSource} from '@angular/material';
 
 @Component({
@@ -19,7 +19,43 @@ import { MatTable } from '@angular/material';
   animations: [rowsAnimation, expandableRow, staggerAnimation]
 })
 export class BlocksComponent implements OnInit, OnDestroy {
+  private dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+  private paginator: MatPaginator;
   @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.setDataSourceAttributes();
+  }
+
+  currentPage = 1;
+  lastPage = 1;
+
+  updateDataSource() {
+    this.dataSource = new MatTableDataSource<any>([...this.blocks]);
+    this.setDataSourceAttributes();
+  }
+
+  setDataSourceAttributes() {
+    let lastPage = 1;
+    if(this.blocks) {
+      lastPage = Math.ceil(this.blocks[0].height/this.blocksToDisplay);
+    }
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator.nextPage = () => { this.displayOlderBlocks(); }
+    this.dataSource.paginator.previousPage = () => { this.displayNewerBlocks(); }
+    this.dataSource.paginator.hasNextPage = () => { return true; }
+    this.dataSource.paginator.hasPreviousPage = () => { return true; }
+    this.dataSource.paginator._intl.getRangeLabel = 
+      (page: number, pageSize: number, length: number) => { 
+        return `${this.currentPage} of ${lastPage}`;  
+      }
+
+    if (this.currentPage === 1) {
+      this.dataSource.paginator.hasPreviousPage = () => { return false; }
+    } else if(this.currentPage === lastPage ) {
+      this.dataSource.paginator.hasNextPage = () => { return false; }
+    }
+  }
 
   displayedColumns: string[] = [
     'height', 
@@ -41,10 +77,7 @@ export class BlocksComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private store: Store <State> ) {
-      // const blocks: Block[] = [];
-      // this.dataSource = new MatTableDataSource(blocks);
-     }
+    private store: Store <State> ) { }
 
   ngOnInit() {
     this.appState = this.store.select('App');
@@ -85,6 +118,7 @@ export class BlocksComponent implements OnInit, OnDestroy {
         data['result'].block_metas.forEach(block => {
           const datePipe = new DatePipe('en-US');
           const formattedTime = datePipe.transform(block.header.time, 'h:mm:ss a, MMM d, y');
+
           this.blocks.unshift({
             hash: block.block_id.hash, 
             height: block.header.height, 
@@ -92,7 +126,9 @@ export class BlocksComponent implements OnInit, OnDestroy {
             txs: block.header.num_txs,
             proposer: block.header.proposer_address
           });
+
           this.blocks.pop();
+          this.updateDataSource();
           this.table.renderRows();
         });
         // TODO remove debugging
@@ -124,25 +160,32 @@ export class BlocksComponent implements OnInit, OnDestroy {
             txs: block.header.num_txs,
             proposer: block.header.proposer_address
           });
+          this.updateDataSource();
         });
       });
   }
 
-  // displayOlderBlocks() {
-  //   if(this.currentBlock - this.blocksToDisplay > 20) {
-  //     document.getElementById('btn-newer').removeAttribute('disabled');
-  //     this.currentBlock -= this.blocksToDisplay;
-  //   }
-  //   this.fetchBlocks();
-  // }
+  displayOlderBlocks() {
+    if(this.blocks$) {
+      this.blocks$.unsubscribe();
+    }
+    if(this.currentBlock - this.blocksToDisplay > 20) {
+      this.currentBlock -= this.blocksToDisplay;
+    }
+    this.fetchBlocks();
+    this.currentPage +=1 ;
+  }
 
-  // displayNewerBlocks() {
-  //   if(this.currentBlock + this.blocksToDisplay == this.startBlock) {
-  //     document.getElementById('btn-newer').setAttribute('disabled', 'true');
-  //     this.currentBlock += this.blocksToDisplay;
-  //   } else if(this.currentBlock + this.blocksToDisplay < this.startBlock) {
-  //     this.currentBlock += this.blocksToDisplay;
-  //   }
-  //   this.fetchBlocks();
-  // }
+  displayNewerBlocks() {
+    if(this.currentBlock + this.blocksToDisplay == this.startBlock) {
+      this.currentBlock += this.blocksToDisplay;
+    } else if(this.currentBlock + this.blocksToDisplay < this.startBlock) {
+      this.currentBlock += this.blocksToDisplay;
+    }
+    this.fetchBlocks();
+    this.currentPage -=1 ;
+  }
+  queryBlock(blockHeight) {
+    this.router.navigate([`/block/${blockHeight}`]);
+  }
 }

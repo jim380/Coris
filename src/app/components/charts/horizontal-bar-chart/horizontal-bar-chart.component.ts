@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { State } from 'src/app/interfaces/state.interface';
+import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-horizontal-bar-chart',
@@ -10,7 +14,7 @@ export class HorizontalBarChartComponent implements OnInit {
   public chartType: string = 'horizontalBar';
 
   public chartDatasets: Array<any> = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset' }
+    { data: [], label: 'Voting Weight' }
   ];
 
   public chartLabels: Array<any> = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
@@ -43,9 +47,34 @@ export class HorizontalBarChartComponent implements OnInit {
   public chartClicked(e: any): void { }
   public chartHovered(e: any): void { }
   
-  constructor() { }
+  appState: Observable<State>;
+  validators$;
+
+  constructor(private store: Store <State>,) { }
 
   ngOnInit() {
+    this.appState = this.store.select('App');
+
+    this.validators$ = this.appState
+      .pipe(
+        map(data => data.validators)
+      )
+      .subscribe(data => {
+        // @aakatev remove debugging
+        // console.log(data);
+        if(this.validators$ && data.length > 0) {
+          let tempArray = [];
+          // @aakatev remove debugging
+          // console.log(data);
+          data.forEach(validator => {
+            tempArray.push(validator.tokens)
+          });
+          this.chartLabels = [
+            { data: [], label: 'Voting Weight' }
+          ];
+          this.validators$.unsubscribe();
+        }
+      });
   }
 
 }
