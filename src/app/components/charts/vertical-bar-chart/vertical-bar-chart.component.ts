@@ -1,12 +1,13 @@
-import { Component, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-test',
-  templateUrl: './test.component.html',
-  styleUrls: ['./test.component.scss']
+  selector: 'app-vertical-bar-chart',
+  templateUrl: './vertical-bar-chart.component.html',
+  styleUrls: ['./vertical-bar-chart.component.scss']
 })
-export class TestComponent {
-  public chartType: string = 'horizontalBar';
+export class VerticalBarChartComponent implements OnInit {
+
+  public chartType: string = 'bar';
 
   public chartDatasets: Array<any> = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset' }
@@ -41,4 +42,10 @@ export class TestComponent {
   };
   public chartClicked(e: any): void { }
   public chartHovered(e: any): void { }
+  
+  constructor() { }
+
+  ngOnInit() {
+  }
+
 }

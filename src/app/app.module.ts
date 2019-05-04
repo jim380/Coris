@@ -40,6 +40,10 @@ import { AgmCoreModule } from '@agm/core';
 import { TestComponent } from './components/test/test.component';
 import { SidenavComponent } from './components/navigation/sidenav/sidenav.component';
 import { ValidatorProfileComponent } from './components/validator-profile/validator-profile.component';
+import { LineChartComponent } from './components/charts/line-chart/line-chart.component';
+import { VerticalBarChartComponent } from './components/charts/vertical-bar-chart/vertical-bar-chart.component';
+import { PieChartComponent } from './components/charts/pie-chart/pie-chart.component';
+import { HorizontalBarChartComponent } from './components/charts/horizontal-bar-chart/horizontal-bar-chart.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +69,10 @@ import { ValidatorProfileComponent } from './components/validator-profile/valida
     TestComponent,
     SidenavComponent,
     ValidatorProfileComponent,
+    LineChartComponent,
+    VerticalBarChartComponent,
+    PieChartComponent,
+    HorizontalBarChartComponent,
     // TimeAgoPipe
     // UniversalSearchBarComponent,
   ],

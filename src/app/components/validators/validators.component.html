@@ -25,211 +25,214 @@
       </ul>
     </li> -->
   </div>
-  <table multiTemplateDataRows mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
-    
-    <ng-container matColumnDef="rank">
-      <th mat-sort-header="rank" mat-header-cell *matHeaderCellDef> Rank </th>
-      <td mat-cell *matCellDef="let validator"> {{validator.rank}} </td>
-    </ng-container>
 
-    <ng-container  matColumnDef="moniker">
-      <th mat-sort-header="description.moniker" mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let validator" id="{{validator.hex_address}}"> 
-        <span>
-          <!-- <figure style="cursor: pointer;" (click)="openDialog(validator)" class="validator-avatar is-128x128" *ngIf="validator.keybase">
-            <img  
-              *ngIf="!validator.picture; else elseBlock" 
-              src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
-              alt="avatar">
-            <ng-template #elseBlock>
-              <img src="{{validator.picture}}" alt="avatar">
-            </ng-template>
-            {{validator.description.moniker}}
-          </figure> -->
-          <div class="chip validator-avatar is-128x128" *ngIf="validator.keybase">
+  <div class="example-container mat-elevation-z8 scrollbar-primary">
+    <table multiTemplateDataRows mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="rank" sticky>
+        <th mat-sort-header="rank" mat-header-cell *matHeaderCellDef> Rank </th>
+        <td mat-cell *matCellDef="let validator"> {{validator.rank}} </td>
+      </ng-container>
+  
+      <ng-container  matColumnDef="moniker" sticky>
+        <th mat-sort-header="description.moniker" mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let validator" id="{{validator.hex_address}}"> 
+          <span>
+            <!-- <figure style="cursor: pointer;" (click)="openDialog(validator)" class="validator-avatar is-128x128" *ngIf="validator.keybase">
               <img  
-              *ngIf="!validator.picture; else elseBlock" 
-              src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
-              alt="avatar"> {{validator.description.moniker | slice:0:12 }}
-            </div>
-        </span>
-        <!-- <span class="moniker">{{validator.description.moniker}}</span> -->
-      </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> Status/Uptime </th>
-      <td mat-cell *matCellDef="let validator">  
-        <span *ngIf="validator.jailed"><i class="ion-record jailed"></i></span>
-        <span *ngIf="!validator.jailed"><i class="ion-record jailedNot"></i></span>
-        <span *ngFor="let block of (appState | async).blocks.slice(0,1)">
-        {{
-          block.header?.height !== null
-          ? (100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) | number:'.0')
-          : 0
-        }} %
-        </span>
-      </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="weight">
-      <th mat-sort-header="tokens" mat-header-cell *matHeaderCellDef> Voting Weight </th>
-      <td mat-cell *matCellDef="let validator">
-        {{validator.tokens/1e6 | number:'.0-0'}}&nbsp;<span class="table-subtitle">({{validator.tokens/(appState | async).totalStake| percent:'.2-2'}})</span>
-        <!-- <br>
-        <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{validator.tokens/(appState | async).totalStake| percent:'.2-2'}}</span> -->
-      </td>
-    </ng-container>
-  
-    
-
-    <ng-container matColumnDef="assets">
-      <th mat-sort-header="account.tokens" mat-header-cell *matHeaderCellDef> Assets </th>
-      <td mat-cell *matCellDef="let validator">
-        <span *ngIf="validator.account?.tokens; else accountElseBlock" matTooltip="Balance" matTooltipPosition="above">
-          {{validator.account?.tokens/1e6 | number:'.2-2'}}
-        </span>
-        <ng-template #accountElseBlock>
-          0
-        </ng-template>
-        <span class="ticker"> ATOM</span>
-        <!-- <br>
-        <span class="table-subtitle" matTooltip="Rewards" matTooltipPosition="above">
-          <i class="ion-ios-pricetags"></i>&nbsp;
-          <span *ngIf="validator.rewards">
-            {{validator.rewards[0].amount/1e6 | number:'.2-2'}}<span class="ticker-small"> ATOM</span>
+                *ngIf="!validator.picture; else elseBlock" 
+                src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
+                alt="avatar">
+              <ng-template #elseBlock>
+                <img src="{{validator.picture}}" alt="avatar">
+              </ng-template>
+              {{validator.description.moniker}}
+            </figure> -->
+            <div class="chip validator-avatar is-128x128" *ngIf="validator.keybase">
+                <img  
+                *ngIf="!validator.picture; else elseBlock" 
+                src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
+                alt="avatar"> {{validator.description.moniker | slice:0:12 }}
+              </div>
           </span>
-        </span> -->
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="delegators">
-      <th mat-header-cell *matHeaderCellDef> Delegators </th>
-      <td mat-cell *matCellDef="let validator"> 
-        <span *ngIf="validator.delegations; else otherBlock">
-          {{validator.delegations?.length}}
-        </span>
-        <ng-template #otherBlock>
-          <span>-</span>
-        </ng-template>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="unbond">
-      <th  mat-header-cell *matHeaderCellDef> 
-        Unbond 
-      </th>
-      <td  mat-cell *matCellDef="let validator">
-        {{ validator.unbonding_total/1e6 | number:'.0-0'}} <span class="ticker">ATOM</span>
-        <br>
-        <span class="table-subtitle" matTooltip="Completion Time" matTooltipPosition="above"><i class="ion-android-time"></i>&nbsp;
-          {{validator.unbonding_time}}
-        </span>
-      </td>
-    </ng-container>
+          <!-- <span class="moniker">{{validator.description.moniker}}</span> -->
+        </td>
+      </ng-container>
     
-<!-- 
-    <ng-container matColumnDef="blockTime">
-      <th mat-header-cell *matHeaderCellDef> Block Time </th>
-      <td mat-cell *matCellDef="let validator">  
-        Add blocktime
-      </td>
-    </ng-container>
-   -->
-    <ng-container matColumnDef="bond">
-      <th mat-sort-header="self_bond" mat-header-cell *matHeaderCellDef> Self-Bond </th>
-      <td mat-cell *matCellDef="let validator">
-        {{validator.self_bond/1e6 | number:'.0-0'}} <span class="ticker">ATOM</span>
-        <!-- <br> -->
-        <!-- <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{ validator.self_bond / validator.tokens | percent:'.2-2' }}</span> -->
-      </td>
-    </ng-container>
-        
-    <ng-container matColumnDef="commission">
-      <th mat-header-cell *matHeaderCellDef> Commission </th>
-      <td mat-cell *matCellDef="let validator">
-        <span matTooltip="Current Rate" matTooltipPosition="above">{{validator.commission?.rate | percent}}</span>
-        <span class="table-subtitle">&nbsp;({{validator.commission?.max_rate | percent}} - {{validator.commission?.max_change_rate | percent}})</span>
-        <!-- <span class="table-subtitle" matTooltip="Max Rate - Max Change Rate" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{validator.commission?.max_rate | percent}} - {{validator.commission?.max_change_rate | percent}}</span> -->
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="expandedDetail">
-      <td mat-cell *matCellDef="let validator" [attr.colspan]="displayedColumns.length">
-        <div
-            class="validator-detail"
-            [@detailExpand]="validator == expandedElement ? 'expanded' : 'collapsed'">
-          <div class="expanded-table-container">
-            <!-- <td style="text-align: left;" class="expanded-column" mat-cell> 
-              <a style="cursor: pointer; text-align: left;" (click)="openDialog(validator)">Details</a>
-            </td> -->
-            <!-- <p class="overflowed-text">Operator address: {{validator.operator_address}}</p>
-            <p class="overflowed-text">Delegator address: {{validator.account?.value.address}}</p>
-            <p class="overflowed-text">Website: {{validator.description?.website}}</p>
-            <p class="overflowed-text">Details: {{validator.description?.details}}</p>  -->
-            <ul class="list-group list-group-horizontal-lg">
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                First seen
-                <span class="badge badge-primary badge-pill">add</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Precommits
-                <span class="badge badge-primary badge-pill" *ngIf="validator.slashing">
-                  <span *ngIf="!validator.jailed; else elseCommitsBlock">
-                    <span *ngFor="let block of (appState | async).blocks.slice(0,1)">
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status/Uptime </th>
+        <td mat-cell *matCellDef="let validator">  
+          <span *ngIf="validator.jailed"><i class="ion-record jailed"></i></span>
+          <span *ngIf="!validator.jailed"><i class="ion-record jailedNot"></i></span>
+          <span *ngFor="let block of (appState | async).blocks.slice(0,1)">
+          {{
+            block.header?.height !== null
+            ? (100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) | number:'.0')
+            : 0
+          }} %
+          </span>
+        </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="weight">
+        <th mat-sort-header="tokens" mat-header-cell *matHeaderCellDef> Voting Weight </th>
+        <td mat-cell *matCellDef="let validator">
+          {{validator.tokens/1e6 | number:'.0-0'}}&nbsp;<span class="table-subtitle">({{validator.tokens/(appState | async).totalStake| percent:'.2-2'}})</span>
+          <!-- <br>
+          <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{validator.tokens/(appState | async).totalStake| percent:'.2-2'}}</span> -->
+        </td>
+      </ng-container>
+    
+      
+  
+      <ng-container matColumnDef="assets">
+        <th mat-sort-header="account.tokens" mat-header-cell *matHeaderCellDef> Assets </th>
+        <td mat-cell *matCellDef="let validator">
+          <span *ngIf="validator.account?.tokens; else accountElseBlock" matTooltip="Balance" matTooltipPosition="above">
+            {{validator.account?.tokens/1e6 | number:'.2-2'}}
+          </span>
+          <ng-template #accountElseBlock>
+            0
+          </ng-template>
+          <span class="ticker"> ATOM</span>
+          <!-- <br>
+          <span class="table-subtitle" matTooltip="Rewards" matTooltipPosition="above">
+            <i class="ion-ios-pricetags"></i>&nbsp;
+            <span *ngIf="validator.rewards">
+              {{validator.rewards[0].amount/1e6 | number:'.2-2'}}<span class="ticker-small"> ATOM</span>
+            </span>
+          </span> -->
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="delegators">
+        <th mat-header-cell *matHeaderCellDef> Delegators </th>
+        <td mat-cell *matCellDef="let validator"> 
+          <span *ngIf="validator.delegations; else otherBlock">
+            {{validator.delegations?.length}}
+          </span>
+          <ng-template #otherBlock>
+            <span>-</span>
+          </ng-template>
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="unbond">
+        <th  mat-header-cell *matHeaderCellDef> 
+          Unbond 
+        </th>
+        <td  mat-cell *matCellDef="let validator">
+          {{ validator.unbonding_total/1e6 | number:'.0-0'}} <span class="ticker">ATOM</span>
+          <br>
+          <span class="table-subtitle" matTooltip="Completion Time" matTooltipPosition="above"><i class="ion-android-time"></i>&nbsp;
+            {{validator.unbonding_time}}
+          </span>
+        </td>
+      </ng-container>
+      
+  <!-- 
+      <ng-container matColumnDef="blockTime">
+        <th mat-header-cell *matHeaderCellDef> Block Time </th>
+        <td mat-cell *matCellDef="let validator">  
+          Add blocktime
+        </td>
+      </ng-container>
+     -->
+      <ng-container matColumnDef="bond">
+        <th mat-sort-header="self_bond" mat-header-cell *matHeaderCellDef> Self-Bond </th>
+        <td mat-cell *matCellDef="let validator">
+          {{validator.self_bond/1e6 | number:'.0-0'}} <span class="ticker">ATOM</span>
+          <!-- <br> -->
+          <!-- <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{ validator.self_bond / validator.tokens | percent:'.2-2' }}</span> -->
+        </td>
+      </ng-container>
+          
+      <ng-container matColumnDef="commission" stickyEnd>
+        <th mat-header-cell *matHeaderCellDef> Commission </th>
+        <td mat-cell *matCellDef="let validator">
+          <span matTooltip="Current Rate" matTooltipPosition="above">{{validator.commission?.rate | percent}}</span>
+          <span class="table-subtitle">&nbsp;({{validator.commission?.max_rate | percent}} - {{validator.commission?.max_change_rate | percent}})</span>
+          <!-- <span class="table-subtitle" matTooltip="Max Rate - Max Change Rate" matTooltipPosition="above"><i class="ion-calculator"></i>&nbsp;{{validator.commission?.max_rate | percent}} - {{validator.commission?.max_change_rate | percent}}</span> -->
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let validator" [attr.colspan]="displayedColumns.length">
+          <div
+              class="validator-detail"
+              [@detailExpand]="validator == expandedElement ? 'expanded' : 'collapsed'">
+            <div class="expanded-table-container">
+              <!-- <td style="text-align: left;" class="expanded-column" mat-cell> 
+                <a style="cursor: pointer; text-align: left;" (click)="openDialog(validator)">Details</a>
+              </td> -->
+              <!-- <p class="overflowed-text">Operator address: {{validator.operator_address}}</p>
+              <p class="overflowed-text">Delegator address: {{validator.account?.value.address}}</p>
+              <p class="overflowed-text">Website: {{validator.description?.website}}</p>
+              <p class="overflowed-text">Details: {{validator.description?.details}}</p>  -->
+              <ul class="list-group list-group-horizontal-lg">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  First seen
+                  <span class="badge badge-primary badge-pill">add</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Precommits
+                  <span class="badge badge-primary badge-pill" *ngIf="validator.slashing">
+                    <span *ngIf="!validator.jailed; else elseCommitsBlock">
+                      <span *ngFor="let block of (appState | async).blocks.slice(0,1)">
+                        {{
+                          block.header?.height !== null
+                          ? block.header?.height - validator.slashing.start_height - validator.slashing.missed_blocks_counter
+                          : 0
+                        }}
+                      </span>
+                    </span>
+                    <ng-template #elseCommitsBlock>
                       {{
-                        block.header?.height !== null
-                        ? block.header?.height - validator.slashing.start_height - validator.slashing.missed_blocks_counter
+                        validators?.blockStamp
+                        ? validators?.blockStamp - validator.slashing.start_height - validator.slashing.missed_blocks_counter
                         : 0
                       }}
-                    </span>
+                    </ng-template>
                   </span>
-                  <ng-template #elseCommitsBlock>
-                    {{
-                      validators?.blockStamp
-                      ? validators?.blockStamp - validator.slashing.start_height - validator.slashing.missed_blocks_counter
-                      : 0
-                    }}
-                  </ng-template>
-                </span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Missed Blocks
-                <span class="badge badge-primary badge-pill">add</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Self-bond%
-                <span class="badge badge-primary badge-pill">{{ validator.self_bond / validator.tokens | percent:'.2-2' }}</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Outstanding Rewards
-                <span class="badge badge-primary badge-pill" *ngIf="validator.rewards">{{validator.rewards[0].amount/1e6 | number:'.2-2'}} <span class="badge-ticker">ATOM</span></span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Rewards
-                <span class="badge badge-primary badge-pill" *ngIf="validator.outstanding_rewards">{{validator.outstanding_rewards[0].amount/1e6 | number:'.2-2'}} <span class="badge-ticker">ATOM</span></span>
-              </li>
-              <!-- <li class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;">
-                <a href="{{validator.description?.website}}" target=" ">Website<span class="badge badge-primary badge-pill"><i class="fa fa-globe"></i></span></a>
-              </li> -->
-              <li class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" (click)="openDialog(validator)">
-                Details
-                <span class="badge badge-primary badge-pill"><i class="fa fa-ellipsis-v"></i></span>
-              </li>
-            </ul>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Missed Blocks
+                  <span class="badge badge-primary badge-pill">add</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Self-bond%
+                  <span class="badge badge-primary badge-pill">{{ validator.self_bond / validator.tokens | percent:'.2-2' }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Outstanding Rewards
+                  <span class="badge badge-primary badge-pill" *ngIf="validator.rewards">{{validator.rewards[0].amount/1e6 | number:'.2-2'}} <span class="badge-ticker">ATOM</span></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Rewards
+                  <span class="badge badge-primary badge-pill" *ngIf="validator.outstanding_rewards">{{validator.outstanding_rewards[0].amount/1e6 | number:'.2-2'}} <span class="badge-ticker">ATOM</span></span>
+                </li>
+                <!-- <li class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;">
+                  <a href="{{validator.description?.website}}" target=" ">Website<span class="badge badge-primary badge-pill"><i class="fa fa-globe"></i></span></a>
+                </li> -->
+                <li class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" (click)="openDialog(validator)">
+                  Details
+                  <span class="badge badge-primary badge-pill"><i class="fa fa-ellipsis-v"></i></span>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let validator; columns: displayedColumns;"
-        [appBgHighlight]="'#383D4C'" defaultColor="#111923"
-        [class.example-expanded-row]="expandedElement === validator"
-        (click)="expandedElement = expandedElement === validator ? null : validator" mdbTooltip="Click to see more" placement="top">
-    </tr>
-    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="validator-detail-row"></tr>
-  </table>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></tr>
+      <tr mat-row *matRowDef="let validator; columns: displayedColumns;"
+          [appBgHighlight]="'#383D4C'" defaultColor="#111923"
+          [class.example-expanded-row]="expandedElement === validator"
+          (click)="expandedElement = expandedElement === validator ? null : validator" mdbTooltip="Click to see more" placement="top">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="validator-detail-row"></tr>
+    </table>
+  </div>
 
   <div class="row paginator">
     <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>

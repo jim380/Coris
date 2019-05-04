@@ -245,3 +245,12 @@ tr.validator-detail-row {
      color: white;
      /* border-bottom: 1px solid transparent; */
  }
+
+ .example-container {
+  height: 500px;
+  overflow: auto;
+}
+
+mat-table {
+  display: flex;
+}
