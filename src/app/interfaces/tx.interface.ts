@@ -13,7 +13,8 @@ export interface Tx {
   txDecod: string;
   tagsBase64: Array<Tag>;
   tagsDecod: Array<Tag>;
-  details?: Object
+  details?: Object;
+  status?: string;
 }
 
 export function decodeTag (tagsBase64) {

@@ -117,6 +117,17 @@ export class TxsComponent implements OnInit {
               // TODO remove debugging
               // console.log(data);
               tx.details = data;
+              if(data) {
+                if(data['raw_log'].includes('"success":true')) {
+                  tx.status = "Success";
+                } else if(data['raw_log'].includes('"success":false')) {
+                  tx.status = "Failure";
+                } else {
+                  tx.status = "Error";
+                }
+              } else {
+                tx.status = "Error";
+              }
             },
             err => {
               // @aakatev some txs cause 500 errors
@@ -133,7 +144,6 @@ export class TxsComponent implements OnInit {
   displayOlderTxs () {
     this.minHeight -= this.blocksToScan;
     this.fetchTxs();  
-    console.log(this.txs);
   }
 
   getTxDetails(tx: Tx) {
