@@ -9,6 +9,7 @@ import { State } from 'src/app/interfaces/state.interface';
 import {MatTable} from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
+import { ProfileCardComponent } from '../validator-profile/profile-card/profile-card.component';
 
 @Component({
   selector: 'app-validators',
@@ -88,7 +89,7 @@ export class ValidatorsComponent implements OnInit {
   }
   
   openDialog(validator) {
-    this.dialog.open( ValidatorComponent,  {
+    this.dialog.open( ProfileCardComponent,  {
       data: { 
         validator
       }

@@ -1,10 +1,10 @@
 <!--Grid row-->
-<div class="profile-card-row">
+<!-- <div class="profile-card-row"> -->
   <!--Grid row-->
-<div class="row">
+<!-- <div class="row"> -->
 
   <!--Grid column-->
-  <div class="col-md-6">
+  <!-- <div class="col-md-6"> -->
 
     <mdb-card class="testimonial-card">
       <!--Bacground color-->
@@ -13,27 +13,26 @@
 
       <!--Avatar-->
       <div class="avatar mx-auto">
-        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg" class="rounded-circle">
+        <img src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" class="rounded-circle">
       </div>
 
       <mdb-card-body>
         <!--Name-->
         <mdb-card-title>
-          <h4>Moniker</h4>
+          <h4>{{validator.description?.moniker}}</h4>
         </mdb-card-title>
         <hr>
         <!--Quotation-->
         <p>
-          <i class="fas fa-quote-left"></i> Details</p>
-
-
+          <i class="fas fa-quote-left"></i>{{validator.description?.details}}
+        </p>
         <!-- Nav tabs -->
         <mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-4 pills-secondary white mb-2'" [contentClass]="'card'">
           <!--Panel 1-->
           <mdb-tab heading="Operator address">
             <div class="row">
               <div class="col-12">
-                <p>content 1</p>
+                <p>{{validator.operator_address}}</p>
               </div>
             </div>
           </mdb-tab>
@@ -41,22 +40,20 @@
           <mdb-tab heading="Delegator address">
             <div class="row">
               <div class="col-12">
-                <p>content 2</p>
+                <p>{{validator.account?.value.address}}</p>
               </div>
             </div>
           </mdb-tab>
           <!--Panel 3-->
         </mdb-tabset>
-
-
       </mdb-card-body>
     </mdb-card>
 
-  </div>
+  <!-- </div> -->
   <!--Grid column-->
   
-</div>
+<!-- </div> -->
 <!--Grid row-->
 
-</div>
-<!--Grid row-->
+<!-- </div> -->
+<!--Grid row--> 

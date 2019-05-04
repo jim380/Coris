@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-profile-card',
@@ -6,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile-card.component.scss']
 })
 export class ProfileCardComponent implements OnInit {
+  validator;
 
-  constructor() { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { 
+    this.validator = data.validator;
+  }
 
   ngOnInit() {
   }

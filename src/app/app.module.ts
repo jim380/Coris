@@ -74,12 +74,12 @@ import { ProfileCardComponent } from './components/validator-profile/profile-car
     PieChartComponent,
     HorizontalBarChartComponent,
     VerticalTabsComponent,
-    ProfileCardComponent,
+    ProfileCardComponent
     // TimeAgoPipe
     // UniversalSearchBarComponent,
   ],
   entryComponents: [
-    DummyComponent
+    ProfileCardComponent
   ],
   imports: [
     BrowserModule,
