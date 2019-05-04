@@ -66,6 +66,7 @@ export class ValidatorsComponent implements OnInit {
     this.hideUnbondColumn();
   }
 
+  optionsSelect: Array<any>;
   ngOnInit() {
     if(this.dataSource) {
       this.dataSource.paginator = this.paginator;
