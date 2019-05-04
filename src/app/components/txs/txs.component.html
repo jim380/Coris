@@ -1,18 +1,17 @@
 <div class="row">
-  
-  <div class="field has-addons">
-    <div class="control">
-      <input class="input" placeholder = "Enter tx hash" #queryInputRef >
-    </div>
-    <div class="control">
-      <a 
-        class = "button is-info" 
-        (click) = 'clickButton(queryInputRef.value)' >
-          Search
-      </a>
+  <div class="container">
+    <div class="row">
+      <div class="col-8">
+        <mat-form-field>
+          <input #queryInputRef matInput placeholder="Enter tx hash">
+        </mat-form-field>
+      </div>
+      <div class="col-4">
+        <button (click) = "queryTx(queryInputRef.value)" mat-raised-button color="accent">Search</button>    
+      </div>
     </div>
   </div>
-
+  
   <div class="card events-card">
 
     <table mat-table
@@ -84,6 +83,6 @@
       </tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="tx-detail-row"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[30]"></mat-paginator>
+    <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[100]"></mat-paginator>
   </div>
 </div>

@@ -30,14 +30,23 @@ export class TxsComponent implements OnInit {
   }
 
   setDataSourceAttributes() {
+    let lastPage = Math.ceil(this.totalTxsCount/30);
+    
     this.dataSource.paginator = this.paginator;
     this.dataSource.paginator.nextPage = () => { this.displayOlderTxs(); }
+    this.dataSource.paginator.previousPage = () => { this.displayNewerTxs(); }
     this.dataSource.paginator.hasNextPage = () => { return true; }
     this.dataSource.paginator.hasPreviousPage = () => { return true; }
     this.dataSource.paginator._intl.getRangeLabel = 
       (page: number, pageSize: number, length: number) => { 
-        return `0 of ${Math.ceil(this.totalTxsCount/30)}`;  
+        return `${this.currentPage} of ${this.lastPage}`;  
       }
+
+    if (this.currentPage === 1) {
+      this.dataSource.paginator.hasPreviousPage = () => { return false; }
+    } else if(this.currentPage === lastPage ) {
+      this.dataSource.paginator.hasNextPage = () => { return false; }
+    }
   }
 
   txs: Tx[];
@@ -54,8 +63,10 @@ export class TxsComponent implements OnInit {
   minHeight = 0;
   lastBlock = 0;
   // @aakatev TODO lookup how to query more than 30 txs at json
-  blocksToScan = 3000;
+  blocksToScan = 30;
   totalTxsCount = 0;
+  currentPage = 1;
+  lastPage = 1;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -63,21 +74,19 @@ export class TxsComponent implements OnInit {
     this.http.get(`${nodeRpc1}/blocks/latest`).subscribe( (data:any) => {
       // @aakatev remove debugging
       this.totalTxsCount = data.block.header.total_txs;
+      // @aakatev TODO FIX this formula only works if we
+      // display  blocksToScan blocks per page  
+      this.lastPage = Math.ceil(this.totalTxsCount/this.blocksToScan);
       this.lastBlock = data.block.header.height;
       this.minHeight = this.lastBlock - this.blocksToScan;
       this.fetchTxs();
     });
     // @aakatev remove debugging
-    // console.log(this.dataSource.paginator);
+    console.log(this.dataSource.paginator);
   }
 
   clearTxs() {
     this.txs = [];
-  }
-  clickButton(value) {
-    // TODO remove debugging
-    // console.log(value);
-    this.router.navigate([`tx/${value}`]);
   }
 
   fetchTxs() {
@@ -163,13 +172,23 @@ export class TxsComponent implements OnInit {
     });
   }
 
-  // TODO: Double check whether this fxn is inclusive
   displayOlderTxs () {
     this.minHeight -= this.blocksToScan;
     this.fetchTxs();  
+    this.currentPage += 1;
+  }
+
+  displayNewerTxs () {
+    this.minHeight += this.blocksToScan;
+    this.fetchTxs();  
+    this.currentPage -= 1;
   }
 
   getTxDetails(tx: Tx) {
     return this.http.get(`${nodeRpc1}/txs/${tx.hash}`);
+  }
+
+  queryTx(txHash) {
+    this.router.navigate([`/tx/${txHash}`]);
   }
 }
