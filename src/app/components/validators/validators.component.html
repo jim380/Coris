@@ -1,3 +1,16 @@
+ <!-- progress bar with label -->
+<!-- <div>
+  <mdb-progress *ngFor="let block of (appState | async).blocks.slice(0,1); let validator" value="{{
+    block.header?.height !== null
+    ? (100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) | number:'.0')
+    : 0
+  }}" min="0" max="100" type="success" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{
+    block.header?.height !== null
+    ? (100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) | number:'.0')
+    : 0
+  }}%</mdb-progress>
+</div> -->
+
 <div class="row" *ngIf="(appState | async).validators.serviceLoaded; else elseBlock">
   <!-- @aakatev	
     https://github.com/cosmos/cosmos-sdk/blob/9a16e2675f392b083dd1074ff92ff1f9fbda750d/types/staking.go
@@ -13,18 +26,21 @@
       <mat-button-toggle (click)="validatorsBondFilter(1)" value="unbonding">Unbonding</mat-button-toggle>
       <mat-button-toggle (click)="validatorsNoFilter()" value="all">All</mat-button-toggle>
     </mat-button-toggle-group>
-    
-    <!-- <li class="dropdown" appDropdown>
-      <a class="dropdown-toggle" role="button">Options<span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <li style="cursor: pointer;" (click)="validatorsBondFilter(2)">Bonded</li>
-        <li style="cursor: pointer;" (click)="validatorsJailedFilter(true)">Jailed</li>
-        <li style="cursor: pointer;" (click)="validatorsFilter(0, false)">Unbonded</li>
-        <li style="cursor: pointer;" (click)="validatorsBondFilter(1)">Unbonding</li>
-        <li style="cursor: pointer;" (click)="validatorsNoFilter()">All</li>
-      </ul>
-    </li> -->
   </div>
+  
+  <!-- progress bar with label -->
+  <!-- <div>
+    <mdb-progress *ngFor="let block of (appState | async).blocks.slice(0,1); let validator" value="{{
+      block.header?.height !== null
+      ? (100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) | number:'.0')
+      : 0
+    }}" min="0" max="100" type="success" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{
+      block.header?.height !== null
+      ? (100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) | number:'.0')
+      : 0
+    }}%</mdb-progress>
+  </div> -->
+  
 
   <div class="example-container mat-elevation-z8 scrollbar-primary">
     <table multiTemplateDataRows mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
