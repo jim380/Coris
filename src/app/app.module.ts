@@ -39,11 +39,12 @@ import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { AgmCoreModule } from '@agm/core';
 import { TestComponent } from './components/test/test.component';
 import { SidenavComponent } from './components/navigation/sidenav/sidenav.component';
-import { ValidatorProfileComponent } from './components/validator-profile/validator-profile.component';
 import { LineChartComponent } from './components/charts/line-chart/line-chart.component';
 import { VerticalBarChartComponent } from './components/charts/vertical-bar-chart/vertical-bar-chart.component';
 import { PieChartComponent } from './components/charts/pie-chart/pie-chart.component';
 import { HorizontalBarChartComponent } from './components/charts/horizontal-bar-chart/horizontal-bar-chart.component';
+import { VerticalTabsComponent } from './components/validator-profile/vertical-tabs/vertical-tabs.component';
+import { ProfileCardComponent } from './components/validator-profile/profile-card/profile-card.component';
 
 @NgModule({
   declarations: [
@@ -68,11 +69,12 @@ import { HorizontalBarChartComponent } from './components/charts/horizontal-bar-
     AgoPipe,
     TestComponent,
     SidenavComponent,
-    ValidatorProfileComponent,
     LineChartComponent,
     VerticalBarChartComponent,
     PieChartComponent,
     HorizontalBarChartComponent,
+    VerticalTabsComponent,
+    ProfileCardComponent,
     // TimeAgoPipe
     // UniversalSearchBarComponent,
   ],

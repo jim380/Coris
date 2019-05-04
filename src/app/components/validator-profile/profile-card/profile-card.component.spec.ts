@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ValidatorProfileComponent } from './validator-profile.component';
+import { ProfileCardComponent } from './profile-card.component';
 
-describe('ValidatorProfileComponent', () => {
-  let component: ValidatorProfileComponent;
-  let fixture: ComponentFixture<ValidatorProfileComponent>;
+describe('ProfileCardComponent', () => {
+  let component: ProfileCardComponent;
+  let fixture: ComponentFixture<ProfileCardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ValidatorProfileComponent ]
+      declarations: [ ProfileCardComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ValidatorProfileComponent);
+    fixture = TestBed.createComponent(ProfileCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
