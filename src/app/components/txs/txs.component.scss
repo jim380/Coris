@@ -19,21 +19,24 @@ table {
   /* border: 3px solid purple; */
 }
 
-/* thead th:nth-child(1) {
-  width: 10%;
-}
-
-thead th:nth-child(2) {
-  width: 10%;
-}
-
-thead th:nth-child(3) {
+th:nth-child(1) {
   width: 20%;
 }
 
-thead th:nth-child(4) {
+th:nth-child(2) {
   width: 20%;
-} */
+}
+
+th:nth-child(3) {
+  width: 20%;
+}
+
+th:nth-child(4) {
+  width: 20%;
+}
+th:nth-child(5) {
+  width: 20%;
+}
 
 td {
   overflow: hidden; /* to hide anything that doesn't fit in the containing element. */

@@ -21,7 +21,7 @@
      <!---------------------------- ROW 1 ---------------------------->
     <div class="row row-queries" *ngIf="(appState | async).blocks.length; else elseBlock">
       <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
-        <div style="cursor: pointer;" routerLink="/last-block" class="is-parent card-deck">
+        <div class="card-deck w-100 p-3">
           <!-- <mat-card class="query-card" mdbTooltip="Latest Block Height" placement="top">
             <mat-card-header>
               <mat-card-title class="subtitle box-key" style="margin-left:-11px">
@@ -49,17 +49,17 @@
                 <!--Card content-->
                 <mdb-card-text>
                     <br>
-                  last updated: 
+                    {{ (appState | async).valsMap.get( (appState | async).round.proposer?.address )}}
                 </mdb-card-text>
               </mdb-card-body>
               <!--/.Card content-->
-          
             </mdb-card>
         </div>
       </div>
 
-      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper card-deck">
-        <!-- <mat-card class="query-card" mdbTooltip="Consensus State" placement="top">
+      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
+        <div class="card-deck w-100 p-3">
+           <!-- <mat-card class="query-card" mdbTooltip="Consensus State" placement="top">
           <mat-card-header>
             <mat-card-title class="subtitle box-key" style="margin-left:-11px">
               <i class="ion-load-a"></i>&nbsp;Consensus
@@ -84,12 +84,13 @@
               </mdb-card-text>
             </mdb-card-body>
             <!--/.Card content-->
-        
           </mdb-card>
+        </div>
       </div>
 
-      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper card-deck">
-        <!-- <mat-card class="query-card" mdbTooltip="Total Active Validators" placement="top">
+      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
+        <div class="card-deck w-100 p-3">
+          <!-- <mat-card class="query-card" mdbTooltip="Total Active Validators" placement="top">
           <mat-card-header>
             <mat-card-title class="subtitle box-key" style="margin-left:-11px">
               <i class="ion-person-stalker"></i>&nbsp;Validators
@@ -114,11 +115,12 @@
               </mdb-card-text>
             </mdb-card-body>
             <!--/.Card content-->
-        
           </mdb-card>
+        </div>
       </div>
 
-      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper card-deck">
+      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
+        <div class="card-deck w-100 p-3">
           <!-- <mat-card class="query-card" mdbTooltip="Total Bonded Stake" placement="top">
             <mat-card-header>
               <mat-card-title class="subtitle box-key" style="margin-left:-11px">
@@ -157,12 +159,14 @@
               </mdb-card-body>
               <!--/.Card content-->
             </mdb-card>
+        </div>
       </div>
     </div>
     
     <!---------------------------- ROW 2 ---------------------------->
     <div class="row row-queries" *ngIf="(appState | async).blocks.length; else elseBlock">
-      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper card-deck">
+      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
+        <div class="card-deck w-100 p-3">
         <!-- <div style="cursor: pointer;" routerLink="/last-block" class="is-parent">
           <mat-card class="query-card" mdbTooltip="Block Interval" placement="top">
             <mat-card-header>
@@ -194,9 +198,11 @@
             </mdb-card-body>
             <!--/.Card content-->
           </mdb-card>
+        </div>
       </div>
 
-      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper card-deck">
+      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
+        <div class="card-deck w-100 p-3">
         <!-- <mat-card class="query-card" mdbTooltip="Community Pool Stake" placement="top">
           <mat-card-header>
             <mat-card-title class="subtitle box-key" style="margin-left:-11px">
@@ -226,9 +232,11 @@
             </mdb-card-body>
             <!--/.Card content-->
           </mdb-card>
+        </div>
       </div>
 
-      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper card-deck">
+      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
+        <div class="card-deck w-100 p-3">
         <!-- <mat-card class="query-card" mdbTooltip="Inflation Rate" placement="top">
           <mat-card-header>
             <mat-card-title class="subtitle box-key" style="margin-left:-11px">
@@ -256,9 +264,11 @@
             </mdb-card-body>
             <!--/.Card content-->
         </mdb-card>
+        </div>
       </div>
 
-      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper card-deck">
+      <div class="col-12 col-lg-3 col-md-6 w-25 query-card-wrapper">
+        <div class="card-deck w-100 p-3">
           <!-- <mat-card class="query-card" mdbTooltip="ATOM USD Price" placement="top">
             <mat-card-header>
               <mat-card-title class="subtitle box-key" style="margin-left:-11px">
@@ -288,6 +298,7 @@
               </mdb-card-body>
               <!--/.Card content-->
           </mdb-card>
+        </div>
       </div>
       
     </div>

@@ -45,6 +45,7 @@ import { PieChartComponent } from './components/charts/pie-chart/pie-chart.compo
 import { HorizontalBarChartComponent } from './components/charts/horizontal-bar-chart/horizontal-bar-chart.component';
 import { VerticalTabsComponent } from './components/validator-profile/vertical-tabs/vertical-tabs.component';
 import { ProfileCardComponent } from './components/validator-profile/profile-card/profile-card.component';
+import { CarouselComponent } from './components/status-bar/carousel/carousel.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { ProfileCardComponent } from './components/validator-profile/profile-car
     PieChartComponent,
     HorizontalBarChartComponent,
     VerticalTabsComponent,
-    ProfileCardComponent
+    ProfileCardComponent,
+    CarouselComponent
     // TimeAgoPipe
     // UniversalSearchBarComponent,
   ],

@@ -16,7 +16,6 @@ table {
   table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
-  /* border: 3px solid purple; */
 }
 
 td {
@@ -26,42 +25,34 @@ td {
   text-align: left;
 }
 
-thead th:nth-child(1) {
-  width: 3%;
+th:nth-child(1) {
+  width: 5%;
 }
 
-thead th:nth-child(2) {
+th:nth-child(2) {
   width: 15%;
 }
 
-thead th:nth-child(3) {
+th:nth-child(3) {
   width: 10%;
 }
 
-thead th:nth-child(4) {
-  width: 10%;
+th:nth-child(4) {
+  width: 15%;
 }
-thead th:nth-child(5) {
-  width: 10%;
-}
-
-thead th:nth-child(6) {
-  width: 10%;
+th:nth-child(5) {
+  width: 15%;
 }
 
-thead th:nth-child(7) {
-  width: 10%;
+th:nth-child(6) {
+  width: 15%;
 }
 
-thead th:nth-child(8) {
-  width: 10%;
+th:nth-child(7) {
+  width: 15%;
 }
 
-thead th:nth-child(9) {
-  width: 10%;
-}
-
-thead th:nth-child(10) {
+th:nth-child(8) {
   width: 10%;
 }
 
@@ -257,4 +248,9 @@ mat-table {
 
 .mdb-progress {
   height: 20px !important;
+}
+
+i {
+  margin-top: 3px;
+  margin-left: 3px;
 }
