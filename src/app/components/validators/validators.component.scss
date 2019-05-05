@@ -138,33 +138,6 @@ tbody {
   margin-left: 0;
 }
 
-.dropdown-toggle {
-  color: white;
-}
-
-.dropdown-menu {
-  background-color: #00796B;
-}
-
-
-.dropdown-menu a:link,
-.dropdown-menu a:visited {
-    color:white;
-    /* border-bottom: 1px solid transparent; */
-}
-
-.dropdown-menu li:hover,
-.dropdown-menu li:active {
-    color: #FC7D14;
-    background-color: #00796B;
-    /* border-bottom: 1px solid transparent; */
-}
-
-.dropdown-toggle:hover,
-.dropdown-toggle:active {
-    color: #FC7D14;
-}
-
 /* Expandable rows */
 tr {
   cursor: pointer;
@@ -261,5 +234,5 @@ i {
 }
 
 .dropdown-menu {
-  background-color: #3F51B5;
+  background-color: white;
 }
