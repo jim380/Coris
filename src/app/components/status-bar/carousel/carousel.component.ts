@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { PricingService } from 'src/app/services/pricing.service';
+import { BlocksService } from 'src/app/services/blocks.service';
+import { ValidatorsService } from 'src/app/services/validators.service';
+import { State } from 'src/app/interfaces/state.interface';
+import { Store } from '@ngrx/store';
+import { WsService } from 'src/app/services/ws.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-carousel',
@@ -9,55 +16,54 @@ export class CarouselComponent implements OnInit {
 
   cards = [
     {
-      title: 'Metric 1',
+      data: 0,
+      title: 'Last Block',
       description: 'Last Updated',
-      buttonText: 'Button',
       img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'
     },
     {
-      title: 'Metric 2',
+      data: 0,
+      title: 'Consensus',
       description: 'Last Updated',
-      buttonText: 'Button',
       img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'
     },
     {
-      title: 'Metric 3',
+      data: 0,
+      title: 'Validators',
       description: 'Last Updated',
-      buttonText: 'Button',
       img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'
     },
     {
-      title: 'Metric 4',
+      data: 0,
+      title: 'Bonded',
       description: 'Last Updated',
-      buttonText: 'Button',
       img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'
     },
     {
-      title: 'Metric 5',
+      data: 0,
+      title: 'Block Time',
       description: 'Last Updated',
-      buttonText: 'Button',
       img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'
     },
     {
-      title: 'Metric 6',
+      data: 0,
+      title: 'Community Pool',
       description: 'Last Updated',
-      buttonText: 'Button',
       img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'
     },
     {
-      title: 'Metric 7',
+      data: 0,
+      title: 'Inflation',
       description: 'Last Updated',
-      buttonText: 'Button',
       img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'
     },
     {
-      title: 'Metric 8',
+      data: 0,
+      title: 'Price',
       description: 'Last Updated',
-      buttonText: 'Button',
       img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'
     }
   ];
-
   slides: any = [[]];
   chunk(arr, chunkSize) {
     let R = [];
@@ -66,9 +72,43 @@ export class CarouselComponent implements OnInit {
     }
     return R;
   }
+
+  appState: Observable<State>;
   
+  constructor(
+    private ws:WsService, 
+    private store: Store <State>,
+    private vs:ValidatorsService,
+    private ps:PricingService,
+    private bs:BlocksService
+  ) { }
+
   ngOnInit() {
-    this.slides = this.chunk(this.cards, 6);
+    this.slides = this.chunk(this.cards, 4);
+
+    this.appState = this.store.select('App');
+    console.log(this.slides);
+
+    // this.ps.getAtomPrice().subscribe(data => {
+    //   // TODO remove debugging
+    //   // console.log(data.data['3794']);
+    //   this.cards[7].data = data.data['3794'].quote.USD.price;
+    //   this.slides = this.chunk(this.cards, 6);  
+    // });
+    
+    // this.ps.getInflation().subscribe(data => {
+    //   // TODO remove debugging
+    //   // console.log(data);
+    //   this.inflation = data;
+    // });
+    
+    // this.bs.getBlockTime$()
+    //   .subscribe(data => {
+    //     this.avgBlockTime = data/1000;
+    //   })
   }
 
+  ngOnDestroy() {
+    this.ws.unsubscribe();
+  }
 }
