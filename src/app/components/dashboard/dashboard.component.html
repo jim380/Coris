@@ -1,54 +1,21 @@
-<div class="row">
-  <div class="columns">
-      <div class="column is-6">
-        <div class="card events-card">
-          <header class="card-header">
-            <p class="card-header-title">
-              <i class="fas fa-vector-square"></i>
-              Recent Blocks
-            </p>
-          </header>
-          <div class="card-table dash-card-table">
-            <div class="content">
-              <table class="table">
-                <tbody>
-                  <tr routerLink="/block/{{block.header.height}}" class="clickable" *ngFor="let block of (appState | async).blocks">
-                    <td class="block-title">{{block.header.app_hash}}</td>
-                    <td width="20%">{{block.header.height}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <footer class="card-footer">
-            <a routerLink="/blocks" class="card-footer-item">View More</a>
-          </footer>
-        </div>
-      </div>
-      <div class="column is-6">
-        <div class="card events-card">
-          <header class="card-header">
-            <p class="card-header-title">
-              <i class="fas fa-exchange-alt"></i>
-              Recent Transactions
-            </p>
-          </header>
-          <div class="card-table dash-card-table">
-            <div class="content">
-              <table class="table is-fullwidth">
-                <tbody>
-                  <tr routerLink="/tx/{{tx.hash}}" class="clickable" *ngFor="let tx of (appState | async).txs">            
-                    <td class="block-title">{{tx.hash}}</td>
-                    <td width="20%">{{tx.height}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <footer class="card-footer">
-            <a routerLink="/txs" class="card-footer-item">View More</a>
-          </footer>
-        </div>
-      </div>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <app-horizontal-bar-chart></app-horizontal-bar-chart>
     </div>
+    <!-- <div class="col">
+      <app-line-chart></app-line-chart>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <app-pie-chart></app-pie-chart>
+    </div>
+    <div class="col">
+      <app-vertical-bar-chart></app-vertical-bar-chart>
+    </div>
+    <div class="col">
+      <app-vertical-bar-chart></app-vertical-bar-chart>
+    </div> -->
+  </div>
 </div>
