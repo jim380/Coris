@@ -1,8 +1,19 @@
 <div class="row table-responsive text-nowrap scrollbar-primary">
-  <mat-form-field>
-    <input #queryInputRef matInput placeholder="Enter block height">
-  </mat-form-field>
-  <table  mat-table [dataSource]="blocks" class="mat-elevation-z8 w-auto">
+  <div class="container">
+    <div class="row">
+      <div class="col-8">
+        <mat-form-field>
+          <input #queryInputRef matInput placeholder="Enter tx hash">
+        </mat-form-field>
+      </div>
+      <div class="col-4">
+        <button (click) = "queryTx(queryInputRef.value)" mat-raised-button color="accent">Search</button>    
+      </div>
+    </div>
+  </div>
+  <table mat-table 
+         [dataSource]="blocks" 
+         class="mat-elevation-z8 w-auto">
     
     <ng-container matColumnDef="height" sticky>
       <th mat-header-cell *matHeaderCellDef class="th-lg"> Height </th>

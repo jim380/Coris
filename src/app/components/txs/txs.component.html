@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row table-responsive text-nowrap scrollbar-primary">
   <div class="container">
     <div class="row">
       <div class="col-8">
@@ -11,78 +11,75 @@
       </div>
     </div>
   </div>
-  
-  <div class="card events-card table-responsive text-nowrap scrollbar-primary">
+  <table mat-table
+        [dataSource]="dataSource" 
+        multiTemplateDataRows
+        class="mat-elevation-z8 w-auto">
 
-    <table mat-table
-          [dataSource]="dataSource" 
-          multiTemplateDataRows
-          class="mat-elevation-z8 w-auto">
+    <ng-container matColumnDef="hash" sticky>
+      <th mat-header-cell *matHeaderCellDef class="th-lg"> Hash </th>
+      <td mat-cell *matCellDef="let tx"> {{tx.hash | slice:0:15 }}... </td>
+    </ng-container>
 
-      <ng-container matColumnDef="hash" sticky>
-        <th mat-header-cell *matHeaderCellDef class="th-lg"> Hash </th>
-        <td mat-cell *matCellDef="let tx"> {{tx.hash | slice:0:15 }}... </td>
-      </ng-container>
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef class="th-lg"> Type </th>
+      <td mat-cell *matCellDef="let tx">
+        <mat-chip-list>
+          <mat-chip color = "primary" selected>
+            {{tx.tagsDecod[0].value | titlecase}}
+          </mat-chip>
+        </mat-chip-list></td>
+    </ng-container>
 
-      <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"> Type </th>
-        <td mat-cell *matCellDef="let tx">
-          <mat-chip-list>
-            <mat-chip color = "primary" selected>
-              {{tx.tagsDecod[0].value | titlecase}}
-            </mat-chip>
-          </mat-chip-list></td>
-      </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef class="th-lg"> Status </th>
+      <td mat-cell *matCellDef="let tx"> 
+        <span>{{tx.status}}</span>
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"> Status </th>
-        <td mat-cell *matCellDef="let tx"> 
-          <span>{{tx.status}}</span>
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="fee">
+      <th mat-header-cell *matHeaderCellDef class="th-lg"> Fee </th>
+      <td mat-cell *matCellDef="let tx"> 
+        {{ 
+          tx.details?.tx.value.fee.amount ?
+          tx.details.tx.value.fee.amount[0].amount : '0' 
+        }}&nbsp;<span class="ticker">uatom</span> 
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="fee">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"> Fee </th>
-        <td mat-cell *matCellDef="let tx"> 
-          {{ 
-            tx.details?.tx.value.fee.amount ?
-            tx.details.tx.value.fee.amount[0].amount : '0' 
-          }}&nbsp;<span class="ticker">uatom</span> 
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="height">
+      <th mat-header-cell *matHeaderCellDef class="th-lg"> Height </th>
+      <td mat-cell *matCellDef="let tx"> {{tx.height}} </td>
+    </ng-container>
 
-      <ng-container matColumnDef="height">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"> Height </th>
-        <td mat-cell *matCellDef="let tx"> {{tx.height}} </td>
-      </ng-container>
+    <ng-container matColumnDef="timestamp">
+      <th mat-header-cell *matHeaderCellDef class="th-lg"> Timestamp </th>
+      <td mat-cell *matCellDef="let tx"> to-add </td>
+    </ng-container>
 
-      <ng-container matColumnDef="timestamp">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"> Timestamp </th>
-        <td mat-cell *matCellDef="let tx"> to-add </td>
-      </ng-container>
-
-      <ng-container matColumnDef="expandedDetail">
-        <td mat-cell *matCellDef="let tx" [attr.colspan]="displayedColumns.length">
-          <div
-              class="tx-detail"
-              [@detailExpand]="tx == expandedElement ? 'expanded' : 'collapsed'">
-            <div *ngIf="tx.tagsDecod[1]">
-              {{tx.tagsDecod[1].key}}: {{tx.tagsDecod[1].value}}
-            </div>
-            <div *ngIf="tx.tagsDecod[1]">
-              {{tx.tagsDecod[2].key}}: {{tx.tagsDecod[2].value}}
-            </div>
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let tx" [attr.colspan]="displayedColumns.length">
+        <div
+            class="tx-detail"
+            [@detailExpand]="tx == expandedElement ? 'expanded' : 'collapsed'">
+          <div *ngIf="tx.tagsDecod[1]">
+            {{tx.tagsDecod[1].key}}: {{tx.tagsDecod[1].value}}
           </div>
-        </td>
-      </ng-container>
+          <div *ngIf="tx.tagsDecod[1]">
+            {{tx.tagsDecod[2].key}}: {{tx.tagsDecod[2].value}}
+          </div>
+        </div>
+      </td>
+    </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let tx; columns: displayedColumns;"
-          [class.example-expanded-row]="expandedElement === tx"
-          (click)="expandedElement = expandedElement === tx ? null : tx" mdbTooltip="Click to see more" placement="top">
-      </tr>
-      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="tx-detail-row"></tr>
-    </table>
-    <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[100]"></mat-paginator>
-  </div>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let tx; columns: displayedColumns;"
+        [class.example-expanded-row]="expandedElement === tx"
+        (click)="expandedElement = expandedElement === tx ? null : tx" mdbTooltip="Click to see more" placement="top">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="tx-detail-row"></tr>
+  </table>
+  <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[100]"></mat-paginator>
+  <!-- </div> -->
 </div>
