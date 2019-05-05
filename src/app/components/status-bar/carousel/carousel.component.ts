@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { WsService } from 'src/app/services/ws.service';
 import { Observable } from 'rxjs';
 import { HostListener } from "@angular/core";
+import { cards } from './carousel.content';
 
 @Component({
   selector: 'app-carousel',
@@ -14,66 +15,11 @@ import { HostListener } from "@angular/core";
   styleUrls: ['./carousel.component.scss']
 })
 export class CarouselComponent implements OnInit {
-  cards = [
-    {
-      data: 0,
-      title: 'Last Block',
-      description: 'Last Updated',
-      img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'
-    },
-    {
-      data: 0,
-      title: 'Consensus',
-      description: 'Last Updated',
-      img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'
-    },
-    {
-      data: 0,
-      title: 'Validators',
-      description: 'Last Updated',
-      img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'
-    },
-    {
-      data: 0,
-      title: 'Bonded',
-      description: 'Last Updated',
-      img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'
-    },
-    {
-      data: 0,
-      title: 'Block Time',
-      description: 'Last Updated',
-      img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'
-    },
-    {
-      data: 0,
-      title: 'Community Pool',
-      description: 'Last Updated',
-      img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'
-    },
-    {
-      data: 0,
-      title: 'Inflation',
-      description: 'Last Updated',
-      img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'
-    },
-    {
-      data: 0,
-      title: 'Price',
-      description: 'Last Updated',
-      img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg'
-    }
-  ];
   slides: any = [[]];
-  chunk(arr, chunkSize) {
-    let R = [];
-    for (let i = 0, len = arr.length; i < len; i += chunkSize) {
-      R.push(arr.slice(i, i + chunkSize));
-    }
-    return R;
-  }
-
   appState: Observable<State>;
+  // 0 - for bigger screens
+  // 1 - for smaller screens
+  layout: number;
   
   constructor(
     private ws:WsService, 
@@ -114,10 +60,25 @@ export class CarouselComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
     let screenWidth = window.innerWidth;
-    if(screenWidth < 730) {
-      this.slides = this.chunk(this.cards, 1);
-    } else {
-      this.slides = this.chunk(this.cards, 6);
+    
+    if(!this.layout) {
+      this.layout = screenWidth > 730 ? 1 : 0; 
     }
+
+    if(screenWidth < 730 && this.layout === 0) {
+      this.slides = this.chunk(cards, 1);
+      this.layout = 1;
+    } else if(screenWidth > 730 && this.layout === 1) {
+      this.slides = this.chunk(cards, 6);
+      this.layout = 0;
+    }
+  }
+  
+  chunk(arr, chunkSize) {
+    let R = [];
+    for (let i = 0, len = arr.length; i < len; i += chunkSize) {
+      R.push(arr.slice(i, i + chunkSize));
+    }
+    return R;
   }
 }
