@@ -1,40 +1,27 @@
 <div class="main-row">
   <mdb-carousel [isControls]="true" class="carousel-multi-item multi-animation" [type]="'carousel-multi-item'"
 [animation]="'slide'">
-<mdb-carousel-item *ngFor="let item of slides; let i = index">
-  <div class="row">
-          <div class="col-md-2" [ngClass]="{'d-none d-md-block': cardIndex !== 0}" *ngFor="let card of item; let cardIndex = index">
-    
-                  <!-- <mdb-card class="my-1">
-                  <mdb-card-img [src]="card.img" alt="Card image cap"></mdb-card-img>
-                  <mdb-card-body>
-                    <mdb-card-title>
-                      <h4>{{card.title}}</h4>
-                    </mdb-card-title>
-                    <p>{{card.description}}</p>
-                    <a href="#" mdbBtn color="primary" class="waves-light" mdbWavesEffect>{{card.buttonText}}</a>
-                  </mdb-card-body>
-                </mdb-card> -->
-                      <!-- <div class="card-deck w-100 p-3"> -->
-                          <mdb-card cascade="true">
-                              <!--Card image-->
-                              <div class="view view-cascade gradient-card-header purple-gradient">
-                              <h2 class="card-header-title">Data</h2>
-                              <p>{{card.title}}</p>
-                              </div>
-                              <!--/Card image-->
-                              <mdb-card-body cascade="true" class="text-center">
-                              <!--Card content-->
-                              <mdb-card-text>
-                                  <br>
-                                  {{card.description}}
-                              </mdb-card-text>
-                              </mdb-card-body>
-                              <!--/.Card content-->
-                          </mdb-card>
-                      <!-- </div> -->
-              </div>
-  </div>
-</mdb-carousel-item>
+  <mdb-carousel-item *ngFor="let item of slides; let i = index">
+    <div class="row">
+      <div class="col-md-2" [ngClass]="{'d-none d-md-block': cardIndex !== 0}" *ngFor="let card of item; let cardIndex = index">
+        <mdb-card cascade="true">
+            <!--Card image-->
+            <div class="view view-cascade gradient-card-header purple-gradient">
+            <h2 class="card-header-title">{{card.data}}</h2>
+            <p>{{card.title}}</p>
+            </div>
+            <!--/Card image-->
+            <mdb-card-body cascade="true" class="text-center">
+            <!--Card content-->
+            <mdb-card-text>
+                <br>
+                {{card.description}}
+            </mdb-card-text>
+            </mdb-card-body>
+            <!--/.Card content-->
+        </mdb-card>
+      </div>
+    </div>
+  </mdb-carousel-item>
 </mdb-carousel>
 </div>
