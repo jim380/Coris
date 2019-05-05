@@ -1,0 +1,26 @@
+.main-row {
+    max-width: 100%;
+}
+
+.row {
+    justify-content: center;
+}
+
+.card-header-title {
+    color: white;
+    font-size: 200%;
+    text-align: center;
+    display: inline-block;   
+}
+
+.card-body {
+    padding: 0;
+}
+
+.card-text {
+    margin-bottom: 0;
+}
+
+.col-12, .col-lg-3, .col-md-6, .w-25, .query-card-wrapper {
+    padding-right: 0;
+}

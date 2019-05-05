@@ -1,22 +1,22 @@
-<div class="row">
-  <table  mat-table [dataSource]="blocks" class="mat-elevation-z8">
+<div class="row table-responsive text-nowrap scrollbar-primary">
+  <table  mat-table [dataSource]="blocks" class="mat-elevation-z8 w-auto">
     
-    <ng-container matColumnDef="height">
-      <th mat-header-cell *matHeaderCellDef> Height </th>
+    <ng-container matColumnDef="height" sticky>
+      <th mat-header-cell *matHeaderCellDef class="th-lg"> Height </th>
       <td mat-cell *matCellDef="let block">
         {{block.height}}
       </td>
     </ng-container>
   
     <ng-container matColumnDef="transactions">
-      <th mat-header-cell *matHeaderCellDef> Transactions </th>
+      <th mat-header-cell *matHeaderCellDef class="th-lg"> Transactions </th>
       <td mat-cell *matCellDef="let block">
         {{block.txs}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="proposer">
-      <th mat-header-cell *matHeaderCellDef> Proposer </th>
+      <th mat-header-cell *matHeaderCellDef class="th-lg"> Proposer </th>
       <td mat-cell *matCellDef="let block">
         <mat-chip-list><mat-chip color = "primary" selected>
           <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has(block.proposer) : false; else elseBlockProposer">
@@ -28,7 +28,7 @@
     </ng-container>
 
     <ng-container matColumnDef="timestamp">
-      <th mat-header-cell *matHeaderCellDef> Timestamp </th>
+      <th mat-header-cell *matHeaderCellDef class="th-lg"> Timestamp </th>
       <td mat-cell *matCellDef="let block">  
         {{block.time | ago }}
       </td>
