@@ -6,6 +6,7 @@ import { State } from 'src/app/interfaces/state.interface';
 import { Store } from '@ngrx/store';
 import { WsService } from 'src/app/services/ws.service';
 import { Observable } from 'rxjs';
+import { HostListener } from "@angular/core";
 
 @Component({
   selector: 'app-carousel',
@@ -13,7 +14,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./carousel.component.scss']
 })
 export class CarouselComponent implements OnInit {
-
   cards = [
     {
       data: 0,
@@ -84,9 +84,8 @@ export class CarouselComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.slides = this.chunk(this.cards, 4);
-
     this.appState = this.store.select('App');
+    this.getScreenSize();
     console.log(this.slides);
 
     // this.ps.getAtomPrice().subscribe(data => {
@@ -110,5 +109,15 @@ export class CarouselComponent implements OnInit {
 
   ngOnDestroy() {
     this.ws.unsubscribe();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?) {
+    let screenWidth = window.innerWidth;
+    if(screenWidth < 730) {
+      this.slides = this.chunk(this.cards, 1);
+    } else {
+      this.slides = this.chunk(this.cards, 6);
+    }
   }
 }

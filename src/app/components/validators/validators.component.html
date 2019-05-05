@@ -18,16 +18,20 @@
     Unbonding BondStatus = 0x01
     Bonded BondStatus = 0x02 
   -->
-  <div class="row bond-status">
-    <mat-button-toggle-group name="fontStyle" aria-label="Font Style" color="primary" value="bonded">
-      <mat-button-toggle (click)="validatorsBondFilter(2)" value="bonded">Bonded</mat-button-toggle>
-      <mat-button-toggle (click)="validatorsJailedFilter(true)" value="jailed">Jailed</mat-button-toggle>
-      <mat-button-toggle (click)="validatorsFilter(0, false)" value="unbonded">Unbonded</mat-button-toggle>
-      <mat-button-toggle (click)="validatorsBondFilter(1)" value="unbonding">Unbonding</mat-button-toggle>
-      <mat-button-toggle (click)="validatorsNoFilter()" value="all">All</mat-button-toggle>
-    </mat-button-toggle-group>
+  <div class="dropdown" mdbDropdown>
+    <button mdbDropdownToggle type="button" mdbBtn  class="dropdown-toggle waves-light" size="sm"
+      mdbWavesEffect>
+      Status
+    </button>
+  
+    <div class="dropdown-menu" value="bonded">
+      <a class="dropdown-item" (click)="validatorsBondFilter(2)" value="bonded">Bonded</a>
+      <a class="dropdown-item" (click)="validatorsJailedFilter(true)" value="jailed">Jailed</a>
+      <a class="dropdown-item" (click)="validatorsBondFilter(1)" value="unbonded">Unbonded</a>
+      <a class="dropdown-item" (click)="validatorsJailedFilter(true)" value="unbonding">Unbonding</a>
+      <a class="dropdown-item" (click)="validatorsBondFilter(1)" value="all">All</a>
+    </div>
   </div>
-
   <!-- progress bar with label -->
   <!-- <div>
     <mdb-progress *ngFor="let block of (appState | async).blocks.slice(0,1); let validator" value="{{
