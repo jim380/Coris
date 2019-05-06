@@ -8,6 +8,7 @@ import { WsService } from 'src/app/services/ws.service';
 import { Observable } from 'rxjs';
 import { HostListener } from "@angular/core";
 import { cards } from './carousel.content';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-carousel',
@@ -17,10 +18,11 @@ import { cards } from './carousel.content';
 export class CarouselComponent implements OnInit {
   slides: any = [[]];
   appState: Observable<State>;
-  // 0 - for bigger screens
-  // 1 - for smaller screens
+  // 1 - for bigger screens
+  // 2 - for smaller screens
   layout: number;
-  
+  datePipe = new DatePipe('en-US');
+
   constructor(
     private ws:WsService, 
     private store: Store <State>,
@@ -32,29 +34,66 @@ export class CarouselComponent implements OnInit {
   ngOnInit() {
     this.appState = this.store.select('App');
     this.getScreenSize();
-    console.log(this.slides);
 
-    // this.ps.getAtomPrice().subscribe(data => {
-    //   // TODO remove debugging
-    //   // console.log(data.data['3794']);
-    //   this.cards[7].data = data.data['3794'].quote.USD.price;
-    //   this.slides = this.chunk(this.cards, 6);  
-    // });
+    this.appState
+      .subscribe(data => {
+        // TODO remove debugging
+        console.log(data);
+      }).unsubscribe();
+
+    this.ps.getAtomPrice()
+      .subscribe(data => {
+        // TODO remove debugging
+        // console.log(data.data['3794']);
+        let price = data.data['3794'].quote.USD.price;
+        let currentTime = this.getCurrentTime();
+  
+        if (this.layout === 1) {
+          this.slides[1][1].data = price.toFixed(2);
+          this.slides[1][1].timestamp = currentTime;
+        } else {
+          this.slides[7][0].data = price.toFixed(2);
+          this.slides[1][1].timestamp = currentTime;
+        }
+      });
+      
+    this.ps.getInflation()
+      .subscribe(data => {
+        // TODO remove debugging
+        // console.log(data);
+        let inflation = Number(data);
+        let currentTime = this.getCurrentTime();
+        if (this.layout === 1) {
+          this.slides[1][0].data = inflation.toFixed(3);
+          this.slides[1][0].timestamp = currentTime;
+        } else {
+          this.slides[6][0].data = inflation.toFixed(3);
+          this.slides[6][0].timestamp = currentTime;
+        }
+      });
     
-    // this.ps.getInflation().subscribe(data => {
-    //   // TODO remove debugging
-    //   // console.log(data);
-    //   this.inflation = data;
-    // });
-    
-    // this.bs.getBlockTime$()
-    //   .subscribe(data => {
-    //     this.avgBlockTime = data/1000;
-    //   })
+    this.bs.getBlockTime$()
+      .subscribe(data => {
+        // TODO remove debugging
+        // console.log(data/1000);
+        let blockTime = data/1000;
+        let currentTime = this.getCurrentTime();
+        if (this.layout === 1) {
+          this.slides[0][4].data = blockTime.toFixed(3);
+          this.slides[0][4].timestamp = currentTime;
+        } else {
+          this.slides[4][0].data = blockTime.toFixed(3);
+          this.slides[4][0].timestamp = currentTime;
+        }
+      })
   }
 
   ngOnDestroy() {
     this.ws.unsubscribe();
+  }
+
+  getCurrentTime() {
+    return this.datePipe.transform( Date.now(), 'h:mm a');
   }
 
   @HostListener('window:resize', ['$event'])
@@ -62,15 +101,15 @@ export class CarouselComponent implements OnInit {
     let screenWidth = window.innerWidth;
     
     if(!this.layout) {
-      this.layout = screenWidth > 730 ? 1 : 0; 
+      this.layout = screenWidth > 730 ? 2 : 1; 
     }
 
-    if(screenWidth < 730 && this.layout === 0) {
+    if(screenWidth < 730 && this.layout === 1) {
       this.slides = this.chunk(cards, 1);
-      this.layout = 1;
-    } else if(screenWidth > 730 && this.layout === 1) {
+      this.layout = 2;
+    } else if(screenWidth > 730 && this.layout === 2) {
       this.slides = this.chunk(cards, 6);
-      this.layout = 0;
+      this.layout = 1;
     }
   }
   
@@ -79,6 +118,7 @@ export class CarouselComponent implements OnInit {
     for (let i = 0, len = arr.length; i < len; i += chunkSize) {
       R.push(arr.slice(i, i + chunkSize));
     }
+    console.log(R);
     return R;
   }
 }
