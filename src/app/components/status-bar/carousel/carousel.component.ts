@@ -41,7 +41,7 @@ export class CarouselComponent implements OnInit {
     this.setAtomPrice();
     this.appState
       .pipe(
-        debounceTime(3000),
+        // debounceTime(3000),
         distinctUntilChanged()
       )
       .subscribe(data => {
@@ -115,10 +115,12 @@ export class CarouselComponent implements OnInit {
     let currentTime = this.getCurrentTime();
 
     if (this.layout === 1) {
-      this.slides[0][1].data = consensus.step;
+      this.slides[0][1].data = consensus.step.substring(9);
+      this.slides[0][1].title = `round: ${consensus.round}`;
       this.slides[0][1].timestamp = currentTime;
     } else {
-      this.slides[1][0].data = consensus.step;
+      this.slides[1][0].data = consensus.step.substring(9);
+      this.slides[1][0].title = `round: ${consensus.round}`;
       this.slides[1][0].timestamp = currentTime;
     }
   }
