@@ -46,6 +46,29 @@ import { HorizontalBarChartComponent } from './components/charts/horizontal-bar-
 import { VerticalTabsComponent } from './components/validator-profile/vertical-tabs/vertical-tabs.component';
 import { ProfileCardComponent } from './components/validator-profile/profile-card/profile-card.component';
 import { CarouselComponent } from './components/status-bar/carousel/carousel.component';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+
+declare var Hammer: any;
+
+export class MyHammerConfig extends HammerGestureConfig {
+  overrides = <any> {
+    'pan': { direction: Hammer.DIRECTION_All },
+    'swipe': { direction: Hammer.DIRECTION_VERTICAL },
+  };
+
+  buildHammer(element: HTMLElement) {
+    const mc = new Hammer(element, {
+      touchAction: 'auto',
+          inputClass: Hammer.SUPPORT_POINTER_EVENTS ? Hammer.PointerEventInput : Hammer.TouchInput,
+          recognizers: [
+            [Hammer.Swipe, {
+              direction: Hammer.DIRECTION_HORIZONTAL
+            }]
+          ]
+    });
+    return mc;
+  }
+}
 
 @NgModule({
   declarations: [
@@ -99,7 +122,12 @@ import { CarouselComponent } from './components/status-bar/carousel/carousel.com
     AgmCoreModule.forRoot({ apiKey: 'ULKdG4NuUxzJcpQFspxF' })
 
   ],
-  providers: [SearchService, MDBSpinningPreloader],
+  providers: [SearchService,
+              MDBSpinningPreloader,
+              { provide: HAMMER_GESTURE_CONFIG,
+                useClass: MyHammerConfig
+              }],
   bootstrap: [AppComponent],
 })
+
 export class AppModule { }
