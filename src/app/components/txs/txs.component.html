@@ -82,6 +82,10 @@
     </tr>
     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="tx-detail-row"></tr>
   </table>
-  <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[100]"></mat-paginator>
+
+  <div class="row paginator">
+    <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[100]"></mat-paginator>
+  </div>
+  
   <!-- </div> -->
 </div>

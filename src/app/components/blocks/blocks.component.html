@@ -51,7 +51,11 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row @rowsAnimation *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[100]"></mat-paginator>
+
+  <div class="row paginator">
+    <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[100]"></mat-paginator>
+  </div>
+  
 </div>
  
 <!--  MASTER BRANCH START
