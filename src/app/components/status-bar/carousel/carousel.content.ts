@@ -1,43 +1,47 @@
+import { DatePipe } from '@angular/common';
+
+const datePipe = new DatePipe('en-US');
+const formattedTime = datePipe.transform( Date.now(), 'h:mm a');
 let cards = [
   {
     data: 0,
     title: 'Last Block',
-    description: 'Last Updated'
+    timestamp: formattedTime
   },
   {
     data: 0,
     title: 'Consensus',
-    description: 'Last Updated'
+    timestamp: formattedTime
   },
   {
     data: 0,
     title: 'Validators',
-    description: 'Last Updated'
+    timestamp: formattedTime
   },
   {
     data: 0,
     title: 'Bonded',
-    description: 'Last Updated'
+    timestamp: formattedTime
   },
   {
     data: 0,
     title: 'Block Time',
-    description: 'Last Updated'
+    timestamp: formattedTime
   },
   {
     data: 0,
     title: 'Community Pool',
-    description: 'Last Updated'
+    timestamp: formattedTime
   },
   {
     data: 0,
     title: 'Inflation',
-    description: 'Last Updated'
+    timestamp: formattedTime
   },
   {
     data: 0,
-    title: 'Price',
-    description: 'Last Updated'
+    title: 'Price (USD)',
+    timestamp: formattedTime
   }
 ];
 export { cards} ;
