@@ -65,11 +65,8 @@
         <div
             class="tx-detail"
             [@detailExpand]="tx == expandedElement ? 'expanded' : 'collapsed'">
-          <div *ngIf="tx.tagsDecod[1]">
-            {{tx.tagsDecod[1].key}}: {{tx.tagsDecod[1].value}}
-          </div>
-          <div *ngIf="tx.tagsDecod[1]">
-            {{tx.tagsDecod[2].key}}: {{tx.tagsDecod[2].value}}
+          <div *ngFor="let tag of tx.tagsDecod">
+            {{tag.key | titlecase}}: {{tag.value}}
           </div>
         </div>
       </td>
