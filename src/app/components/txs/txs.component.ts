@@ -47,6 +47,7 @@ export class TxsComponent implements OnInit {
     } else if(this.currentPage === lastPage ) {
       this.dataSource.paginator.hasNextPage = () => { return false; }
     }
+    console.log(this.dataSource.data);
   }
 
   txs: Tx[];
@@ -56,7 +57,7 @@ export class TxsComponent implements OnInit {
     'status',
     'fee',
     'height',
-    // 'timestamp'
+    'timestamp'
   ];
   expandedElement: Tx | null;
 
