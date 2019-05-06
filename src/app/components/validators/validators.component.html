@@ -27,9 +27,9 @@
     <div class="dropdown-menu" value="bonded">
       <a class="dropdown-item" (click)="validatorsBondFilter(2)" value="bonded">Bonded</a>
       <a class="dropdown-item" (click)="validatorsJailedFilter(true)" value="jailed">Jailed</a>
-      <a class="dropdown-item" (click)="validatorsBondFilter(1)" value="unbonded">Unbonded</a>
-      <a class="dropdown-item" (click)="validatorsJailedFilter(true)" value="unbonding">Unbonding</a>
-      <a class="dropdown-item" (click)="validatorsBondFilter(1)" value="all">All</a>
+      <a class="dropdown-item" (click)="validatorsFilter(0, false)" value="unbonded">Unbonded</a>
+      <a class="dropdown-item" (click)="validatorsBondFilter(1)" value="unbonding">Unbonding</a>
+      <a class="dropdown-item" (click)="validatorsNoFilter()" value="all">All</a>
     </div>
   </div>
   <!-- progress bar with label -->
@@ -145,7 +145,7 @@
           {{ validator.unbonding_total/1e6 | number:'.0-0'}} <span class="ticker">ATOM</span>
           <br>
           <span class="table-subtitle" matTooltip="Completion Time" matTooltipPosition="above"><i class="ion-android-time"></i>&nbsp;
-            {{validator.unbonding_time}}
+            {{validator.unbonding_time | date: "MMM d, y"}}
           </span>
         </td>
       </ng-container>
