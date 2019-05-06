@@ -91,6 +91,16 @@
             : 0
           }} %
           </span>
+          <!-- @aakatev TODO fix sizing issue -->
+          <!-- <span *ngFor="let block of (appState | async).blocks.slice(0,1)">
+          
+            <mdb-simple-chart [percent]="block.header?.height !== null
+                ? (100-validator.slashing?.missed_blocks_counter/(block.header.height-validator.slashing?.start_height) | number:'.0')
+                : 0" 
+                            [barColor]="'4CAF50'" 
+                            [animate]="{duration: 1000, enabled: true}">
+            </mdb-simple-chart>
+          </span> -->
         </td>
       </ng-container>
     

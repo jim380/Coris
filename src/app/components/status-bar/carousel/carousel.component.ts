@@ -35,57 +35,19 @@ export class CarouselComponent implements OnInit {
     this.appState = this.store.select('App');
     this.getScreenSize();
 
+    this.setBlockTime();
+    this.setInflation();
+    this.setAtomPrice();
     this.appState
       .subscribe(data => {
         // TODO remove debugging
         console.log(data);
+        this.setConsensusState(data.roundStep);
+        this.setLastBlock(data.blocks);
+        this.setValidatorsCount(data.validators);
+        this.setBondedTokens(data.stakePool);
+        this.setCommunityPool(data.stakePool);
       }).unsubscribe();
-
-    this.ps.getAtomPrice()
-      .subscribe(data => {
-        // TODO remove debugging
-        // console.log(data.data['3794']);
-        let price = data.data['3794'].quote.USD.price;
-        let currentTime = this.getCurrentTime();
-  
-        if (this.layout === 1) {
-          this.slides[1][1].data = price.toFixed(2);
-          this.slides[1][1].timestamp = currentTime;
-        } else {
-          this.slides[7][0].data = price.toFixed(2);
-          this.slides[1][1].timestamp = currentTime;
-        }
-      });
-      
-    this.ps.getInflation()
-      .subscribe(data => {
-        // TODO remove debugging
-        // console.log(data);
-        let inflation = Number(data);
-        let currentTime = this.getCurrentTime();
-        if (this.layout === 1) {
-          this.slides[1][0].data = inflation.toFixed(3);
-          this.slides[1][0].timestamp = currentTime;
-        } else {
-          this.slides[6][0].data = inflation.toFixed(3);
-          this.slides[6][0].timestamp = currentTime;
-        }
-      });
-    
-    this.bs.getBlockTime$()
-      .subscribe(data => {
-        // TODO remove debugging
-        // console.log(data/1000);
-        let blockTime = data/1000;
-        let currentTime = this.getCurrentTime();
-        if (this.layout === 1) {
-          this.slides[0][4].data = blockTime.toFixed(3);
-          this.slides[0][4].timestamp = currentTime;
-        } else {
-          this.slides[4][0].data = blockTime.toFixed(3);
-          this.slides[4][0].timestamp = currentTime;
-        }
-      })
   }
 
   ngOnDestroy() {
@@ -120,5 +82,73 @@ export class CarouselComponent implements OnInit {
     }
     console.log(R);
     return R;
+  }
+
+  setBlockTime() {
+    this.bs.getBlockTime$()
+      .subscribe(data => {
+        // TODO remove debugging
+        // console.log(data/1000);
+        let blockTime = data/1000;
+        let currentTime = this.getCurrentTime();
+        if (this.layout === 1) {
+          this.slides[0][4].data = blockTime.toFixed(3);
+          this.slides[0][4].timestamp = currentTime;
+        } else {
+          this.slides[4][0].data = blockTime.toFixed(3);
+          this.slides[4][0].timestamp = currentTime;
+        }
+      })
+  }
+  setInflation() {
+    this.ps.getInflation()
+      .subscribe(data => {
+        // TODO remove debugging
+        // console.log(data);
+        let inflation = Number(data);
+        let currentTime = this.getCurrentTime();
+        if (this.layout === 1) {
+          this.slides[1][0].data = inflation.toFixed(3);
+          this.slides[1][0].timestamp = currentTime;
+        } else {
+          this.slides[6][0].data = inflation.toFixed(3);
+          this.slides[6][0].timestamp = currentTime;
+        }
+      });
+  }
+
+  setAtomPrice() {
+    this.ps.getAtomPrice()
+      .subscribe(data => {
+        // TODO remove debugging
+        // console.log(data.data['3794']);
+        let price = data.data['3794'].quote.USD.price;
+        let currentTime = this.getCurrentTime();
+  
+        if (this.layout === 1) {
+          this.slides[1][1].data = price.toFixed(2);
+          this.slides[1][1].timestamp = currentTime;
+        } else {
+          this.slides[7][0].data = price.toFixed(2);
+          this.slides[1][1].timestamp = currentTime;
+        }
+      });
+  }
+
+  setConsensusState(data) {
+
+  }
+  
+  setLastBlock(data) {
+    
+  }
+  setValidatorsCount(data) {
+    
+  }
+  setBondedTokens(data) {
+    
+  }
+  setCommunityPool(data) {
+    
   }
 }

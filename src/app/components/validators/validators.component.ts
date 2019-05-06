@@ -30,6 +30,9 @@ export class ValidatorsComponent implements OnInit {
   private paginator: MatPaginator;
   private sort: MatSort;
   private expandedElement: any | null;
+  public statusChartOptions: any = {
+    responsive: true
+  };
 
 
   @ViewChild(MatTable) table: MatTable<any>;
