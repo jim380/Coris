@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { HostListener } from "@angular/core";
 import { cards } from './carousel.content';
 import { DatePipe } from '@angular/common';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-carousel',
@@ -39,15 +40,20 @@ export class CarouselComponent implements OnInit {
     this.setInflation();
     this.setAtomPrice();
     this.appState
+      .pipe(
+        debounceTime(3000),
+        distinctUntilChanged()
+      )
       .subscribe(data => {
         // TODO remove debugging
-        console.log(data);
+        // console.log(data);
+
         this.setConsensusState(data.roundStep);
         this.setLastBlock(data.blocks);
         this.setValidatorsCount(data.validators);
         this.setBondedTokens(data.stakePool);
         this.setCommunityPool(data.stakePool);
-      }).unsubscribe();
+      });
   }
 
   ngOnDestroy() {
@@ -83,6 +89,72 @@ export class CarouselComponent implements OnInit {
     console.log(R);
     return R;
   }
+  
+
+  setLastBlock(data) {
+    // TODO @aakatev remove debugging
+    // console.log(data);
+    if(data.length > 0) {
+      let block = data[0];
+      let currentTime = this.getCurrentTime();
+
+      if (this.layout === 1) {
+        this.slides[0][0].data = block.header.height;
+        this.slides[0][0].timestamp = currentTime;
+      } else {
+        this.slides[0][0].data = block.header.height;
+        this.slides[0][0].timestamp = currentTime;
+      }
+    }
+  }
+
+  setConsensusState(data) {
+    // TODO @aakatev remove debugging
+    // console.log(data);
+    let consensus = data;
+    let currentTime = this.getCurrentTime();
+
+    if (this.layout === 1) {
+      this.slides[0][1].data = consensus.step;
+      this.slides[0][1].timestamp = currentTime;
+    } else {
+      this.slides[1][0].data = consensus.step;
+      this.slides[1][0].timestamp = currentTime;
+    }
+  }
+  
+  setValidatorsCount(data) {
+    // TODO @aakatev remove debugging
+    // console.log(data);
+    let validators = data;
+    let currentTime = this.getCurrentTime();
+
+    if (this.layout === 1) {
+      this.slides[0][2].data = validators.length;
+      this.slides[0][2].timestamp = currentTime;
+    } else {
+      this.slides[2][0].data = validators.length;
+      this.slides[2][0].timestamp = currentTime;
+    }
+    
+  }
+  setBondedTokens(data) {
+    // TODO @aakatev remove debugging
+    // console.log(data);
+    
+    if(data.bonded_tokens && data.not_bonded_tokens) {
+      let currentTime = this.getCurrentTime();
+      let bondedPercentage = ((data.bonded_tokens/1e6)/(data.bonded_tokens/1e6 + data.not_bonded_tokens/1e6)).toFixed(2)
+
+      if (this.layout === 1) {
+        this.slides[0][3].data = `${bondedPercentage} %`;
+        this.slides[0][3].timestamp = currentTime;
+      } else {
+        this.slides[3][0].data = `${bondedPercentage} %`;
+        this.slides[3][0].timestamp = currentTime;
+      }
+    }
+  }
 
   setBlockTime() {
     this.bs.getBlockTime$()
@@ -100,6 +172,24 @@ export class CarouselComponent implements OnInit {
         }
       })
   }
+
+  setCommunityPool(data) {
+    // TODO @aakatev remove debugging
+    // console.log(data);
+    if(data.community_pool) {
+      let communityPool = data.community_pool;
+      let currentTime = this.getCurrentTime();
+
+      if (this.layout === 1) {
+        this.slides[0][5].data = (communityPool.amount/1e6).toFixed(0);
+        this.slides[0][5].timestamp = currentTime;
+      } else {
+        this.slides[5][0].data = (communityPool.amount/1e6).toFixed(0);
+        this.slides[5][0].timestamp = currentTime;
+      }
+    }
+  }
+
   setInflation() {
     this.ps.getInflation()
       .subscribe(data => {
@@ -130,25 +220,8 @@ export class CarouselComponent implements OnInit {
           this.slides[1][1].timestamp = currentTime;
         } else {
           this.slides[7][0].data = price.toFixed(2);
-          this.slides[1][1].timestamp = currentTime;
+          this.slides[7][0].timestamp = currentTime;
         }
       });
-  }
-
-  setConsensusState(data) {
-
-  }
-  
-  setLastBlock(data) {
-    
-  }
-  setValidatorsCount(data) {
-    
-  }
-  setBondedTokens(data) {
-    
-  }
-  setCommunityPool(data) {
-    
   }
 }
