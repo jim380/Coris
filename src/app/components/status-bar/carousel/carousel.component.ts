@@ -116,7 +116,7 @@ export class CarouselComponent implements OnInit {
     let currentTime = this.getCurrentTime();
 
     if (this.layout === 1) {
-      if (consensus.step.substring(9) === "NewHeight") {
+      if (consensus.step.includes("NewHeight")) {
         this.slides[0][1].data = `Block`;
       } else {
         this.slides[0][1].data = consensus.step.substring(9);
@@ -125,10 +125,10 @@ export class CarouselComponent implements OnInit {
       this.slides[0][1].title = `round: ${consensus.round}`;
       this.slides[0][1].timestamp = currentTime;
     } else {
-      if (consensus.step.substring(9) === "NewHeight") {
-        this.slides[0][1].data = `Block`;
+      if (consensus.step.includes("NewHeight")) {
+        this.slides[1][0].data = `Block`;
       } else {
-        this.slides[0][1].data = consensus.step.substring(9);
+        this.slides[1][0].data = consensus.step.substring(9);
       }
       this.slides[1][0].data = consensus.step.substring(9);
       this.slides[1][0].title = `round: ${consensus.round}`;
