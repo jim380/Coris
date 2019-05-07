@@ -16,8 +16,9 @@ export class GovernanceComponent implements OnInit {
     'title', 
     'status',
     'submitted',
-    'voting',
-    'deposit'
+    // 'voting',
+    'deposit',
+    `depositEnd`
   ];
 
   constructor(private http: HttpClient) { }

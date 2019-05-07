@@ -48,6 +48,7 @@ import { ProfileCardComponent } from './components/validator-profile/profile-car
 import { CarouselComponent } from './components/status-bar/carousel/carousel.component';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import {TimeAgoPipe} from 'time-ago-pipe';
+import { GovDetailComponent } from './components/governance/gov-detail/gov-detail.component';
 
 declare var Hammer: any;
 
@@ -101,7 +102,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     VerticalTabsComponent,
     ProfileCardComponent,
     CarouselComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
+    GovDetailComponent
     // UniversalSearchBarComponent,
   ],
   entryComponents: [

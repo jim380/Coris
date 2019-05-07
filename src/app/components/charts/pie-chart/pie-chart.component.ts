@@ -10,15 +10,15 @@ export class PieChartComponent implements OnInit {
   public chartType: string = 'pie';
 
   public chartDatasets: Array<any> = [
-    { data: [300, 50, 100, 40, 120], label: 'My First dataset' }
+    { data: [300, 50, 100, 40], label: 'Votes' }
   ];
 
-  public chartLabels: Array<any> = ['Red', 'Green', 'Yellow', 'Grey', 'Dark Grey'];
+  public chartLabels: Array<any> = ['Yes', 'No', 'NoWithVeto', 'Abstain'];
 
   public chartColors: Array<any> = [
     {
-      backgroundColor: ['#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
-      hoverBackgroundColor: ['#FF5A5E', '#5AD3D1', '#FFC870', '#A8B3C5', '#616774'],
+      backgroundColor: ['#F7464A', '#46BFBD', '#FDB45C', '#949FB1'],
+      hoverBackgroundColor: ['#FF5A5E', '#5AD3D1', '#FFC870', '#A8B3C5'],
       borderWidth: 2,
     }
   ];
