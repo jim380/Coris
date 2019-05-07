@@ -112,27 +112,29 @@ export class CarouselComponent implements OnInit {
   setConsensusState(data) {
     // TODO @aakatev remove debugging
     // console.log(data);
-    let consensus = data;
-    let currentTime = this.getCurrentTime();
+    if(data) {
+      let consensus = data;
+      let currentTime = this.getCurrentTime();
 
-    if (this.layout === 1) {
-      if (consensus.step.includes("NewHeight")) {
-        this.slides[0][1].data = `Block`;
+      if (this.layout === 1) {
+        if (consensus.step.includes("NewHeight")) {
+          this.slides[0][1].data = `Block`;
+        } else {
+          this.slides[0][1].data = consensus.step.substring(9);
+        }
+        // this.slides[0][1].data = consensus.step.substring(9);
+        this.slides[0][1].title = `round: ${consensus.round}`;
+        this.slides[0][1].timestamp = currentTime;
       } else {
-        this.slides[0][1].data = consensus.step.substring(9);
-      }
-      // this.slides[0][1].data = consensus.step.substring(9);
-      this.slides[0][1].title = `round: ${consensus.round}`;
-      this.slides[0][1].timestamp = currentTime;
-    } else {
-      if (consensus.step.includes("NewHeight")) {
-        this.slides[1][0].data = `Block`;
-      } else {
+        if (consensus.step.includes("NewHeight")) {
+          this.slides[1][0].data = `Block`;
+        } else {
+          this.slides[1][0].data = consensus.step.substring(9);
+        }
         this.slides[1][0].data = consensus.step.substring(9);
+        this.slides[1][0].title = `round: ${consensus.round}`;
+        this.slides[1][0].timestamp = currentTime;
       }
-      this.slides[1][0].data = consensus.step.substring(9);
-      this.slides[1][0].title = `round: ${consensus.round}`;
-      this.slides[1][0].timestamp = currentTime;
     }
   }
   

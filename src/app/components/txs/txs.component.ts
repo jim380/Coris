@@ -115,7 +115,7 @@ export class TxsComponent implements OnInit {
             // @aakatev TODO add handling to other faulty txs
             let errValue = "faulty"
             if (dataTx.tx_result.code === 12 ) {
-              errValue = `Out of gas(Wanted: ${dataTx.tx_result.gasWanted})`
+              errValue = `Out of gas`
             }
 
             // TODO remove debugging
@@ -145,21 +145,31 @@ export class TxsComponent implements OnInit {
       if(this.txs.length > 0) {
         this.txs.forEach(tx => {
           this.getTxDetails(tx)
-            .subscribe(data => {
+            .subscribe( (data:any) => {
               // TODO remove debugging
               // console.log(data);
               tx.details = data;
-              if(data) {
-                if(data['raw_log'].includes('"success":true')) {
-                  tx.status = "Success";
-                } else if(data['raw_log'].includes('"success":false')) {
-                  tx.status = "Failure";
-                } else {
-                  tx.status = "Error";
-                }
-              } else {
-                tx.status = "Error";
+
+              if(data.code === 12) {
+                // TODO remove debugging
+                console.log(data);
+                // console.log(data.raw_log.match(/message.*\\/g))
+                // .replace(/\\"/g, " "));
+              } else if (data.code) {
+                console.log(data);
               }
+
+              // if(data) {
+              //   if(data['raw_log'].includes('"success":true')) {
+              //     tx.status = "Success";
+              //   } else if(data['raw_log'].includes('"success":false')) {
+              //     tx.status = "Failure";
+              //   } else {
+              //     tx.status = "Error";
+              //   }
+              // } else {
+              //   tx.status = "Error";
+              // }
             },
             err => {
               // @aakatev some txs cause 500 errors

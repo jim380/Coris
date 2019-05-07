@@ -36,7 +36,8 @@
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-android-checkbox-outline"></i>Status</th>
       <td mat-cell *matCellDef="let tx"> 
-        <span *ngIf="tx.status==='Success'; else ElseStatus"><i class="ion-checkmark-circled success"></i></span>
+        <!-- <span *ngIf="tx.status==='Success'; else ElseStatus"><i class="ion-checkmark-circled success"></i></span> -->
+        <span *ngIf="!tx.details?.code; else ElseStatus"><i class="ion-checkmark-circled success"></i></span>
         <ng-template #ElseStatus>
           <i class="ion-close-circled fail"></i>
         </ng-template>
@@ -68,9 +69,9 @@
         <div
             class="tx-detail"
             [@detailExpand]="tx == expandedElement ? 'expanded' : 'collapsed'">
-          <!-- <div *ngFor="let tag of tx.tagsDecod">
+          <div *ngFor="let tag of tx.tagsDecod">
             {{tag.key | titlecase}}: {{tag.value}}
-          </div> -->
+          </div>
           <div class="row">
             <ul class="list-group">
               <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -83,11 +84,11 @@
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Amount:
-                <span class="badge badge-primary badge-pill">1000</span>
+                <span class="badge badge-primary badge-pill">{{tx.gasUsed}}</span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Gas (used/wanted):
-                <span class="badge badge-primary badge-pill">2500</span>
+                <span class="badge badge-primary badge-pill">{{tx.gasUsed}}/{{tx.gasWanted}}</span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Memo:
