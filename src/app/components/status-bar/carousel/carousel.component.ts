@@ -146,13 +146,13 @@ export class CarouselComponent implements OnInit {
     
     if(data.bonded_tokens && data.not_bonded_tokens) {
       let currentTime = this.getCurrentTime();
-      let bondedPercentage = ((data.bonded_tokens/1e6)/(data.bonded_tokens/1e6 + data.not_bonded_tokens/1e6)).toFixed(2)
+      let bondedPercentage = ((data.bonded_tokens/1e6)/(data.bonded_tokens/1e6 + data.not_bonded_tokens/1e6)*100).toFixed(2)
 
       if (this.layout === 1) {
-        this.slides[0][3].data = `${bondedPercentage} %`;
+        this.slides[0][3].data = `${bondedPercentage}%`;
         this.slides[0][3].timestamp = currentTime;
       } else {
-        this.slides[3][0].data = `${bondedPercentage} %`;
+        this.slides[3][0].data = `${bondedPercentage}%`;
         this.slides[3][0].timestamp = currentTime;
       }
     }
@@ -166,10 +166,10 @@ export class CarouselComponent implements OnInit {
         let blockTime = data/1000;
         let currentTime = this.getCurrentTime();
         if (this.layout === 1) {
-          this.slides[0][4].data = blockTime.toFixed(3);
+          this.slides[0][4].data = blockTime.toFixed(2);
           this.slides[0][4].timestamp = currentTime;
         } else {
-          this.slides[4][0].data = blockTime.toFixed(3);
+          this.slides[4][0].data = blockTime.toFixed(2);
           this.slides[4][0].timestamp = currentTime;
         }
       })
@@ -200,10 +200,10 @@ export class CarouselComponent implements OnInit {
         let inflation = Number(data);
         let currentTime = this.getCurrentTime();
         if (this.layout === 1) {
-          this.slides[1][0].data = inflation.toFixed(3);
+          this.slides[1][0].data = `${(inflation*100).toFixed(2)}%`;
           this.slides[1][0].timestamp = currentTime;
         } else {
-          this.slides[6][0].data = inflation.toFixed(3);
+          this.slides[6][0].data = `${(inflation*100).toFixed(2)}%`;
           this.slides[6][0].timestamp = currentTime;
         }
       });

@@ -2,13 +2,10 @@
 /* Reusable Components */
 /*-------------------------------------------------*/
 .row {
-  max-width: 90%;
+  max-width: 100%;
   margin: 0 auto;
 }
 
-p {
-  padding: 1px;
-}
 /*-------------------------------------------------*/
 /* Table */
 /*-------------------------------------------------*/
@@ -130,7 +127,20 @@ tr.tx-detail-row {
   margin-right: 0;
  }
 
- .mat-paginator {
+.mat-paginator {
   color:white;
   background-color: #3F51B5;
+}
+
+.success {
+  color: #4CAF50;
+}
+
+.fail {
+color: #F44336;/*#00796b;*/
+}
+
+.list-group-item {
+  background-color: #0D151F;
+  color: white;
  }
