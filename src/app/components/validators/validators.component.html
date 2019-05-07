@@ -50,12 +50,12 @@
     <table multiTemplateDataRows mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8 w-auto">
 
       <ng-container matColumnDef="rank">
-        <th mat-sort-header="rank" mat-header-cell *matHeaderCellDef> Rank </th>
+        <th mat-sort-header="rank" mat-header-cell *matHeaderCellDef><i class="ion-android-funnel"></i></th>
         <td mat-cell *matCellDef="let validator"> {{validator.rank}} </td>
       </ng-container>
   
       <ng-container  matColumnDef="moniker" sticky>
-        <th mat-sort-header="description.moniker" mat-header-cell *matHeaderCellDef class="th-lg"> Name </th>
+        <th mat-sort-header="description.moniker" mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-person"></i>Name</th>
         <td mat-cell *matCellDef="let validator" id="{{validator.hex_address}}"> 
           <span>
             <!-- <figure style="cursor: pointer;" (click)="openDialog(validator)" class="validator-avatar is-128x128" *ngIf="validator.keybase">
@@ -80,7 +80,7 @@
       </ng-container>
     
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"> Status </th>
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-load-a"></i>Status</th>
         <td mat-cell *matCellDef="let validator">  
           <span *ngIf="validator.jailed"><i class="ion-record jailed"></i></span>
           <span *ngIf="!validator.jailed"><i class="ion-record jailedNot"></i></span>
@@ -105,7 +105,7 @@
       </ng-container>
     
       <ng-container matColumnDef="weight">
-        <th mat-sort-header="tokens" mat-header-cell *matHeaderCellDef class="th-lg"> Voting Weight </th>
+        <th mat-sort-header="tokens" mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-flash"></i>Voting Weight</th>
         <td mat-cell *matCellDef="let validator">
           {{validator.tokens/1e6 | number:'.0-0'}}&nbsp;<span class="table-subtitle">({{validator.tokens/(appState | async).totalStake| percent:'.2-2'}})</span>
           <!-- <br>
@@ -116,7 +116,7 @@
       
   
       <ng-container matColumnDef="assets">
-        <th mat-sort-header="account.tokens" mat-header-cell *matHeaderCellDef class="th-lg"> Assets </th>
+        <th mat-sort-header="account.tokens" mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-social-usd"></i>Assets</th>
         <td mat-cell *matCellDef="let validator">
           <span *ngIf="validator.account?.tokens; else accountElseBlock" matTooltip="Balance" matTooltipPosition="above">
             {{validator.account?.tokens/1e6 | number:'.2-2'}}
@@ -136,7 +136,7 @@
       </ng-container>
   
       <ng-container matColumnDef="delegators">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"> Delegators </th>
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-person-stalker"></i>Delegators</th>
         <td mat-cell *matCellDef="let validator"> 
           <span *ngIf="validator.delegations; else otherBlock">
             {{validator.delegations?.length}}
@@ -149,7 +149,7 @@
   
       <ng-container matColumnDef="unbond">
         <th  mat-header-cell *matHeaderCellDef class="th-lg"> 
-          Unbond 
+          <i class="ion-log-out"></i>Unbond 
         </th>
         <td  mat-cell *matCellDef="let validator">
           {{ validator.unbonding_total/1e6 | number:'.0-0'}} <span class="ticker">ATOM</span>
@@ -169,7 +169,7 @@
       </ng-container>
      -->
       <ng-container matColumnDef="bond">
-        <th mat-sort-header="self_bond" mat-header-cell *matHeaderCellDef class="th-lg"> Self-Bond </th>
+        <th mat-sort-header="self_bond" mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-log-in"></i>Self-Bond</th>
         <td mat-cell *matCellDef="let validator">
           {{validator.self_bond/1e6 | number:'.0-0'}} <span class="ticker">ATOM</span>
           <!-- <br> -->
@@ -178,7 +178,7 @@
       </ng-container>
           
       <ng-container matColumnDef="commission">
-        <th mat-header-cell *matHeaderCellDef> Commission </th>
+        <th mat-header-cell *matHeaderCellDef><i class="ion-cash"></i>Commission</th>
         <td mat-cell *matCellDef="let validator">
           <span matTooltip="Current Rate" matTooltipPosition="above">{{validator.commission?.rate | percent}}</span>
           <span class="table-subtitle">&nbsp;({{validator.commission?.max_rate | percent}} - {{validator.commission?.max_change_rate | percent}})</span>

@@ -17,14 +17,14 @@
         class="mat-elevation-z8 w-auto">
 
     <ng-container matColumnDef="hash" sticky>
-      <th mat-header-cell *matHeaderCellDef class="th-lg"> Hash </th>
+      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-pound"></i>Hash</th>
       <td mat-cell *matCellDef="let tx" mdbPopover="{{tx.hash}}"
       placement="top"
       triggers="focus" mdbWavesEffect> {{tx.hash | slice:0:15 }}... </td>
     </ng-container>
 
     <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef class="th-lg"> Type </th>
+      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-document-text"></i>Type</th>
       <td mat-cell *matCellDef="let tx">
         <mat-chip-list>
           <mat-chip color = "primary" selected>
@@ -34,7 +34,7 @@
     </ng-container>
 
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef class="th-lg"> Status </th>
+      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-android-checkbox-outline"></i>Status</th>
       <td mat-cell *matCellDef="let tx"> 
         <span *ngIf="tx.status==='Success'; else ElseStatus"><i class="ion-checkmark-circled success"></i></span>
         <ng-template #ElseStatus>
@@ -44,7 +44,7 @@
     </ng-container>
 
     <ng-container matColumnDef="fee">
-      <th mat-header-cell *matHeaderCellDef class="th-lg"> Fee </th>
+      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-card"></i>Fee</th>
       <td mat-cell *matCellDef="let tx"> 
         {{ 
           tx.details?.tx.value.fee.amount ?
@@ -54,12 +54,12 @@
     </ng-container>
 
     <ng-container matColumnDef="height">
-      <th mat-header-cell *matHeaderCellDef class="th-lg"> Height </th>
+      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-soup-can"></i>Height</th>
       <td mat-cell *matCellDef="let tx"> {{tx.height}} </td>
     </ng-container>
 
     <ng-container matColumnDef="timestamp">
-      <th mat-header-cell *matHeaderCellDef class="th-lg"> Time </th>
+      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-clock"></i>Time</th>
       <td mat-cell *matCellDef="let tx"> {{tx.details?.timestamp | timeAgo}} </td>
     </ng-container>
 
@@ -68,22 +68,30 @@
         <div
             class="tx-detail"
             [@detailExpand]="tx == expandedElement ? 'expanded' : 'collapsed'">
-          <div *ngFor="let tag of tx.tagsDecod">
+          <!-- <div *ngFor="let tag of tx.tagsDecod">
             {{tag.key | titlecase}}: {{tag.value}}
-          </div>
+          </div> -->
           <div class="row">
             <ul class="list-group">
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                Cras justo odio
-                <span class="badge badge-primary badge-pill">14</span>
+                From:
+                <span class="badge badge-primary badge-pill">sender</span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                Dapibus ac facilisis in
-                <span class="badge badge-primary badge-pill">2</span>
+                To:
+                <span class="badge badge-primary badge-pill">recipient</span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                Morbi leo risus
-                <span class="badge badge-primary badge-pill">1</span>
+                Amount:
+                <span class="badge badge-primary badge-pill">1000</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Gas (used/wanted):
+                <span class="badge badge-primary badge-pill">2500</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Memo:
+                <span class="badge badge-primary badge-pill">wtf is up G!</span>
               </li>
             </ul>
           </div>
