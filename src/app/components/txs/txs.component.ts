@@ -92,12 +92,13 @@ export class TxsComponent implements OnInit {
 
   fetchTxs() {
     this.http.get(`${nodeRpc2}/tx_search?query="tx.height>${this.minHeight}"`)
-      .subscribe(data => {
+      .subscribe( (data:any) => {
       this.clearTxs();
-      let currTxs = data['result'].txs.reverse();
+      let currTxs = data.result.txs.reverse();
       
       // TODO remove debugging
       // console.log(data['result'].txs);
+      console.log(data);
 
       currTxs.forEach(dataTx => {
         if(dataTx.height < this.minHeight + this.blocksToScan) {
