@@ -107,7 +107,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     // UniversalSearchBarComponent,
   ],
   entryComponents: [
-    ProfileCardComponent
+    ProfileCardComponent,
+    TestComponent,
+    PieChartComponent
   ],
   imports: [
     BrowserModule,

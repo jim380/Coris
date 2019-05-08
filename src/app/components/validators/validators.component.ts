@@ -1,3 +1,4 @@
+import { TestComponent } from './../test/test.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -10,6 +11,7 @@ import {MatTable} from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import { ProfileCardComponent } from '../validator-profile/profile-card/profile-card.component';
+import { PieChartComponent } from '../charts/pie-chart/pie-chart.component';
 
 @Component({
   selector: 'app-validators',
@@ -91,8 +93,24 @@ export class ValidatorsComponent implements OnInit {
     
   }
   
-  openDialog(validator) {
+  openValidatorDialog(validator) {
     this.dialog.open( ProfileCardComponent,  {
+      data: { 
+        validator
+      }
+    });
+  }
+
+  openTestDialog(validator) {
+    this.dialog.open( TestComponent,  {
+      data: { 
+        validator
+      }
+    });
+  }
+
+  openPieChartDialog(validator) {
+    this.dialog.open( PieChartComponent,  {
       data: { 
         validator
       }
