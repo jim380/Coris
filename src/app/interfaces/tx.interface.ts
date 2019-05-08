@@ -9,12 +9,13 @@ export interface Tx {
   height: number;
   gasWanted: number;
   gasUsed: number;
-  txBase64: string;
-  txDecod: string;
-  tagsBase64: Array<Tag>;
-  tagsDecod: Array<Tag>;
+  txBase64?: string;
+  txDecod?: string;
+  tagsBase64?: Array<Tag>;
+  tagsDecod?: Array<Tag>;
   details?: Object;
   status?: string;
+  tags?: Object
 }
 
 export function decodeTag (tagsBase64) {

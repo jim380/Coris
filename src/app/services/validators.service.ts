@@ -30,7 +30,7 @@ export class ValidatorsService {
   async initValidators() { 
     this.appState = this.store.select('App');
     let block$ = this.appState.subscribe(data => {
-      if( block$ && data.validators.length > 0) {
+      if( block$ && data.validators.length > 0 && data.blocks.length > 0) {
         // console.log(data.blocks[0].header.height);
         this.validatorsStore.blockStamp = Number(data.blocks[0].header.height);
         block$.unsubscribe();

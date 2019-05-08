@@ -101,11 +101,44 @@ export class TxsComponent implements OnInit {
 
       currTxs.forEach(dataTx => {
         if(dataTx.height < this.minHeight + this.blocksToScan) {
+          // const dataTx = await data['result'].txs[0];
+          // let dataTagsDecod : Tag[] = [];
+
+          // TODO remove debugging
+          // console.log(dataTx);
+
+          // if(dataTx.tx_result.tags) {
+          //   dataTx.tx_result.tags.forEach(tag => {
+          //     dataTagsDecod.push(decodeTag(tag));
+          //   });
+          // } else {
+          //   // @aakatev TODO add handling to other faulty txs
+          //   let errValue = "faulty"
+          //   if (dataTx.tx_result.code === 12 ) {
+          //     errValue = `Out of gas`
+          //   }
+
+            // TODO remove debugging
+            // console.log("Faulty_tx", dataTx);
+            
+          //   dataTagsDecod.push({
+          //     key: "type",
+          //     value: errValue
+          //   })
+          // }
+          // TODO remove debugging
+          // console.log(dataTagsDecod);
+          // console.log(this.decodeTag(dataTx.tx_result.tags[1]));
+          
           this.txs.push({
             hash: dataTx.hash, 
             height: dataTx.height,
             gasUsed: dataTx.tx_result.gasUsed,
-            gasWanted: dataTx.tx_result.gasWanted
+            gasWanted: dataTx.tx_result.gasWanted,
+            // txBase64: dataTx.tx,
+            // txDecod: atob(dataTx.tx),
+            // tagsBase64: dataTx.tx_result.tags,
+            // tagsDecod: dataTagsDecod
           });        
         }
       });
@@ -118,17 +151,6 @@ export class TxsComponent implements OnInit {
               tx.details = data;
               tx.tags = data.tags;
 
-              data.tags.forEach((tag:any) => {
-              // TODO remove debugging
-              // console.log(tag);
-                if(!tx[tag.key]) {
-                  tx[tag.key.replace(/-/g, '_')] = [tag.value.replace(/_/g, ' ')];
-                } else {
-                  tx[tag.key.replace(/-/g, '_')].push(tag.value.replace(/_/g, ' '));
-                }
-                
-              });
-
               if(data.code === 12) {
                 // TODO remove debugging
                 console.log(data);
@@ -138,6 +160,17 @@ export class TxsComponent implements OnInit {
                 console.log(data);
               }
 
+              // if(data) {
+              //   if(data['raw_log'].includes('"success":true')) {
+              //     tx.status = "Success";
+              //   } else if(data['raw_log'].includes('"success":false')) {
+              //     tx.status = "Failure";
+              //   } else {
+              //     tx.status = "Error";
+              //   }
+              // } else {
+              //   tx.status = "Error";
+              // }
             },
             err => {
               // @aakatev some txs cause 500 errors
