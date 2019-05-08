@@ -49,6 +49,9 @@ import { CarouselComponent } from './components/status-bar/carousel/carousel.com
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import {TimeAgoPipe} from 'time-ago-pipe';
 import { GovDetailComponent } from './components/governance/gov-detail/gov-detail.component';
+import { MetricsCardComponent } from './components/validator-profile/metrics-card/metrics-card.component';
+import { RewardsCardComponent } from './components/validator-profile/rewards-card/rewards-card.component';
+import { AddressCardComponent } from './components/validator-profile/address-card/address-card.component';
 
 declare var Hammer: any;
 
@@ -103,13 +106,17 @@ export class MyHammerConfig extends HammerGestureConfig {
     ProfileCardComponent,
     CarouselComponent,
     TimeAgoPipe,
-    GovDetailComponent
+    GovDetailComponent,
+    MetricsCardComponent,
+    RewardsCardComponent,
+    AddressCardComponent
     // UniversalSearchBarComponent,
   ],
   entryComponents: [
     ProfileCardComponent,
-    TestComponent,
-    PieChartComponent
+    PieChartComponent,
+    RewardsCardComponent,
+    AddressCardComponent
   ],
   imports: [
     BrowserModule,

@@ -12,6 +12,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import { ProfileCardComponent } from '../validator-profile/profile-card/profile-card.component';
 import { PieChartComponent } from '../charts/pie-chart/pie-chart.component';
+import { MetricsCardComponent } from '../validator-profile/metrics-card/metrics-card.component';
+import { AddressCardComponent } from '../validator-profile/address-card/address-card.component';
+import { RewardsCardComponent } from '../validator-profile/rewards-card/rewards-card.component';
 
 @Component({
   selector: 'app-validators',
@@ -101,8 +104,16 @@ export class ValidatorsComponent implements OnInit {
     });
   }
 
-  openTestDialog(validator) {
-    this.dialog.open( TestComponent,  {
+  openRewardsDialog(validator) {
+    this.dialog.open( RewardsCardComponent,  {
+      data: { 
+        validator
+      }
+    });
+  }
+
+  openAddressDialog(validator) {
+    this.dialog.open( AddressCardComponent,  {
       data: { 
         validator
       }
