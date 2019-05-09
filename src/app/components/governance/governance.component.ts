@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Proposal } from 'src/app/interfaces/proposal.interface';
-import { HttpClient } from '@angular/common/http';
-import { nodeRpc1 } from '../../../config.js';
 import { MatDialog, MatTableDataSource, MatTable } from '@angular/material';
 import { GovDetailComponent } from './gov-detail/gov-detail.component';
 import { trigger, style, animate, transition, state } from '@angular/animations';
+import { GovService } from 'src/app/services/gov.service';
 
 @Component({
   selector: 'app-governance',
@@ -34,18 +33,18 @@ export class GovernanceComponent implements OnInit {
     `depositEnd`
   ];
 
-  constructor(private http: HttpClient, private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private gs: GovService) { }
 
   ngOnInit() {
-    this.fetchProposals();
+    this.initProposals();
   }
 
   clearProposals() {
     this.proposals = [];
   }
 
-  fetchProposals() {
-    this.http.get(`${nodeRpc1}/gov/proposals`)
+  initProposals() {
+    this.gs.getProposals()
       .subscribe(data => {
         // TODO remove debugging
         console.log(data);
@@ -55,7 +54,7 @@ export class GovernanceComponent implements OnInit {
         });
 
         this.proposals.forEach( (proposal: any) => {
-          this.getProposer(proposal.proposal_id).subscribe( (data:any) => {
+          this.gs.getProposer(proposal.proposal_id).subscribe( (data:any) => {
             // TODO remove debugging
             console.log(data.proposer);
             proposal.proposer = data.proposer;
@@ -72,9 +71,6 @@ export class GovernanceComponent implements OnInit {
       });
   }
   
-  getProposer(proposalId) {
-    return this.http.get(`${nodeRpc1}/gov/proposals/${proposalId}/proposer`);
-  }
 
   openGovDetailDialog(data) {
     this.dialog.open( GovDetailComponent,  {
