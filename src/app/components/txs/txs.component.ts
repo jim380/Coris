@@ -162,6 +162,9 @@ export class TxsComponent implements OnInit {
                   } else if (data.code === 104) {
                     tx.error = "no delegation distribution info";
                     console.log(data);
+                  } else if (data.code === 10) {
+                    tx.error = "insufficient account funds";
+                    console.log(data);
                   } else if (data.code) {
                     // TODO @aakatev find more failed tx codes
                     tx.error = "TEST"
