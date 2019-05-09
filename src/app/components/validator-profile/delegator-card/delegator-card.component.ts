@@ -1,4 +1,5 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material';
 
 export interface PeriodicElement {
   name: string;
@@ -20,20 +21,24 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
 ];
 
-
 @Component({
-  selector: 'app-test',
-  templateUrl: './test.component.html',
-  styleUrls: ['./test.component.scss']
+  selector: 'app-delegator-card',
+  templateUrl: './delegator-card.component.html',
+  styleUrls: ['./delegator-card.component.scss']
 })
 
+export class DelegatorCardComponent implements OnInit {
 
-export class TestComponent implements OnInit{
+  validator;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { 
+    this.validator = data.validator;
+  }
 
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = ELEMENT_DATA;
   
   ngOnInit() {
-    
   }
+
 }

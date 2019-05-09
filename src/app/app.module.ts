@@ -52,6 +52,9 @@ import { GovDetailComponent } from './components/governance/gov-detail/gov-detai
 import { MetricsCardComponent } from './components/validator-profile/metrics-card/metrics-card.component';
 import { RewardsCardComponent } from './components/validator-profile/rewards-card/rewards-card.component';
 import { AddressCardComponent } from './components/validator-profile/address-card/address-card.component';
+import { DelegatorCardComponent } from './components/validator-profile/delegator-card/delegator-card.component';
+import { PowerEventCardComponent } from './components/validator-profile/power-event-card/power-event-card.component';
+import { ProposedBlocksCardComponent } from './components/validator-profile/proposed-blocks-card/proposed-blocks-card.component';
 
 declare var Hammer: any;
 
@@ -109,14 +112,20 @@ export class MyHammerConfig extends HammerGestureConfig {
     GovDetailComponent,
     MetricsCardComponent,
     RewardsCardComponent,
-    AddressCardComponent
+    AddressCardComponent,
+    DelegatorCardComponent,
+    PowerEventCardComponent,
+    ProposedBlocksCardComponent
     // UniversalSearchBarComponent,
   ],
   entryComponents: [
     ProfileCardComponent,
     GovDetailComponent,
     RewardsCardComponent,
-    AddressCardComponent
+    AddressCardComponent,
+    DelegatorCardComponent,
+    PowerEventCardComponent,
+    ProposedBlocksCardComponent
   ],
   imports: [
     BrowserModule,

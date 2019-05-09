@@ -15,6 +15,9 @@ import { GovDetailComponent } from '../governance/gov-detail/gov-detail.componen
 import { MetricsCardComponent } from '../validator-profile/metrics-card/metrics-card.component';
 import { AddressCardComponent } from '../validator-profile/address-card/address-card.component';
 import { RewardsCardComponent } from '../validator-profile/rewards-card/rewards-card.component';
+import { DelegatorCardComponent } from '../validator-profile/delegator-card/delegator-card.component';
+import { PowerEventCardComponent } from '../validator-profile/power-event-card/power-event-card.component'
+import { ProposedBlocksCardComponent } from '../validator-profile/proposed-blocks-card/proposed-blocks-card.component'
 
 @Component({
   selector: 'app-validators',
@@ -106,6 +109,30 @@ export class ValidatorsComponent implements OnInit {
 
   openRewardsDialog(validator) {
     this.dialog.open( RewardsCardComponent,  {
+      data: { 
+        validator
+      }
+    });
+  }
+
+  openDelegatorDialog(validator) {
+    this.dialog.open( DelegatorCardComponent,  {
+      data: { 
+        validator
+      }
+    });
+  }
+
+  openPowerEventsDialog(validator) {
+    this.dialog.open( PowerEventCardComponent,  {
+      data: { 
+        validator
+      }
+    });
+  }
+
+  openProposedBlocksDialog(validator) {
+    this.dialog.open( ProposedBlocksCardComponent,  {
       data: { 
         validator
       }

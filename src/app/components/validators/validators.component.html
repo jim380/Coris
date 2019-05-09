@@ -200,11 +200,11 @@
               <p class="overflowed-text">Website: {{validator.description?.website}}</p>
               <p class="overflowed-text">Details: {{validator.description?.details}}</p>  -->
               <ul class="list-group list-group-horizontal-lg">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <li class="list-group-item d-flex justify-content-between align-items-center" [appBgHighlight]="'#383D4C'" defaultColor="#111923" style="cursor: pointer;" (click)="openDelegatorDialog(validator)">
                   First seen
                   <span class="badge badge-primary badge-pill">{{validator.slashing?.start_height}}</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <li class="list-group-item d-flex justify-content-between align-items-center" [appBgHighlight]="'#383D4C'" defaultColor="#111923" style="cursor: pointer;" (click)="openPowerEventsDialog(validator)">
                   Precommits
                   <span class="badge badge-primary badge-pill" *ngIf="validator.slashing">
                     <span *ngIf="!validator.jailed; else elseCommitsBlock">
@@ -229,11 +229,11 @@
                     </ng-template>
                   </span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" (click)="openGovDetailDialog(validator)">
+                <li class="list-group-item d-flex justify-content-between align-items-center" [appBgHighlight]="'#383D4C'" defaultColor="#111923" style="cursor: pointer;" (click)="openGovDetailDialog(validator)">
                   Missed Blocks
                   <span class="badge badge-primary badge-pill">{{validator.slashing?.missed_blocks_counter}}</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <li class="list-group-item d-flex justify-content-between align-items-center" [appBgHighlight]="'#383D4C'" defaultColor="#111923" style="cursor: pointer;" (click)="openProposedBlocksDialog(validator)">
                   Self-bond%
                   <span class="badge badge-primary badge-pill">{{ validator.self_bond / validator.tokens | percent:'.2-2' }}</span>
                 </li>
@@ -241,15 +241,15 @@
                   Outstanding Rewards
                   <span class="badge badge-primary badge-pill" *ngIf="validator.rewards">{{validator.rewards[0].amount/1e6 | number:'.2-2'}} <span class="badge-ticker">ATOM</span></span>
                 </li> -->
-                <li class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" (click)="openRewardsDialog(validator)">
+                <li class="list-group-item d-flex justify-content-between align-items-center" [appBgHighlight]="'#383D4C'" defaultColor="#111923" style="cursor: pointer;" (click)="openRewardsDialog(validator)">
                   Rewards
                   <span class="badge badge-primary badge-pill" *ngIf="validator.outstanding_rewards">{{validator.outstanding_rewards[0].amount/1e6 | number:'.2-2'}} <span class="badge-ticker">ATOM</span></span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" (click)="openAddressDialog(validator)"> 
+                <li class="list-group-item d-flex justify-content-between align-items-center" [appBgHighlight]="'#383D4C'" defaultColor="#111923" style="cursor: pointer;" (click)="openAddressDialog(validator)"> 
                   Address
                   <span class="badge badge-primary badge-pill" *ngIf="validator.rewards"><i class="fa fa-id-badge"></i></span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center" style="cursor: pointer;" (click)="openValidatorDialog(validator)">
+                <li class="list-group-item d-flex justify-content-between align-items-center" [appBgHighlight]="'#383D4C'" defaultColor="#111923" style="cursor: pointer;" (click)="openValidatorDialog(validator)">
                   Details
                   <span class="badge badge-primary badge-pill"><i class="fa fa-info"></i></span>
                 </li>
