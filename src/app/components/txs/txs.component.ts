@@ -157,8 +157,14 @@ export class TxsComponent implements OnInit {
                   if(data.code === 12) {
                     // TODO remove debugging
                     console.log(data);
-                    tx.error = "out of gas"
+                    // tx['action'] = "out of gas";
+                    tx.error = "out of gas";
+                  } else if (data.code === 104) {
+                    tx.error = "no delegation distribution info";
+                    console.log(data);
                   } else if (data.code) {
+                    // TODO @aakatev find more failed tx codes
+                    tx.error = "TEST"
                     console.log(data);
                   }
                 },

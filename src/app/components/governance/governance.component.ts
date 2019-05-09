@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Proposal } from 'src/app/interfaces/proposal.interface';
 import { HttpClient } from '@angular/common/http';
 import { nodeRpc1 } from '../../../config.js';
+import { MatDialog } from '@angular/material';
+import { GovDetailComponent } from './gov-detail/gov-detail.component.js';
 
 @Component({
   selector: 'app-governance',
@@ -9,7 +11,7 @@ import { nodeRpc1 } from '../../../config.js';
   styleUrls: ['./governance.component.scss']
 })
 export class GovernanceComponent implements OnInit {
-  proposals: Proposal[];
+  private proposals: Proposal[];
   
   displayedColumns: string[] = [
     'id', 
@@ -21,7 +23,11 @@ export class GovernanceComponent implements OnInit {
     `depositEnd`
   ];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private dialog: MatDialog) { }
+
+  ngOnInit() {
+    this.fetchProposals();
+  }
 
   clearProposals() {
     this.proposals = [];
@@ -39,7 +45,11 @@ export class GovernanceComponent implements OnInit {
       });
   }
 
-  ngOnInit() {
-    this.fetchProposals();
+  openGovDetailDialog( data = { 
+    testData: "data"
+  }) {
+    this.dialog.open( GovDetailComponent,  {
+      data
+    });
   }
 }

@@ -19,6 +19,7 @@ import { appReducer } from './state/app.reducers';
 import { BlockComponent } from './components/block/block.component';
 import { TxComponent } from './components/tx/tx.component';
 import { ValidatorComponent } from './components/validator/validator.component';
+import { GovernanceComponent } from './components/governance/governance.component';
 import { NewTxComponent } from './components/new-tx/new-tx.component';
 import { MaterialModule } from './material.module';
 
@@ -29,7 +30,6 @@ import { MainNavComponent } from './components/navigation/main-nav/main-nav.comp
 import { LayoutModule } from '@angular/cdk/layout';
 import { DropdownDirective } from './Directives/dropdown.directive';
 import { BgHighlightDirective } from './Directives/bg-highlight.directive';
-import { GovernanceComponent } from './components/governance/governance.component';
 import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
 import { SearchService } from './services/search.service';
 import { AgoPipe } from './pipes/ago.pipe';
@@ -85,6 +85,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     BlocksComponent,
     TxsComponent,
     DashboardComponent,
+    GovernanceComponent,
     LastBlockComponent,
     BlockComponent,
     TxComponent,
@@ -96,7 +97,6 @@ export class MyHammerConfig extends HammerGestureConfig {
     MainNavComponent,
     DropdownDirective,
     BgHighlightDirective,
-    GovernanceComponent,
     ScrollTopComponent,
     AgoPipe,
     TestComponent,

@@ -128,6 +128,10 @@
                   Amount:
                   <span class="badge badge-primary badge-pill">{{tx.gasUsed}}</span>
                 </li> -->
+                <li *ngIf="tx.error" class="list-group-item d-flex justify-content-between align-items-center">
+                  Status:
+                  <span class="badge badge-primary badge-pill">{{tx.error|titlecase}}</span>
+                </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   Gas (used/wanted):
                   <span class="badge badge-primary badge-pill">{{tx.gasUsed}}/{{tx.gasWanted}}</span>
