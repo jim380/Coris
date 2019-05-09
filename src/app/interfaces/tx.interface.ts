@@ -15,7 +15,8 @@ export interface Tx {
   tagsDecod?: Array<Tag>;
   details?: Object;
   status?: string;
-  tags?: Object
+  tags?: Object;
+  error?: any;
 }
 
 export function decodeTag (tagsBase64) {
