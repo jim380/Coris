@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-gov-detail',
@@ -9,9 +10,7 @@ export class GovDetailComponent implements OnInit {
 
   public chartType: string = 'pie';
 
-  public chartDatasets: Array<any> = [
-    { data: [300, 50, 100, 40], label: 'Votes' }
-  ];
+  public chartDatasets: Array<any> = [];
 
   public chartLabels: Array<any> = ['Yes', 'No', 'NoWithVeto', 'Abstain'];
 
@@ -29,9 +28,21 @@ export class GovDetailComponent implements OnInit {
   public chartClicked(e: any): void { }
   public chartHovered(e: any): void { }
   
-  constructor() { }
+  constructor(@Inject(MAT_DIALOG_DATA) public proposal: any) { }
 
   ngOnInit() {
+    let proposalResult = this.proposal.final_tally_result;
+
+    this.chartDatasets = [{ 
+      data: [
+        proposalResult.yes, 
+        proposalResult.no, 
+        proposalResult.no_with_veto, 
+        proposalResult.abstrain
+      ], 
+      label: 'Votes' }
+    ]
+    console.log(this.proposal);
   }
 
 }

@@ -10,3 +10,10 @@
 .row-2 {
     margin-top: 30px;
 }
+
+li {
+    max-height: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

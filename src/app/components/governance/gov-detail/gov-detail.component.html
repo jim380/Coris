@@ -69,11 +69,11 @@
       </mdb-tabset> -->
     
           <ul class="list-group">
-              <li class="list-group-item">Title</li>
-              <li class="list-group-item">Proposer</li>
-              <li class="list-group-item">Description</li>
-              <li class="list-group-item">Deposit</li>
-              <li class="list-group-item">Voting Period</li>
+              <li class="list-group-item">Title: {{proposal.proposal_content.value.title}}</li>
+              <li *ngIf="proposal.proposer" class="list-group-item">Proposer: {{proposal.proposer}}</li>
+              <li class="list-group-item">Description: {{proposal.proposal_content.value.description}}</li>
+              <li class="list-group-item">Deposit: {{proposal.total_deposit[0].amount}} {{proposal.total_deposit[0].denom}}</li>
+              <li class="list-group-item">Status: {{proposal.proposal_status}}</li>
           </ul>
 
        </div>

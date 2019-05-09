@@ -115,3 +115,18 @@ th:nth-child(5) {
 th:nth-child(6) {
   width: 15%;
 }
+
+ /* Expandable rows */
+ tr {
+  cursor: pointer;
+}
+
+tr.proposal-detail-row {
+  height: 0;
+  cursor: default;
+}
+
+.list-group-item {
+  background-color: #0D151F;
+  color: white;
+}
