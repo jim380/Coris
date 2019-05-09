@@ -114,7 +114,7 @@ export class MyHammerConfig extends HammerGestureConfig {
   ],
   entryComponents: [
     ProfileCardComponent,
-    PieChartComponent,
+    GovDetailComponent,
     RewardsCardComponent,
     AddressCardComponent
   ],

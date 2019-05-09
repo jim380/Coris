@@ -11,7 +11,7 @@ import {MatTable} from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import { ProfileCardComponent } from '../validator-profile/profile-card/profile-card.component';
-import { PieChartComponent } from '../charts/pie-chart/pie-chart.component';
+import { GovDetailComponent } from '../governance/gov-detail/gov-detail.component';
 import { MetricsCardComponent } from '../validator-profile/metrics-card/metrics-card.component';
 import { AddressCardComponent } from '../validator-profile/address-card/address-card.component';
 import { RewardsCardComponent } from '../validator-profile/rewards-card/rewards-card.component';
@@ -120,8 +120,8 @@ export class ValidatorsComponent implements OnInit {
     });
   }
 
-  openPieChartDialog(validator) {
-    this.dialog.open( PieChartComponent,  {
+  openGovDetailDialog(validator) {
+    this.dialog.open( GovDetailComponent,  {
       data: { 
         validator
       }
