@@ -1,8 +1,8 @@
 <div class="main-row">
   <mat-card>
     <div class="row row-1">
-      <div class="col-4">
-        <mat-card style="max-width: 60%; background-color: white">
+      <div class="col-5 chart-card">
+        <mat-card style="max-width: 100%; background-color: white">
           <div style="display: block" class="row">
             <canvas mdbChart
               [chartType]="chartType"
@@ -18,7 +18,7 @@
         </mat-card>
       </div>
     
-      <div class="col-8">
+      <div class="col-7">
         <!-- Tabset tabs -->
         <!-- <mdb-tabset [vertical]="true" [buttonClass]="'tabs-white flex-column list-group'" [contentClass]="'vertical'">
         <mdb-tab heading="<a class='list-group-item'> Title </a>">
@@ -67,15 +67,15 @@
           </div>
         </mdb-tab>
       </mdb-tabset> -->
-      <div class="col-8">
+    
           <ul class="list-group">
               <li class="list-group-item">Title</li>
               <li class="list-group-item">Proposer</li>
               <li class="list-group-item">Description</li>
               <li class="list-group-item">Deposit</li>
               <li class="list-group-item">Voting Period</li>
-            </ul>
-       </div>
+          </ul>
+
        </div>
     </div>
     <div class="row row-2">
