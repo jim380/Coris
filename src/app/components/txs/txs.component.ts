@@ -120,26 +120,38 @@ export class TxsComponent implements OnInit {
         });
 
         if(this.txs.length > 0) {
-          this.txs.forEach(tx => {
+          this.txs.forEach( (tx) => {
             if(tx.height < this.minHeight + this.blocksToScan) {
               this.getTxDetails(tx)
                 .subscribe( (data:any) => {
+                  
+                  // @aakatev THIS IS LOGIC FOR NOT-FAULTY TXS!
+                  // TODO handle faulty txs above this block!!
+                  
                   // TODO remove debugging
                   // console.log(data);
                   tx.details = data;
                   if(data.tags) {
+                    let index = -1;
                     data.tags.forEach((tag:any) => {
-                    // tx.tags = data.tags;
+                      // tx.tags = data.tags;
 
-                    // TODO remove debugging
-                    // console.log(tag);
+                      // TODO remove debugging
+                      // console.log(tag);
+                      if(tag.key === 'action') {
+                        index += 1;
+                      }
+
                       if(!tx[tag.key]) {
-                        tx[tag.key.replace(/-/g, '_')] = [tag.value.replace(/_/g, ' ')];
+                        tx[tag.key.replace(/-/g, '_')] = [];
+                        tx[tag.key.replace(/-/g, '_')][index] = tag.value.replace(/_/g, ' ');
                       } else {
-                        tx[tag.key.replace(/-/g, '_')].push(tag.value.replace(/_/g, ' '));
+                        tx[tag.key.replace(/-/g, '_')][index] = tag.value.replace(/_/g, ' ');
                       }
                     });
                   }
+                  // END LOGIC FOR NOT-FAULTY
+                  
                   
 
                   if(data.code === 12) {
