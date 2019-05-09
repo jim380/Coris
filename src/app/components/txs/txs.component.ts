@@ -119,45 +119,47 @@ export class TxsComponent implements OnInit {
           }
         });
 
-        resolve();
         if(this.txs.length > 0) {
           this.txs.forEach(tx => {
-            this.getTxDetails(tx)
-              .subscribe( (data:any) => {
-                // TODO remove debugging
-                // console.log(data);
-                tx.details = data;
-                if(data.tags) {
-                  data.tags.forEach((tag:any) => {
-                  // tx.tags = data.tags;
-
+            if(tx.height < this.minHeight + this.blocksToScan) {
+              this.getTxDetails(tx)
+                .subscribe( (data:any) => {
                   // TODO remove debugging
-                  // console.log(tag);
-                    if(!tx[tag.key]) {
-                      tx[tag.key.replace(/-/g, '_')] = [tag.value.replace(/_/g, ' ')];
-                    } else {
-                      tx[tag.key.replace(/-/g, '_')].push(tag.value.replace(/_/g, ' '));
-                    }
-                  });
-                }
-                
+                  // console.log(data);
+                  tx.details = data;
+                  if(data.tags) {
+                    data.tags.forEach((tag:any) => {
+                    // tx.tags = data.tags;
 
-                if(data.code === 12) {
-                  // TODO remove debugging
-                  console.log(data);
-                  tx.error = "out of gas"
-                } else if (data.code) {
-                  console.log(data);
-                }
-              },
-              err => {
-                // @aakatev some txs cause 500 errors
-                // otherwise would dump code in console
-                // console.log(err);
-              });
+                    // TODO remove debugging
+                    // console.log(tag);
+                      if(!tx[tag.key]) {
+                        tx[tag.key.replace(/-/g, '_')] = [tag.value.replace(/_/g, ' ')];
+                      } else {
+                        tx[tag.key.replace(/-/g, '_')].push(tag.value.replace(/_/g, ' '));
+                      }
+                    });
+                  }
+                  
+
+                  if(data.code === 12) {
+                    // TODO remove debugging
+                    console.log(data);
+                    tx.error = "out of gas"
+                  } else if (data.code) {
+                    console.log(data);
+                  }
+                },
+                err => {
+                  // @aakatev some txs cause 500 errors
+                  // otherwise would dump code in console
+                  // console.log(err);
+                });
+            }
           });
           this.dataSource = new MatTableDataSource<any>([...this.txs]);
           this.setDataSourceAttributes();
+          resolve();
         }
       });
     });
