@@ -130,8 +130,8 @@ export class ValidatorsService {
     // @aakatev 4/9/19 
     // MAIN PLACE TO GET LOGS 
     // OF CURRENT VLAIDATORS STATE
-    // console.log(this.validatorsStore);
-    // console.log(this.validatorsMap);
+    console.log(this.validatorsStore);
+    console.log(this.validatorsMap);
   }
 
 
@@ -212,18 +212,23 @@ export class ValidatorsService {
     });
   }
 
-  getValidatorDistribution(validator) {
+  getValidatorDistribution(validator:any) {
     return new Promise(resolve => {
       this.http.get(`${nodeRpc1}/distribution/validators/${validator.operator_address}`)
         .subscribe(
-          (data) => {
+          (data:any) => {
             // TODO remove debugging
             // console.log(data);
             validator.distribution = data;
 
-            this.http.get(`${nodeRpc1}/auth/accounts/${data['operator_address']}`)
+            this.http.get(`${nodeRpc1}/auth/accounts/${data.operator_address}`)
               .subscribe(data => {
                 validator.account = data;
+                // Added on 05/09/19
+                // @aakatev
+                if(validator.account.value.address) {
+                  this.validatorsMap.set(validator.account.value.address, validator.description.moniker);
+                }
                 resolve();
               })
       

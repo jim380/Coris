@@ -1,5 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
+import { Observable } from 'rxjs';
+import { State } from 'src/app/interfaces/state.interface';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-gov-detail',
@@ -27,10 +30,14 @@ export class GovDetailComponent implements OnInit {
   };
   public chartClicked(e: any): void { }
   public chartHovered(e: any): void { }
-  
-  constructor(@Inject(MAT_DIALOG_DATA) public proposal: any) { }
+
+  appState: Observable<State>;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public proposal: any, private store: Store <State>) { }
 
   ngOnInit() {
+    this.appState = this.store.select('App');
+    
     let tally = this.proposal.currentTally;
 
     this.chartDatasets = [{ 

@@ -100,8 +100,10 @@ export class GovernanceComponent implements OnInit {
             // console.log(data);
             proposal.currentVotes = {};
             if(data) {
+              proposal.currentVotes.All = [];
               data.forEach( (voter: any) => {
                 // TODO remove debugging
+                proposal.currentVotes.All.push(voter.voter);
                 if( !proposal.currentVotes[voter.option] ) {
                   proposal.currentVotes[voter.option] = [];
                 }
