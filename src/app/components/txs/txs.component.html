@@ -149,8 +149,9 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let tx; columns: displayedColumns;"
+          [appBgHighlight]="'#383D4C'" defaultColor="#111923"
           [class.example-expanded-row]="expandedElement === tx"
-          (click)="expandedElement = expandedElement === tx ? null : tx" mdbTooltip="Click to see more" placement="top">
+          (click)="expandedElement = expandedElement === tx ? null : tx">
       </tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="tx-detail-row"></tr>
     </table>

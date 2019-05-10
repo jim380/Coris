@@ -49,7 +49,9 @@
     </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row @rowsAnimation *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row @rowsAnimation *matRowDef="let row; columns: displayedColumns;"
+    [appBgHighlight]="'#383D4C'" defaultColor="#111923"
+    ></tr>
   </table>
 
   <div class="row paginator">
