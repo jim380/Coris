@@ -147,12 +147,13 @@ export class TxsComponent implements OnInit {
                       if(tag.key === 'action') {
                         index += 1;
                       }
+                      let formattedKey = tag.key.replace(/-/g, '_');
 
-                      if(!tx[tag.key]) {
-                        tx[tag.key.replace(/-/g, '_')] = [];
-                        tx[tag.key.replace(/-/g, '_')][index] = tag.value.replace(/_/g, ' ');
+                      if(!tx[formattedKey]) {
+                        tx[formattedKey] = [];
+                        tx[formattedKey][index] = tag.value.replace(/_/g, ' ');
                       } else {
-                        tx[tag.key.replace(/-/g, '_')][index] = tag.value.replace(/_/g, ' ');
+                        tx[formattedKey][index] = tag.value.replace(/_/g, ' ');
                       }
                     });
                   }
