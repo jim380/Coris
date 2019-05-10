@@ -88,23 +88,48 @@
                       </li>
                   <li *ngIf="tx.sender && tx.sender[i]" class="list-group-item d-flex justify-content-between align-items-center">
                     From:
-                    <span class="badge badge-primary badge-pill">{{tx.sender[i]}}</span>
+                    <span class="badge badge-primary badge-pill">
+                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.sender[i] ) : false; else elseSender">
+                        {{ (appState | async).valsMap.get( tx.delegator[i] )}}
+                      </span>
+                      <ng-template #elseSender>{{tx.sender[i]}}</ng-template>
+                    </span>
                   </li>
                   <li *ngIf="tx.recipient && tx.recipient[i]" class="list-group-item d-flex justify-content-between align-items-center">
                     To:
-                    <span class="badge badge-primary badge-pill">{{tx.recipient[i]}}</span>
+                    <span class="badge badge-primary badge-pill">
+                        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.recipient[i] ) : false; else elseRecipient">
+                          {{ (appState | async).valsMap.get( tx.delegator[i] )}}
+                        </span>
+                        <ng-template #elseRecipient>{{tx.recipient[i]}}</ng-template>
+                    </span>
                   </li>
                   <li *ngIf="tx.delegator && tx.delegator[i]" class="list-group-item d-flex justify-content-between align-items-center">
                     Delegator:
-                    <span class="badge badge-primary badge-pill">{{tx.delegator[i]}}</span>
+                    <span class="badge badge-primary badge-pill">
+                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.delegator[i] ) : false; else elseDelegator">
+                        {{ (appState | async).valsMap.get( tx.delegator[i] )}}
+                      </span>
+                      <ng-template #elseDelegator>{{tx.delegator[i]}}</ng-template> 
+                    </span>
                   </li>
                   <li *ngIf="tx.source_validator && tx.source_validator[i]" class="list-group-item d-flex justify-content-between align-items-center">
                     Validator:
-                    <span class="badge badge-primary badge-pill">{{tx.source_validator[i]}}</span>
+                    <span class="badge badge-primary badge-pill">
+                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.source_validator[i] ) : false; else elseSourceVal">
+                        {{ (appState | async).valsMap.get( tx.source_validator[i] )}}
+                      </span>
+                      <ng-template #elseSourceVal>{{tx.source_validator[i]}}</ng-template> 
+                    </span>
                   </li>
                   <li *ngIf="tx.destination_validator && tx.destination_validator[i]" class="list-group-item d-flex justify-content-between align-items-center">
                     Validator:
-                    <span class="badge badge-primary badge-pill">{{tx.destination_validator[i]}}</span>
+                    <span class="badge badge-primary badge-pill">
+                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.destination_validator[i] ) : false; else elseDestVal">
+                        {{ (appState | async).valsMap.get( tx.destination_validator[i] )}}
+                      </span>
+                      <ng-template #elseDestVal>{{tx.destination_validator[i]}}</ng-template>
+                    </span>
                   </li>
                   <li *ngIf="tx.end_time && tx.end_time[i]" class="list-group-item d-flex justify-content-between align-items-center">
                     Ends:
@@ -113,7 +138,12 @@
                   <span *ngIf="action === 'vote'">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Voter:
-                      <span class="badge badge-primary badge-pill">{{tx.voter[i]}}</span>
+                      <span class="badge badge-primary badge-pill">
+                        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.voter[i] ) : false; else elseVoter">
+                          {{ (appState | async).valsMap.get( tx.voter[i] )}}
+                        </span>
+                        <ng-template #elseVoter>{{tx.voter[i]}}</ng-template>
+                      </span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Proposal:

@@ -42,6 +42,12 @@ export class ValidatorsService {
 
     this.validatorsStore.forEach(async validator => {
       await this.getValidatorSlashing(validator);
+      
+      // 05/10/19 TODO  @aakatev
+      // refactor this logic later
+      // TODO remove debugging
+      // console.log(validator);
+      this.validatorsMap.set(validator.operator_address, validator.description.moniker);
     });
 
     this.validatorsStore.forEach(async validator => {
@@ -127,8 +133,8 @@ export class ValidatorsService {
     this.store.dispatch(new AppActions.UpdateValsMap(this.validatorsMap));
     
     // TODO remove debugging
-    // @aakatev 4/9/19 
-    // MAIN PLACE TO GET LOGS 
+    // @aakatev 05/09/19 
+    // MAIN PLACE TO COLLECT LOGS 
     // OF CURRENT VLAIDATORS STATE
     // console.log(this.validatorsStore);
     // console.log(this.validatorsMap);
@@ -137,7 +143,7 @@ export class ValidatorsService {
 
   getValidatorsDetails() {
     return new Promise(resolve => {
-        this.http.get(`${nodeRpc1}/staking/validators`).subscribe(async data => {
+        this.http.get(`${nodeRpc1}/staking/validators`).subscribe(async (data:any) => {
         // TODO remove debugging
         // console.log( data );
         if (data !== null) {

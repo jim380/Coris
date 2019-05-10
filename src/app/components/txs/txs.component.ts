@@ -3,9 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
+import { State } from 'src/app/interfaces/state.interface';
+import { Store } from '@ngrx/store';
 import { nodeRpc1, nodeRpc2 } from '../../../config.js'
 import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
 import { MatTableDataSource, MatPaginator, MatTable, MatSort } from '@angular/material';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -70,10 +73,13 @@ export class TxsComponent implements OnInit {
   totalTxsCount = 0;
   // currentPage = 1;
   // lastPage = 1;
+  appState: Observable<State>;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private store: Store <State>, private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
+    this.appState = this.store.select('App');
+
     this.http.get(`${nodeRpc1}/blocks/latest`).subscribe( async (data:any) => {
       // @aakatev remove debugging
       this.totalTxsCount = data.block.header.total_txs;
