@@ -17,109 +17,118 @@
           </div>
         </mat-card>
       </div>
-    
       <div class="col-7">
-        <!-- Tabset tabs -->
-        <!-- <mdb-tabset [vertical]="true" [buttonClass]="'tabs-white flex-column list-group'" [contentClass]="'vertical'">
-        <mdb-tab heading="<a class='list-group-item'> Title </a>">
-          <div class="row">
-            <div class="col-12 waves-light" mdbWavesEffect>
-              <br>
-              <p class="h5"> Title </p>
-              <p>proposal title</p>
-            </div>
-          </div>
-        </mdb-tab>
-        <mdb-tab heading="<a class='list-group-item'> Proposer </a>">
-          <div class="row">
-            <div class="col-12 waves-light" mdbWavesEffect>
-              <br>
-              <p class="h5"> Proposer </p>
-              <p>proposer name</p>
-            </div>
-          </div>
-        </mdb-tab>
-        <mdb-tab heading="<a class='list-group-item'> Description </a>">
-          <div class="row">
-            <div class="col-12 waves-light" mdbWavesEffect>
-              <br>
-              <p class="h5"> Description </p>
-              <p>proposal content</p>
-            </div>
-          </div>
-        </mdb-tab>
-        <mdb-tab heading="<a class='list-group-item'> Deposit </a>">
-          <div class="row">
-            <div class="col-12 waves-light" mdbWavesEffect>
-              <br>
-              <p class="h5"> Deposit </p>
-              <p>proposal deposits</p>
-            </div>
-          </div>
-        </mdb-tab>
-        <mdb-tab heading="<a class='list-group-item'> Voting Period </a>">
-          <div class="row">
-            <div class="col-12 waves-light" mdbWavesEffect>
-              <br>
-              <p class="h5"> Voting Period </p>
-              <p>Begin time - End time</p>
-            </div>
-          </div>
-        </mdb-tab>
-      </mdb-tabset> -->
-    
-          <ul class="list-group">
-              <li class="list-group-item">Title: {{proposal.proposal_content.value.title}}</li>
-              <li *ngIf="proposal.proposer" class="list-group-item">Proposer: {{proposal.proposer}}</li>
-              <li class="list-group-item">Description: {{proposal.proposal_content.value.description}}</li>
-              <li class="list-group-item">Deposit: {{proposal.total_deposit[0].amount}} {{proposal.total_deposit[0].denom}}</li>
-              <li class="list-group-item">Status: {{proposal.proposal_status}}</li>
-          </ul>
-
-       </div>
+        <ul class="list-group">
+          <li class="list-group-item">Title: {{proposal.proposal_content.value.title}}</li>
+          <li *ngIf="proposal.proposer" class="list-group-item">Proposer: {{proposal.proposer}}</li>
+          <li class="list-group-item">Description: {{proposal.proposal_content.value.description}}</li>
+          <li class="list-group-item">Deposit: {{proposal.total_deposit[0].amount}} {{proposal.total_deposit[0].denom}}</li>
+          <li class="list-group-item">Status: {{proposal.proposal_status}}</li>
+        </ul>
+      </div>
     </div>
+    <!-- Tabset tabs -->
+    <!-- <mdb-tabset [vertical]="true" [buttonClass]="'tabs-white flex-column list-group'" [contentClass]="'vertical'">
+      <mdb-tab heading="<a class='list-group-item'> Title </a>">
+        <div class="row">
+          <div class="col-12 voters-list waves-light" mdbWavesEffect>
+            <br>
+            <p class="h5"> Title </p>
+            <p>proposal title</p>
+          </div>
+        </div>
+      </mdb-tab>
+      <mdb-tab heading="<a class='list-group-item'> Proposer </a>">
+        <div class="row">
+          <div class="col-12 voters-list waves-light" mdbWavesEffect>
+            <br>
+            <p class="h5"> Proposer </p>
+            <p>proposer name</p>
+          </div>
+        </div>
+      </mdb-tab>
+      <mdb-tab heading="<a class='list-group-item'> Description </a>">
+        <div class="row">
+          <div class="col-12 voters-list waves-light" mdbWavesEffect>
+            <br>
+            <p class="h5"> Description </p>
+            <p>proposal content</p>
+          </div>
+        </div>
+      </mdb-tab>
+      <mdb-tab heading="<a class='list-group-item'> Deposit </a>">
+        <div class="row">
+          <div class="col-12 voters-list waves-light" mdbWavesEffect>
+            <br>
+            <p class="h5"> Deposit </p>
+            <p>proposal deposits</p>
+          </div>
+        </div>
+      </mdb-tab>
+      <mdb-tab heading="<a class='list-group-item'> Voting Period </a>">
+        <div class="row">
+          <div class="col-12 voters-list waves-light" mdbWavesEffect>
+            <br>
+            <p class="h5"> Voting Period </p>
+            <p>Begin time - End time</p>
+          </div>
+        </div>
+      </mdb-tab>
+    </mdb-tabset> -->
     <div class="row row-2">
       <!-- Nav tabs -->
-<mdb-tabset [buttonClass]="'pills-secondary white mb-2'" [contentClass]="'card'">
-    <!--Panel 1-->
-    <mdb-tab heading="ALL">
-      <div class="row">
-        <div class="col-12">
-          <p>A simply list group or table showing all of the ppl who voted.</p>
-        </div>
-      </div>
-    </mdb-tab>
-    <!--Panel 2-->
-    <mdb-tab heading="YES">
-      <div class="row">
-        <div class="col-12">
-          <p *ngFor="let voter of proposal.currentVotes.Yes">{{voter}}</p>
-        </div>
-      </div>
-    </mdb-tab>
-    <!--Panel 3-->
-    <mdb-tab heading="NO">
-      <div class="row">
-        <div class="col-12">
-          <p *ngFor="let voter of proposal.currentVotes.No">{{voter}}</p>
-        </div>
-      </div>
-    </mdb-tab>
-    <mdb-tab heading="NOWITHVETO">
-      <div class="row">
-        <div class="col-12">
-            <p *ngFor="let voter of proposal.currentVotes.NoWithVeto">{{voter}}</p>
-        </div>
-      </div>
-    </mdb-tab>
-    <mdb-tab heading="ABSTAIN">
-        <div class="row">
-          <div class="col-12">
-            <p *ngFor="let voter of proposal.currentVotes.Abstain">{{voter}}</p>
+      <mdb-tabset [buttonClass]="'pills-secondary white mb-2'" [contentClass]="'card'">
+        <!--Panel 1-->
+        <mdb-tab heading="ALL">
+          <div class="row">
+            <div class="col-12 voters-list">
+              <p *ngFor="let voter of proposal.currentVotes.Yes">{{voter}}</p>
+              <p *ngFor="let voter of proposal.currentVotes.No">{{voter}}</p>
+              <p *ngFor="let voter of proposal.currentVotes.NoWithVeto">{{voter}}</p>
+              <p *ngFor="let voter of proposal.currentVotes.Abstain">{{voter}}</p>
+            </div>
           </div>
-        </div>
-    </mdb-tab>
-  </mdb-tabset>
+        </mdb-tab>
+        <!--Panel 2-->
+        <mdb-tab heading="YES">
+          <div class="row">
+            <div class="col-12 voters-list">
+              <p *ngFor="let voter of proposal.currentVotes.Yes">{{voter}}</p>
+            </div>
+          </div>
+        </mdb-tab>
+        <!--Panel 3-->
+        <mdb-tab heading="NO">
+          <div class="row">
+            <div class="col-12 voters-list">
+              <p *ngFor="let voter of proposal.currentVotes.No">{{voter}}</p>
+            </div>
+          </div>
+        </mdb-tab>
+        <mdb-tab heading="NOWITHVETO">
+          <div class="row">
+            <div class="col-12 voters-list">
+              <p *ngFor="let voter of proposal.currentVotes.NoWithVeto">{{voter}}</p>
+            </div>
+          </div>
+        </mdb-tab>
+        <mdb-tab heading="ABSTAIN">
+          <div class="row">
+            <div class="col-12 voters-list">
+              <p *ngFor="let voter of proposal.currentVotes.Abstain">{{voter}}</p>
+            </div>
+          </div>
+        </mdb-tab>
+        <mdb-tab heading="DEPOSIT">
+          <div class="row">
+            <div class="col-12 voters-list">
+              <p *ngFor="let deposit of proposal.currentDeposit">
+                {{deposit.depositor}} - {{deposit.amount[0].amount}} {{deposit.amount[0].denom}}
+              </p>
+            </div>
+          </div>
+        </mdb-tab>
+      </mdb-tabset>
     </div>
   </mat-card>
 </div>

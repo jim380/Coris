@@ -17,3 +17,9 @@ li {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.voters-list {
+    max-height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
