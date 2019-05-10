@@ -130,8 +130,8 @@ export class ValidatorsService {
     // @aakatev 4/9/19 
     // MAIN PLACE TO GET LOGS 
     // OF CURRENT VLAIDATORS STATE
-    console.log(this.validatorsStore);
-    console.log(this.validatorsMap);
+    // console.log(this.validatorsStore);
+    // console.log(this.validatorsMap);
   }
 
 

@@ -145,7 +145,12 @@
           <div class="row">
             <div class="col-12 voters-list">
               <p *ngFor="let deposit of proposal.currentDeposit">
-                {{deposit.depositor}} - {{deposit.amount[0].amount}} {{deposit.amount[0].denom}}
+                <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( deposit.depositor ) : false; else elseAbstainVoter">
+                  {{ (appState | async).valsMap.get( deposit.depositor )}} - {{deposit.amount[0].amount}} {{deposit.amount[0].denom}}
+                </span>
+                <ng-template #elseAbstainVoter>
+                  {{deposit.depositor}} - {{deposit.amount[0].amount}} {{deposit.amount[0].denom}}
+                </ng-template>
               </p>
             </div>
           </div>

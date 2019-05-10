@@ -37,7 +37,7 @@ export class GovDetailComponent implements OnInit {
 
   ngOnInit() {
     this.appState = this.store.select('App');
-    
+
     let tally = this.proposal.currentTally;
 
     this.chartDatasets = [{ 
@@ -49,7 +49,7 @@ export class GovDetailComponent implements OnInit {
       ], 
       label: 'Votes' }
     ]
-    console.log(this.proposal);
+    // console.log(this.proposal);
   }
 
 }
