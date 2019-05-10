@@ -31,14 +31,14 @@ export class GovDetailComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public proposal: any) { }
 
   ngOnInit() {
-    let proposalResult = this.proposal.final_tally_result;
+    let tally = this.proposal.currentTally;
 
     this.chartDatasets = [{ 
       data: [
-        proposalResult.yes, 
-        proposalResult.no, 
-        proposalResult.no_with_veto, 
-        proposalResult.abstrain
+        tally.yes, 
+        tally.no, 
+        tally.no_with_veto, 
+        tally.abstrain
       ], 
       label: 'Votes' }
     ]

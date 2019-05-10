@@ -125,8 +125,12 @@ export class ValidatorsService {
   updateValidators() {
     this.store.dispatch(new AppActions.UpdateValidators(this.validatorsStore));
     this.store.dispatch(new AppActions.UpdateValsMap(this.validatorsMap));
+    
     // TODO remove debugging
-    console.log(this.validatorsStore);
+    // @aakatev 4/9/19 
+    // MAIN PLACE TO GET LOGS 
+    // OF CURRENT VLAIDATORS STATE
+    // console.log(this.validatorsStore);
     // console.log(this.validatorsMap);
   }
 

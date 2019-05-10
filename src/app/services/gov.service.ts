@@ -16,4 +16,28 @@ export class GovService {
   getProposer(proposalId) {
     return this.http.get(`${nodeRpc1}/gov/proposals/${proposalId}/proposer`);
   }
+
+  getCurrentTally(proposalId) {
+    return this.http.get(`${nodeRpc1}/gov/proposals/${proposalId}/tally`);
+  }
+
+  getCurrentDeposits(proposalId) {
+    return this.http.get(`${nodeRpc1}/gov/proposals/${proposalId}/deposits`);
+  }
+
+  getCurrentVotes(proposalId) {
+    return this.http.get(`${nodeRpc1}/gov/proposals/${proposalId}/votes`);
+  }
+
+  getParamDeposit() {
+    return this.http.get(`${nodeRpc1}/gov/parameters/deposit`);
+  }
+
+  getParamTallying() {
+    return this.http.get(`${nodeRpc1}/gov/parameters/tallying`);
+  }
+
+  getParamVoting() {
+    return this.http.get(`${nodeRpc1}/gov/parameters/voting`);
+  }
 }
