@@ -1,8 +1,8 @@
 <div class="main-row">
   <mat-card>
     <div class="row row-1">
-      <div class="col-5 chart-card">
-        <mat-card style="max-width: 100%; background-color: white">
+      <div class="col-4 chart-card">
+        <mat-card>
           <div style="display: block" class="row">
             <canvas mdbChart
               [chartType]="chartType"
@@ -17,8 +17,8 @@
           </div>
         </mat-card>
       </div>
-      <div class="col-7">
-        <ul class="list-group">
+      <div class="col-8">
+        <!-- <ul class="list-group">
           <li class="list-group-item">Title: {{proposal.proposal_content.value.title}}</li>
           <li *ngIf="proposal.proposer" class="list-group-item">
             Proposer: 
@@ -30,7 +30,33 @@
           <li class="list-group-item">Description: {{proposal.proposal_content.value.description}}</li>
           <li class="list-group-item">Deposit: {{proposal.total_deposit[0].amount}} {{proposal.total_deposit[0].denom}}</li>
           <li class="list-group-item">Status: {{proposal.proposal_status}}</li>
-        </ul>
+        </ul> -->
+        <mdb-card style="max-width: 100%;" class="text-left">
+          <mdb-card-body>
+            <mdb-card-title>
+              <h5 class="proposal-title font-weight-bold mb-3">{{proposal.proposal_content.value.title}}</h5>
+            </mdb-card-title>
+            <mdb-card-text class="mb-0 text-left">
+              {{proposal.proposal_content.value.description}}
+            </mdb-card-text>
+          </mdb-card-body>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <span class="font-weight-bold">Proposer: </span>
+                <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( proposal.proposer ) : false; else elseVetoVoter">
+                  {{ (appState | async).valsMap.get( proposal.proposer )}}
+                </span>
+                <ng-template #elseVetoVoter>{{proposal.proposer}}</ng-template>
+            </li>
+            <li class="list-group-item"><span class="font-weight-bold">Deposit: </span>{{proposal.total_deposit[0].amount/1e6 | number:".2-2"}} ATOM</li>
+            <li class="list-group-item"><span class="font-weight-bold">Status: </span>{{proposal.proposal_status}}</li>
+            <li class="list-group-item"><span class="font-weight-bold">Voting period: </span>Start - End</li>
+          </ul>
+          <!-- <mdb-card-body>
+            <a href="#!" class="card-link">Card link</a>
+            <a href="#!" class="card-link">Another link</a>
+          </mdb-card-body> -->
+        </mdb-card>
       </div>
     </div>
     <!-- Tabset tabs -->

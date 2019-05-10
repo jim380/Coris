@@ -1,6 +1,7 @@
 .main-row {
-    max-width: 95%;
+    max-width: 800px;
     margin:0 auto;
+    max-height: 600px;
 }
 
 .row {
@@ -9,6 +10,12 @@
 
 .row-2 {
     margin-top: 30px;
+}
+
+mat-card {
+    max-width: 100%;
+    background-color: white;
+    width: 800px;
 }
 
 li {
@@ -22,4 +29,9 @@ li {
     max-height: 200px;
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+.proposal-title {
+    font-weight: 300;
+    font-size: 120%;
 }
