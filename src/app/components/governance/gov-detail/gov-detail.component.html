@@ -93,7 +93,7 @@
     <mdb-tab heading="YES">
       <div class="row">
         <div class="col-12">
-          <p>A simply list group or table showing ppl who voted NO.</p>
+          <p *ngFor="let voter of proposal.currentVotes.Yes">{{voter}}</p>
         </div>
       </div>
     </mdb-tab>
@@ -101,21 +101,21 @@
     <mdb-tab heading="NO">
       <div class="row">
         <div class="col-12">
-          <p>A simply list group or table showing ppl who voted NO.</p>
+          <p *ngFor="let voter of proposal.currentVotes.No">{{voter}}</p>
         </div>
       </div>
     </mdb-tab>
     <mdb-tab heading="NOWITHVETO">
       <div class="row">
         <div class="col-12">
-          <p>A simply list group or table showing ppl who voted NOWITHVETO</p>
+            <p *ngFor="let voter of proposal.currentVotes.NoWithVeto">{{voter}}</p>
         </div>
       </div>
     </mdb-tab>
     <mdb-tab heading="ABSTAIN">
         <div class="row">
           <div class="col-12">
-            <p>A simply list group or table showing ppl who voted ABSTAIN.</p>
+            <p *ngFor="let voter of proposal.currentVotes.Abstain">{{voter}}</p>
           </div>
         </div>
     </mdb-tab>

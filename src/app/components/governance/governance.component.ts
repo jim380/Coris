@@ -98,7 +98,17 @@ export class GovernanceComponent implements OnInit {
           this.gs.getCurrentVotes(proposal.proposal_id).subscribe( (data:any) => {
             // TODO remove debugging
             // console.log(data);
-            proposal.currentVotes = data;
+            proposal.currentVotes = {};
+            if(data) {
+              data.forEach( (voter: any) => {
+                // TODO remove debugging
+                if( !proposal.currentVotes[voter.option] ) {
+                  proposal.currentVotes[voter.option] = [];
+                }
+                proposal.currentVotes[voter.option].push(voter.voter);
+                // console.log(voter);    
+              });
+            }
           },
           error => {
             console.log("Votes error!");
