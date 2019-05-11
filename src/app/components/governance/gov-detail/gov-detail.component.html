@@ -180,90 +180,127 @@
         <div class="col-md-8">
             <div class="my-5">
                 <mat-card alignment="left">
+                  <mat-card-title>Votes</mat-card-title>
                     <div class="card-body">
-                        <table class="table large-header">
-                            <thead>
-                                <tr>
-                                    <th>Country</th>
-                                    <th>Visits</th>
-                                    <th>Pages</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>United States</td>
-                                    <td>27315</td>
-                                    <td>3307</td>
-                                </tr>
-                                <tr>
-                                    <td>India</td>
-                                    <td>55432</td>
-                                    <td>3504</td>
-                                </tr>
-                                <tr>
-                                    <td>China</td>
-                                    <td>44341</td>
-                                    <td>4613</td>
-                                </tr>
-                                <tr>
-                                    <td>Poland</td>
-                                    <td>14514</td>
-                                    <td>3208</td>
-                                </tr>
-                                <tr>
-                                    <td>Italy</td>
-                                    <td>2424</td>
-                                    <td>1414</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                      <mat-tab-group (selectedTabChange)="onTabChange($event);">
+                        <mat-tab label="All">
+                          <table mat-table [dataSource]="votesDataSource" class="table large-header">
+                            <ng-container matColumnDef="voter">
+                              <th mat-header-cell *matHeaderCellDef> Voter </th>
+                              <td mat-cell *matCellDef="let vote"> {{vote.voter}} </td>
+                            </ng-container>
+                        
+                            <ng-container matColumnDef="vote">
+                              <th mat-header-cell *matHeaderCellDef> Vote </th>
+                              <td mat-cell *matCellDef="let vote"> {{vote.option}} </td>
+                            </ng-container>
+                        
+                            <tr mat-header-row *matHeaderRowDef="votesDisplayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: votesDisplayedColumns;"></tr>
+                          </table>
+                          <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
+                        </mat-tab>
+                        <mat-tab label="Yes">
+                          <table mat-table [dataSource]="votesDataSource" class="table large-header">
+                            <ng-container matColumnDef="voter">
+                              <th mat-header-cell *matHeaderCellDef> Voter </th>
+                              <td mat-cell *matCellDef="let vote"> {{vote.voter}} </td>
+                            </ng-container>
+                        
+                            <ng-container matColumnDef="vote">
+                              <th mat-header-cell *matHeaderCellDef> Vote </th>
+                              <td mat-cell *matCellDef="let vote"> {{vote.option}} </td>
+                            </ng-container>
+                        
+                            <tr mat-header-row *matHeaderRowDef="votesDisplayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: votesDisplayedColumns;"></tr>
+                          </table>
+                          <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
+                        </mat-tab>
+                        <mat-tab label="No">
+                          <table mat-table [dataSource]="votesDataSource" class="table large-header">
+                            <ng-container matColumnDef="voter">
+                              <th mat-header-cell *matHeaderCellDef> Voter </th>
+                              <td mat-cell *matCellDef="let vote"> {{vote.voter}} </td>
+                            </ng-container>
+                        
+                            <ng-container matColumnDef="vote">
+                              <th mat-header-cell *matHeaderCellDef> Vote </th>
+                              <td mat-cell *matCellDef="let vote"> {{vote.option}} </td>
+                            </ng-container>
+                        
+                            <tr mat-header-row *matHeaderRowDef="votesDisplayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: votesDisplayedColumns;"></tr>
+                          </table>
+                          <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
+                        </mat-tab>
+                        <mat-tab label="NoWithVeto">
+                          <table mat-table [dataSource]="votesDataSource" class="table large-header">
+                            <ng-container matColumnDef="voter">
+                              <th mat-header-cell *matHeaderCellDef> Voter </th>
+                              <td mat-cell *matCellDef="let vote"> {{vote.voter}} </td>
+                            </ng-container>
+                        
+                            <ng-container matColumnDef="vote">
+                              <th mat-header-cell *matHeaderCellDef> Vote </th>
+                              <td mat-cell *matCellDef="let vote"> {{vote.option}} </td>
+                            </ng-container>
+                        
+                            <tr mat-header-row *matHeaderRowDef="votesDisplayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: votesDisplayedColumns;"></tr>
+                          </table>
+                          <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
+                        </mat-tab>
+                        <mat-tab label="Abstain">
+                          <table mat-table [dataSource]="votesDataSource" class="table large-header">
+                            <ng-container matColumnDef="voter">
+                              <th mat-header-cell *matHeaderCellDef> Voter </th>
+                              <td mat-cell *matCellDef="let vote"> {{vote.voter}} </td>
+                            </ng-container>
+                        
+                            <ng-container matColumnDef="vote">
+                              <th mat-header-cell *matHeaderCellDef> Vote </th>
+                              <td mat-cell *matCellDef="let vote"> {{vote.option}} </td>
+                            </ng-container>
+                        
+                            <tr mat-header-row *matHeaderRowDef="votesDisplayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: votesDisplayedColumns;"></tr>
+                          </table>
+                          <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
+                        </mat-tab>
+                      </mat-tab-group>
+                      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
                     </div>
                 </mat-card>
             </div>
-
             <div class="my-5">
-                <mat-card alignment="left">
-                    <div class="card-body">
-                        <table class="table large-header">
-                            <thead>
-                                <tr>
-                                    <th>Browser</th>
-                                    <th>Visits</th>
-                                    <th>Pages</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Google Chrome</td>
-                                    <td>53415</td>
-                                    <td>3307</td>
-                                </tr>
-                                <tr>
-                                    <td>Mozilla Firefox</td>
-                                    <td>23332</td>
-                                    <td>2504</td>
-                                </tr>
-                                <tr>
-                                    <td>Safari</td>
-                                    <td>13141</td>
-                                    <td>3613</td>
-                                </tr>
-                                <tr>
-                                    <td>Opera</td>
-                                    <td>1114</td>
-                                    <td>208</td>
-                                </tr>
-                                <tr>
-                                    <td>Microsoft Edge</td>
-                                    <td>124</td>
-                                    <td>14</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </mat-card>
+              <mat-card alignment="left">
+                <mat-card-title>Deposit</mat-card-title>
+                <div class="card-body">
+                  <div class="row table-responsive text-nowrap scrollbar-primary">
+                    <table mat-table [dataSource]="depositDataSource" class="table large-header">
+                      <ng-container matColumnDef="depositor">
+                        <th mat-header-cell *matHeaderCellDef> Depositor </th>
+                        <td mat-cell *matCellDef="let deposit"> 
+                          {{deposit.depositor}} 
+                        </td>
+                      </ng-container>
+                  
+                      <ng-container matColumnDef="amount">
+                        <th mat-header-cell *matHeaderCellDef> Amount </th>
+                        <td mat-cell *matCellDef="let deposit"> 
+                          {{deposit.amount[0].amount}} {{deposit.amount[0].denom}}
+                        </td>
+                      </ng-container>
+                  
+                      <tr mat-header-row *matHeaderRowDef="depositDisplayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: depositDisplayedColumns;"></tr>
+                    </table> 
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                  </div>
+                </div>
+              </mat-card>
             </div>
         </div>
-        
     </div>
 </section>

@@ -89,7 +89,11 @@ export class GovernanceComponent implements OnInit {
           this.gs.getCurrentDeposits(proposal.proposal_id).subscribe( (data:any) => {
             // TODO remove debugging
             // console.log(data);
-            proposal.currentDeposit = data;
+            if(data) {
+              proposal.currentDeposit = data;
+            } else {
+              proposal.currentDeposit = [];
+            }
           },
           error => {
             console.log("Deposit error!");
@@ -97,19 +101,22 @@ export class GovernanceComponent implements OnInit {
 
           this.gs.getCurrentVotes(proposal.proposal_id).subscribe( (data:any) => {
             // TODO remove debugging
-            // console.log(data);
-            proposal.currentVotes = {};
+            console.log(data);
             if(data) {
-              proposal.currentVotes.All = [];
-              data.forEach( (voter: any) => {
-                // TODO remove debugging
-                proposal.currentVotes.All.push(voter.voter);
-                if( !proposal.currentVotes[voter.option] ) {
-                  proposal.currentVotes[voter.option] = [];
-                }
-                proposal.currentVotes[voter.option].push(voter.voter);
-                // console.log(voter);    
-              });
+              proposal.currentVotes = data;
+              
+              // proposal.currentVotes.All = [];
+              // data.forEach( (voter: any) => {
+              //   // TODO remove debugging
+              //   proposal.currentVotes.All.push(voter.voter);
+              //   if( !proposal.currentVotes[voter.option] ) {
+              //     proposal.currentVotes[voter.option] = [];
+              //   }
+              //   proposal.currentVotes[voter.option].push(voter.voter);
+              //   // console.log(voter);    
+              // });
+            } else {
+              proposal.currentVotes = [];
             }
           },
           error => {
