@@ -35,3 +35,9 @@ li {
     font-weight: 300;
     font-size: 120%;
 }
+
+.card.card-cascade {
+    .view {
+        box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.15), 0 3px 12px 0 rgba(0, 0, 0, 0.15);
+    }
+}
