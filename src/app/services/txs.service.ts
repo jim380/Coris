@@ -10,7 +10,12 @@ import { nodeRpc1 } from '../../config.js'
 export class TxsService {
 
   constructor(private http: HttpClient) { }
-
+  
+  // sender is and account in cosmos-prefix format
+  // e.g. cosmos1msy0nwz3q5ky9sj539mutajqye934sl2wexmaf
+  public get(sender: string, limit: string, page: string) {
+    return this.http.get(`${nodeRpc1}/txs?sender=${sender}&limit=${limit}&page=${page}`);
+  }
 
   public postData(delegatorAddr: string) {
     

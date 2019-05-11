@@ -4,7 +4,7 @@ import { State } from '../interfaces/state.interface';
 import { Observable, of, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { nodeRpc2 } from '../../config.js';
+import { nodeRpc1, nodeRpc2 } from '../../config.js';
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +58,23 @@ export class BlocksService {
     return this.http.get(`${nodeRpc2}/blockchain?maxHeight=${maxHeight}`);
   }
 
+  fetchCommitAt(height) {
+    return this.http.get(`${nodeRpc2}/commit?height=${height}`);
+  }
+
+  fetchBlockAt(height) {
+    return this.http.get(`${nodeRpc2}/block?height=${height}`);
+  }
+
+  fetchBlockAtAlternative(height) {
+    return this.http.get(`${nodeRpc1}/blocks/${height}`);
+  }
+
   getBlockTime$(): Observable<any> {
     return this.avgBlockTime$.asObservable();
+  }
+
+  getInitialBlocks() {
+
   }
 }
