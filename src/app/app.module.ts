@@ -55,6 +55,8 @@ import { AddressCardComponent } from './components/validator-profile/address-car
 import { DelegatorCardComponent } from './components/validator-profile/delegator-card/delegator-card.component';
 import { PowerEventCardComponent } from './components/validator-profile/power-event-card/power-event-card.component';
 import { ProposedBlocksCardComponent } from './components/validator-profile/proposed-blocks-card/proposed-blocks-card.component';
+import { StatusCard1Component } from './components/test/status-card1/status-card1.component';
+import { StatusCard2Component } from './components/test/status-card2/status-card2.component';
 
 declare var Hammer: any;
 
@@ -115,7 +117,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     AddressCardComponent,
     DelegatorCardComponent,
     PowerEventCardComponent,
-    ProposedBlocksCardComponent
+    ProposedBlocksCardComponent,
+    StatusCard1Component,
+    StatusCard2Component
     // UniversalSearchBarComponent,
   ],
   entryComponents: [
