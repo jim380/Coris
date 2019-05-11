@@ -1,8 +1,257 @@
-<mat-card>
-  <div>
-    <p class="overflowed-text">Operator address: {{validator.operator_address}}</p>
-    <p class="overflowed-text">Delegator address: {{validator.account?.value.address}}</p>
-    <p class="overflowed-text">Website: {{validator.description?.website}}</p>
-    <p class="overflowed-text">Details: {{validator.description?.details}}</p> 
+<div class="row my-5">
+  <div class="col-md-3">
+    <!--Card-->
+    <div class="card card-cascade narrower">
+      <!--Card image-->
+      <div class="view view-cascade overlay hm-white-slight waves-light" mdbWavesEffect>
+        <img src="https://mdbootstrap.com/img/Photos/Horizontal/People/6-col/img%20%283%29.jpg" class="img-fluid">
+        <a>
+          <div class="mask"></div>
+        </a>
+      </div>
+      <!--/Card image-->
+      <!--Card content-->
+      <div class="card-body card-body-cascade text-center">
+        <!--Title-->
+        <h4 class="card-title font-bold mb-2"><strong>Alice Mayer</strong></h4>
+        <!-- <h5 class="indigo-text"><strong>Photographer</strong></h5> -->
+        <h6 class='text-justify'><strong>About:</strong></h6>
+        <p class='text-justify'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione perferendis quod animi dignissimos consectetur
+            quibusdam numquam laboriosam, minus, provident...</p>
+        <div class="text-right">
+            <button type="button" class="btn btn-outline-primary btn-rounded  btn-sm" mdbWavesEffect>More...</button>
+        </div>
+        <hr>
+        <!--Linkedin-->
+        <a class="icons-sm li-ic px-3"><mdb-icon fab icon="linkedin-in"></mdb-icon></a>
+        <!--Twitter-->
+        <a class="icons-sm tw-ic px-3"><mdb-icon fab icon="twitter"></mdb-icon></a>
+        <!--Dribbble-->
+        <a class="icons-sm fb-ic px-3"><mdb-icon fab icon="facebook-f"></mdb-icon></a>
+      </div>
+      <!--/.Card content-->
+    </div>
+    <!--/.Card-->
+
+    <!--Card-->
+    <div class="card card-cascade narrower mt-5">
+      <!--Card image-->
+      <div class="view view-cascade gradient-card-header blue-gradient">
+          <h4 class="h4-responsive">Achievments</h4>
+      </div>
+      <!--/Card image-->
+      <!--Card content-->
+      <div class="card-body card-body-cascade text-center">
+        <div class="chip">
+          <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/158907-200.png" alt="Ask a question and accept an answer">Scholar
+        </div>
+        <div class="chip">
+          <img src="https://www.hrglobalindia.com/wp-content/uploads/2015/05/icon3-e1431786925198.png" alt="Provide non-wiki answers of 15 total score in 20 of top 40 tags">Generalist
+        </div>
+        <div class="chip">
+          <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/359329-200.png" alt=" Accepted answer and score of 40 or more">Guru
+        </div>
+        <div class="chip">
+          <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/62983-200.png" alt="Answer a question with score of 1 or more">Teacher
+        </div>
+      </div>
+      <!--/.Card content-->
+    </div>
+    <!--/.Card-->
   </div>
-</mat-card>
+
+  <div class="col-md-9">
+    <section class="section text-center pb-3">
+      <!--Section heading-->
+      <!-- <h2 class="section-heading h1 pt-4"><strong>Latest projects:</strong></h2> -->
+      <!--Section description-->
+      <!--Grid row-->
+      <div class="row d-flex justify-content-center">
+
+        <!--Grid column-->
+        <div class="col-lg-6 col-xl-5 mb-3">
+
+          <!--Validator Info Card-->
+          <div class="card card-cascade narrower d-flex mb-5">
+            <!--Card image-->
+            <div class="view view-cascade overlay hm-white-slight">
+              <img src="https://mdbootstrap.com/img/Mockups/Horizontal/6-col/pro-profile-page.jpg" class="img-fluid" alt="">
+              <a href="#">
+                <div class="mask"></div>
+              </a>
+            </div>
+            <!--Card content-->
+            <div class="card-body card-body-cascade">
+              <!--Title-->
+              <h4 class="card-title font-bold mb-3"><strong>Validator Info</strong></h4>
+              <!--Text-->
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+              </p>
+            </div>
+            <!--Card footer-->
+            <div class="d-flex justify-content-between card-footer links-light">
+              <span class="text-left left pt-2">
+                <a><mdb-icon fas icon="share-alt" class="mr-2"></mdb-icon></a>
+                <a><mdb-icon far icon="heart" class="mr-2"></mdb-icon>10</a>
+              </span>
+              <span class="text-right right"> 
+                <a href="" class="waves-effect p-2">Live Preview <mdb-icon fas icon="camera" class="ml-1"></mdb-icon></a>
+              </span>
+            </div>
+          </div>
+          <!--/Validator Info Card-->
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-6 col-xl-5 mb-3">
+
+          <!--Delegator Card-->
+          <div class="card card-cascade narrower d-flex mb-5">
+            <!--Card image-->
+            <div class="view view-cascade overlay hm-white-slight">
+              <img src="https://mdbootstrap.com/img/Mockups/Horizontal/6-col/pro-signup.jpg" class="img-fluid" alt="">
+              <a href="#">
+                <div class="mask"></div>
+              </a>
+            </div>
+            <!--Card content-->
+            <div class="card-body card-body-cascade">
+              <!--Title-->
+              <h4 class="card-title font-bold mb-3"><strong>Delegators</strong></h4>
+              <!--Text-->
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+              </p>
+            </div>
+            <!--Card footer-->
+            <div class="card-footer d-flex justify-content-between links-light">
+              <span class="left pt-2">
+                <a><mdb-icon fas icon="share-alt" class="mr-2"></mdb-icon></a>
+                <a><mdb-icon far icon="heart" class="mr-2"></mdb-icon>10</a>
+              </span>
+              <span class="right"> 
+                <a href="" class="waves-effect p-2">Live Preview <mdb-icon fas icon="camera" class="ml-1"></mdb-icon></a>
+              </span>
+            </div>
+          </div>
+          <!--/Delegator Card-->
+
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+
+      <!--Grid row-->
+      <div class="row d-flex justify-content-center">
+
+        <!--Grid column-->
+        <div class="col-lg-6 col-xl-5 mb-3">
+
+            <!--Power Events Card-->
+            <div class="card card-cascade narrower d-flex mb-5">
+              <!--Card image-->
+              <div class="view view-cascade overlay hm-white-slight">
+                  <img src="https://mdbootstrap.com/img/Mockups/Horizontal/6-col/pro-pricing.jpg" class="img-fluid" alt="">
+                  <a href="#">
+                      <div class="mask"></div>
+                  </a>
+              </div>
+              <!--Card content-->
+              <div class="card-body card-body-cascade">
+                  <!--Title-->
+                  <h4 class="card-title font-bold mb-3"><strong>Power Event</strong></h4>
+                  <!--Text-->
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+                  </p>
+              </div>
+              <!--Card footer-->
+              <div class="card-footer d-flex justify-content-between links-light">
+                  <span class="left pt-2">
+                      <a><mdb-icon fas icon="share-alt" class="mr-2"></mdb-icon></a>
+                      <a><mdb-icon far icon="heart" class="mr-2"></mdb-icon>10</a>
+                  </span>
+                  <span class="right"> 
+                      <a href="" class="waves-effect p-2">Live Preview <mdb-icon fas icon="camera" class="ml-1"></mdb-icon></a>
+                  </span>
+              </div>
+            </div>
+            <!--/Power Events Card-->
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-6 col-xl-5 mb-3">
+
+            <!--Proposed Blocks Card-->
+            <div class="card card-cascade narrower d-flex mb-5">
+                <!--Card image-->
+                <div class="view view-cascade overlay hm-white-slight">
+                  <img src="https://mdbootstrap.com/img/Mockups/Horizontal/6-col/pro-landing.jpg" class="img-fluid" alt="">
+                  <a href="#">
+                    <div class="mask"></div>
+                  </a>
+                </div>
+                <!--Card content-->
+                <div class="card-body card-body-cascade">
+                  <!--Title-->
+                  <h4 class="card-title font-bold mb-3"><strong>Proposed Blocks</strong></h4>
+                  <!--Text-->
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+                  </p>
+                </div>
+                <!--Card footer-->
+                <div class="card-footer d-flex justify-content-between links-light">
+                  <span class="left pt-2">
+                    <a><mdb-icon fas icon="share-alt" class="mr-2"></mdb-icon></a>
+                    <a><mdb-icon far icon="heart" class="mr-2"></mdb-icon>10</a>
+                  </span>
+                  <span class="right"> 
+                    <a href="" class="waves-effect p-2">Live Preview <mdb-icon fas icon="camera" class="ml-1"></mdb-icon></a>
+                  </span>
+                </div>
+            </div>
+            <!--/Proposed Blocks Card-->
+
+        </div>
+        <!--Grid column-->
+
+        <!-- paginator -->
+        <!-- <div class="col-lg-12">
+                  <div class="text-center">
+
+                      <nav class="my-4">
+                          <ul class="pagination pagination-circle pg-blue mb-0">
+
+                              <li class="page-item disabled"><a class="page-link" mdbWavesEffect>First</a></li>
+
+                              <li class="page-item disabled">
+                                  <a class="page-link" mdbWavesEffect aria-label="Previous">
+                                      <span aria-hidden="true">«</span>
+                                      <span class="sr-only">Previous</span>
+                                  </a>
+                              </li>
+
+                              <li class="page-item active"><a class="page-link" mdbWavesEffect>1</a></li>
+                              <li class="page-item"><a class="page-link" mdbWavesEffect>2</a></li>
+                              <li class="page-item"><a class="page-link" mdbWavesEffect>3</a></li>
+                              <li class="page-item"><a class="page-link" mdbWavesEffect>4</a></li>
+                              <li class="page-item"><a class="page-link" mdbWavesEffect>5</a></li>
+
+                              <li class="page-item">
+                                  <a class="page-link" mdbWavesEffect aria-label="Next">
+                                      <span aria-hidden="true">»</span>
+                                      <span class="sr-only">Next</span>
+                                  </a>
+                              </li>
+                              <li class="page-item"><a class="page-link">Last</a></li>
+                          </ul>
+                      </nav>
+                  </div>
+              </div> -->
+      </div>
+      <!--Grid row-->
+    </section>
+  </div>
+</div>
