@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -99,6 +99,14 @@ export class TxsComponent implements OnInit {
     // console.log(this.dataSource.paginator);
   }
 
+  @HostListener('scroll', ['$event'])
+  onScroll(event: any) {
+    // visible height + pixel scrolled >= total height 
+    // if (event.target.offsetHeight + event.target.scrollTop >= event.target.scrollHeight) {
+      console.log("End");
+    // }
+}
+
   clearTxs() {
     this.txs = [];
   }
@@ -194,8 +202,8 @@ export class TxsComponent implements OnInit {
   }
 
   async displayOlderTxs () {
-    this.minHeight -= this.blocksToScan;
-    await this.fetchTxs();  
+    await this.fetchTxs(); 
+    this.minHeight -= this.blocksToScan; 
     // this.currentPage += 1;
   }
 

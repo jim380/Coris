@@ -1,5 +1,5 @@
 <span *ngIf="txs && txs.length >= INITIAL_TXS_COUNT; else elseLoading">
-  <div class="row table-responsive text-nowrap scrollbar-primary">
+  <div (scroll)="onScroll($event)" class="row table-responsive text-nowrap scrollbar-primary">
     <div class="container">
       <div class="row">
         <div class="col-8">

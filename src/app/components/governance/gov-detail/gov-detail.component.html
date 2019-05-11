@@ -187,7 +187,12 @@
                           <table mat-table [dataSource]="votesDataSource" class="table large-header">
                             <ng-container matColumnDef="voter">
                               <th mat-header-cell *matHeaderCellDef> Voter </th>
-                              <td mat-cell *matCellDef="let vote"> {{vote.voter}} </td>
+                              <td mat-cell *matCellDef="let vote">
+                                <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( vote.voter ) : false; else elseVetoVoter">
+                                  {{ (appState | async).valsMap.get( vote.voter )}}
+                                </span>
+                                <ng-template #elseVetoVoter>{{ vote.voter }}</ng-template>
+                              </td>
                             </ng-container>
                         
                             <ng-container matColumnDef="vote">
@@ -204,7 +209,12 @@
                           <table mat-table [dataSource]="votesDataSource" class="table large-header">
                             <ng-container matColumnDef="voter">
                               <th mat-header-cell *matHeaderCellDef> Voter </th>
-                              <td mat-cell *matCellDef="let vote"> {{vote.voter}} </td>
+                              <td mat-cell *matCellDef="let vote"> 
+                                <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( vote.voter ) : false; else elseVetoVoter">
+                                  {{ (appState | async).valsMap.get( vote.voter )}}
+                                </span>
+                                <ng-template #elseVetoVoter>{{ vote.voter }}</ng-template>
+                              </td>
                             </ng-container>
                         
                             <ng-container matColumnDef="vote">
@@ -221,7 +231,12 @@
                           <table mat-table [dataSource]="votesDataSource" class="table large-header">
                             <ng-container matColumnDef="voter">
                               <th mat-header-cell *matHeaderCellDef> Voter </th>
-                              <td mat-cell *matCellDef="let vote"> {{vote.voter}} </td>
+                              <td mat-cell *matCellDef="let vote">
+                                <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( vote.voter ) : false; else elseVetoVoter">
+                                  {{ (appState | async).valsMap.get( vote.voter )}}
+                                </span>
+                                <ng-template #elseVetoVoter>{{ vote.voter }}</ng-template>
+                              </td>
                             </ng-container>
                         
                             <ng-container matColumnDef="vote">
@@ -238,7 +253,12 @@
                           <table mat-table [dataSource]="votesDataSource" class="table large-header">
                             <ng-container matColumnDef="voter">
                               <th mat-header-cell *matHeaderCellDef> Voter </th>
-                              <td mat-cell *matCellDef="let vote"> {{vote.voter}} </td>
+                              <td mat-cell *matCellDef="let vote">
+                                <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( vote.voter ) : false; else elseVetoVoter">
+                                  {{ (appState | async).valsMap.get( vote.voter )}}
+                                </span>
+                                <ng-template #elseVetoVoter>{{ vote.voter }}</ng-template>
+                              </td>
                             </ng-container>
                         
                             <ng-container matColumnDef="vote">
@@ -255,7 +275,12 @@
                           <table mat-table [dataSource]="votesDataSource" class="table large-header">
                             <ng-container matColumnDef="voter">
                               <th mat-header-cell *matHeaderCellDef> Voter </th>
-                              <td mat-cell *matCellDef="let vote"> {{vote.voter}} </td>
+                              <td mat-cell *matCellDef="let vote">
+                                <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( vote.voter ) : false; else elseVetoVoter">
+                                  {{ (appState | async).valsMap.get( vote.voter )}}
+                                </span>
+                                <ng-template #elseVetoVoter>{{ vote.voter }}</ng-template>
+                              </td>
                             </ng-container>
                         
                             <ng-container matColumnDef="vote">
@@ -282,7 +307,10 @@
                       <ng-container matColumnDef="depositor">
                         <th mat-header-cell *matHeaderCellDef> Depositor </th>
                         <td mat-cell *matCellDef="let deposit"> 
-                          {{deposit.depositor}} 
+                          <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( deposit.depositor ) : false; else elseVetoVoter">
+                            {{ (appState | async).valsMap.get( deposit.depositor )}}
+                          </span>
+                          <ng-template #elseVetoVoter>{{ deposit.depositor }}</ng-template> 
                         </td>
                       </ng-container>
                   
