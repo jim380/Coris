@@ -1,193 +1,269 @@
-<div class="main-row">
-  <mat-card>
-    <div class="row row-1">
-      <div class="col-4 chart-card">
-        <mat-card>
-          <div style="display: block" class="row">
-            <canvas mdbChart
-              [chartType]="chartType"
-              [datasets]="chartDatasets"
-              [labels]="chartLabels"
-              [colors]="chartColors"
-              [options]="chartOptions"
-              [legend]="true"
-              (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)">
-            </canvas>
+<!-- <section class="section">
+  <div class="row main-row">
+    <mat-card>
+      <div class="row row-1">
+        <div class="col-md-4 chart-card">
+          <div class="my-5">
+              <mat-card>
+                  <div style="display: block" class="row">
+                    <canvas mdbChart
+                      [chartType]="chartType"
+                      [datasets]="chartDatasets"
+                      [labels]="chartLabels"
+                      [colors]="chartColors"
+                      [options]="chartOptions"
+                      [legend]="true"
+                      (chartHover)="chartHovered($event)"
+                      (chartClick)="chartClicked($event)">
+                    </canvas>
+                  </div>
+              </mat-card>
           </div>
-        </mat-card>
+        </div>
+        <div class="col-md-8">
+          <div class="my-5">
+              <mdb-card style="max-width: 100%;" class="text-left">
+                  <mdb-card-body>
+                    <mdb-card-title>
+                      <h5 class="proposal-title font-weight-bold mb-3">{{proposal.proposal_content.value.title}}</h5>
+                    </mdb-card-title>
+                    <mdb-card-text class="mb-0 text-left">
+                      {{proposal.proposal_content.value.description}}
+                    </mdb-card-text>
+                  </mdb-card-body>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <span class="font-weight-bold">Proposer: </span>
+                        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( proposal.proposer ) : false; else elseVetoVoter">
+                          {{ (appState | async).valsMap.get( proposal.proposer )}}
+                        </span>
+                        <ng-template #elseVetoVoter>{{proposal.proposer}}</ng-template>
+                    </li>
+                    <li class="list-group-item"><span class="font-weight-bold">Deposit: </span>{{proposal.total_deposit[0].amount/1e6 | number:".2-2"}} ATOM</li>
+                    <li class="list-group-item"><span class="font-weight-bold">Status: </span>{{proposal.proposal_status}}</li>
+                    <li class="list-group-item"><span class="font-weight-bold">Voting period: </span>Start - End</li>
+                  </ul>
+                </mdb-card>
+          </div>
+        </div>
       </div>
-      <div class="col-8">
-        <!-- <ul class="list-group">
-          <li class="list-group-item">Title: {{proposal.proposal_content.value.title}}</li>
-          <li *ngIf="proposal.proposer" class="list-group-item">
-            Proposer: 
-            <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( proposal.proposer ) : false; else elseVetoVoter">
-              {{ (appState | async).valsMap.get( proposal.proposer )}}
-            </span>
-            <ng-template #elseVetoVoter>{{proposal.proposer}}</ng-template>
-          </li>
-          <li class="list-group-item">Description: {{proposal.proposal_content.value.description}}</li>
-          <li class="list-group-item">Deposit: {{proposal.total_deposit[0].amount}} {{proposal.total_deposit[0].denom}}</li>
-          <li class="list-group-item">Status: {{proposal.proposal_status}}</li>
-        </ul> -->
-        <mdb-card style="max-width: 100%;" class="text-left">
-          <mdb-card-body>
-            <mdb-card-title>
-              <h5 class="proposal-title font-weight-bold mb-3">{{proposal.proposal_content.value.title}}</h5>
-            </mdb-card-title>
-            <mdb-card-text class="mb-0 text-left">
-              {{proposal.proposal_content.value.description}}
-            </mdb-card-text>
-          </mdb-card-body>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <span class="font-weight-bold">Proposer: </span>
-                <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( proposal.proposer ) : false; else elseVetoVoter">
-                  {{ (appState | async).valsMap.get( proposal.proposer )}}
-                </span>
-                <ng-template #elseVetoVoter>{{proposal.proposer}}</ng-template>
-            </li>
-            <li class="list-group-item"><span class="font-weight-bold">Deposit: </span>{{proposal.total_deposit[0].amount/1e6 | number:".2-2"}} ATOM</li>
-            <li class="list-group-item"><span class="font-weight-bold">Status: </span>{{proposal.proposal_status}}</li>
-            <li class="list-group-item"><span class="font-weight-bold">Voting period: </span>Start - End</li>
-          </ul>
-          <!-- <mdb-card-body>
-            <a href="#!" class="card-link">Card link</a>
-            <a href="#!" class="card-link">Another link</a>
-          </mdb-card-body> -->
-        </mdb-card>
+      <div class="row row-2">
+        <div class="my-5">
+            <mdb-tabset [buttonClass]="'pills-secondary white mb-2'" [contentClass]="'card'">
+                <mdb-tab heading="ALL">
+                  <div class="row">
+                    <div class="col-12 voters-list">
+                      <p *ngFor="let voter of proposal.currentVotes.All">
+                        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( voter ) : false; else elseVoter">
+                          {{ (appState | async).valsMap.get( voter )}}
+                        </span>
+                        <ng-template #elseVoter>{{voter}}</ng-template>
+                      </p>
+                    </div>
+                  </div>
+                </mdb-tab>
+                <mdb-tab heading="YES">
+                  <div class="row">
+                    <div class="col-12 voters-list">
+                      <p *ngFor="let voter of proposal.currentVotes.Yes">
+                        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( voter ) : false; else elseYesVoter">
+                          {{ (appState | async).valsMap.get( voter )}}
+                        </span>
+                        <ng-template #elseYesVoter>{{voter}}</ng-template>
+                      </p>
+                    </div>
+                  </div>
+                </mdb-tab>
+                <mdb-tab heading="NO">
+                  <div class="row">
+                    <div class="col-12 voters-list">
+                      <p *ngFor="let voter of proposal.currentVotes.No">
+                        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( voter ) : false; else elseNoVoter">
+                          {{ (appState | async).valsMap.get( voter )}}
+                        </span>
+                        <ng-template #elseNoVoter>{{voter}}</ng-template>
+                      </p>
+                    </div>
+                  </div>
+                </mdb-tab>
+                <mdb-tab heading="NOWITHVETO">
+                  <div class="row">
+                    <div class="col-12 voters-list">
+                      <p *ngFor="let voter of proposal.currentVotes.NoWithVeto">
+                        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( voter ) : false; else elseVetoVoter">
+                          {{ (appState | async).valsMap.get( voter )}}
+                        </span>
+                        <ng-template #elseVetoVoter>{{voter}}</ng-template>
+                      </p>
+                    </div>
+                  </div>
+                </mdb-tab>
+                <mdb-tab heading="ABSTAIN">
+                  <div class="row">
+                    <div class="col-12 voters-list">
+                      <p *ngFor="let voter of proposal.currentVotes.Abstain">
+                        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( voter ) : false; else elseAbstainVoter">
+                          {{ (appState | async).valsMap.get( voter )}}
+                        </span>
+                        <ng-template #elseAbstainVoter>{{voter}}</ng-template>
+                      </p>
+                    </div>
+                  </div>
+                </mdb-tab>
+                <mdb-tab heading="DEPOSIT">
+                  <div class="row">
+                    <div class="col-12 voters-list">
+                      <p *ngFor="let deposit of proposal.currentDeposit">
+                        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( deposit.depositor ) : false; else elseAbstainVoter">
+                          {{ (appState | async).valsMap.get( deposit.depositor )}} - {{deposit.amount[0].amount}} {{deposit.amount[0].denom}}
+                        </span>
+                        <ng-template #elseAbstainVoter>
+                          {{deposit.depositor}} - {{deposit.amount[0].amount}} {{deposit.amount[0].denom}}
+                        </ng-template>
+                      </p>
+                    </div>
+                  </div>
+                </mdb-tab>
+              </mdb-tabset>
+        </div>
       </div>
+    </mat-card>
+  </div>
+</section> -->
+
+<section class="section">
+    <div class="row main-row">
+
+        <div class="col-md-4">
+            <div class="my-5">
+                <mdb-card style="max-width: 100%;" class="text-left">
+                    <mdb-card-body>
+                      <mdb-card-title>
+                        <h5 class="proposal-title font-weight-bold mb-3">{{proposal.proposal_content.value.title}}</h5>
+                      </mdb-card-title>
+                      <mdb-card-text class="mb-0 text-left">
+                        {{proposal.proposal_content.value.description}}
+                      </mdb-card-text>
+                    </mdb-card-body>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                          <span class="font-weight-bold">Proposer: </span>
+                          <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( proposal.proposer ) : false; else elseVetoVoter">
+                            {{ (appState | async).valsMap.get( proposal.proposer )}}
+                          </span>
+                          <ng-template #elseVetoVoter>{{proposal.proposer}}</ng-template>
+                      </li>
+                      <li class="list-group-item"><span class="font-weight-bold">Deposit: </span>{{proposal.total_deposit[0].amount/1e6 | number:".2-2"}} ATOM</li>
+                      <li class="list-group-item"><span class="font-weight-bold">Status: </span>{{proposal.proposal_status}}</li>
+                      <li class="list-group-item"><span class="font-weight-bold">Voting period: </span>Start - End</li>
+                    </ul>
+                </mdb-card>
+            </div>
+            <div class="my-5">
+                <mat-card>
+                    <div style="display: block" class="row">
+                      <canvas mdbChart
+                        [chartType]="chartType"
+                        [datasets]="chartDatasets"
+                        [labels]="chartLabels"
+                        [colors]="chartColors"
+                        [options]="chartOptions"
+                        [legend]="true"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)">
+                      </canvas>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="my-5">
+                <mat-card alignment="left">
+                    <div class="card-body">
+                        <table class="table large-header">
+                            <thead>
+                                <tr>
+                                    <th>Country</th>
+                                    <th>Visits</th>
+                                    <th>Pages</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>United States</td>
+                                    <td>27315</td>
+                                    <td>3307</td>
+                                </tr>
+                                <tr>
+                                    <td>India</td>
+                                    <td>55432</td>
+                                    <td>3504</td>
+                                </tr>
+                                <tr>
+                                    <td>China</td>
+                                    <td>44341</td>
+                                    <td>4613</td>
+                                </tr>
+                                <tr>
+                                    <td>Poland</td>
+                                    <td>14514</td>
+                                    <td>3208</td>
+                                </tr>
+                                <tr>
+                                    <td>Italy</td>
+                                    <td>2424</td>
+                                    <td>1414</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </mat-card>
+            </div>
+
+            <div class="my-5">
+                <mat-card alignment="left">
+                    <div class="card-body">
+                        <table class="table large-header">
+                            <thead>
+                                <tr>
+                                    <th>Browser</th>
+                                    <th>Visits</th>
+                                    <th>Pages</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Google Chrome</td>
+                                    <td>53415</td>
+                                    <td>3307</td>
+                                </tr>
+                                <tr>
+                                    <td>Mozilla Firefox</td>
+                                    <td>23332</td>
+                                    <td>2504</td>
+                                </tr>
+                                <tr>
+                                    <td>Safari</td>
+                                    <td>13141</td>
+                                    <td>3613</td>
+                                </tr>
+                                <tr>
+                                    <td>Opera</td>
+                                    <td>1114</td>
+                                    <td>208</td>
+                                </tr>
+                                <tr>
+                                    <td>Microsoft Edge</td>
+                                    <td>124</td>
+                                    <td>14</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+        
     </div>
-    <!-- Tabset tabs -->
-    <!-- <mdb-tabset [vertical]="true" [buttonClass]="'tabs-white flex-column list-group'" [contentClass]="'vertical'">
-      <mdb-tab heading="<a class='list-group-item'> Title </a>">
-        <div class="row">
-          <div class="col-12 voters-list waves-light" mdbWavesEffect>
-            <br>
-            <p class="h5"> Title </p>
-            <p>proposal title</p>
-          </div>
-        </div>
-      </mdb-tab>
-      <mdb-tab heading="<a class='list-group-item'> Proposer </a>">
-        <div class="row">
-          <div class="col-12 voters-list waves-light" mdbWavesEffect>
-            <br>
-            <p class="h5"> Proposer </p>
-            <p>proposer name</p>
-          </div>
-        </div>
-      </mdb-tab>
-      <mdb-tab heading="<a class='list-group-item'> Description </a>">
-        <div class="row">
-          <div class="col-12 voters-list waves-light" mdbWavesEffect>
-            <br>
-            <p class="h5"> Description </p>
-            <p>proposal content</p>
-          </div>
-        </div>
-      </mdb-tab>
-      <mdb-tab heading="<a class='list-group-item'> Deposit </a>">
-        <div class="row">
-          <div class="col-12 voters-list waves-light" mdbWavesEffect>
-            <br>
-            <p class="h5"> Deposit </p>
-            <p>proposal deposits</p>
-          </div>
-        </div>
-      </mdb-tab>
-      <mdb-tab heading="<a class='list-group-item'> Voting Period </a>">
-        <div class="row">
-          <div class="col-12 voters-list waves-light" mdbWavesEffect>
-            <br>
-            <p class="h5"> Voting Period </p>
-            <p>Begin time - End time</p>
-          </div>
-        </div>
-      </mdb-tab>
-    </mdb-tabset> -->
-    <div class="row row-2">
-      <!-- Nav tabs -->
-      <mdb-tabset [buttonClass]="'pills-secondary white mb-2'" [contentClass]="'card'">
-        <!--Panel 1-->
-        <mdb-tab heading="ALL">
-          <div class="row">
-            <div class="col-12 voters-list">
-              <p *ngFor="let voter of proposal.currentVotes.All">
-                <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( voter ) : false; else elseVoter">
-                  {{ (appState | async).valsMap.get( voter )}}
-                </span>
-                <ng-template #elseVoter>{{voter}}</ng-template>
-              </p>
-            </div>
-          </div>
-        </mdb-tab>
-        <!--Panel 2-->
-        <mdb-tab heading="YES">
-          <div class="row">
-            <div class="col-12 voters-list">
-              <p *ngFor="let voter of proposal.currentVotes.Yes">
-                <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( voter ) : false; else elseYesVoter">
-                  {{ (appState | async).valsMap.get( voter )}}
-                </span>
-                <ng-template #elseYesVoter>{{voter}}</ng-template>
-              </p>
-            </div>
-          </div>
-        </mdb-tab>
-        <!--Panel 3-->
-        <mdb-tab heading="NO">
-          <div class="row">
-            <div class="col-12 voters-list">
-              <p *ngFor="let voter of proposal.currentVotes.No">
-                <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( voter ) : false; else elseNoVoter">
-                  {{ (appState | async).valsMap.get( voter )}}
-                </span>
-                <ng-template #elseNoVoter>{{voter}}</ng-template>
-              </p>
-            </div>
-          </div>
-        </mdb-tab>
-        <mdb-tab heading="NOWITHVETO">
-          <div class="row">
-            <div class="col-12 voters-list">
-              <p *ngFor="let voter of proposal.currentVotes.NoWithVeto">
-                <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( voter ) : false; else elseVetoVoter">
-                  {{ (appState | async).valsMap.get( voter )}}
-                </span>
-                <ng-template #elseVetoVoter>{{voter}}</ng-template>
-              </p>
-            </div>
-          </div>
-        </mdb-tab>
-        <mdb-tab heading="ABSTAIN">
-          <div class="row">
-            <div class="col-12 voters-list">
-              <p *ngFor="let voter of proposal.currentVotes.Abstain">
-                <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( voter ) : false; else elseAbstainVoter">
-                  {{ (appState | async).valsMap.get( voter )}}
-                </span>
-                <ng-template #elseAbstainVoter>{{voter}}</ng-template>
-              </p>
-            </div>
-          </div>
-        </mdb-tab>
-        <mdb-tab heading="DEPOSIT">
-          <div class="row">
-            <div class="col-12 voters-list">
-              <p *ngFor="let deposit of proposal.currentDeposit">
-                <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( deposit.depositor ) : false; else elseAbstainVoter">
-                  {{ (appState | async).valsMap.get( deposit.depositor )}} - {{deposit.amount[0].amount}} {{deposit.amount[0].denom}}
-                </span>
-                <ng-template #elseAbstainVoter>
-                  {{deposit.depositor}} - {{deposit.amount[0].amount}} {{deposit.amount[0].denom}}
-                </ng-template>
-              </p>
-            </div>
-          </div>
-        </mdb-tab>
-      </mdb-tabset>
-    </div>
-  </mat-card>
-</div>
+</section>
