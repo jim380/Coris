@@ -39,10 +39,6 @@ import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { AgmCoreModule } from '@agm/core';
 import { TestComponent } from './components/test/test.component';
 import { SidenavComponent } from './components/navigation/sidenav/sidenav.component';
-import { LineChartComponent } from './components/charts/line-chart/line-chart.component';
-import { VerticalBarChartComponent } from './components/charts/vertical-bar-chart/vertical-bar-chart.component';
-import { PieChartComponent } from './components/charts/pie-chart/pie-chart.component';
-import { HorizontalBarChartComponent } from './components/charts/horizontal-bar-chart/horizontal-bar-chart.component';
 import { VerticalTabsComponent } from './components/validator-profile/vertical-tabs/vertical-tabs.component';
 import { ProfileCardComponent } from './components/validator-profile/profile-card/profile-card.component';
 import { CarouselComponent } from './components/status-bar/carousel/carousel.component';
@@ -57,6 +53,8 @@ import { PowerEventCardComponent } from './components/validator-profile/power-ev
 import { ProposedBlocksCardComponent } from './components/validator-profile/proposed-blocks-card/proposed-blocks-card.component';
 import { StatusCard1Component } from './components/test/status-card1/status-card1.component';
 import { StatusCard2Component } from './components/test/status-card2/status-card2.component';
+import { ChartCardsComponent } from './components/charts/chart-cards/chart-cards.component';
+import { ChartCardsGovComponent } from './components/charts/chart-cards-gov/chart-cards-gov.component';
 
 declare var Hammer: any;
 
@@ -103,10 +101,6 @@ export class MyHammerConfig extends HammerGestureConfig {
     AgoPipe,
     TestComponent,
     SidenavComponent,
-    LineChartComponent,
-    VerticalBarChartComponent,
-    PieChartComponent,
-    HorizontalBarChartComponent,
     VerticalTabsComponent,
     ProfileCardComponent,
     CarouselComponent,
@@ -119,7 +113,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     PowerEventCardComponent,
     ProposedBlocksCardComponent,
     StatusCard1Component,
-    StatusCard2Component
+    StatusCard2Component,
+    ChartCardsComponent,
+    ChartCardsGovComponent
     // UniversalSearchBarComponent,
   ],
   entryComponents: [
