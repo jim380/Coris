@@ -56,6 +56,7 @@ import { StatusCard2Component } from './components/test/status-card2/status-card
 import { ChartCardsComponent } from './components/charts/chart-cards/chart-cards.component';
 import { ChartCardsGovComponent } from './components/charts/chart-cards-gov/chart-cards-gov.component';
 import { ClipboardModule } from 'ngx-clipboard';
+import { ToastrModule } from 'ngx-toastr';
 
 declare var Hammer: any;
 
@@ -143,6 +144,13 @@ export class MyHammerConfig extends HammerGestureConfig {
     FormsModule,
     ReactiveFormsModule,
     MDBBootstrapModulesPro.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+      progressBar: true,
+      closeButton: true,
+    }),
     AgmCoreModule.forRoot({ apiKey: 'ULKdG4NuUxzJcpQFspxF' })
 
   ],

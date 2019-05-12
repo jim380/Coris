@@ -38,6 +38,7 @@
     "ng-uikit-pro-standard": "git+https://oauth2:ULKdG4NuUxzJcpQFspxF@git.mdbootstrap.com/mdb/angular/ng-uikit-pro-standard.git",
     "ng2-charts": "^2.2.2",
     "ngx-clipboard": "^12.0.0",
+    "ngx-toastr": "^10.0.4",
     "rxjs": "~6.3.3",
     "screenfull": "^3.3.0",
     "time-ago-pipe": "^1.3.2",

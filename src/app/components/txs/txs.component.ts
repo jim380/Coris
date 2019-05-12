@@ -9,6 +9,7 @@ import { nodeRpc1, nodeRpc2 } from '../../../config.js'
 import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
 import { MatTableDataSource, MatPaginator, MatTable, MatSort } from '@angular/material';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -75,7 +76,11 @@ export class TxsComponent implements OnInit {
   // lastPage = 1;
   appState: Observable<State>;
 
-  constructor(private store: Store <State>, private http: HttpClient, private router: Router) { }
+  constructor(
+    private toastr: ToastrService,
+    private store: Store <State>,
+    private http: HttpClient,
+    private router: Router) { }
 
   ngOnInit() {
     this.appState = this.store.select('App');
@@ -226,4 +231,11 @@ export class TxsComponent implements OnInit {
   queryTx(txHash) {
     this.router.navigate([`/tx/${txHash}`]);
   }
+
+  showSuccess() {
+    // const options = { toastClass: 'opacity' };
+    this.toastr.success('Copied to clipboard');
+  }
+
 }
+

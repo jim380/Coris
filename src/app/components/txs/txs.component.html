@@ -21,7 +21,7 @@
         <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-pound"></i>Hash</th>
         <td mat-cell *matCellDef="let tx" mdbWavesEffect> 
           <span matTooltip="tx.hash" matTooltipPosition="above">
-            {{tx.hash | slice:0:15 }}... <i class="ion-ios-copy-outline copy-button" style="cursor: pointer;" ngxClipboard [cbContent]="tx.hash"></i>
+            {{tx.hash | slice:0:15 }}... <i class="ion-ios-copy-outline copy-button" style="cursor: pointer;" ngxClipboard [cbContent]="tx.hash" (click)="showSuccess()"></i>
           </span>
           </td>
       </ng-container>

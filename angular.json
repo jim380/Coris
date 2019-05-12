@@ -36,6 +36,7 @@
               "node_modules/@fortawesome/fontawesome-free/scss/brands.scss",
               "node_modules/ng-uikit-pro-standard/assets/scss/bootstrap/bootstrap.scss",
               "node_modules/ng-uikit-pro-standard/assets/scss/mdb.scss",
+              "node_modules/ngx-toastr/toastr.css",
               "src/styles.scss",
               "src/app/theme.scss"
             ],
