@@ -55,6 +55,7 @@ import { StatusCard1Component } from './components/test/status-card1/status-card
 import { StatusCard2Component } from './components/test/status-card2/status-card2.component';
 import { ChartCardsComponent } from './components/charts/chart-cards/chart-cards.component';
 import { ChartCardsGovComponent } from './components/charts/chart-cards-gov/chart-cards-gov.component';
+import { ClipboardModule } from 'ngx-clipboard';
 
 declare var Hammer: any;
 
@@ -136,6 +137,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     HttpClientModule,
     BrowserAnimationsModule,
     ChartsModule,
+    ClipboardModule,
     StoreModule.forRoot({ App: appReducer }),
     LayoutModule,
     FormsModule,

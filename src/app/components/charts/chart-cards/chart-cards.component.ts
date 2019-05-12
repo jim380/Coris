@@ -18,19 +18,21 @@ export class ChartCardsComponent implements OnInit {
     },
     {
       data: [2, 7, 8],
-      label: 'Max Rate'
+      label: 'Max Rate',
+      hidden: true
     },
     {
       data: [11, 1, 10, 2],
-      label: 'Rate Change'
+      label: 'Rate Change',
+      hidden: true
     }
   ];
   public commissionChartLabels: Array<any> = [];
   public commissionChartColors: Array<any> = [
     {
       backgroundColor: 'rgba(255,255,255,0.2)',
-      borderColor: 'rgba(255,255,255,1)',
-      borderWidth: 2,
+      // borderColor: 'rgba(255,255,255,1)',
+      // borderWidth: 1,
       pointBackgroundColor: 'rgba(255,255,255,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
@@ -38,8 +40,8 @@ export class ChartCardsComponent implements OnInit {
     },
     {
       backgroundColor: 'rgba(255,255,255,0.2)',
-      borderColor: 'rgba(255,255,255,1)',
-      borderWidth: 2,
+      // borderColor: 'rgba(255,255,255,1)',
+      // borderWidth: 1,
       pointBackgroundColor: 'rgba(255,255,255,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
@@ -47,8 +49,8 @@ export class ChartCardsComponent implements OnInit {
     },
     {
       backgroundColor: 'rgba(255,255,255,0.2)',
-      borderColor: 'rgba(255,255,255,1)',
-      borderWidth: 2,
+      // borderColor: 'rgba(255,255,255,1)',
+      // borderWidth: 1,
       pointBackgroundColor: 'rgba(255,255,255,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
