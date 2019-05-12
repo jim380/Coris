@@ -11,25 +11,22 @@ import { distinctUntilChanged } from 'rxjs/operators';
 })
 export class ChartCardsComponent implements OnInit {
   // public map: any = { lat: 51.678418, lng: 7.809007 };
-  
   public commissionChartType = 'bar';
   public commissionChartDatasets: Array<any> = [
     {
-      data: [65, 59, 80, 90, 5],
-      labels: [0, 50, 60, 80, 100],
+      data: [],
       label: 'Rate'
     },
     {
-      data: [12, 50, 20, 10, 12],
-      labels: [0, 30, 60, 80, 100],
+      data: [2, 7, 8],
       label: 'Max Rate'
     },
     {
-      data: [12, 50, 20, 10, 12],
-      labels: [0, 40, 60, 80, 100],
-      label: 'Max Change'
+      data: [11, 1, 10, 2],
+      label: 'Rate Change'
     }
   ];
+  public commissionChartLabels: Array<any> = [];
   public commissionChartColors: Array<any> = [
     {
       backgroundColor: 'rgba(255,255,255,0.2)',
@@ -79,7 +76,6 @@ export class ChartCardsComponent implements OnInit {
       }]
     }
   };
-  public commissionChartLabels: Array<any> = [0, .25, .50, .75, 1];
   
   public blockChartType = 'line';
   public blockChartDatasets: Array<any> = [
@@ -171,20 +167,28 @@ export class ChartCardsComponent implements OnInit {
       this.comissions.max_rate.push( Number(validator.commission.max_rate) );
       this.comissions.rate.push( Number(validator.commission.rate) );
     });
-    console.log( this.comissions.rate.sort((a,b)=>a-b) );
-    console.log( this.comissions.max_change_rate.sort((a,b)=>a-b) );
-    console.log( this.comissions.max_rate.sort((a,b)=>a-b) );
+
+    // TODO remove debugging
+    // console.log( this.comissions.rate.sort((a,b)=>a-b) );
+    // console.log( this.comissions.max_change_rate.sort((a,b)=>a-b) );
+    // console.log( this.comissions.max_rate.sort((a,b)=>a-b) );
 
     let rateMap = this.getArrayDistribution(this.comissions.rate.sort((a,b)=>a-b));
     let changeRateMap = this.getArrayDistribution(this.comissions.max_change_rate.sort((a,b)=>a-b));
-    let maxRate = this.getArrayDistribution(this.comissions.max_rate.sort((a,b)=>a-b));
+    let maxRateMap = this.getArrayDistribution(this.comissions.max_rate.sort((a,b)=>a-b));
 
-    this.commissionChartLabels = this.getLabelsArray([rateMap, changeRateMap, maxRate]);
-    
-    // this.setBlockChartData(rateMap);
-    // this.setBlockChartData(changeRateMap);
-    // this.setBlockChartData(maxRate);
+    let commissionChartLabels = this.getLabelsArray([rateMap, changeRateMap, maxRateMap]);
 
+    // TODO remove debugging
+    // console.log(commissionChartLabels);
+
+    this.fillMaps([rateMap, changeRateMap, maxRateMap], commissionChartLabels);
+
+    let rateArray = this.convertToArray(rateMap, commissionChartLabels);
+    let maxRateArray = this.convertToArray(maxRateMap, commissionChartLabels);
+    let changeRateArray =  this.convertToArray(changeRateMap, commissionChartLabels);
+
+    this.initCommissionGraph(commissionChartLabels, rateArray, maxRateArray, changeRateArray);
   }
 
   getArrayDistribution(array: any) {
@@ -208,18 +212,39 @@ export class ChartCardsComponent implements OnInit {
 
     array.forEach( (map: any) => {
       map.forEach((value, key) => {
-        if (labelArray.indexOf(key) === -1) { 
+        if ( labelArray.indexOf(key) === -1 ) { 
           labelArray.push(key); 
         }
       });
     });
-
     return labelArray.sort((a,b)=>a-b);
   }
-  setBlockChartData(distributionMap) {
-    distributionMap.forEach((value, key) => {
-      // this.commissionChartLabels.push(key);
-      console.log('key: ', key, 'value: ', value, '\n');
+
+  fillMaps(mapArray: any, array: any) {
+    mapArray.forEach( (map: any) => {
+      array.forEach(element => {
+        if( (!map.has(element)) ) {
+          map.set(element, 0);
+        }
+      });
     });
+  }
+
+  convertToArray(map: any, array: any) {
+    let convertedArray = [];
+    array.forEach((element, index) => {
+      convertedArray[index] = map.get(element);
+    });
+
+    return convertedArray;
+  }
+
+  initCommissionGraph(labels, rate, maxRate, rateChange) {
+    this.commissionChartLabels = labels.map((x) => {
+      return x.toFixed(3);
+    });
+    this.commissionChartDatasets[0].data = rate;
+    this.commissionChartDatasets[1].data = maxRate;
+    this.commissionChartDatasets[2].data = rateChange;
   }
 }
