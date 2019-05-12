@@ -77,7 +77,7 @@ export class CarouselComponent implements OnInit {
       this.slides = this.chunk(cards, 1);
       this.layout = 2;
     } else if(screenWidth > 730 && this.layout === 2) {
-      this.slides = this.chunk(cards, 6);
+      this.slides = this.chunk(cards, 4);
       this.layout = 1;
     }
   }

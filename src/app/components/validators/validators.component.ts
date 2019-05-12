@@ -107,6 +107,14 @@ export class ValidatorsComponent implements OnInit {
     });
   }
 
+  openValidatorDetailDialog(validator) {
+    this.dialog.open( ValidatorComponent,  {
+      data: { 
+        validator
+      }
+    });
+  }
+
   openRewardsDialog(validator) {
     this.dialog.open( RewardsCardComponent,  {
       data: { 
