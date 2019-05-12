@@ -3,6 +3,10 @@ import { Observable } from 'rxjs';
 import { State } from 'src/app/interfaces/state.interface';
 import { Store } from '@ngrx/store';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { 
+  commissionChart,
+  radarChart,
+  blockChart } from './chart-cards.config';
 
 @Component({
   selector: 'app-chart-cards',
@@ -10,111 +14,22 @@ import { distinctUntilChanged } from 'rxjs/operators';
   styleUrls: ['./chart-cards.component.scss']
 })
 export class ChartCardsComponent implements OnInit {
-  public commissionChartType = 'bar';
-  public commissionChartDatasets: Array<any> = [
-    {
-      data: [],
-      label: 'Rate'
-    },
-    {
-      data: [2, 7, 8],
-      label: 'Max Rate',
-      hidden: true
-    },
-    {
-      data: [11, 1, 10, 2],
-      label: 'Rate Change',
-      hidden: true
-    }
-  ];
-  public commissionChartLabels: Array<any> = [];
-  public commissionChartColors: Array<any> = [
-    {
-      backgroundColor: 'rgba(255,255,255,0.2)',
-      // borderColor: 'rgba(255,255,255,1)',
-      // borderWidth: 1,
-      pointBackgroundColor: 'rgba(255,255,255,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(255,255,255,1)'
-    },
-    {
-      backgroundColor: 'rgba(255,255,255,0.2)',
-      // borderColor: 'rgba(255,255,255,1)',
-      // borderWidth: 1,
-      pointBackgroundColor: 'rgba(255,255,255,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(255,255,255,1)'
-    },
-    {
-      backgroundColor: 'rgba(255,255,255,0.2)',
-      // borderColor: 'rgba(255,255,255,1)',
-      // borderWidth: 1,
-      pointBackgroundColor: 'rgba(255,255,255,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(255,255,255,1)'
-    }
-  ];
-  public commissionChartOptions: any = {
-    responsive: true,
-    legend: {
-      labels: {
-        fontColor: 'white',
-      }
-    },
-    scales: {
-      yAxes: [{
-        ticks: {
-          fontColor: 'white',
-        }
-      }],
-      xAxes: [{
-        ticks: {
-          fontColor: 'white',
-        }
-      }]
-    }
-  };
+  public commissionChartType = commissionChart.type;
+  public commissionChartDatasets = commissionChart.datasets;
+  public commissionChartLabels = commissionChart.labels;
+  public commissionChartColors = commissionChart.colors;
+  public commissionChartOptions = commissionChart.options;
   
-  public blockChartType = 'line';
-  public blockChartDatasets: Array<any> = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: '#1'},
-    {data: [28, 48, 10, 69, 36, 37, 110], label: '#2'},
-    {data: [38, 58, 30, 79, 26, 37, 20], label: '#3'},
-    {data: [48, 68, 20, 89, 76, 27, 40], label: '#4'}
-  ];
-  public blockChartLabels: Array<any> = [0, 40, 60, 80, 100];
-  public blockChartColors: Array<any> = [
-    {
-      backgroundColor: 'rgba(220,220,220,0.2)',
-      borderColor: 'rgba(220,220,220,1)',
-      borderWidth: 2,
-      pointBackgroundColor: 'rgba(220,220,220,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(220,220,220,1)'
-    }
-  ];
+  public blockChartType = blockChart.type;
+  public blockChartDatasets = blockChart.datasets;
+  public blockChartLabels = blockChart.labels;
+  public blockChartColors = blockChart.colors;
 
-  public radarChartType = 'radar';
-  public radarChartDatasets: Array<any> = [65, 59, 40, 87];
-  public radarChartColors: Array<any> = [
-    {
-      backgroundColor: ['#4285F4', '#ffbb33', '#29b6f6', '#FF5252'],
-      hoverBackgroundColor: ['#6ea0f2', '#fec451', '#52c3f6', '#fa6e6e']
-    }
-  ];
-  public radarChartOptions: any = {
-    responsive: true,
-    legend: {
-      labels: {
-        fontColor: 'white',
-      }
-    }
-  };
-  public radarChartLabels: Array<any> = [0, 40, 60, 80, 100];
+  public radarChartType = radarChart.type;
+  public radarChartDatasets = radarChart.datasets;
+  public radarChartColors = radarChart.colors;
+  public radarChartOptions = radarChart.options;
+  public radarChartLabels = radarChart.labels;
 
 
   appState: Observable<State>;

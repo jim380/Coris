@@ -44,4 +44,4 @@ let cards = [
     timestamp: formattedTime
   }
 ];
-export { cards} ;
+export { cards };
