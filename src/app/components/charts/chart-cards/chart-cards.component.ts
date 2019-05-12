@@ -10,7 +10,6 @@ import { distinctUntilChanged } from 'rxjs/operators';
   styleUrls: ['./chart-cards.component.scss']
 })
 export class ChartCardsComponent implements OnInit {
-  // public map: any = { lat: 51.678418, lng: 7.809007 };
   public commissionChartType = 'bar';
   public commissionChartDatasets: Array<any> = [
     {
@@ -162,12 +161,10 @@ export class ChartCardsComponent implements OnInit {
     data.forEach( (validator: any) => {
       // TODO remove debugging
       // console.log(validator.commission);
-
       this.comissions.max_change_rate.push( Number(validator.commission.max_change_rate) );
       this.comissions.max_rate.push( Number(validator.commission.max_rate) );
       this.comissions.rate.push( Number(validator.commission.rate) );
     });
-
     // TODO remove debugging
     // console.log( this.comissions.rate.sort((a,b)=>a-b) );
     // console.log( this.comissions.max_change_rate.sort((a,b)=>a-b) );

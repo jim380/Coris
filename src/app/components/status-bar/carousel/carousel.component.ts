@@ -12,16 +12,23 @@ import { DatePipe } from '@angular/common';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { BreadcrumbModule } from 'ng-uikit-pro-standard';
 
+export const BREAKPOINTS = {
+  MD: 768,
+  XL: 1200,  
+}
+
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss']
 })
+
 export class CarouselComponent implements OnInit {
   slides: any = [[]];
   appState: Observable<State>;
   // 1 - for bigger screens
   // 2 - for smaller screens
+  // 3 - for medium screens
   layout: number;
   datePipe = new DatePipe('en-US');
 
@@ -67,19 +74,24 @@ export class CarouselComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
+
+    console.log(window.innerWidth);
     let screenWidth = window.innerWidth;
     
     if(!this.layout) {
-      this.layout = screenWidth > 730 ? 2 : 1; 
+      this.layout = screenWidth > BREAKPOINTS.MD ? 2 : 1; 
     }
 
-    if(screenWidth < 730 && this.layout === 1) {
+    if(screenWidth < BREAKPOINTS.MD && this.layout === 1) {
       this.slides = this.chunk(cards, 1);
       this.layout = 2;
-    } else if(screenWidth > 730 && this.layout === 2) {
+    } else if(screenWidth > BREAKPOINTS.MD && this.layout === 2) {
       this.slides = this.chunk(cards, 4);
       this.layout = 1;
-    }
+    } 
+    // else if(screenWidth) {
+
+    // }
   }
   
   chunk(arr, chunkSize) {
@@ -87,7 +99,8 @@ export class CarouselComponent implements OnInit {
     for (let i = 0, len = arr.length; i < len; i += chunkSize) {
       R.push(arr.slice(i, i + chunkSize));
     }
-    // console.log(R);
+    // TODO remove debugging
+    console.log(R);
     return R;
   }
   
@@ -179,8 +192,8 @@ export class CarouselComponent implements OnInit {
         let blockTime = data/1000;
         let currentTime = this.getCurrentTime();
         if (this.layout === 1) {
-          this.slides[0][4].data = blockTime.toFixed(2);
-          this.slides[0][4].timestamp = currentTime;
+          this.slides[1][0].data = blockTime.toFixed(2);
+          this.slides[1][0].timestamp = currentTime;
         } else {
           this.slides[4][0].data = blockTime.toFixed(2);
           this.slides[4][0].timestamp = currentTime;
@@ -196,8 +209,8 @@ export class CarouselComponent implements OnInit {
       let currentTime = this.getCurrentTime();
 
       if (this.layout === 1) {
-        this.slides[0][5].data = (communityPool.amount/1e6).toFixed(0);
-        this.slides[0][5].timestamp = currentTime;
+        this.slides[1][1].data = (communityPool.amount/1e6).toFixed(0);
+        this.slides[1][1].timestamp = currentTime;
       } else {
         this.slides[5][0].data = (communityPool.amount/1e6).toFixed(0);
         this.slides[5][0].timestamp = currentTime;
@@ -213,8 +226,8 @@ export class CarouselComponent implements OnInit {
         let inflation = Number(data);
         let currentTime = this.getCurrentTime();
         if (this.layout === 1) {
-          this.slides[1][0].data = `${(inflation*100).toFixed(2)}%`;
-          this.slides[1][0].timestamp = currentTime;
+          this.slides[1][2].data = `${(inflation*100).toFixed(2)}%`;
+          this.slides[1][2].timestamp = currentTime;
         } else {
           this.slides[6][0].data = `${(inflation*100).toFixed(2)}%`;
           this.slides[6][0].timestamp = currentTime;
@@ -231,8 +244,8 @@ export class CarouselComponent implements OnInit {
         let currentTime = this.getCurrentTime();
   
         if (this.layout === 1) {
-          this.slides[1][1].data = price.toFixed(2);
-          this.slides[1][1].timestamp = currentTime;
+          this.slides[1][3].data = price.toFixed(2);
+          this.slides[1][3].timestamp = currentTime;
         } else {
           this.slides[7][0].data = price.toFixed(2);
           this.slides[7][0].timestamp = currentTime;
