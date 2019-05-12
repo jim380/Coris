@@ -29,7 +29,7 @@ export class CarouselComponent implements OnInit {
   // 1 - for bigger screens
   // 2 - for smaller screens
   // 3 - for medium screens
-  layout: number;
+  screenLayot: string;
   datePipe = new DatePipe('en-US');
 
   constructor(
@@ -68,39 +68,57 @@ export class CarouselComponent implements OnInit {
     this.ws.unsubscribe();
   }
 
-  getCurrentTime() {
-    return this.datePipe.transform( Date.now(), 'h:mm a');
-  }
+  
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
-
-    console.log(window.innerWidth);
+    // TODO remove debugging
+    // console.log(window.innerWidth);
     let screenWidth = window.innerWidth;
     
-    if(!this.layout) {
-      this.layout = screenWidth > BREAKPOINTS.MD ? 2 : 1; 
+    if(!this.screenLayot || this.screenLayot != this.getScreenLayout(screenWidth)) {
+      this.screenLayot = this.getScreenLayout(screenWidth);
+
+      switch (this.screenLayot) {
+        case 'XL': {
+          this.slides = this.chunk(cards, 4);
+          // TODO remove debugging
+          // console.log('XL');
+          break;
+        }
+        case 'MD': {
+          this.slides = this.chunk(cards, 2);
+          // TODO remove debugging
+          // console.log('MD');
+          break;
+        }   
+        case 'SM': {
+          this.slides = this.chunk(cards, 1);
+          // TODO remove debugging
+          // console.log('SM');
+          break;
+        }
+      }
     }
-
-    if(screenWidth < BREAKPOINTS.MD && this.layout === 1) {
-      this.slides = this.chunk(cards, 1);
-      this.layout = 2;
-    } else if(screenWidth > BREAKPOINTS.MD && this.layout === 2) {
-      this.slides = this.chunk(cards, 4);
-      this.layout = 1;
-    } 
-    // else if(screenWidth) {
-
-    // }
   }
   
+  getScreenLayout(width) {
+    if(width > BREAKPOINTS.XL) {
+      return 'XL';
+    } else if(width > BREAKPOINTS.MD){
+      return 'MD';
+    } else {
+      return 'SM';
+    }
+  }
+
   chunk(arr, chunkSize) {
     let R = [];
     for (let i = 0, len = arr.length; i < len; i += chunkSize) {
       R.push(arr.slice(i, i + chunkSize));
     }
     // TODO remove debugging
-    console.log(R);
+    // console.log(R);
     return R;
   }
   
@@ -112,12 +130,15 @@ export class CarouselComponent implements OnInit {
       let block = data[0];
       let currentTime = this.getCurrentTime();
 
-      if (this.layout === 1) {
+      if (this.screenLayot === 'XL') {
+        this.slides[0][0].data = block.header.height;
+        this.slides[0][0].timestamp = currentTime;
+      } else if (this.screenLayot === 'SM') {
         this.slides[0][0].data = block.header.height;
         this.slides[0][0].timestamp = currentTime;
       } else {
         this.slides[0][0].data = block.header.height;
-        this.slides[0][0].timestamp = currentTime;
+        this.slides[0][0].timestamp = currentTime; 
       }
     }
   }
@@ -128,25 +149,27 @@ export class CarouselComponent implements OnInit {
     if(data) {
       let consensus = data;
       let currentTime = this.getCurrentTime();
+      let formattedStep;
+      if (consensus.step.includes("NewHeight")) {
+        formattedStep = `Block`;
+      } else {
+        formattedStep = consensus.step.substring(9);
+      }
 
-      if (this.layout === 1) {
-        if (consensus.step.includes("NewHeight")) {
-          this.slides[0][1].data = `Block`;
-        } else {
-          this.slides[0][1].data = consensus.step.substring(9);
-        }
-        // this.slides[0][1].data = consensus.step.substring(9);
+      if (this.screenLayot === 'XL') {
+        this.slides[0][1].data = formattedStep;
         this.slides[0][1].title = `round: ${consensus.round}`;
         this.slides[0][1].timestamp = currentTime;
-      } else {
-        if (consensus.step.includes("NewHeight")) {
-          this.slides[1][0].data = `Block`;
-        } else {
-          this.slides[1][0].data = consensus.step.substring(9);
-        }
+      } else if (this.screenLayot === 'SM') {
+        this.slides[1][0].data = formattedStep;
         this.slides[1][0].data = consensus.step.substring(9);
         this.slides[1][0].title = `round: ${consensus.round}`;
         this.slides[1][0].timestamp = currentTime;
+      } else {
+        this.slides[0][1].data = formattedStep;
+        this.slides[0][1].data = consensus.step.substring(9);
+        this.slides[0][1].title = `round: ${consensus.round}`;
+        this.slides[0][1].timestamp = currentTime;
       }
     }
   }
@@ -157,29 +180,34 @@ export class CarouselComponent implements OnInit {
     let validators = data;
     let currentTime = this.getCurrentTime();
 
-    if (this.layout === 1) {
+    if (this.screenLayot === 'XL') {
       this.slides[0][2].data = validators.length;
       this.slides[0][2].timestamp = currentTime;
-    } else {
+    } else if (this.screenLayot === 'SM') {
       this.slides[2][0].data = validators.length;
       this.slides[2][0].timestamp = currentTime;
+    } else {
+      this.slides[1][0].data = validators.length;
+      this.slides[1][0].timestamp = currentTime;
     }
     
   }
   setBondedTokens(data) {
     // TODO @aakatev remove debugging
     // console.log(data);
-    
     if(data.bonded_tokens && data.not_bonded_tokens) {
       let currentTime = this.getCurrentTime();
       let bondedPercentage = ((data.bonded_tokens/1e6)/(data.bonded_tokens/1e6 + data.not_bonded_tokens/1e6)*100).toFixed(2)
 
-      if (this.layout === 1) {
+      if (this.screenLayot === 'XL') {
         this.slides[0][3].data = `${bondedPercentage}%`;
         this.slides[0][3].timestamp = currentTime;
-      } else {
+      } else if (this.screenLayot === 'SM') {
         this.slides[3][0].data = `${bondedPercentage}%`;
         this.slides[3][0].timestamp = currentTime;
+      } else {
+        this.slides[1][1].data = `${bondedPercentage}%`;
+        this.slides[1][1].timestamp = currentTime;
       }
     }
   }
@@ -191,12 +219,15 @@ export class CarouselComponent implements OnInit {
         // console.log(data/1000);
         let blockTime = data/1000;
         let currentTime = this.getCurrentTime();
-        if (this.layout === 1) {
+        if (this.screenLayot === 'XL') {
           this.slides[1][0].data = blockTime.toFixed(2);
           this.slides[1][0].timestamp = currentTime;
-        } else {
+        } else if (this.screenLayot === 'SM') {
           this.slides[4][0].data = blockTime.toFixed(2);
           this.slides[4][0].timestamp = currentTime;
+        } else {
+          this.slides[2][0].data = blockTime.toFixed(2);
+          this.slides[2][0].timestamp = currentTime;
         }
       })
   }
@@ -208,12 +239,15 @@ export class CarouselComponent implements OnInit {
       let communityPool = data.community_pool;
       let currentTime = this.getCurrentTime();
 
-      if (this.layout === 1) {
+      if (this.screenLayot === 'XL') {
         this.slides[1][1].data = (communityPool.amount/1e6).toFixed(0);
         this.slides[1][1].timestamp = currentTime;
-      } else {
+      } else if (this.screenLayot === 'SM') {
         this.slides[5][0].data = (communityPool.amount/1e6).toFixed(0);
         this.slides[5][0].timestamp = currentTime;
+      } else {
+        this.slides[2][1].data = (communityPool.amount/1e6).toFixed(0);
+        this.slides[2][1].timestamp = currentTime;
       }
     }
   }
@@ -225,12 +259,15 @@ export class CarouselComponent implements OnInit {
         // console.log(data);
         let inflation = Number(data);
         let currentTime = this.getCurrentTime();
-        if (this.layout === 1) {
+        if (this.screenLayot === 'XL') {
           this.slides[1][2].data = `${(inflation*100).toFixed(2)}%`;
           this.slides[1][2].timestamp = currentTime;
-        } else {
+        } else if (this.screenLayot === 'SM') {
           this.slides[6][0].data = `${(inflation*100).toFixed(2)}%`;
           this.slides[6][0].timestamp = currentTime;
+        } else {
+          this.slides[3][0].data = `${(inflation*100).toFixed(2)}%`;
+          this.slides[3][0].timestamp = currentTime;
         }
       });
   }
@@ -243,13 +280,21 @@ export class CarouselComponent implements OnInit {
         let price = data.data['3794'].quote.USD.price;
         let currentTime = this.getCurrentTime();
   
-        if (this.layout === 1) {
+        if (this.screenLayot === 'XL') {
           this.slides[1][3].data = price.toFixed(2);
           this.slides[1][3].timestamp = currentTime;
-        } else {
+        } else if (this.screenLayot === 'SM') {
           this.slides[7][0].data = price.toFixed(2);
           this.slides[7][0].timestamp = currentTime;
+        } else {
+          this.slides[3][1].data = price.toFixed(2);
+          this.slides[3][1].timestamp = currentTime;
         }
       });
   }
+
+  getCurrentTime() {
+    return this.datePipe.transform( Date.now(), 'h:mm a');
+  }
+
 }
