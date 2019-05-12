@@ -150,5 +150,17 @@ color: #F44336;/*#00796b;*/
 }
 
 .copy-button {
-  color: #7986CB;
+  color:#3F51B5;
+}
+
+.copy-button:hover,
+.copy-button:active {
+  color:#7986cb;
+  /* border-bottom: 1px solid transparent; */
+}
+
+.button-row {
+  max-width: 90%;
+  justify-content: center;
+  margin: 0 auto;
 }
