@@ -15,6 +15,12 @@ import { State } from 'src/app/interfaces/state.interface';
 
 export class ValidatorComponent implements OnInit {
 
+  validator;
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { 
+    this.validator = data.validator;
+  }
+
   imagesBasic = [
     {
       img: 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(117).jpg',
@@ -62,7 +68,6 @@ export class ValidatorComponent implements OnInit {
       description: 'Image 9'
     }
 ];
-  constructor() { }
 
   ngOnInit() {
   }
