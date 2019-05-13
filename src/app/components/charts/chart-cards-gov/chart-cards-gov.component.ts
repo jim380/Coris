@@ -1,100 +1,64 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-chart-cards-gov',
   templateUrl: './chart-cards-gov.component.html',
   styleUrls: ['./chart-cards-gov.component.scss']
 })
-export class ChartCardsGovComponent implements OnInit {
+export class ChartCardsGovComponent implements OnInit, OnChanges {
+  @Input() proposals: any; 
+  graphRendered = 0;
 
-  public map: any = { lat: 51.678418, lng: 7.809007 };
-
-  public chart3Type = 'pie';
-  public chart2Type = 'pie';
-  public chart1Type = 'pie';
-
-  public chart1Datasets: Array<any> = [65, 59, 40, 87];
-
-  public chart2Datasets: Array<any> = [
-    {
-      data: [65, 59, 80, 90],
-      labels: ['January', 'Febuary', 'March', 'April'],
-      label: '#1'
-    },
-  ];
-
-  public chart3Datasets: Array<any> = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: '#1'},
-    {data: [28, 48, 10, 69, 36, 37, 110], label: '#2'},
-    {data: [38, 58, 30, 79, 26, 37, 20], label: '#3'},
-    {data: [48, 68, 20, 89, 76, 27, 40], label: '#4'}
-  ];
-
-  public chartLabels: Array<any> = ['Jan', 'Feb', 'Mar', 'Apr'];
-
-  public chart1Colors: Array<any> = [
-    {
-      backgroundColor: ['#4285F4', '#ffbb33', '#29b6f6', '#FF5252'],
-      hoverBackgroundColor: ['#6ea0f2', '#fec451', '#52c3f6', '#fa6e6e']
-    }
-  ];
-  public chart2Colors: Array<any> = [
-    {
-        backgroundColor: 'rgba(255,255,255,0.2)',
-        borderColor: 'rgba(255,255,255,1)',
-        borderWidth: 2,
-        pointBackgroundColor: 'rgba(255,255,255,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(255,255,255,1)'
-    }
-  ];
-  public chart3Colors: Array<any> = [
-    {
-        backgroundColor: 'rgba(220,220,220,0.2)',
-        borderColor: 'rgba(220,220,220,1)',
-        borderWidth: 2,
-        pointBackgroundColor: 'rgba(220,220,220,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(220,220,220,1)'
-    }
-  ];
-
-  public chart1Options: any = {
-    responsive: true,
-    legend: {
-      labels: {
-        fontColor: 'white',
+  public govCharts = {
+    type: 'pie',
+    labels: ['Yes', 'No', 'Veto', 'Abstain'],
+    datasets: [
+      [65, 59, 80, 90],
+      [65, 59, 80, 90],
+      [65, 59, 80, 90]
+    ],
+    colors: [
+      {
+        backgroundColor: ['#4285F4', '#ffbb33', '#29b6f6', '#FF5252'],
+        hoverBackgroundColor: ['#6ea0f2', '#fec451', '#52c3f6', '#fa6e6e']
       }
-    }
-  };
-
-  public chart2Options: any = {
-    responsive: true,
-    legend: {
-      labels: {
-        fontColor: 'white',
-      }
-    },
-    scales: {
-      yAxes: [{
-        ticks: {
+    ],
+    options: {
+      responsive: true,
+      legend: {
+        labels: {
           fontColor: 'white',
         }
-      }],
-      xAxes: [{
-        ticks: {
-          fontColor: 'white',
-        }
-      }]
+      }
     }
-  };
+  }
 
   constructor() {
   }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.proposals.currentValue[0].currentTally 
+      && changes.proposals.currentValue[1].currentTally 
+      && changes.proposals.currentValue[2].currentTally 
+      && !this.graphRendered){
+      console.log(changes.proposals.currentValue);
+      this.setChartData(changes.proposals.currentValue);
+      this.graphRendered = 1;
+    }
+  }
+
+  setChartData(data: any) {
+    data.forEach( (proposal, index) => {
+      console.log(proposal.currentTally);
+      this.govCharts.datasets[index] = [
+        proposal.currentTally.yes,
+        proposal.currentTally.no,
+        proposal.currentTally.no_with_veto,
+        proposal.currentTally.abstain,
+      ]
+    });
   }
 
 }

@@ -1,100 +1,36 @@
-
 <section class="mb-5">
-    
-    <!--Grid row-->
-<div class="row">
-
-    <!--Grid column-->
-    <div class="col-lg-4 col-md-12 my-5">   
-        <!--Card-->
-        <div class="card card-cascade narrower">    
-            <!--Card image-->
-            <div class="view view-cascade gradient-card-header mdb-color lighten-4">
-                <canvas mdbChart
-                    height="197"
-                    width="394"
-                    [chartType]="chart1Type"
-                    [data]="chart1Datasets"
-                    [labels]="chartLabels"
-                    [options]="chart1Options"
-                    [legend]="true"
-                    [colors]="chart1Colors">
-                </canvas>
-            </div>
-            <!--/Card image-->  
-            <!--Card content-->
-            <div class="card-body card-body-cascade text-center">   
-                <div class="list-group list-panel">
-                    <a class="list-group-item d-flex justify-content-between dark-grey-text">Vote Distribution on the last 3 proposals<mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
-                </div>  
-            </div>
-            <!--/.Card content-->   
+  <div class="row">
+    <div *ngFor="let proposal of proposals; let i = index" class="col-lg-4 col-md-12 my-5">   
+      <!--Card-->
+      <div class="card card-cascade narrower">    
+        <!--Card image-->
+        <div class="view view-cascade gradient-card-header mdb-color lighten-4">
+          <canvas mdbChart
+            height="197"
+            width="394"
+            [chartType]="govCharts.type"
+            [data]="govCharts.datasets[i]"
+            [labels]="govCharts.labels"
+            [options]="govCharts.options"
+            [legend]="true"
+            [colors]="govCharts.colors">
+          </canvas>
         </div>
-        <!--/.Card-->   
+        <!--/Card image-->  
+        <!--Card content-->
+        <div class="card-body card-body-cascade text-center">   
+          <!-- <div class="list-group list-panel"> -->
+            <!-- <a class="list-group-item d-flex justify-content-between dark-grey-text"> -->
+              Proposal: {{ proposals[i].proposal_id }}
+              <br>
+              Status: {{ proposals[i].proposal_status }}
+              <!-- <mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon> -->
+            <!-- </a> -->
+          <!-- </div>   -->
+        </div>
+        <!--/.Card content-->   
+      </div>
+      <!--/.Card-->   
     </div>
-    <!--Grid column-->
-
-    <!--Grid column-->
-    <div class="col-lg-4 col-md-12 my-5">   
-            <!--Card-->
-            <div class="card card-cascade narrower">    
-                <!--Card image-->
-                <div class="view view-cascade gradient-card-header mdb-color lighten-4">
-                    <canvas mdbChart
-                        height="197"
-                        width="394"
-                        [chartType]="chart1Type"
-                        [data]="chart1Datasets"
-                        [labels]="chartLabels"
-                        [options]="chart1Options"
-                        [legend]="true"
-                        [colors]="chart1Colors">
-                    </canvas>
-                </div>
-                <!--/Card image-->  
-                <!--Card content-->
-                <div class="card-body card-body-cascade text-center">   
-                    <div class="list-group list-panel">
-                        <a class="list-group-item d-flex justify-content-between dark-grey-text">Vote Distribution on the last 3 proposals<mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
-                    </div>  
-                </div>
-                <!--/.Card content-->   
-            </div>
-            <!--/.Card-->   
-        </div>
-        <!--Grid column-->
-
-        <!--Grid column-->
-    <div class="col-lg-4 col-md-12 my-5">   
-            <!--Card-->
-            <div class="card card-cascade narrower">    
-                <!--Card image-->
-                <div class="view view-cascade gradient-card-header mdb-color lighten-4">
-                    <canvas mdbChart
-                        height="197"
-                        width="394"
-                        [chartType]="chart1Type"
-                        [data]="chart1Datasets"
-                        [labels]="chartLabels"
-                        [options]="chart1Options"
-                        [legend]="true"
-                        [colors]="chart1Colors">
-                    </canvas>
-                </div>
-                <!--/Card image-->  
-                <!--Card content-->
-                <div class="card-body card-body-cascade text-center">   
-                    <div class="list-group list-panel">
-                        <a class="list-group-item d-flex justify-content-between dark-grey-text">Vote Distribution on the last 3 proposals<mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
-                    </div>  
-                </div>
-                <!--/.Card content-->   
-            </div>
-            <!--/.Card-->   
-        </div>
-        <!--Grid column-->
-
-</div>
-<!--Grid row-->  
-
+  </div>
 </section>
