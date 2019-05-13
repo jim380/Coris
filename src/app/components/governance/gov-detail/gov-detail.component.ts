@@ -45,10 +45,9 @@ export class GovDetailComponent implements OnInit, AfterViewInit {
     this.appState = this.store.select('App');
 
     this.initChart();
-    // this.initTable('All');
-    // this.initDepositTable();
-
-    console.log(this.proposal);
+    
+    // TODO remove debugging
+    // console.log(this.proposal);
   }
   ngAfterViewInit() {
     this.votesDataSource.paginator = this.paginators.toArray()[0];
