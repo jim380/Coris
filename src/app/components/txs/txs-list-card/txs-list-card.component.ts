@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatPaginator, MatTableDataSource } from '@angular/material';
 import { TxsService } from 'src/app/services/txs.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-txs-list-card',
@@ -20,7 +21,11 @@ export class TxsListCardComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private ts: TxsService) { 
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any, 
+    private ts: TxsService, 
+    private toastr: ToastrService
+  ) { 
     this.delegator.address = data.address;
     // TODO remove debugging
     // console.log(data);
@@ -57,6 +62,11 @@ export class TxsListCardComponent implements OnInit, AfterViewInit {
   public initTable(array) {
     this.dataSource = new MatTableDataSource<any>([...array]);
     this.dataSource.paginator = this.paginator;
+  }
+
+  public onCopySuccess() {
+    // const options = { toastClass: 'opacity' };
+    this.toastr.success('Copied to clipboard');
   }
 
 }
