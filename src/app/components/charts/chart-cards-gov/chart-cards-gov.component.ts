@@ -13,9 +13,9 @@ export class ChartCardsGovComponent implements OnInit, OnChanges {
     type: 'pie',
     labels: ['Yes', 'No', 'Veto', 'Abstain'],
     datasets: [
-      [65, 59, 80, 90],
-      [65, 59, 80, 90],
-      [65, 59, 80, 90]
+      [],
+      [],
+      []
     ],
     colors: [
       {
@@ -33,8 +33,7 @@ export class ChartCardsGovComponent implements OnInit, OnChanges {
     }
   }
 
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit() { }
 
@@ -42,8 +41,9 @@ export class ChartCardsGovComponent implements OnInit, OnChanges {
     if(changes.proposals.currentValue[0].currentTally 
       && changes.proposals.currentValue[1].currentTally 
       && changes.proposals.currentValue[2].currentTally 
-      && !this.graphRendered){
-      console.log(changes.proposals.currentValue);
+      && !this.graphRendered) {
+      // TODO remove debugging
+      // console.log(changes.proposals.currentValue);
       this.setChartData(changes.proposals.currentValue);
       this.graphRendered = 1;
     }
@@ -51,7 +51,8 @@ export class ChartCardsGovComponent implements OnInit, OnChanges {
 
   setChartData(data: any) {
     data.forEach( (proposal, index) => {
-      console.log(proposal.currentTally);
+      // TODO remove debugging
+      // console.log(proposal.currentTally);
       this.govCharts.datasets[index] = [
         proposal.currentTally.yes,
         proposal.currentTally.no,

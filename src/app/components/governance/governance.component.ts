@@ -47,12 +47,17 @@ export class GovernanceComponent implements OnInit {
     this.gs.getProposals()
       .subscribe(data => {
         // TODO remove debugging
-        console.log(data);
+        // console.log(data);
         this.clearProposals();
         (data as any[]).forEach(proposal => {
+          let formattedStatus = 
+              proposal.proposal_status === "VotingPeriod" 
+              ? "Voting Period" 
+              : proposal.proposal_status;
+
           this.proposals.push({
             proposal_id: proposal.proposal_id,
-            proposal_status: proposal.proposal_status,
+            proposal_status: formattedStatus,
             submit_time: proposal.submit_time,
             deposit_end_time: proposal.deposit_end_time,
             // final_tally_result: proposal.final_tally_result,
@@ -101,7 +106,7 @@ export class GovernanceComponent implements OnInit {
 
           this.gs.getCurrentVotes(proposal.proposal_id).subscribe( (data:any) => {
             // TODO remove debugging
-            console.log(data);
+            // console.log(data);
             if(data) {
               proposal.currentVotes = data;
               

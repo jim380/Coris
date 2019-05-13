@@ -86,7 +86,8 @@ export class GovDetailComponent implements OnInit, AfterViewInit {
 
 
   public initDepositTable() {
-    console.log(this.proposal.currentDeposit);
+    // TODO remove debugging
+    // console.log(this.proposal.currentDeposit);
     this.depositDataSource = new MatTableDataSource<any>([...this.proposal.currentDeposit]);
     this.depositDataSource.paginator = this.paginators.toArray()[1];
   }
