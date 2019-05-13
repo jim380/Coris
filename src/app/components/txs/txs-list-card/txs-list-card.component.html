@@ -2,7 +2,7 @@
   <div class="row main-row">
     <div class="col-md-12">
       <mat-card alignment="left">
-        <mat-card-title>Account: {{address}}</mat-card-title>
+        <mat-card-title>Account: {{ delegator.address }}</mat-card-title>
         <mat-card-subtitle>Transactions (last 100)</mat-card-subtitle>
           <div class="card-body">
             <mat-tab-group (selectedTabChange)="onTabChange($event);">
