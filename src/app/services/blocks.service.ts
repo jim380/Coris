@@ -17,10 +17,12 @@ export class BlocksService {
 
   constructor(
     private store: Store<State>, 
-    private http: HttpClient) {
-      this.appState = this.store.select('App');
-      this.getBlockTime();      
+    private http: HttpClient
+  ) {
+    this.appState = this.store.select('App');
+    this.getBlockTime();      
   }
+
   getBlockTime() {
     let subscription$ = this.appState
     .pipe(
@@ -28,29 +30,9 @@ export class BlocksService {
     )
     .subscribe( data => {
       if(data.length > 0) {
-        // TODO remove debugging
-        // console.log(data[0].header.height);
-        this.fetchBlocks(data[0].header.height)
-          .subscribe(data => {
-            let blocks = data['result'].block_metas;
-            // TODO remove debugging
-            // console.log(blocks);
+        let startBlock = Number(data[0].header.height);
+        this.fetchRecentBlocks(startBlock);
 
-            for(let i = 0; (i < blocks.length-1); i++) {
-              if(this.avgBlockTime == 0) {
-                this.avgBlockTime = ( Date.parse(blocks[i].header.time) - Date.parse(blocks[i+1].header.time) );
-              } else {
-                this.avgBlockTime
-                  = ( this.avgBlockTime
-                  + ( Date.parse(blocks[i].header.time) - Date.parse(blocks[i+1].header.time) ))
-                  / 2;
-              }
-              this.avgBlockTime$.next(this.avgBlockTime);
-              // TODO remove debugging
-              // console.log(this.avgBlockTime);  
-            }
-          });
-          
         subscription$.unsubscribe();
       }
     });  
@@ -101,5 +83,29 @@ export class BlocksService {
 
   getRecentBlocks$(): Observable<any[]> {
     return of(this.recentBlocks);
+  }
+
+  getBlockTimeNew$(): Observable<any> {
+    return of(this.avgBlockTime);
+  }
+
+  getBlockTimesArray(blocks, array) {
+    let blocksCounter$ = range( 0, (blocks.length-1) );
+    
+    blocksCounter$.subscribe((count: number) => {
+      console.log(count);
+      array[count] = ( 
+        Date.parse(blocks[count].block.header.time) 
+        - Date.parse(blocks[count+1].block.header.time) 
+      );
+    });
+  }
+
+  getArrayAverage(array: number[]) {
+    let total = 0;
+    array.forEach((element:number) => {
+      total += element;
+    });
+    return total/array.length
   }
 }
