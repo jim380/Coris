@@ -11,6 +11,7 @@ import { ValidatorComponent } from './components/validator/validator.component';
 import { NewTxComponent } from './components/new-tx/new-tx.component';
 import { GovernanceComponent } from './components/governance/governance.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TestComponent } from './components/test/test.component';
 
 const routerOptions: ExtraOptions = {
   anchorScrolling: 'enabled',
@@ -21,7 +22,7 @@ const routerOptions: ExtraOptions = {
 const routes: Routes = [
   { path: '', redirectTo: '/validators', pathMatch: 'full'},
   { path: 'validators', component: ValidatorsComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  // { path: 'dashboard', component: DashboardComponent },
   { path: 'block/:height', component: BlockComponent },
   { path: 'last-block', component: LastBlockComponent },
   { path: 'blocks', component: BlocksComponent },
@@ -29,7 +30,8 @@ const routes: Routes = [
   { path: 'txs', component: TxsComponent },
   { path: 'validator/:address', component: ValidatorComponent },
   { path: 'new/tx/:delegator', component: NewTxComponent},
-  { path: 'gov', component: GovernanceComponent }
+  { path: 'gov', component: GovernanceComponent },
+  { path: 'test', component: TestComponent }
 ];
 
 @NgModule({

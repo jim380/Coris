@@ -43,9 +43,7 @@ export class GovDetailComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.appState = this.store.select('App');
-
-    this.initChart();
-    
+    this.initChart();    
     // TODO remove debugging
     // console.log(this.proposal);
   }
