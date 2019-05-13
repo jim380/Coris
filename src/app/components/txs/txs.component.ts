@@ -7,9 +7,10 @@ import { State } from 'src/app/interfaces/state.interface';
 import { Store } from '@ngrx/store';
 import { nodeRpc1, nodeRpc2 } from '../../../config.js'
 import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
-import { MatTableDataSource, MatPaginator, MatTable, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatTable, MatSort, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { TxsListCardComponent } from './txs-list-card/txs-list-card.component';
 
 
 @Component({
@@ -80,7 +81,8 @@ export class TxsComponent implements OnInit {
     private toastr: ToastrService,
     private store: Store <State>,
     private http: HttpClient,
-    private router: Router) { }
+    private router: Router,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.appState = this.store.select('App');
@@ -138,7 +140,7 @@ export class TxsComponent implements OnInit {
           }
         });
 
-        if(this.txs.length > 0) {
+        if(this.txs.length >= 0) {
           this.txs.forEach( (tx) => {
             if(tx.height < this.minHeight + this.blocksToScan) {
               this.getTxDetails(tx)
@@ -170,9 +172,7 @@ export class TxsComponent implements OnInit {
                       }
                     });
                   }
-                  // END LOGIC FOR NOT-FAULTY
-                  
-                  
+                  // END LOGIC FOR NOT-FAULTY  
 
                   if(data.code === 12) {
                     // TODO remove debugging
@@ -235,6 +235,14 @@ export class TxsComponent implements OnInit {
   showSuccess() {
     // const options = { toastClass: 'opacity' };
     this.toastr.success('Copied to clipboard');
+  }
+
+  openTxsListDialog(address) {
+    this.dialog.open( TxsListCardComponent,  {
+      data: { 
+        address
+      }
+    });
   }
 
 }

@@ -34,18 +34,6 @@ export class ChartCardsComponent implements OnInit {
 
   appState: Observable<State>;
   storeSubscription$;
-  comissions = {
-    max_change_rate: [],
-    max_rate: [],
-    rate: []
-  };
-
-  comissionsDistribution = {
-    max_change_rate: [],
-    max_rate: [],
-    rate: []
-
-  }
 
   constructor(private store: Store <State>) {
     this.appState = this.store.select('App');
@@ -75,21 +63,27 @@ export class ChartCardsComponent implements OnInit {
   }
 
   initCommissionChart(data) {
+    let comissions = {
+      max_change_rate: [],
+      max_rate: [],
+      rate: []
+    };
+  
     data.forEach( (validator: any) => {
       // TODO remove debugging
       // console.log(validator.commission);
-      this.comissions.max_change_rate.push( Number(validator.commission.max_change_rate) );
-      this.comissions.max_rate.push( Number(validator.commission.max_rate) );
-      this.comissions.rate.push( Number(validator.commission.rate) );
+      comissions.max_change_rate.push( Number(validator.commission.max_change_rate) );
+      comissions.max_rate.push( Number(validator.commission.max_rate) );
+      comissions.rate.push( Number(validator.commission.rate) );
     });
     // TODO remove debugging
     // console.log( this.comissions.rate.sort((a,b)=>a-b) );
     // console.log( this.comissions.max_change_rate.sort((a,b)=>a-b) );
     // console.log( this.comissions.max_rate.sort((a,b)=>a-b) );
 
-    let rateMap = this.getArrayDistribution(this.comissions.rate.sort((a,b)=>a-b));
-    let changeRateMap = this.getArrayDistribution(this.comissions.max_change_rate.sort((a,b)=>a-b));
-    let maxRateMap = this.getArrayDistribution(this.comissions.max_rate.sort((a,b)=>a-b));
+    let rateMap = this.getArrayDistribution(comissions.rate);
+    let changeRateMap = this.getArrayDistribution(comissions.max_change_rate);
+    let maxRateMap = this.getArrayDistribution(comissions.max_rate);
 
     let commissionChartLabels = this.getLabelsArray([rateMap, changeRateMap, maxRateMap]);
 
@@ -98,14 +92,15 @@ export class ChartCardsComponent implements OnInit {
 
     this.fillMaps([rateMap, changeRateMap, maxRateMap], commissionChartLabels);
 
-    let rateArray = this.convertToArray(rateMap, commissionChartLabels);
-    let maxRateArray = this.convertToArray(maxRateMap, commissionChartLabels);
-    let changeRateArray =  this.convertToArray(changeRateMap, commissionChartLabels);
+    let rateArray = this.convertMapToArray(rateMap, commissionChartLabels);
+    let maxRateArray = this.convertMapToArray(maxRateMap, commissionChartLabels);
+    let changeRateArray =  this.convertMapToArray(changeRateMap, commissionChartLabels);
 
-    this.initCommissionGraph(commissionChartLabels, rateArray, maxRateArray, changeRateArray);
+    this.renderCommissionGraph(commissionChartLabels, rateArray, maxRateArray, changeRateArray);
   }
 
   getArrayDistribution(array: any) {
+    array.sort((a,b) => a-b);
     let distributionMap = new Map();
 
     array.forEach(element => {
@@ -144,7 +139,7 @@ export class ChartCardsComponent implements OnInit {
     });
   }
 
-  convertToArray(map: any, array: any) {
+  convertMapToArray(map: any, array: any) {
     let convertedArray = [];
     array.forEach((element, index) => {
       convertedArray[index] = map.get(element);
@@ -153,7 +148,7 @@ export class ChartCardsComponent implements OnInit {
     return convertedArray;
   }
 
-  initCommissionGraph(labels, rate, maxRate, rateChange) {
+  renderCommissionGraph(labels, rate, maxRate, rateChange) {
     this.commissionChartLabels = labels.map((x) => {
       return x.toFixed(3);
     });

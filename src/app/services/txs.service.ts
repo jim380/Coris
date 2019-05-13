@@ -11,10 +11,32 @@ export class TxsService {
 
   constructor(private http: HttpClient) { }
   
-  // sender is and account in cosmos-prefix format
+  // sender is an account in cosmos-prefix format
   // e.g. cosmos1msy0nwz3q5ky9sj539mutajqye934sl2wexmaf
-  public getTxs(sender: string, limit: string, page: string) {
+  public getTxs(sender: string, limit: number, page: number) {
+    // TODO remove debugging
+    // console.log(`${nodeRpc1}/txs?sender=${sender}&limit=${limit}&page=${page}`);
     return this.http.get(`${nodeRpc1}/txs?sender=${sender}&limit=${limit}&page=${page}`);
+  }
+
+
+  // delegator is an account in cosmos-prefix format
+  // e.g. cosmos1msy0nwz3q5ky9sj539mutajqye934sl2wexmaf
+  // ONLY RETURNS LAST 100 TXS
+  public getStakingTxs(delegator: string) {
+    return this.http.get(`${nodeRpc1}/staking/delegators/${delegator}/txs`);
+  }
+
+  public getDelegations(delegator: string) {
+    return this.http.get(`${nodeRpc1}/staking/delegators/${delegator}/delegations`);
+  }
+
+  public getUnbondingDelegations(delegator: string) {
+    return this.http.get(`${nodeRpc1}/staking/delegators/${delegator}/unbonding_delegations`);
+  }
+
+  public getDelegatorValidators(delegator: string) {
+    return this.http.get(`${nodeRpc1}/staking/delegators/${delegator}/validators`);
   }
 
   public postData(delegatorAddr: string) {
