@@ -59,14 +59,13 @@ export class ChartCardsComponent implements OnInit {
         }
       });
 
-    this.bs.getBlocksTime$().subscribe((data: any) => {
-      // TODO Find out how to refresh chart
-      // if(data.length === 99) {
-      //   let formattedBlocksTime = data.map(x => x/1000);
-      //   console.log( formattedBlocksTime );
-      //   this.blockChartDatasets[0].data = formattedBlocksTime;
-      // }
-      this.blockChartDatasets[0].data = data;
+    this.bs.getBlocksTime$().subscribe((blocksTime: any[]) => {
+      let formattedBlocksTime = blocksTime.map(x => x/1000);
+      if(formattedBlocksTime.length === 99) {
+        // TODO remove debugging
+        // console.log( formattedBlocksTime );
+        this.blockChartDatasets = [ { data: formattedBlocksTime, label: 'Block Time'} ];;
+      }
     });
   }
 
