@@ -92,7 +92,7 @@
                     From:
                     <span class="badge badge-primary badge-pill">
                       <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.sender[i] ) : false; else elseSender">
-                        {{ (appState | async).valsMap.get( tx.delegator[i] )}}
+                        {{ (appState | async).valsMap.get( tx.sender[i] )}}
                       </span>
                       <ng-template #elseSender>{{tx.sender[i]}}</ng-template>
                     </span>
@@ -101,7 +101,7 @@
                     To:
                     <span class="badge badge-primary badge-pill">
                         <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.recipient[i] ) : false; else elseRecipient">
-                          {{ (appState | async).valsMap.get( tx.delegator[i] )}}
+                          {{ (appState | async).valsMap.get( tx.recipient[i] )}}
                         </span>
                         <ng-template #elseRecipient>{{tx.recipient[i]}}</ng-template>
                     </span>
