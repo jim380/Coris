@@ -63,11 +63,11 @@ export class BlocksService {
   }
 
   getBlocksTime$() {
-    return this.getBlocksTime$;
+    return this.blocksTime$;
   }
 
   getRecentBlocks$() {
-    return this.getRecentBlocks$;
+    return this.recentBlocks$;
   }
 
   fetchRecentBlocks(lastBlock: number) {
@@ -82,7 +82,9 @@ export class BlocksService {
               this.recentBlocks[count] = block;
               fetchedCounter += 1;
             }, 
-            (error) => {  },
+            (error) => {
+              console.log(error);
+            },
             () => {
               if(fetchedCounter === 100) {
                 this.getBlockTimesArray(this.recentBlocks, this.blocksTime);
@@ -103,7 +105,9 @@ export class BlocksService {
         );
         arrayFilled++;
       },
-      (error) => {  },
+      (error) => { 
+        console.log(error);
+      },
       () => {
         if (arrayFilled === 99) {
           this.recentBlocks$.next(blocks);

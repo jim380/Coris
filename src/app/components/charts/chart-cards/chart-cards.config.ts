@@ -70,10 +70,7 @@ const commissionChart = {
 
 const blockChart = {
   datasets: [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: '#1'},
-    {data: [28, 48, 10, 69, 36, 37, 110], label: '#2'},
-    {data: [38, 58, 30, 79, 26, 37, 20], label: '#3'},
-    {data: [48, 68, 20, 89, 76, 27, 40], label: '#4'}
+    {data: [], label: 'Block Time'}
   ],
   labels: [0, 40, 60, 80, 100],
   colors: [

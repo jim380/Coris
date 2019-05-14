@@ -222,7 +222,7 @@ export class CarouselComponent implements OnInit {
     this.bs.getAvgBlockTime$()
       .subscribe(data => {
         // TODO remove debugging
-        console.log(data);
+        // console.log(data);
         let blockTime = data/1000;
         let currentTime = this.getCurrentTime();
         if (this.screenLayot === 'XL') {

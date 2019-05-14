@@ -7,6 +7,7 @@ import {
   commissionChart,
   radarChart,
   blockChart } from './chart-cards.config';
+import { BlocksService } from 'src/app/services/blocks.service';
 
 @Component({
   selector: 'app-chart-cards',
@@ -35,7 +36,10 @@ export class ChartCardsComponent implements OnInit {
   appState: Observable<State>;
   storeSubscription$;
 
-  constructor(private store: Store <State>) {
+  constructor(
+    private store: Store <State>,
+    private bs: BlocksService
+  ) {
     this.appState = this.store.select('App');
   }
 
@@ -54,6 +58,16 @@ export class ChartCardsComponent implements OnInit {
           this.storeSubscription$.unsubscribe();
         }
       });
+
+    this.bs.getBlocksTime$().subscribe((data: any) => {
+      // TODO Find out how to refresh chart
+      // if(data.length === 99) {
+      //   let formattedBlocksTime = data.map(x => x/1000);
+      //   console.log( formattedBlocksTime );
+      //   this.blockChartDatasets[0].data = formattedBlocksTime;
+      // }
+      this.blockChartDatasets[0].data = data;
+    });
   }
 
   ngOnDestroy() {
