@@ -155,7 +155,9 @@
                       </li>
                       <li class="list-group-item"><span class="font-weight-bold">Deposit: </span>{{proposal.total_deposit[0].amount/1e6 | number:".2-2"}} ATOM</li>
                       <li class="list-group-item"><span class="font-weight-bold">Status: </span>{{proposal.proposal_status}}</li>
-                      <li class="list-group-item"><span class="font-weight-bold">Voting period: </span>Start - End</li>
+                      <li style="overflow-x: scroll" class="list-group-item"><span class="font-weight-bold">Voting period: </span>
+                        {{ proposal.voting_start_time | date :'short' }} - {{ proposal.voting_end_time | date :'short' }}
+                      </li>
                     </ul>
                 </mdb-card>
             </div>
