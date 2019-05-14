@@ -169,4 +169,5 @@ export class ChartCardsComponent implements OnInit {
     this.commissionChartDatasets[1].data = maxRate;
     this.commissionChartDatasets[2].data = rateChange;
   }
+
 }

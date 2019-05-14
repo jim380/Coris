@@ -57,7 +57,7 @@ export class CarouselComponent implements OnInit {
         // TODO remove debugging
         if (data.roundStep && !this.blocksFetched) {
           this.bs.fetchRecentBlocks( 
-            Number(data.roundStep.height) 
+            Number( (data.roundStep.height-1) ) 
           );
           this.blocksFetched = true;
         }
