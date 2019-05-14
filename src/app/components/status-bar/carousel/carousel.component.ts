@@ -31,6 +31,7 @@ export class CarouselComponent implements OnInit {
   // 3 - for medium screens
   screenLayot: string;
   datePipe = new DatePipe('en-US');
+  blocksFetched = false;
 
   constructor(
     private ws:WsService, 
@@ -54,7 +55,12 @@ export class CarouselComponent implements OnInit {
       )
       .subscribe(data => {
         // TODO remove debugging
-        // console.log(data);
+        if (data.roundStep && !this.blocksFetched) {
+          this.bs.fetchRecentBlocks( 
+            Number(data.roundStep.height) 
+          );
+          this.blocksFetched = true;
+        }
 
         this.setConsensusState(data.roundStep);
         this.setLastBlock(data.blocks);
@@ -213,10 +219,10 @@ export class CarouselComponent implements OnInit {
   }
 
   setBlockTime() {
-    this.bs.getBlockTime$()
+    this.bs.getAvgBlockTime$()
       .subscribe(data => {
         // TODO remove debugging
-        // console.log(data/1000);
+        console.log(data);
         let blockTime = data/1000;
         let currentTime = this.getCurrentTime();
         if (this.screenLayot === 'XL') {

@@ -42,9 +42,6 @@ import { map } from 'rxjs/operators';
 })
 export class StatusBarComponent implements OnInit {
   appState: Observable<State>;
-  atomData = null;
-  avgBlockTime = 0;
-  inflation = 0;
 
   networks = [
     {id: 1, name: 'mainnet'},
@@ -52,32 +49,13 @@ export class StatusBarComponent implements OnInit {
   ];
 
   constructor(
-    private ws:WsService, 
-    private store: Store <State>,
-    private vs:ValidatorsService,
-    private ps:PricingService,
-    private bs:BlocksService) { }
+    // private ws:WsService, 
+    private store: Store <State>
+  ) { }
 
   ngOnInit() { 
     this.appState = this.store.select('App');
-    this.ps.getAtomPrice().subscribe(data => {
-      // TODO remove debugging
-      // console.log(data.data['3794']);
-      this.atomData = data.data['3794'];
-    });
-    
-    this.ps.getInflation().subscribe(data => {
-      // TODO remove debugging
-      // console.log(data);
-      this.inflation = data;
-    });
-    
-    this.bs.getBlockTime$()
-      .subscribe(data => {
-        this.avgBlockTime = data/1000;
-      })
   }
-  ngOnDestroy() {
-    this.ws.unsubscribe();
-  }
+
+  ngOnDestroy() { }
 }

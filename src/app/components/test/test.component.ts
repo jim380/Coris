@@ -19,28 +19,60 @@ export class TestComponent implements OnInit {
   storeSubscription$;
   
   recentBlocks = [];
+  blockTimes = [];
+  avgBlockTime = 0;
 
-  constructor( private bs: BlocksService ) { }
-
+  constructor(
+    private store: Store <State>,
+    private bs: BlocksService
+  ) { }
+  
 
   ngOnInit() {
-    this.bs.getRecentBlocks$()
-      .subscribe((blocks) => {
-        this.recentBlocks = blocks;
-      });
+    this.appState = this.store.select('App');
+
+    this.storeSubscription$ = this.appState
+    .pipe(
+      distinctUntilChanged()
+    )
+    .subscribe(data => {
+      if(data.blocks.length > 0 && this.storeSubscription$) {
+        let startBlock = Number(data.blocks[0].header.height);
+        this.bs.fetchRecentBlocks(startBlock);
+        
+        this.bs.avgBlockTime$.subscribe((data: any) => {
+          this.avgBlockTime = data;
+        })
+
+        this.storeSubscription$.unsubscribe();
+      }
+    });
   }
 
-  ngOnDestroy() { }
-
-  times = [];
-  logBlocks() {
-    console.log(this.recentBlocks);
-
-    if(this.recentBlocks.length === 100) {
-      this.bs.getBlockTimesArray(this.recentBlocks, this.times);
-      console.log(
-        this.bs.getArrayAverage(this.times)
-      );
+  ngOnDestroy() {
+    if(this.storeSubscription$) {
+      this.storeSubscription$.unsubscribe();
     }
   }
+  
+
+  // getBlockTimesArray(blocks, array) {
+  //   let blocksCounter$ = range( 0, (blocks.length-1) );
+    
+  //   blocksCounter$.subscribe((count: number) => {
+  //     console.log(count);
+  //     array[count] = ( 
+  //       Date.parse(blocks[count].block.header.time) 
+  //       - Date.parse(blocks[count+1].block.header.time) 
+  //     );
+  //   });
+  // }
+
+  // getArrayAverage(array: number[]) {
+  //   let total = 0;
+  //   array.forEach((element:number) => {
+  //     total += element;
+  //   });
+  //   return total/array.length
+  // }
 }

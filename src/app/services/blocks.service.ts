@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from '../interfaces/state.interface';
-import { Observable, of, Subject, range } from 'rxjs';
+import { Observable, of, Subject, range, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { nodeRpc1, nodeRpc2 } from '../../config.js';
@@ -11,32 +11,24 @@ import { nodeRpc1, nodeRpc2 } from '../../config.js';
 })
 export class BlocksService {
   appState: Observable<State>;
+
   avgBlockTime = 0;
-  avgBlockTime$ = new Subject<any>();
+  avgBlockTime$ = new BehaviorSubject(this.avgBlockTime);
+
   recentBlocks = [];
+  recentBlocks$ = new BehaviorSubject(this.recentBlocks);
+
+  blocksTime = [];
+  blocksTime$ = new BehaviorSubject(this.blocksTime);
 
   constructor(
     private store: Store<State>, 
     private http: HttpClient
   ) {
-    this.appState = this.store.select('App');
-    this.getBlockTime();      
+    this.appState = this.store.select('App');   
   }
 
-  getBlockTime() {
-    let subscription$ = this.appState
-    .pipe(
-      map(data => data.blocks)
-    )
-    .subscribe( data => {
-      if(data.length > 0) {
-        let startBlock = Number(data[0].header.height);
-        this.fetchRecentBlocks(startBlock);
-
-        subscription$.unsubscribe();
-      }
-    });  
-  }
+  
   // fetchBlocks() doesnt include precommits
   fetchBlocks(maxHeight) {
     return this.http.get(`${nodeRpc2}/blockchain?maxHeight=${maxHeight}`);
@@ -66,39 +58,61 @@ export class BlocksService {
     return this.http.get(`${nodeRpc1}/blocks/latest`);
   }
 
-  getBlockTime$(): Observable<any> {
-    return this.avgBlockTime$.asObservable();
+  getAvgBlockTime$() {
+    return this.avgBlockTime$;
+  }
+
+  getBlocksTime$() {
+    return this.getBlocksTime$;
+  }
+
+  getRecentBlocks$() {
+    return this.getRecentBlocks$;
   }
 
   fetchRecentBlocks(lastBlock: number) {
     let blocksCounter$ = range(0, 100);
-    
-    blocksCounter$.subscribe((count: number) => {
-      this.fetchBlockAtAlternative(lastBlock - count)
-        .subscribe( (block: any) => {
-          this.recentBlocks[count] = block;
-        });
-    });
+    let fetchedCounter = 0;
+
+    blocksCounter$.subscribe(
+      (count: number) => {
+        this.fetchBlockAtAlternative(lastBlock - count)
+          .subscribe( 
+            (block: any) => {
+              this.recentBlocks[count] = block;
+              fetchedCounter += 1;
+            }, 
+            (error) => {  },
+            () => {
+              if(fetchedCounter === 100) {
+                this.getBlockTimesArray(this.recentBlocks, this.blocksTime);
+              }
+            });
+      });
   }
 
-  getRecentBlocks$(): Observable<any[]> {
-    return of(this.recentBlocks);
-  }
-
-  getBlockTimeNew$(): Observable<any> {
-    return of(this.avgBlockTime);
-  }
-
-  getBlockTimesArray(blocks, array) {
+  private getBlockTimesArray(blocks, array) {
     let blocksCounter$ = range( 0, (blocks.length-1) );
+    let arrayFilled = 0;
     
-    blocksCounter$.subscribe((count: number) => {
-      console.log(count);
-      array[count] = ( 
-        Date.parse(blocks[count].block.header.time) 
-        - Date.parse(blocks[count+1].block.header.time) 
-      );
-    });
+    blocksCounter$.subscribe(
+      (count: number) => {
+        array[count] = ( 
+          Date.parse(blocks[count].block.header.time) 
+          - Date.parse(blocks[count+1].block.header.time) 
+        );
+        arrayFilled++;
+      },
+      (error) => {  },
+      () => {
+        if (arrayFilled === 99) {
+          this.recentBlocks$.next(blocks);
+          this.blocksTime$.next(array);
+          this.avgBlockTime = this.getArrayAverage(this.blocksTime);
+          this.avgBlockTime$.next(this.avgBlockTime);
+        }
+      }
+    );
   }
 
   getArrayAverage(array: number[]) {

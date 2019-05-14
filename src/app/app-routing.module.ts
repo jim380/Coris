@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'validator/:address', component: ValidatorComponent },
   { path: 'new/tx/:delegator', component: NewTxComponent},
   { path: 'gov', component: GovernanceComponent },
-  { path: 'test', component: TestComponent }
+  // { path: 'test', component: TestComponent }
 ];
 
 @NgModule({
