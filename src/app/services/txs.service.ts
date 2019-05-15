@@ -19,7 +19,6 @@ export class TxsService {
     return this.http.get(`${nodeRpc1}/txs?sender=${sender}&limit=${limit}&page=${page}`);
   }
 
-
   // delegator is an account in cosmos-prefix format
   // e.g. cosmos1msy0nwz3q5ky9sj539mutajqye934sl2wexmaf
   // ONLY RETURNS LAST 100 TXS
@@ -37,6 +36,10 @@ export class TxsService {
 
   public getDelegatorValidators(delegator: string) {
     return this.http.get(`${nodeRpc1}/staking/delegators/${delegator}/validators`);
+  }
+
+  public getAccountInfo(delegator: string) {
+    return this.http.get(`${nodeRpc1}/auth/accounts/${delegator}`);
   }
 
   public postData(delegatorAddr: string) {

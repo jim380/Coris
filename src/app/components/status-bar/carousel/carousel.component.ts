@@ -152,6 +152,8 @@ export class CarouselComponent implements OnInit {
   setConsensusState(data) {
     // TODO @aakatev remove debugging
     // console.log(data);
+    // TOFIX this place has async bug that is hard to replicate
+    // look into it more
     if(data) {
       let consensus = data;
       let currentTime = this.getCurrentTime();

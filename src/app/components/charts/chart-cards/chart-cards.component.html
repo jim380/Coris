@@ -73,15 +73,10 @@
         <div class="card card-cascade narrower">    
             <!--Card image-->
             <div class="view view-cascade gradient-card-header mdb-color lighten-4">
-                <canvas mdbChart
-                    height="197"
-                    width="394"
-                    [chartType]="radarChartType"
-                    [datasets]="radarChartDatasets"
-                    [labels]="radarChartLabels"
-                    [options]="radarChartOptions"
-                    [legend]="true"
-                    [colors]="radarChartColors">
+                <canvas baseChart
+                    [datasets]="scatterChartData"
+                    [options]="scatterChartOptions"
+                    [chartType]="scatterChartType">
                 </canvas>
             </div>
             <!--/Card image-->  

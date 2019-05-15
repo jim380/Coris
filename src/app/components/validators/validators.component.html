@@ -200,7 +200,13 @@
               <p class="overflowed-text">Website: {{validator.description?.website}}</p>
               <p class="overflowed-text">Details: {{validator.description?.details}}</p>  -->
               <ul class="list-group list-group-horizontal-lg">
-                <li class="list-group-item d-flex justify-content-between align-items-center" [appBgHighlight]="'#383D4C'" defaultColor="#111923" style="cursor: pointer;" (click)="openDelegatorDialog(validator)">
+                <li 
+                  [routerLink]="['/validator', validator.hex_address]" 
+                  class="list-group-item d-flex justify-content-between align-items-center" 
+                  [appBgHighlight]="'#383D4C'" 
+                  defaultColor="#111923" 
+                  style="cursor: pointer;"
+                >
                   First seen
                   <span class="badge badge-primary badge-pill">{{validator.slashing?.start_height}}</span>
                 </li>

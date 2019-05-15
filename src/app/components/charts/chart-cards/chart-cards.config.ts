@@ -89,32 +89,35 @@ const blockChart = {
 
 
 
-const radarChart = {
+const scatterChart = {
   datasets: [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First dataset' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'My Second dataset' }
+    {
+      data: [],
+      label: 'Top100',
+      pointRadius: 5,
+    },
+    {
+      data: [],
+      label: 'Top50',
+      pointRadius: 5,
+      hidden: true
+    },
+    {
+      data: [],
+      label: 'Top25',
+      pointRadius: 5,
+      hidden: true
+    }
   ],
-  labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
-  colors: [
-    // {
-    //   backgroundColor: 'rgba(105, 0, 132, .2)',
-    //   borderColor: 'rgba(200, 99, 132, .7)',
-    //   borderWidth: 2,
-    // },
-    // {
-    //   backgroundColor: 'rgba(0, 250, 220, .2)',
-    //   borderColor: 'rgba(0, 213, 132, .7)',
-    //   borderWidth: 2,
-    // }
-  ],
+  colors: [],
   options: {
-    responsive: true
+    responsive: true,
   },
-  type: 'radar'
+  type: 'scatter'
 };
 
 export { 
   commissionChart,
-  radarChart,
+  scatterChart,
   blockChart    
 };

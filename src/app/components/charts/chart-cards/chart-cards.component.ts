@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, range } from 'rxjs';
 import { State } from 'src/app/interfaces/state.interface';
 import { Store } from '@ngrx/store';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { 
   commissionChart,
-  radarChart,
+  scatterChart,
   blockChart } from './chart-cards.config';
 import { BlocksService } from 'src/app/services/blocks.service';
+import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
+import { Label } from 'ng2-charts';
 
 @Component({
   selector: 'app-chart-cards',
@@ -15,6 +17,12 @@ import { BlocksService } from 'src/app/services/blocks.service';
   styleUrls: ['./chart-cards.component.scss']
 })
 export class ChartCardsComponent implements OnInit {
+  // scatter
+  public scatterChartOptions = scatterChart.options;
+  public scatterChartData = scatterChart.datasets;
+  public scatterChartType = scatterChart.type;
+
+
   public commissionChartType = commissionChart.type;
   public commissionChartDatasets = commissionChart.datasets;
   public commissionChartLabels = commissionChart.labels;
@@ -25,13 +33,6 @@ export class ChartCardsComponent implements OnInit {
   public blockChartDatasets = blockChart.datasets;
   public blockChartLabels = blockChart.labels;
   public blockChartColors = blockChart.colors;
-
-  public radarChartType = radarChart.type;
-  public radarChartDatasets = radarChart.datasets;
-  public radarChartColors = radarChart.colors;
-  public radarChartOptions = radarChart.options;
-  public radarChartLabels = radarChart.labels;
-
 
   appState: Observable<State>;
   storeSubscription$;
@@ -54,6 +55,7 @@ export class ChartCardsComponent implements OnInit {
           // TODO remove debugging
           // console.log(data);
           this.initCommissionChart(data.validators);
+          this.initScatterChart(data.validators);
 
           this.storeSubscription$.unsubscribe();
         }
@@ -73,6 +75,25 @@ export class ChartCardsComponent implements OnInit {
     if(this.storeSubscription$) {
       this.storeSubscription$.unsubscribe();
     }
+  }
+
+  initScatterChart(validatorsArray: any[]) {
+    // TODO remove debugging
+    console.log(validatorsArray);
+    const validatorsCounter$ = range(0, 100);
+  //output: 1,2,3,4,5,6,7,8,9,10
+  const example = validatorsCounter$
+    .subscribe( (count) => { 
+      this.scatterChartData[0].data.push({ x: count+1, y: validatorsArray[count].tokens });
+      if(count < 50) {
+        this.scatterChartData[1].data.push({ x: count+1, y: validatorsArray[count].tokens });
+      }
+      if(count < 25) {
+        this.scatterChartData[2].data.push({ x: count+1, y: validatorsArray[count].tokens });
+      } 
+    });
+
+
   }
 
   initCommissionChart(data) {
