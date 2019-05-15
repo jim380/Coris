@@ -38,6 +38,13 @@ export class TxsComponent implements OnInit {
   // }
 
   setDataSourceAttributes() {
+    /*  05/15/19 @aakatev
+      Commented out blocks are part of 
+      server side pagination logic, which
+      needs better refinement (possibly separate API)
+      Could be reused after alpha  
+    */
+
     // let lastPage = Math.ceil(this.totalTxsCount/30);
     
     // this.dataSource.paginator = this.paginator;
@@ -230,8 +237,168 @@ export class TxsComponent implements OnInit {
     return this.http.get(`${nodeRpc1}/txs/${tx.hash}`);
   }
 
+  fetchTx(hash) {
+    return new Promise ((resolve, reject) => {
+      this.http.get(`${nodeRpc2}/tx_search?query="tx.height>${this.minHeight}"`)
+        .subscribe( (data:any) => {
+        // this.clearTxs();
+        let currTxs = data.result.txs.reverse();
+        
+        // TODO remove debugging
+        // console.log(data['result'].txs);
+        console.log(data);
+
+        currTxs.forEach(dataTx => {
+          if(dataTx.height < this.minHeight + this.blocksToScan) {
+            this.txs.push({
+              hash: dataTx.hash, 
+              height: dataTx.height,
+              gasUsed: dataTx.tx_result.gasUsed,
+              gasWanted: dataTx.tx_result.gasWanted
+            });        
+          }
+        });
+
+        if(this.txs.length >= 0) {
+          this.txs.forEach( (tx) => {
+            if(tx.height < this.minHeight + this.blocksToScan) {
+              this.getTxDetails(tx)
+                .subscribe( (data:any) => {
+                  
+                  // @aakatev THIS IS LOGIC FOR NOT-FAULTY TXS!
+                  // TODO handle faulty txs above this block!!
+                  
+                  // TODO remove debugging
+                  // console.log(data);
+                  tx.details = data;
+                  if(data.tags) {
+                    let index = -1;
+                    data.tags.forEach((tag:any) => {
+                      // tx.tags = data.tags;
+
+                      // TODO remove debugging
+                      // console.log(tag);
+                      if(tag.key === 'action') {
+                        index += 1;
+                      }
+                      let formattedKey = tag.key.replace(/-/g, '_');
+
+                      if(!tx[formattedKey]) {
+                        tx[formattedKey] = [];
+                        tx[formattedKey][index] = tag.value.replace(/_/g, ' ');
+                      } else {
+                        tx[formattedKey][index] = tag.value.replace(/_/g, ' ');
+                      }
+                    });
+                  }
+                  // END LOGIC FOR NOT-FAULTY  
+
+                  if(data.code === 12) {
+                    // TODO remove debugging
+                    // console.log(data);
+                    // tx['action'] = "out of gas";
+                    tx.error = "out of gas";
+                  } else if (data.code === 104) {
+                    tx.error = "no delegation distribution info";
+                    // TODO remove debugging
+                    // console.log(data);
+                  } else if (data.code === 10) {
+                    tx.error = "insufficient account funds";
+                    // TODO remove debugging
+                    // console.log(data);
+                  } else if (data.code === 102) {
+                    tx.error = "no delegation for this (address, validator) pair";
+                    // TODO remove debugging
+                    // console.log(data);
+                  } else if (data.code) {
+                    // TODO @aakatev find more failed tx codes
+                    tx.error = "TEST"
+                    console.log(data);
+                  }
+                },
+                err => {
+                  // @aakatev some txs cause 500 errors
+                  // otherwise would dump code in console
+                  // console.log(err);
+                });
+            }
+          });
+          this.dataSource = new MatTableDataSource<any>([...this.txs]);
+          this.setDataSourceAttributes();
+          resolve();
+        }
+      });
+    });
+  }
+
   queryTx(txHash) {
-    this.router.navigate([`/tx/${txHash}`]);
+    let tx;
+    this.http.get(`${nodeRpc1}/txs/${txHash}`).subscribe((data:any) => {
+      tx = {
+        hash: data.txhash, 
+        height: data.height,
+        gasUsed: data.gasUsed,
+        gasWanted: data.gasWanted,
+        details: data,
+        error: null,
+      };
+      // TODO remove debugging
+      // console.log(data);
+      if(data.tags) {
+        let index = -1;
+        data.tags.forEach((tag:any) => {
+          // tx.tags = data.tags;
+
+          // TODO remove debugging
+          // console.log(tag);
+          if(tag.key === 'action') {
+            index += 1;
+          }
+          let formattedKey = tag.key.replace(/-/g, '_');
+
+          if(!tx[formattedKey]) {
+            tx[formattedKey] = [];
+            tx[formattedKey][index] = tag.value.replace(/_/g, ' ');
+          } else {
+            tx[formattedKey][index] = tag.value.replace(/_/g, ' ');
+          }
+        });
+      }
+      // END LOGIC FOR NOT-FAULTY  
+
+      if(data.code === 12) {
+        // TODO remove debugging
+        // console.log(data);
+        // tx['action'] = "out of gas";
+        tx.error = "out of gas";
+      } else if (data.code === 104) {
+        tx.error = "no delegation distribution info";
+        // TODO remove debugging
+        // console.log(data);
+      } else if (data.code === 10) {
+        tx.error = "insufficient account funds";
+        // TODO remove debugging
+        // console.log(data);
+      } else if (data.code === 102) {
+        tx.error = "no delegation for this (address, validator) pair";
+        // TODO remove debugging
+        // console.log(data);
+      } else if (data.code) {
+        // TODO @aakatev find more failed tx codes
+        tx.error = "TEST"
+        console.log(data);
+      }
+    },
+    err => {
+      // @aakatev some txs cause 500 errors
+      // otherwise would dump code in console
+      // console.log(err);
+    },
+    () => {
+      // TODO remove debugging
+      // console.log(tx);
+      this.openTxDialog(tx);
+    });
   }
 
   onCopySucceess() {

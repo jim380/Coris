@@ -39,7 +39,7 @@ export class TxComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.tx);
+    // console.log(this.tx);
     this.appState = this.store.select('App');
   }
 
