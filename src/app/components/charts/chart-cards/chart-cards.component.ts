@@ -79,7 +79,7 @@ export class ChartCardsComponent implements OnInit {
 
   initScatterChart(validatorsArray: any[]) {
     // TODO remove debugging
-    console.log(validatorsArray);
+    // console.log(validatorsArray);
     const validatorsCounter$ = range(0, 100);
   //output: 1,2,3,4,5,6,7,8,9,10
   const example = validatorsCounter$

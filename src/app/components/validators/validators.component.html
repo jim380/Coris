@@ -200,8 +200,7 @@
               <p class="overflowed-text">Website: {{validator.description?.website}}</p>
               <p class="overflowed-text">Details: {{validator.description?.details}}</p>  -->
               <ul class="list-group list-group-horizontal-lg">
-                <li 
-                  [routerLink]="['/validator', validator.hex_address]" 
+                <li  
                   class="list-group-item d-flex justify-content-between align-items-center" 
                   [appBgHighlight]="'#383D4C'" 
                   defaultColor="#111923" 
@@ -249,7 +248,10 @@
                 </li> -->
                 <li class="list-group-item d-flex justify-content-between align-items-center" [appBgHighlight]="'#383D4C'" defaultColor="#111923" style="cursor: pointer;" (click)="openRewardsDialog(validator)">
                   Rewards
-                  <span class="badge badge-primary badge-pill" *ngIf="validator.outstanding_rewards">{{validator.outstanding_rewards[0].amount/1e6 | number:'.2-2'}} <span class="badge-ticker">ATOM</span></span>
+                  <span class="badge badge-primary badge-pill" *ngIf="validator.outstanding_rewards">
+                    {{validator.outstanding_rewards[0].amount/1e6 | number:'.2-2'}} 
+                    <span class="badge-ticker">ATOM</span>
+                  </span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center" [appBgHighlight]="'#383D4C'" defaultColor="#111923" style="cursor: pointer;" (click)="openAddressDialog(validator)"> 
                   Address

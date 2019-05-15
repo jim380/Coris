@@ -22,7 +22,6 @@ export class ValidatorComponent implements OnInit {
   ) { 
     // let address = this.route.snapshot.paramMap.get('address');
     // console.log(address);
-    
     this.validator = data.validator;
     console.log(data);
   }

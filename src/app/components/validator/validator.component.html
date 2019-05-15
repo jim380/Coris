@@ -17,20 +17,20 @@
                 <mdb-card-body>
                   <!--Name-->
                   <mdb-card-title>
-                    <h1>Moniker</h1>
+                    <h1>{{ validator.description.moniker }}</h1>
                     <a href="#" target=" "><i class="ion-social-chrome"></i></a>
                   </mdb-card-title>
                   <hr>
                   <!--Quotation-->
                   <p>
-                    <i class="fas fa-quote-left"></i>Description
+                    <i class="fas fa-quote-left"></i>{{ validator.description.details }}
                   </p>
           
                   <mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-4 pills-secondary white mb-2'" [contentClass]="'card'">
                     <mdb-tab heading="Operator address">
                       <div class="row">
                         <div class="col-12">
-                          <p>operator address</p>
+                          <p>{{ validator.operator_address }}</p>
                         </div>
                       </div>
                     </mdb-tab>
@@ -38,7 +38,7 @@
                     <mdb-tab heading="Delegator address">
                       <div class="row">
                         <div class="col-12">
-                          <p>validator address</p>
+                          <p>{{ validator.account.value.address }}</p>
                         </div>
                       </div>
                     </mdb-tab>
@@ -53,44 +53,65 @@
                     <div class="row">
                         <div class="col-4">
                             <small class="grey-text">Rank</small>
-                            <h4>50</h4>
+                            <h4>{{ validator.rank }}</h4>
                         </div>
                         <div class="col-4">
                             <small class="grey-text">Voting Power</small>
-                            <h4>150,000</h4>
+                            <h4>{{ validator.tokens/1e6 | number:'.0-0' }}</h4>
                         </div>
                         <div class="col-4">
                             <small class="grey-text">Delegators</small>
-                            <h4>35</h4>
+                            <h4>
+                              <span *ngIf="validator.delegations; else elseBlock">
+                                {{ validator.delegations.length | number:'.0-0' }}
+                              </span>
+                              <ng-template #elseBlock>
+                                0
+                              </ng-template>
+                            </h4>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-4">
                             <small class="grey-text">Balance</small>
-                            <h4>125 ATOM</h4>
+                            <h4>
+                              <span 
+                                  *ngIf="validator.account?.tokens; else balanceElseBlock" 
+                                  matTooltipPosition="above"
+                              >
+                                {{validator.account?.tokens/1e6 | number:'.2-2'}}
+                              </span>
+                              <ng-template #balanceElseBlock>
+                                0
+                              </ng-template>
+                            </h4>
                         </div>
                         <div class="col-4">
-                            <small class="grey-text">Rewards</small>
-                            <h4>2000 ATOM</h4>
+                          <small class="grey-text">Rewards</small>
+                          <h4 *ngIf="validator.outstanding_rewards">
+                            {{validator.outstanding_rewards[0].amount/1e6 | number:'.2-2'}}
+                          </h4>
                         </div>
                         <div class="col-4">
-                            <small class="grey-text">Outstanding Rewards</small>
-                            <h4>12.7 ATOM</h4>
+                          <small class="grey-text">Outstanding Rewards</small>
+                          <h4 *ngIf="validator.rewards">
+                            {{validator.rewards[0].amount/1e6 | number:'.2-2'}} 
+                          </h4>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-4">
                             <small class="grey-text">Commission</small>
-                            <h4>10%</h4>
+                            <h4> {{ validator.commission?.rate | percent }} </h4>
                         </div>
                         <div class="col-4">
                             <small class="grey-text">Commission Max</small>
-                            <h4>25%</h4>
+                            <h4>{{ validator.commission?.max_rate | percent }}</h4>
                         </div>
                         <div class="col-4">
                             <small class="grey-text">Commission Max Change</small>
-                            <h4>1%</h4>
+                            <h4>{{ validator.commission?.max_change_rate | percent }}</h4>
                         </div>
                     </div>
                     <a class="btn grey btn-rounded waves-effect waves-light text-white" mdbWavesEffect>At a Glance</a>
