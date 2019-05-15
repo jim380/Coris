@@ -36,13 +36,13 @@ export class TxsListCardComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.ts.getTxs(this.delegator.address, 20, 1).subscribe((data: any) => {
       // TODO remove debugging
-      console.log(data);
+      // console.log(data);
       this.delegator.txs.transfer = data;
     });
 
     this.ts.getStakingTxs(this.delegator.address).subscribe((data: any) => {
       // TODO remove debugging
-      console.log(data);
+      // console.log(data);
       this.initTable(data);
       this.delegator.txs.staking = data;
     });
@@ -65,7 +65,6 @@ export class TxsListCardComponent implements OnInit, AfterViewInit {
   }
 
   public onCopySuccess() {
-    // const options = { toastClass: 'opacity' };
     this.toastr.success('Copied to clipboard');
   }
 
