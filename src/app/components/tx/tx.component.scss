@@ -1,53 +1,8 @@
-/*-------------------------------------------------*/
-/* Reusable Components */
-/*-------------------------------------------------*/
-
-.row {
-  max-width: 90%; /*1140px or in %*/
+.mat-card {
+  max-width: 90%;
   margin: 0 auto;
 }
 
-p {
-  padding: 1px;
-}
-/*-------------------------------------------------*/
-/* Paragraphs */
-/*-------------------------------------------------*/
-p, tbody {
-  color: white;
-  text-align: left;
-}
-
-table {
-  table-layout: fixed;
-  /*width: 100px;*/
-}
-
-td, div {
-  overflow: hidden; 
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.card-header {
-  background: #00796B;
-}
-
-tbody,
-.card,
-.card-table p {
-  background:#0D151F;
-}
-
-.search-box {
+.card-1 {
   margin-bottom: 20px;
-}
-
-.query-name {
-  text-emphasis: bold;
-  color: #FC7D14;
-}
-
-.tx-info {
-  margin-left: 8px;
 }
