@@ -23,8 +23,9 @@ export class ValidatorsService {
 
   constructor(
     private store: Store <State>,
-    private http: HttpClient) {
-      this.initValidators();
+    private http: HttpClient
+  ) {
+    this.initValidators();
   }
 
   async initValidators() { 

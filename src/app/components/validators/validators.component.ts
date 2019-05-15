@@ -111,7 +111,8 @@ export class ValidatorsComponent implements OnInit {
     this.dialog.open( ValidatorComponent,  {
       data: { 
         validator
-      }
+      },
+      height: '75vh',
     });
   }
 

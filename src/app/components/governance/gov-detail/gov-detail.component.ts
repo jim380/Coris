@@ -36,7 +36,10 @@ export class GovDetailComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginators = new QueryList<MatPaginator>();
 
 
-  constructor(@Inject(MAT_DIALOG_DATA) public proposal: any, private store: Store <State>) { 
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public proposal: any, 
+    private store: Store <State>
+  ) { 
     this.initTable('All');
     this.initDepositTable();
   }

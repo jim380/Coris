@@ -234,7 +234,7 @@
                     </ng-template>
                   </span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center" [appBgHighlight]="'#383D4C'" defaultColor="#111923" style="cursor: pointer;" (click)="openValidatorDetailDialog(validator)"> 
+                <li class="list-group-item d-flex justify-content-between align-items-center" [appBgHighlight]="'#383D4C'" defaultColor="#111923" style="cursor: pointer;"> 
                   Missed Blocks
                   <span class="badge badge-primary badge-pill">{{validator.slashing?.missed_blocks_counter}}</span>
                 </li>
@@ -257,10 +257,24 @@
                   Address
                   <span class="badge badge-primary badge-pill" *ngIf="validator.rewards"><i class="fa fa-id-badge"></i></span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center" [appBgHighlight]="'#383D4C'" defaultColor="#111923" style="cursor: pointer;" (click)="openValidatorDialog(validator)">
+                <li
+                    *ngIf="validator.delegations && validator.delegations.length > 0; else detailsLoading"
+                    class="list-group-item d-flex justify-content-between align-items-center" 
+                    [appBgHighlight]="'#383D4C'" 
+                    defaultColor="#111923" 
+                    style="cursor: pointer;" 
+                    (click)="openValidatorDetailDialog(validator)">
                   Details
                   <span class="badge badge-primary badge-pill"><i class="fa fa-info"></i></span>
                 </li>
+                <ng-template #detailsLoading>
+                    <li
+                      class="list-group-item d-flex justify-content-between align-items-center" 
+                      defaultColor="#111923">
+                    Loading...
+                    <mdb-spinner spinnerColor="blue"></mdb-spinner>
+                  </li>
+                </ng-template>
               </ul>
             </div>
           </div>
