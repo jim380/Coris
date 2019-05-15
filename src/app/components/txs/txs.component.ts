@@ -7,10 +7,11 @@ import { State } from 'src/app/interfaces/state.interface';
 import { Store } from '@ngrx/store';
 import { nodeRpc1, nodeRpc2 } from '../../../config.js'
 import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
-import { MatTableDataSource, MatPaginator, MatTable, MatSort, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatTable, MatSort, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { TxsListCardComponent } from './txs-list-card/txs-list-card.component';
+import { TxComponent } from '../tx/tx.component';
 
 
 @Component({
@@ -82,7 +83,8 @@ export class TxsComponent implements OnInit {
     private store: Store <State>,
     private http: HttpClient,
     private router: Router,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.appState = this.store.select('App');
@@ -232,7 +234,7 @@ export class TxsComponent implements OnInit {
     this.router.navigate([`/tx/${txHash}`]);
   }
 
-  showSuccess() {
+  onCopySucceess() {
     // const options = { toastClass: 'opacity' };
     this.toastr.success('Copied to clipboard');
   }
@@ -244,6 +246,21 @@ export class TxsComponent implements OnInit {
       }
     });
   }
+
+  openTxDialog(tx) {
+    this.dialog.open( TxComponent,  {
+      data: { 
+        tx
+      },
+      height: '75vh'
+    });
+  }
+
+  // TODO figuire out how to open on separate route
+  // routeToTxPage() {
+  //   // let data = MAT_DIALOG_DATA();
+  //   // this.router.navigate(['/edit-transaction-portal'], { queryParams: { bill: 'U001' } });
+  // }
 
 }
 

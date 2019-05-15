@@ -1,59 +1,148 @@
-<mat-card class="card-1 mat-elevation-z8">
-    <mat-card-header>
-        <mat-card-title>Transaction Detail</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Hash
-              <span class="badge badge-primary badge-pill">14</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Status
-              <span class="badge badge-primary badge-pill">2</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Height
-              <span class="badge badge-primary badge-pill">1</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                Timestamp
-                <span class="badge badge-primary badge-pill">1</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Fee
-              <span class="badge badge-primary badge-pill">1</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Gas (used/wanted)
-              <span class="badge badge-primary badge-pill">1</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Memo
-              <span class="badge badge-primary badge-pill">1</span>
-            </li>
-        </ul>
-    </mat-card-content>
-</mat-card>
-<mat-card class="card-2 mat-elevation-z8">
-    <mat-card-header>
-        <mat-card-title>Activity</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              From (or delegator)
-              <span class="badge badge-primary badge-pill">14</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              To (or validator)
-              <span class="badge badge-primary badge-pill">2</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Amount
-              <span class="badge badge-primary badge-pill">1</span>
-            </li>
-        </ul>
-    </mat-card-content>
-</mat-card>
-  
+<section>
+  <div class="row">
+    <!-- First column -->
+    <div class="col-12">
+      <mat-card class="card-1 mat-elevation-z8">
+        <mat-card-header>
+            <mat-card-title>Transaction Detail</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Hash
+                  <span class="badge badge-primary badge-pill">
+                    {{tx.hash | slice:0:15 }}... 
+                    <i 
+                      class="ion-ios-copy copy-button" 
+                      style="cursor: pointer;" 
+                      ngxClipboard 
+                      [cbContent]="tx.hash" 
+                      (click)="onCopySucceess()">
+                    </i>
+                  </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Status
+                  <span *ngIf="!tx.error; else elseStatus">
+                    <i class="ion-checkmark-circled success"></i>
+                  </span>
+                  <ng-template #elseStatus>
+                    <i class="ion-close-circled fail"></i>
+                  </ng-template>
+                  <!-- <span class="badge badge-primary badge-pill"></span> -->
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Height
+                  <span class="badge badge-primary badge-pill">{{tx.height}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Timestamp
+                    <span class="badge badge-primary badge-pill">{{tx.details?.timestamp | timeAgo}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Fee
+                  <span class="badge badge-primary badge-pill">
+                      {{ 
+                        tx.details?.tx.value.fee.amount ?
+                        tx.details.tx.value.fee.amount[0].amount : '0' 
+                      }} uatom
+                  </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Gas (used/wanted)
+                  <span class="badge badge-primary badge-pill">
+                    {{tx.gasUsed}}/{{tx.gasWanted}}
+                  </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Memo
+                  <span class="badge badge-primary badge-pill">#FILLME!</span>
+                </li>
+            </ul>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-12">
+      <mat-card class="card-2 mat-elevation-z8">
+        <mat-card-header>
+            <mat-card-title>Activity</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <ul class="list-group">
+              <span *ngFor="let action of tx.action; index as i">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Type:
+                    <span class="badge badge-primary badge-pill">{{ action | titlecase}}</span>
+                  </li>
+                <li *ngIf="tx.sender && tx.sender[i]" class="list-group-item d-flex justify-content-between align-items-center">
+                  From:
+                  <span class="badge badge-primary badge-pill">
+                    <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.sender[i] ) : false; else elseSender">
+                      {{ (appState | async).valsMap.get( tx.sender[i] )}}
+                    </span>
+                    <ng-template #elseSender>{{tx.sender[i]}}</ng-template>
+                  </span>
+                </li>
+                <li *ngIf="tx.recipient && tx.recipient[i]" class="list-group-item d-flex justify-content-between align-items-center">
+                  To:
+                  <span class="badge badge-primary badge-pill">
+                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.recipient[i] ) : false; else elseRecipient">
+                        {{ (appState | async).valsMap.get( tx.recipient[i] )}}
+                      </span>
+                      <ng-template #elseRecipient>{{tx.recipient[i]}}</ng-template>
+                  </span>
+                </li>
+                <li *ngIf="tx.delegator && tx.delegator[i]" class="list-group-item d-flex justify-content-between align-items-center">
+                  Delegator:
+                  <span style="cursor:pointer;" (click)="openTxsListDialog(tx.delegator[i])" class="badge badge-primary badge-pill">
+                    <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.delegator[i] ) : false; else elseDelegator">
+                      {{ (appState | async).valsMap.get( tx.delegator[i] )}}
+                    </span>
+                    <ng-template #elseDelegator>{{tx.delegator[i]}}</ng-template> 
+                  </span>
+                </li>
+                <li *ngIf="tx.source_validator && tx.source_validator[i]" class="list-group-item d-flex justify-content-between align-items-center">
+                  Validator:
+                  <span class="badge badge-primary badge-pill">
+                    <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.source_validator[i] ) : false; else elseSourceVal">
+                      {{ (appState | async).valsMap.get( tx.source_validator[i] )}}
+                    </span>
+                    <ng-template #elseSourceVal>{{tx.source_validator[i]}}</ng-template> 
+                  </span>
+                </li>
+                <li *ngIf="tx.destination_validator && tx.destination_validator[i]" class="list-group-item d-flex justify-content-between align-items-center">
+                  Validator:
+                  <span class="badge badge-primary badge-pill">
+                    <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.destination_validator[i] ) : false; else elseDestVal">
+                      {{ (appState | async).valsMap.get( tx.destination_validator[i] )}}
+                    </span>
+                    <ng-template #elseDestVal>{{tx.destination_validator[i]}}</ng-template>
+                  </span>
+                </li>
+                <li *ngIf="tx.end_time && tx.end_time[i]" class="list-group-item d-flex justify-content-between align-items-center">
+                  Ends:
+                  <span class="badge badge-primary badge-pill">{{tx.end_time[i]|date: 'h:ma dd/MM/yy' }}</span>
+                </li>
+                <span *ngIf="action === 'vote'">
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Voter:
+                    <span class="badge badge-primary badge-pill">
+                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.voter[i] ) : false; else elseVoter">
+                        {{ (appState | async).valsMap.get( tx.voter[i] )}}
+                      </span>
+                      <ng-template #elseVoter>{{tx.voter[i]}}</ng-template>
+                    </span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                    Proposal:
+                    <span class="badge badge-primary badge-pill">{{tx.proposal_id[i]}}</span>
+                  </li>
+                </span>
+                <br>
+              </span>
+            </ul>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</section>
