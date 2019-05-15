@@ -58,6 +58,7 @@ import { ChartCardsGovComponent } from './components/charts/chart-cards-gov/char
 import { ClipboardModule } from 'ngx-clipboard';
 import { ToastrModule } from 'ngx-toastr';
 import { TxsListCardComponent } from './components/txs/txs-list-card/txs-list-card.component';
+import { AccountDetailComponent } from './components/account-detail/account-detail.component';
 
 declare var Hammer: any;
 
@@ -119,7 +120,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     StatusCard2Component,
     ChartCardsComponent,
     ChartCardsGovComponent,
-    TxsListCardComponent
+    TxsListCardComponent,
+    AccountDetailComponent
     // UniversalSearchBarComponent,
   ],
   entryComponents: [

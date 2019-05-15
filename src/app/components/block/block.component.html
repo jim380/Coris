@@ -1,68 +1,75 @@
-<div class="row search-box">
-    <div class="field has-addons">
-        <div class="control">
-          <input class="input" placeholder = "Enter block height" #queryInputRef >
-        </div>
-        <div class="control">
-          <a 
-            class = "button is-info" 
-            (click) = 'clickButton(queryInputRef.value)' >
-              Search
-          </a>
-        </div>
-    </div>
-</div>
+<mat-card class="card-1 mat-elevation-z8">
+    <mat-card-header>
+        <mat-card-title>Block # Detail</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Hash
+                <span class="badge badge-primary badge-pill">14</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Proposer
+                <span class="badge badge-primary badge-pill">2</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Transactions
+                <span class="badge badge-primary badge-pill">1</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Timestamp
+                <span class="badge badge-primary badge-pill">1</span>
+            </li>
+        </ul>
+    </mat-card-content>
+</mat-card>
 
-<div class="row">
-  <div *ngIf="(block?.last_commit); else elseBlock" class="card events-card">
-          <div class="card-header">
-            <p class="card-header-title"><i class="fab fa-codepen"></i>Block&nbsp;&nbsp;&nbsp;#{{block.header.height}}</p>
-          </div>
-
-          <div class="row block-info">
-            <div class="col span-1-of-3">
-                <div class="card-table table-block">
-                    <table class="table is-fullwidth">
-                      <tbody>
-                        <tr class="query-name">Height</tr>
-                        <tr class="query-name">Hash</tr>
-                        <tr class="query-name">Proposer</tr>
-                        <tr><a (click)="showHideElem()">Precommits ({{block.last_commit?.precommits?.length}})</a></tr> 
-                      </tbody>
-                    </table>
-                  </div>
-            </div>
-            <div class="col span-2-of-3">
-                <div class="card-table table-block">
-                    <table class="table is-fullwidth">
-                      <tbody>
-                        <tr>{{block.header.height}}</tr>
-                        <tr>{{block.header.app_hash}}</tr>
-                        <tr>{{block.header.proposer_address}}</tr>
-                        <tr>{{block.header.time}}</tr>
-                      </tbody>
-                    </table>
-                  </div>
+<mat-card class="card-2 mat-elevation-z8">
+    <mat-card-header>
+        <mat-card-title>Activity</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+<!-- Nav tabs -->
+<mdb-tabset [buttonClass]="'pills-secondary white mb-2'" [contentClass]="'card'">
+        <!--Panel 1-->
+        <mdb-tab heading="Transfer">
+          <div class="row">
+            <div class="col-12">
+              <p>A table with tabs might be a better idea here, like how you did the tables in Gov Detail page.</p>
             </div>
           </div>
-
-          <div class="card-table table-precommits" [style.display]="displayCommits ? 'flex': 'none'" id="precommits">
-            <table class="table is-fullwidth">
-              <tbody>
-                  <tr *ngFor="let validator of block.last_commit.precommits">
-                     <td *ngIf="(validator === null)">Abscent!</td>
-                     <td 
-                       *ngIf="(validator !== null)"
-                       routerLink="/validator/{{validator.validator_address}}" 
-                       class="clickable"
-                         >{{validator.validator_address}}
-                     </td>
-                   </tr>
-              </tbody>
-            </table>
+        </mdb-tab>
+        <!--Panel 2-->
+        <mdb-tab heading="Staking">
+          <div class="row">
+            <div class="col-12">
+              <p>A table with tabs might be a better idea here, like how you did the tables in Gov Detail page.</p>
+            </div>
           </div>
-  </div>
-
-  <ng-template #elseBlock>No block found at {{queryHeight}}!</ng-template>
+        </mdb-tab>
+        <!--Panel 3-->
+        <mdb-tab heading="Distribution">
+          <div class="row">
+            <div class="col-12">
+              <p>A table with tabs might be a better idea here, like how you did the tables in Gov Detail page.</p>
+            </div>
+          </div>
+        </mdb-tab>
+        <mdb-tab heading="Governance">
+          <div class="row">
+            <div class="col-12">
+              <p>A table with tabs might be a better idea here, like how you did the tables in Gov Detail page.</p>
+            </div>
+          </div>
+        </mdb-tab>
+        <mdb-tab heading="Slashing">
+            <div class="row">
+              <div class="col-12">
+                <p>A table with tabs might be a better idea here, like how you did the tables in Gov Detail page.</p>
+              </div>
+            </div>
+        </mdb-tab>
+      </mdb-tabset>
+    </mat-card-content>
+</mat-card>
   
-</div>
