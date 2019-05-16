@@ -2,9 +2,9 @@
     <div class="row">
         <!-- First column -->
         <div class="col-lg-6 col-md-12">
-            <mdb-card class="testimonial-card">
+          <mdb-card class="testimonial-card mb-5">
                 <!--Bacground color-->
-                <div class="card-up indigo lighten-1">
+                <div class="card-up indigo">
                 </div>
           
                 <!--Avatar-->
@@ -18,12 +18,12 @@
                   <!--Name-->
                   <mdb-card-title>
                     <h1>{{ validator.description.moniker }}</h1>
-                    <a href="#" target=" "><i class="ion-social-chrome"></i></a>
+                    <a href="{{ validator.description.website }}" target=" "><i class="ion-social-chrome"></i></a>
                   </mdb-card-title>
                   <hr>
                   <!--Quotation-->
                   <p>
-                    <i class="fas fa-quote-left"></i>{{ validator.description.details }}
+                    <i class="fas fa-quote-left"></i>&nbsp;{{ validator.description.details }}
                   </p>
           
                   <mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-4 pills-secondary white mb-2'" [contentClass]="'card'">
@@ -45,182 +45,217 @@
            
                   </mdb-tabset>
                 </mdb-card-body>
-              </mdb-card>
+          </mdb-card>
         </div>
         <div class="col-lg-6 col-md-12">
-            <!--Panel-->
-            <div class=" card my-5">
+          <!-- /.Panel -->
+          <div class="mb-5">
+            <mdb-card alignment="left" class="mat-elevation-z8 mb-3">
+              <mdb-card-header>
+                <mdb-card-title>Delegations</mdb-card-title>
+              </mdb-card-header>
+              <mdb-card-body class="bg-transparent">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-4 col-12">
-                            <small class="grey-text">Rank</small>
-                            <h4>{{ validator.rank }}</h4>
-                        </div>
-                        <div class="col-sm-4 col-12">
-                            <small class="grey-text">Voting Power</small>
-                            <h4>{{ validator.tokens/1e6 | number:'.0-0' }}</h4>
-                        </div>
-                        <div class="col-sm-4 col-12">
-                            <small class="grey-text">Delegators</small>
-                            <h4>
-                              <span *ngIf="validator.delegations; else elseBlock">
-                                {{ validator.delegations.length | number:'.0-0' }}
+                  <div class="row table-responsive text-nowrap">
+                        <table mat-table [dataSource]="delegationsDataSource" class="table large-header">
+                          <ng-container matColumnDef="address">
+                            <th mat-header-cell *matHeaderCellDef> Address </th>
+                            <td mat-cell *matCellDef="let delegation"> 
+                              <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( delegation.delegator_address ) : false; else elseVetoVoter">
+                                {{ (appState | async).valsMap.get( delegation.delegator_address )}}
                               </span>
-                              <ng-template #elseBlock>
-                                0
-                              </ng-template>
-                            </h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 col-12">
-                            <small class="grey-text">Balance</small>
-                            <h4>
-                              <span 
-                                  *ngIf="validator.account?.tokens; else balanceElseBlock" 
-                                  matTooltipPosition="above"
-                              >
-                                {{validator.account?.tokens/1e6 | number:'.2-2'}}
-                              </span>
-                              <ng-template #balanceElseBlock>
-                                0
-                              </ng-template>
-                            </h4>
-                        </div>
-                        <div class="col-sm-4 col-12">
-                          <small class="grey-text">Rewards</small>
-                          <h4 *ngIf="validator.outstanding_rewards">
-                            {{validator.outstanding_rewards[0].amount/1e6 | number:'.2-2'}}
-                          </h4>
-                        </div>
-                        <div class="col-sm-4 col-12">
-                          <small class="grey-text">Outstanding Rewards</small>
-                          <h4 *ngIf="validator.rewards">
-                            {{validator.rewards[0].amount/1e6 | number:'.2-2'}} 
-                          </h4>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-4 col-12">
-                            <small class="grey-text">Commission</small>
-                            <h4> {{ validator.commission?.rate | percent }} </h4>
-                        </div>
-                        <div class="col-sm-4 col-12">
-                            <small class="grey-text">Commission Max</small>
-                            <h4>{{ validator.commission?.max_rate | percent }}</h4>
-                        </div>
-                        <div class="col-sm-4 col-12">
-                            <small class="grey-text">Commission Max Change</small>
-                            <h4>{{ validator.commission?.max_change_rate | percent }}</h4>
-                        </div>
-                    </div>
-                    <a class="btn grey btn-rounded waves-effect waves-light text-white" mdbWavesEffect>Details</a>
+                              <ng-template #elseVetoVoter>
+                                {{ delegation.delegator_address }}
+                              </ng-template> 
+                            </td>
+                          </ng-container>
+                      
+                          <ng-container matColumnDef="amount">
+                            <th mat-header-cell *matHeaderCellDef> Amount </th>
+                            <td mat-cell *matCellDef="let delegation"> 
+                              {{ delegation.shares/1e6 | number:'.2-2' }}
+                            </td>
+                          </ng-container>
+                      
+                          <tr mat-header-row *matHeaderRowDef="delegationsDisplayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: delegationsDisplayedColumns;"></tr>
+                        </table> 
+                        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                  </div>
                 </div>
-            </div>
-            <!--/.Panel-->
+              </mdb-card-body>            
+            </mdb-card>
+          </div>
+          <!-- /.Panel -->
         </div>
         <!-- /.First column -->
         
         <!-- Second column -->
-        <div class="col-lg-12">
-            <div class="my-5">
-              <mat-card alignment="left">
-                <mat-card-title>Delegations</mat-card-title>
-                <div class="card-body">
-                  <div class="row table-responsive text-nowrap scrollbar-primary">
-                    <table mat-table [dataSource]="delegationsDataSource" class="table large-header">
-                      <ng-container matColumnDef="address">
-                        <th mat-header-cell *matHeaderCellDef> Address </th>
-                        <td mat-cell *matCellDef="let delegation"> 
-                          <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( delegation.delegator_address ) : false; else elseVetoVoter">
-                            {{ (appState | async).valsMap.get( delegation.delegator_address )}}
-                          </span>
-                          <ng-template #elseVetoVoter>
-                            {{ delegation.delegator_address }}
-                          </ng-template> 
-                        </td>
-                      </ng-container>
-                  
-                      <ng-container matColumnDef="amount">
-                        <th mat-header-cell *matHeaderCellDef> Amount </th>
-                        <td mat-cell *matCellDef="let delegation"> 
-                          {{ delegation.shares/1e6 | number:'.2-2' }}
-                        </td>
-                      </ng-container>
-                  
-                      <tr mat-header-row *matHeaderRowDef="delegationsDisplayedColumns"></tr>
-                      <tr mat-row *matRowDef="let row; columns: delegationsDisplayedColumns;"></tr>
-                    </table> 
-                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <div class="col-lg-6 col-md-12">
+          <!--Panel-->
+          <div class="mb-5">
+            <mdb-card alignment="left" class="mat-elevation-z8 mb-3">
+            <mdb-card-header>
+              <mdb-card-title>At a Glance</mdb-card-title>
+            </mdb-card-header>
+            <mdb-card-body>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-4 col-12">
+                    <mdb-badge color="red">
+                      Rank
+                    </mdb-badge>
+                    <h4>{{ validator.rank }}</h4>
+                  </div>
+                  <div class="col-sm-4 col-12">
+                      <mdb-badge color="cyan">
+                        Voting Power
+                      </mdb-badge>
+                    <h4>{{ validator.tokens/1e6 | number:'.0-0' }}</h4>
+                  </div>
+                  <div class="col-sm-4 col-12">
+                      <mdb-badge color="amber darken-2">
+                          Delegators
+                      </mdb-badge>
+                    <h4>
+                      <span *ngIf="validator.delegations; else elseBlock">
+                        {{ validator.delegations.length | number:'.0-0' }}
+                      </span>
+                      <ng-template #elseBlock>
+                        0
+                      </ng-template>
+                    </h4>
                   </div>
                 </div>
-              </mat-card>
-            </div>
-            <!-- /.Panel -->
-            
-            <!-- Panel -->
-            <div class="card my-5">
-              <mat-card alignment="left">
-                  <mat-card-title>Account: {{ validator.account.value.address }}</mat-card-title>
-                  <mat-card-subtitle>Transactions (last 100)</mat-card-subtitle>
-                    <div class="card-body">
-                      <mat-tab-group (selectedTabChange)="onTabChange($event);">
-                        <mat-tab label="Staking">
-                          <table mat-table [dataSource]="accountDataSource" class="table large-header">
-                            <ng-container matColumnDef="hash">
-                              <th mat-header-cell *matHeaderCellDef> Hash </th>
-                              <td mat-cell *matCellDef="let tx">
-                                {{ tx.txhash }}
-                                <i  class="ion-ios-copy copy-button" 
-                                    style="cursor: pointer;" 
-                                    ngxClipboard [cbContent]="tx.txhash" 
-                                    (click)="onCopySuccess()">
-                                </i>
-                              </td>
-                            </ng-container>
-                        
-                            <ng-container matColumnDef="height">
-                              <th mat-header-cell *matHeaderCellDef> Height </th>
-                              <td mat-cell *matCellDef="let tx"> 
-                                {{ tx.height }} 
-                              </td>
-                            </ng-container>
-                        
-                            <tr mat-header-row *matHeaderRowDef="accountDisplayedColumns"></tr>
-                            <tr mat-row *matRowDef="let row; columns: accountDisplayedColumns;"></tr>
-                          </table>
-                        </mat-tab>
-                        <mat-tab label="Transfer">
-                          <table mat-table [dataSource]="accountDataSource" class="table large-header">
-                            <ng-container matColumnDef="hash">
-                              <th mat-header-cell *matHeaderCellDef> Hash </th>
-                              <td mat-cell *matCellDef="let tx">
-                                {{ tx.txhash }}
-                                <i  class="ion-ios-copy copy-button" 
-                                    style="cursor: pointer;" 
-                                    ngxClipboard [cbContent]="tx.txhash" 
-                                    (click)="onCopySuccess()">
-                                </i>
-                              </td>
-                            </ng-container>
-                        
-                            <ng-container matColumnDef="height">
-                              <th mat-header-cell *matHeaderCellDef> Height </th>
-                              <td mat-cell *matCellDef="let tx"> 
-                                {{ tx.height }} 
-                              </td>
-                            </ng-container>
-                        
-                            <tr mat-header-row *matHeaderRowDef="accountDisplayedColumns"></tr>
-                            <tr mat-row *matRowDef="let row; columns: accountDisplayedColumns;"></tr>
-                          </table>
-                        </mat-tab>
-                      </mat-tab-group>
-                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                <div class="row">
+                  <div class="col-sm-4 col-12">
+                    <mdb-badge color="lime Commision Max">
+                        Balance
+                    </mdb-badge>
+                    <h4>
+                      <span 
+                          *ngIf="validator.account?.tokens; else balanceElseBlock" 
+                          matTooltipPosition="above"
+                      >
+                        {{validator.account?.tokens/1e6 | number:'.2-2'}}
+                      </span>
+                      <ng-template #balanceElseBlock>
+                        0
+                      </ng-template>
+                    </h4>
                   </div>
-                </mat-card>
-            </div>
+                  <div class="col-sm-4 col-12">
+                    <mdb-badge color="purple darken-2">
+                        Rewards
+                    </mdb-badge>
+                    <h4 *ngIf="validator.outstanding_rewards">
+                      {{validator.outstanding_rewards[0].amount/1e6 | number:'.2-2'}}
+                    </h4>
+                  </div>
+                  <div class="col-sm-4 col-12">
+                    <mdb-badge color="indigo">
+                      Outstanding Rewards
+                    </mdb-badge>
+                    <h4 *ngIf="validator.rewards">
+                      {{validator.rewards[0].amount/1e6 | number:'.2-2'}} 
+                    </h4>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4 col-12">
+                    <mdb-badge color="teal">
+                      Commission
+                    </mdb-badge>
+                    <h4> {{ validator.commission?.rate | percent }} </h4>
+                  </div>
+                  <div class="col-sm-4 col-12">
+                    <mdb-badge color="yellow darken-2">
+                      Commision Max
+                    </mdb-badge>
+                    <h4>{{ validator.commission?.max_rate | percent }}</h4>
+                  </div>
+                  <div class="col-sm-4 col-12">
+                    <mdb-badge color="brown">
+                      Commision Max
+                    </mdb-badge>
+                    <h4>{{ validator.commission?.max_change_rate | percent }}</h4>
+                  </div>
+                </div>
+                <!-- <a class="btn grey btn-rounded waves-effect waves-light text-white" mdbWavesEffect>Details</a> -->
+              </div>
+            </mdb-card-body>
+            </mdb-card>
+          </div>
+          <!--/.Panel-->
+        </div>
+        <div class="col-lg-6 col-md-12">
+          <!-- Panel -->
+          <div class="mb-5">
+            <mdb-card alignment="left" class="mat-elevation-z8 mb-3">
+              <mdb-card-header>
+                <!-- <mdb-card-title>Account: {{ validator.account.value.address }}</mdb-card-title> -->
+                <!-- <mat-card-subtitle>Transactions (last 100)</mat-card-subtitle> -->
+                <mdb-card-title>Power Events</mdb-card-title>
+              </mdb-card-header>
+              <mdb-card-body>
+                <div class="card-body">
+                          <mat-tab-group (selectedTabChange)="onTabChange($event);">
+                            <mat-tab label="Staking">
+                              <table mat-table [dataSource]="accountDataSource" class="table large-header">
+                                <ng-container matColumnDef="hash">
+                                  <th mat-header-cell *matHeaderCellDef> Hash </th>
+                                  <td mat-cell *matCellDef="let tx">
+                                    {{ tx.txhash }}
+                                    <i  class="ion-ios-copy copy-button" 
+                                        style="cursor: pointer;" 
+                                        ngxClipboard [cbContent]="tx.txhash" 
+                                        (click)="onCopySuccess()">
+                                    </i>
+                                  </td>
+                                </ng-container>
+                            
+                                <ng-container matColumnDef="height">
+                                  <th mat-header-cell *matHeaderCellDef> Height </th>
+                                  <td mat-cell *matCellDef="let tx"> 
+                                    {{ tx.height }} 
+                                  </td>
+                                </ng-container>
+                            
+                                <tr mat-header-row *matHeaderRowDef="accountDisplayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: accountDisplayedColumns;"></tr>
+                              </table>
+                            </mat-tab>
+                            <mat-tab label="Transfer">
+                              <table mat-table [dataSource]="accountDataSource" class="table large-header">
+                                <ng-container matColumnDef="hash">
+                                  <th mat-header-cell *matHeaderCellDef> Hash </th>
+                                  <td mat-cell *matCellDef="let tx">
+                                    {{ tx.txhash }}
+                                    <i  class="ion-ios-copy copy-button" 
+                                        style="cursor: pointer;" 
+                                        ngxClipboard [cbContent]="tx.txhash" 
+                                        (click)="onCopySuccess()">
+                                    </i>
+                                  </td>
+                                </ng-container>
+                            
+                                <ng-container matColumnDef="height">
+                                  <th mat-header-cell *matHeaderCellDef> Height </th>
+                                  <td mat-cell *matCellDef="let tx"> 
+                                    {{ tx.height }} 
+                                  </td>
+                                </ng-container>
+                            
+                                <tr mat-header-row *matHeaderRowDef="accountDisplayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: accountDisplayedColumns;"></tr>
+                              </table>
+                            </mat-tab>
+                          </mat-tab-group>
+                        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                </div>
+              </mdb-card-body>
+            </mdb-card>
+          </div>
         </div>   
   </div>
 </section>

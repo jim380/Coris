@@ -3,7 +3,7 @@
 @include mat-core();
 
 $app-primary: mat-palette($mat-indigo, 500, 100, 700);
-$app-accent:  mat-palette($mat-amber, A400, A200, A700);
+$app-accent:  mat-palette($mat-pink, A400, A200, A700);
 
 $app-theme: mat-light-theme($app-primary, $app-accent);
 

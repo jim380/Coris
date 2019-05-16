@@ -6,3 +6,26 @@
 .card-1 {
   margin-bottom: 20px;
 }
+
+.success {
+  color: #4CAF50;
+}
+
+.fail {
+color: #F44336;/*#00796b;*/
+}
+
+.copy-button {
+  color:#3F51B5;
+}
+
+.copy-button:hover,
+.copy-button:active {
+  color:#7986cb;
+  /* border-bottom: 1px solid transparent; */
+}
+
+.card-title {
+  margin: 0;
+  font-size: 130%;
+}

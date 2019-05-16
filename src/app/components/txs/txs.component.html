@@ -1,5 +1,5 @@
 <span *ngIf="txs && txs.length >= INITIAL_TXS_COUNT; else elseLoading">
-  <div (scroll)="onScroll($event)" class="row table-responsive text-nowrap scrollbar-primary">
+  <div (scroll)="onScroll($event)" class="row table-responsive text-nowrap scrollbar-primary main-row mat-elevation-z8">
     <div class="container">
       <div class="row">
         <div class="col-8">
@@ -18,23 +18,24 @@
           class="mat-elevation-z8 w-auto">
 
       <ng-container matColumnDef="hash" sticky>
-        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-pound"></i>Hash</th>
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-pound"></i>&nbsp;Hash</th>
         <td mat-cell *matCellDef="let tx" mdbWavesEffect> 
-          <span matTooltip="tx.hash" matTooltipPosition="above">
+          <span>
             {{tx.hash | slice:0:15 }}... 
             <i 
               class="ion-ios-copy copy-button" 
               style="cursor: pointer;" 
               ngxClipboard 
               [cbContent]="tx.hash" 
-              (click)="onCopySucceess()">
+              (click)="onCopySucceess()"
+              mdbTooltip="copy to clipboard" placement="left">
             </i>
           </span>
           </td>
       </ng-container>
 
       <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-document-text"></i>Type</th>
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-document-text"></i>&nbsp;Type</th>
         <td mat-cell *matCellDef="let tx">
           <mat-chip-list>
             <mat-chip color = "primary" selected>
@@ -49,7 +50,7 @@
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-android-checkbox-outline"></i>Status</th>
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-android-checkbox-outline"></i>&nbsp;Status</th>
         <td mat-cell *matCellDef="let tx"> 
           <span *ngIf="!tx.error; else elseStatus"><i class="ion-checkmark-circled success"></i></span>
           <ng-template #elseStatus>
@@ -59,7 +60,7 @@
       </ng-container>
 
       <ng-container matColumnDef="fee">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-card"></i>Fee</th>
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-card"></i>&nbsp;Fee</th>
         <td mat-cell *matCellDef="let tx"> 
           {{ 
             tx.details?.tx.value.fee.amount ?
@@ -69,12 +70,12 @@
       </ng-container>
 
       <ng-container matColumnDef="height">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-soup-can"></i>Height</th>
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-soup-can"></i>&nbsp;Height</th>
         <td mat-cell *matCellDef="let tx"> {{tx.height}} </td>
       </ng-container>
 
       <ng-container matColumnDef="timestamp">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-clock"></i>Time</th>
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-clock"></i>&nbsp;Time</th>
         <td mat-cell *matCellDef="let tx"> {{tx.details?.timestamp | ago | async}} </td>
       </ng-container>
 
@@ -205,7 +206,7 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let tx; columns: displayedColumns;"
-          [appBgHighlight]="'#383D4C'" defaultColor="#111923"
+          [appBgHighlight]="'#d1d1d1'" defaultColor="#ffffff"
           [class.example-expanded-row]="expandedElement === tx"
           (click)="expandedElement = expandedElement === tx ? null : tx">
       </tr>

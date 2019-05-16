@@ -1,101 +1,99 @@
 
-<section class="mb-5">
-    
+<!-- <section class="mb-5"> -->    
     <!--Grid row-->
-<div class="row">
-    <!--Grid column-->
-    <div class="col-lg-4 col-md-12 my-5">   
-        <!--Card-->
-        <div class="card card-cascade narrower">    
-            <!--Card image-->
-            <div class="view view-cascade gradient-card-header indigo">
-                <canvas mdbChart
-                    height="197"
-                    width="394"
-                    [chartType]="blockChartType"
-                    [datasets]="blockChartDatasets"
-                    [labels]="blockChartLabels"
-                    [options]="radarChartOptions"
-                    [legend]="true"
-                    [colors]="blockChartColors">
+    <div class="row">
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-12 mb-5">   
+            <!--Card-->
+            <div class="card card-cascade narrower">    
+                <!--Card image-->
+                <div class="view view-cascade gradient-card-header indigo">
+                    <canvas mdbChart
+                        height="197"
+                        width="394"
+                        [chartType]="blockChartType"
+                        [datasets]="blockChartDatasets"
+                        [labels]="blockChartLabels"
+                        [options]="radarChartOptions"
+                        [legend]="true"
+                        [colors]="blockChartColors">
+                    </canvas>
+                </div>
+                <!--/Card image-->  
+                <!--Card content-->
+                <div class="card-body card-body-cascade text-center">   
+                    <div class="list-group list-panel">
+                        <a class="list-group-item d-flex justify-content-between dark-grey-text">Block Time (block interval vs. time) <mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
+                        <a class="list-group-item d-flex justify-content-between dark-grey-text">Avg Block Time (avg block interval vs. time)<mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
+                        <a class="list-group-item d-flex justify-content-between dark-grey-text">Maybe more ??? <mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
+                    </div>  
+                </div>
+                <!--/.Card content-->   
+            </div>
+            <!--/.Card-->   
+        </div>
+        <!--Grid column--> 
+
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-12 mb-5">   
+            <!--Card-->
+            <div class="card card-cascade narrower">    
+                <!--Card image-->
+                <div class="view view-cascade gradient-card-header blue-gradient">
+                    <canvas mdbChart
+                        height="197"
+                        width="394"
+                        [chartType]="commissionChartType"
+                        [datasets]="commissionChartDatasets"
+                        [labels]="commissionChartLabels"
+                        [options]="commissionChartOptions"
+                        [legend]="true"
+                        [colors]="commissionChartColors">
                 </canvas>
+                </div>
+                <!--/Card image-->  
+                <!--Card content-->
+                <div class="card-body card-body-cascade text-center">   
+                    <div class="list-group list-panel">
+                        <a class="list-group-item d-flex justify-content-between dark-grey-text">Commission (# of validators vs. rate) <mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
+                        <a class="list-group-item d-flex justify-content-between dark-grey-text">Max commission<mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
+                        <a class="list-group-item d-flex justify-content-between dark-grey-text">Max commission change<mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
+                    </div>  
+                </div>
+                <!--/.Card content-->   
             </div>
-            <!--/Card image-->  
-            <!--Card content-->
-            <div class="card-body card-body-cascade text-center">   
-                <div class="list-group list-panel">
-                    <a class="list-group-item d-flex justify-content-between dark-grey-text">Block Time (block interval vs. time) <mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
-                    <a class="list-group-item d-flex justify-content-between dark-grey-text">Avg Block Time (avg block interval vs. time)<mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
-                    <a class="list-group-item d-flex justify-content-between dark-grey-text">Maybe more ??? <mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
-                </div>  
-            </div>
-            <!--/.Card content-->   
+            <!--/.Card-->   
         </div>
-        <!--/.Card-->   
-    </div>
-    <!--Grid column--> 
+        <!--Grid column--> 
 
-    <!--Grid column-->
-    <div class="col-lg-4 col-md-12 my-5">   
-        <!--Card-->
-        <div class="card card-cascade narrower">    
-            <!--Card image-->
-            <div class="view view-cascade gradient-card-header blue-gradient">
-                <canvas mdbChart
-                    height="197"
-                    width="394"
-                    [chartType]="commissionChartType"
-                    [datasets]="commissionChartDatasets"
-                    [labels]="commissionChartLabels"
-                    [options]="commissionChartOptions"
-                    [legend]="true"
-                    [colors]="commissionChartColors">
-            </canvas>
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-12 mb-5">   
+            <!--Card-->
+            <div class="card card-cascade narrower">    
+                <!--Card image-->
+                <div class="view view-cascade gradient-card-header mdb-color lighten-4">
+                    <canvas baseChart
+                        [datasets]="scatterChartData"
+                        [options]="scatterChartOptions"
+                        [chartType]="scatterChartType">
+                    </canvas>
+                </div>
+                <!--/Card image-->  
+                <!--Card content-->
+                <div class="card-body card-body-cascade text-center">   
+                    <div class="list-group list-panel">
+                        <a class="list-group-item d-flex justify-content-between dark-grey-text">Total (voting power per validator)<mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
+                        <a class="list-group-item d-flex justify-content-between dark-grey-text">Self-delegation (self-delegation per validator)<mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
+                        <a class="list-group-item d-flex justify-content-between dark-grey-text">More (Balance, Rewards, Unbond)<mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
+                    </div>  
+                </div>
+                <!--/.Card content-->   
             </div>
-            <!--/Card image-->  
-            <!--Card content-->
-            <div class="card-body card-body-cascade text-center">   
-                <div class="list-group list-panel">
-                    <a class="list-group-item d-flex justify-content-between dark-grey-text">Commission (# of validators vs. rate) <mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
-                    <a class="list-group-item d-flex justify-content-between dark-grey-text">Max commission<mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
-                    <a class="list-group-item d-flex justify-content-between dark-grey-text">Max commission change<mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
-                </div>  
-            </div>
-            <!--/.Card content-->   
+            <!--/.Card-->   
         </div>
-        <!--/.Card-->   
+        <!--Grid column-->
+
+
     </div>
-    <!--Grid column--> 
-
-    <!--Grid column-->
-    <div class="col-lg-4 col-md-12 my-5">   
-        <!--Card-->
-        <div class="card card-cascade narrower">    
-            <!--Card image-->
-            <div class="view view-cascade gradient-card-header mdb-color lighten-4">
-                <canvas baseChart
-                    [datasets]="scatterChartData"
-                    [options]="scatterChartOptions"
-                    [chartType]="scatterChartType">
-                </canvas>
-            </div>
-            <!--/Card image-->  
-            <!--Card content-->
-            <div class="card-body card-body-cascade text-center">   
-                <div class="list-group list-panel">
-                    <a class="list-group-item d-flex justify-content-between dark-grey-text">Total (voting power per validator)<mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
-                    <a class="list-group-item d-flex justify-content-between dark-grey-text">Self-delegation (self-delegation per validator)<mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
-                    <a class="list-group-item d-flex justify-content-between dark-grey-text">More (Balance, Rewards, Unbond)<mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon></a>
-                </div>  
-            </div>
-            <!--/.Card content-->   
-        </div>
-        <!--/.Card-->   
-    </div>
-    <!--Grid column-->
-
-
-</div>
-<!--Grid row-->  
-
-</section>
+    <!--Grid row-->  
+<!-- </section> -->

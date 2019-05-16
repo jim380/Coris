@@ -1,5 +1,5 @@
 <app-chart-cards-gov *ngIf="proposals" [proposals]="proposals.slice(-3)"></app-chart-cards-gov>
-<div class="row scrollbar-primary table-responsive text-nowrap">
+<div class="row scrollbar-primary mat-elevation-z8 table-responsive text-nowrap">
   <table mat-table multiTemplateDataRows [dataSource]="dataSource" class="mat-elevation-z8 w-auto">
     
     <ng-container matColumnDef="id">
@@ -10,14 +10,14 @@
     </ng-container>
   
     <ng-container matColumnDef="title" sticky>
-      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-code"></i>Title</th>
+      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-code"></i>&nbsp;Title</th>
       <td mat-cell *matCellDef="let proposal" mdbTooltip="{{proposal.proposal_content.value.title}}" placement="top">
         {{proposal.proposal_content.value.title | slice:0:20}}...
       </td>
     </ng-container>
 
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-android-checkbox-outline"></i>Status</th>
+      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-android-checkbox-outline"></i>&nbsp;Status</th>
       <td mat-cell *matCellDef="let proposal">
         <span *ngIf="proposal.proposal_status === 'Passed'">
             <i class="ion-checkmark-circled success"></i>
@@ -36,7 +36,7 @@
     </ng-container>
 
     <ng-container matColumnDef="submitted">
-      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-paper-airplane"></i>Submitted</th>
+      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-paper-airplane"></i>&nbsp;Submitted</th>
       <td mat-cell *matCellDef="let proposal">  
         {{proposal.submit_time | date:"h:mm a, MMM d, y"}}
       </td>
@@ -50,14 +50,14 @@
     </ng-container> -->
 
     <ng-container matColumnDef="deposit">
-      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-archive"></i>Deposit</th>
+      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-archive"></i>&nbsp;Deposit</th>
       <td mat-cell *matCellDef="let proposal">  
         {{proposal.total_deposit[0].amount/1e6 | number:".2-2"}} <span class="ticker">ATOM</span>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="depositEnd">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-load-c"></i>Deposit End</th>
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-load-c"></i>&nbsp;Deposit End</th>
         <td mat-cell *matCellDef="let proposal">  
           {{proposal.deposit_end_time | date:"h:mm a, MMM d, y"}}
         </td>
@@ -81,7 +81,7 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let proposal; columns: displayedColumns;"
-        [appBgHighlight]="'#383D4C'" defaultColor="#111923"
+        [appBgHighlight]="'#d1d1d1'" defaultColor="#ffffff"
         [class.example-expanded-row]="expandedElement === proposal"
         (click)="expandedElement = expandedElement === proposal ? null : proposal">
     </tr>

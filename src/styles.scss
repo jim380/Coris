@@ -3,24 +3,24 @@
 // @import "https://fonts.googleapis.com/css?family=Lato:100,300,300i,400";
 @import url(https://fonts.googleapis.com/css?family=Lato:100,300,300i,400);
 
-@viewport {
-  width: device-width ;
-  zoom: 1.0 ;
-}
+// @viewport {
+//   width: device-width ;
+//   zoom: 1.0 ;
+// }
 
-i {
-  margin-right: 5px;
-}
+// i {
+//   margin-right: 5px;
+// }
 
-.clickable {
-  cursor: pointer;
-}
+// .clickable {
+//   cursor: pointer;
+// }
 
-html,
-body{
-  background: #484C52;
-  color: #F7F7F7;
-}
+// html,
+// body{
+//   background: #484C52;
+//   color: black;
+// }
 
 /* @aakatev moved from app.components.css */
 /*-------------------------------------------------*/
@@ -30,8 +30,8 @@ html, body {
   font-size: 20px;
   line-height: 1.5;
   height: 100%;
-  background: #111923;
-  color: white;
+  background: white;
+  color: black;
   font-family: 'Lato', 'Arial', sans-serif;
   font-weight: 300;
   text-rendering: optimizeLegibility;
@@ -203,12 +203,12 @@ article {
 
 .title {
   font-weight: 500;
-  color: rgb(255, 255, 255);
+  color: black;
 }
 
 .subtitle {
   font-weight: 400;
-  color:#FFC107;
+  color:#FF4081;
 }
 
 
@@ -218,7 +218,7 @@ article {
 }
 
 .header-subtitle {
- color: #FFC107
+ color: #FF4081;
 }
 
 .card .content {
@@ -385,7 +385,7 @@ min-height: 450px;
 
 .scrollbar-primary::-webkit-scrollbar {
 width: 12px;
-background-color: #111923; }
+background-color: white; }
 
 .scrollbar-primary::-webkit-scrollbar-thumb {
 border-radius: 10px;
