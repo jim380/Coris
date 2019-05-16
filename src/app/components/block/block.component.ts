@@ -5,6 +5,7 @@ import { Observable, range } from 'rxjs';
 import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { TxsService } from 'src/app/services/txs.service';
 import { TxComponent } from '../tx/tx.component';
+import { PopupService } from 'src/app/services/popup.service';
 // import { HttpClient } from '@angular/common/http';
 // import { ActivatedRoute, Router } from '@angular/router';
 // import { nodeRpc2 } from '../../../config.js';
@@ -32,7 +33,8 @@ export class BlockComponent implements OnInit, AfterViewInit {
     // private router: Router
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ts: TxsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private popupService: PopupService
   ) { 
     // TODO remove debugging
     console.log(data.block);
@@ -155,6 +157,12 @@ export class BlockComponent implements OnInit, AfterViewInit {
       height: '80vh'
     });
   }
+
+
+  openValidatorDetailDialogHEX(addressHEX) {
+    this.popupService.openValidatorDetailDialogHEX(addressHEX, this.appState, this.dialog);
+  }
+
 
   // fetchBlock() {
   //   this.queryHeight = Number(this.route.snapshot.paramMap.get('height'));
