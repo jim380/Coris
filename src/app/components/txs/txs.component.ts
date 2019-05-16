@@ -14,6 +14,7 @@ import { TxsListCardComponent } from './txs-list-card/txs-list-card.component';
 import { TxComponent } from '../tx/tx.component';
 import { ValidatorComponent } from '../validator/validator.component';
 import { take } from 'rxjs/operators';
+import { PopupService } from 'src/app/services/popup.service.js';
 
 
 @Component({
@@ -92,7 +93,8 @@ export class TxsComponent implements OnInit {
     private store: Store <State>,
     private http: HttpClient,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private popupService: PopupService
   ) { }
 
   ngOnInit() {
@@ -426,26 +428,7 @@ export class TxsComponent implements OnInit {
   }
 
   openValidatorDetailDialog(operatorAddress) {
-    console.log(operatorAddress);
-    this.appState.pipe(
-      take(1)
-    ).subscribe((data) => {
-      // @aakatev 05/16/19
-      // Some validators are not available at state
-      // TOFIX figuire out other way to query missing validators
-      // Might need major changes in validator.service.ts
-      let validatorQuery = data.validators
-        .filter(x => x.operator_address == operatorAddress);
-      if( validatorQuery.length === 1) {
-        this.dialog.open( ValidatorComponent,  {
-          data: { 
-            validator: validatorQuery[0]          },
-          height: '75vh',
-        });
-      } else {
-        console.log("Validator was not found! Operator address: ", operatorAddress)
-      }
-    });
+    this.popupService.openValidatorDetailDialog(operatorAddress, this.appState, this.dialog);
   }
 
   // TODO figuire out how to open on separate route

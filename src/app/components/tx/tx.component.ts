@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { TxsListCardComponent } from '../txs/txs-list-card/txs-list-card.component';
+import { PopupService } from 'src/app/services/popup.service';
 
 // @aakatev
 // 05/15/19
@@ -31,6 +32,7 @@ export class TxComponent implements OnInit {
     private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private store: Store <State>,
+    private popupService: PopupService
     // private route: ActivatedRoute, 
     // private router: Router 
   ) {  
@@ -47,6 +49,7 @@ export class TxComponent implements OnInit {
     // const options = { toastClass: 'opacity' };
     this.toastr.success('Copied to clipboard');
   }
+
   openTxsListDialog(address) {
     this.dialog.open( TxsListCardComponent,  {
       data: { 
@@ -54,6 +57,12 @@ export class TxComponent implements OnInit {
       }
     });
   }
+
+  openValidatorDetailDialog(operatorAddress) {
+    this.popupService.openValidatorDetailDialog(operatorAddress, this.appState, this.dialog);
+  }
+
+  
   // queryTx () {
   //   this.initTxHash();
   //   this.http.get(`${nodeRpc2}/tx_search?query="tx.hash='${this.txHash}'"`).subscribe(async data => {
