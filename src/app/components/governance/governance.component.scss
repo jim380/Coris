@@ -3,7 +3,7 @@
 /*-------------------------------------------------*/
 .row {
   max-width: 90%;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 p {
@@ -16,7 +16,6 @@ table {
   table-layout: fixed;
   min-width: 100%;
   border-collapse: collapse;
-  /* border: 3px solid purple; */
 }
 
 td {
@@ -24,14 +23,6 @@ td {
   white-space: nowrap; /* to make sure the line doesn't break when it is longer than the containing div. */
   text-overflow: ellipsis;
   text-align: left;
-}
-
-tbody tr:nth-child(odd){
-  background:#0D151F;
-}
-
-tbody tr:nth-child(even){
-  background:#111923;
 }
 
 button {
@@ -48,7 +39,7 @@ button {
 
 p,
 tbody {
-  color: white;
+  color: black;
 }
 
 .td-1 {
@@ -61,11 +52,11 @@ tbody {
 
 /* mat-table */
 .mat-row:nth-child(even){
-  background-color:#0D151F;
+  background-color:white;
 }
 
 .mat-row:nth-child(odd){
-  background-color:#111923;
+  background-color:white;
 }
 
 .mat-header-cell, .mat-cell {
@@ -81,7 +72,7 @@ tbody {
 }
 
 .mat-cell {
-  color: #F7F7F7;
+  color: black;
 }
 
 .mat-header-row {
@@ -90,7 +81,7 @@ tbody {
 
 .ticker {
   font-size: 80%;
-  color: #B2DFDB;
+  color: #3F51B5;
 }
 
 th:nth-child(1) {
@@ -127,8 +118,7 @@ tr.proposal-detail-row {
 }
 
 .list-group-item {
-  background-color: #0D151F;
-  color: white;
+  color: black;
 }
 
 .success {
@@ -140,5 +130,5 @@ color: #F44336;/*#00796b;*/
 }
 
 .voting {
-  color: #B3E5FC;/*#00796b;*/
+  color: #3F51B5;/*#00796b;*/
 }

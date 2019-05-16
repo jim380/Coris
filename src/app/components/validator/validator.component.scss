@@ -20,12 +20,18 @@
 
 .card.card-cascade {
   .view {
-      box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.15), 0 3px 12px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.15), 0 3px 12px 0 rgba(0, 0, 0, 0.15);
   }
+}
+
+section {
+  // background-color: #121212;
+  margin: 0 auto;
 }
 
 .row {
   max-width: 90%;
+  // background-color: #111923;
 }
 
 .testimonial-card {
@@ -49,3 +55,4 @@ th, td {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+

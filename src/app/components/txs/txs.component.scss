@@ -13,7 +13,6 @@ table {
   table-layout: fixed;
   min-width: 100%;
   border-collapse: collapse;
-  /* border: 3px solid purple; */
 }
 
 th:nth-child(1) {
@@ -61,16 +60,15 @@ tbody {
 
 /* mat-table */
 .mat-row:nth-child(even){
-  background-color:#0D151F;
+  background-color: white;
 }
 
 .mat-row:nth-child(odd){
-  background-color:#111923;
+  background-color: white;
 }
 
 .mat-header-cell, .mat-cell {
   font-size: 20px;
-  font-family: 'Lato', 'Arial', sans-serif;
   font-weight: 300;
   text-rendering: optimizeLegibility;
   vertical-align: middle;
@@ -81,7 +79,7 @@ tbody {
 }
 
 .mat-cell {
-  color: #F7F7F7;
+  color: black;
 }
 
 .mat-header-row {
@@ -90,7 +88,7 @@ tbody {
 
 .ticker {
   font-size: 80%;
-  color: #B2DFDB;
+  color: #3F51B5;
 }
 
 .txHashColumn {
@@ -141,8 +139,7 @@ color: #F44336;/*#00796b;*/
 }
 
 .list-group-item {
-  background-color: #0D151F;
-  color: white;
+  color: black;
 }
 
 .badge {
@@ -162,5 +159,5 @@ color: #F44336;/*#00796b;*/
 .button-row {
   max-width: 90%;
   justify-content: center;
-  margin: 0 auto;
+  margin: 20px auto 20px auto;
 }

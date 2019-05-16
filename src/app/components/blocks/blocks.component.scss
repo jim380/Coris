@@ -6,6 +6,11 @@
   margin: 0 auto;
 }
 
+.container {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
 p {
   padding: 1px;
 }
@@ -16,7 +21,6 @@ table {
   table-layout: fixed;
   min-width: 100%;
   border-collapse: collapse;
-  /* border: 3px solid purple; */
 }
 
 td {
@@ -42,14 +46,6 @@ th:nth-child(4) {
   width: 25%;
 }
 
-tbody tr:nth-child(odd){
-  background:#0D151F;
-}
-
-tbody tr:nth-child(even){
-  background:#111923;
-}
-
 button {
   margin: 15px;
 }
@@ -64,7 +60,7 @@ button {
 
 p,
 tbody {
-  color: white;
+  color: black;
 }
 
 .td-1 {
@@ -77,11 +73,11 @@ tbody {
 
 /* mat-table */
 .mat-row:nth-child(even){
-  background-color:#0D151F;
+  background-color:white;
 }
 
 .mat-row:nth-child(odd){
-  background-color:#111923;
+  background-color:white;
 }
 
 .mat-header-cell, .mat-cell {
@@ -97,7 +93,7 @@ tbody {
 }
 
 .mat-cell {
-  color: #F7F7F7;
+  color: black;
 }
 
 .mat-header-row {
@@ -114,10 +110,10 @@ tbody {
   margin-top: 20px;
   margin-bottom: 20px;
   float: right;
-  margin-right: 0;
+  margin-right: 60px;
  }
 
- .mat-paginator {
-  color:white;
-  background-color: #3F51B5;
- }
+//  .mat-paginator {
+//   color:white;
+//   background-color: #3F51B5;
+//  }
