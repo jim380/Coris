@@ -3,11 +3,11 @@
     <div class="row">
       <div class="col-8">
         <mat-form-field>
-          <input #queryInputRef matInput placeholder="Enter tx hash">
+          <input #queryInputRef matInput placeholder="Enter block height">
         </mat-form-field>
       </div>
       <div class="col-4">
-        <button (click) = "queryTx(queryInputRef.value)" mat-raised-button color="accent">Search</button>    
+        <button (click) = "queryBlock(queryInputRef.value)" mat-raised-button color="accent">Search</button>    
       </div>
     </div>
   </div>
@@ -17,7 +17,7 @@
     
     <ng-container matColumnDef="height" sticky>
       <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-soup-can"></i>Height</th>
-      <td mat-cell *matCellDef="let block">
+      <td (click)="openBlockDialog(block)" mat-cell *matCellDef="let block">
         {{block.height}}
       </td>
     </ng-container>
@@ -44,7 +44,7 @@
     <ng-container matColumnDef="timestamp">
       <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-clock"></i>Timestamp</th>
       <td mat-cell *matCellDef="let block">  
-        {{block.time | timeAgo }}
+        {{block.time | ago |async }}
       </td>
     </ng-container>
   

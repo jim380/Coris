@@ -37,7 +37,7 @@
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     Timestamp
-                    <span class="badge badge-primary badge-pill">{{tx.details?.timestamp | timeAgo}}</span>
+                    <span class="badge badge-primary badge-pill">{{tx.details?.timestamp | ago | async}}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   Fee

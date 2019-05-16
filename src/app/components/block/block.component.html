@@ -1,75 +1,98 @@
-<mat-card class="card-1 mat-elevation-z8">
-    <mat-card-header>
-        <mat-card-title>Block # Detail</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                Hash
-                <span class="badge badge-primary badge-pill">14</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                Proposer
-                <span class="badge badge-primary badge-pill">2</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                Transactions
-                <span class="badge badge-primary badge-pill">1</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                Timestamp
-                <span class="badge badge-primary badge-pill">1</span>
-            </li>
-        </ul>
-    </mat-card-content>
-</mat-card>
-
-<mat-card class="card-2 mat-elevation-z8">
-    <mat-card-header>
-        <mat-card-title>Activity</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-<!-- Nav tabs -->
-<mdb-tabset [buttonClass]="'pills-secondary white mb-2'" [contentClass]="'card'">
-        <!--Panel 1-->
-        <mdb-tab heading="Transfer">
-          <div class="row">
-            <div class="col-12">
-              <p>A table with tabs might be a better idea here, like how you did the tables in Gov Detail page.</p>
+<section>
+    <div class="row">
+      <div class="col-12">  
+        <mat-card class="card-1 mat-elevation-z8">
+            <mat-card-header>
+                <mat-card-title>Block {{ block.height }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Hash
+                        <span class="badge badge-primary badge-pill">{{ block.hash }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Proposer
+                        <span class="badge badge-primary badge-pill">
+                          <span *ngIf="(appState | async).valsMap.size 
+                                  ? (appState | async).valsMap.has(block.proposer) 
+                                  : false; else elseBlockProposer">
+                            {{ (appState | async).valsMap.get(block.proposer) }}
+                          </span>
+                          <ng-template #elseBlockProposer>{{block.proposer}}</ng-template>
+                        </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Transactions
+                        <span class="badge badge-primary badge-pill">{{ block.txs }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Timestamp
+                        <span class="badge badge-primary badge-pill">{{ block.time | ago | async }}</span>
+                    </li>
+                </ul>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="col-12">
+      <div class="my-5">
+        <mat-card alignment="left">
+          <mat-card-title>Transactions</mat-card-title>
+            <div class="card-body">
+              <mat-tab-group (selectedTabChange)="onTabChange($event);">
+                <mat-tab label="All">
+                  <div class="row table-responsive text-nowrap scrollbar-primary">
+                    <table mat-table [dataSource]="txsDataSource" class="table large-header">
+                      <ng-container matColumnDef="hash">
+                        <th mat-header-cell *matHeaderCellDef> Hash </th>
+                        <td (click)="openTxDialog(tx)" style="cursor: pointer;" mat-cell *matCellDef="let tx">
+                        {{ tx.hash | slice:0:12 }}...
+                        </td>
+                      </ng-container>
+                  
+                      <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef> Type </th>
+                        <td mat-cell *matCellDef="let tx">
+                          <p *ngFor="let action of tx.action">
+                            {{ action }}
+                          </p>
+                        </td>
+                      </ng-container>
+                  
+                      <tr mat-header-row *matHeaderRowDef="txsDisplayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: txsDisplayedColumns;"></tr>
+                    </table>
+                  </div>
+                </mat-tab>
+                <mat-tab label="Transfer">
+                  <div class="row table-responsive text-nowrap scrollbar-primary">
+                    
+                  </div>
+                </mat-tab>
+                <mat-tab label="Staking">
+                  <div class="row table-responsive text-nowrap scrollbar-primary">
+                    
+                  </div>
+                </mat-tab>
+                <mat-tab label="Distribution">
+                  <div class="row table-responsive text-nowrap scrollbar-primary">
+                    
+                  </div>
+                </mat-tab>
+                <mat-tab label="Governance">
+                  
+                </mat-tab>
+                <mat-tab label="Slashing">
+                  <div class="row table-responsive text-nowrap scrollbar-primary">
+                    
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+              <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
             </div>
-          </div>
-        </mdb-tab>
-        <!--Panel 2-->
-        <mdb-tab heading="Staking">
-          <div class="row">
-            <div class="col-12">
-              <p>A table with tabs might be a better idea here, like how you did the tables in Gov Detail page.</p>
-            </div>
-          </div>
-        </mdb-tab>
-        <!--Panel 3-->
-        <mdb-tab heading="Distribution">
-          <div class="row">
-            <div class="col-12">
-              <p>A table with tabs might be a better idea here, like how you did the tables in Gov Detail page.</p>
-            </div>
-          </div>
-        </mdb-tab>
-        <mdb-tab heading="Governance">
-          <div class="row">
-            <div class="col-12">
-              <p>A table with tabs might be a better idea here, like how you did the tables in Gov Detail page.</p>
-            </div>
-          </div>
-        </mdb-tab>
-        <mdb-tab heading="Slashing">
-            <div class="row">
-              <div class="col-12">
-                <p>A table with tabs might be a better idea here, like how you did the tables in Gov Detail page.</p>
-              </div>
-            </div>
-        </mdb-tab>
-      </mdb-tabset>
-    </mat-card-content>
-</mat-card>
-  
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</section>
+      
