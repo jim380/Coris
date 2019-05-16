@@ -1,5 +1,6 @@
-<div class="row" *ngIf="(appState | async).validators.serviceLoaded; else elseBlock">
-  <div class="row mat-elevation-z8 table-responsive text-nowrap scrollbar-primary text-nowrap">
+<div class="row">
+  <div *ngIf="(appState | async).validators.serviceLoaded; else elseBlock" 
+       class="row mat-elevation-z8 table-responsive text-nowrap scrollbar-primary text-nowrap">
     <div class="container">
       <div class="row">
         <div class="col-8">
@@ -18,7 +19,7 @@
           
           <ng-container matColumnDef="height" sticky>
             <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-soup-can"></i>&nbsp;Height</th>
-            <td mat-cell *matCellDef="let block">
+            <td (click)="openBlockDialog(block)" style="cursor: pointer" mat-cell *matCellDef="let block">
               {{block.height}}
             </td>
           </ng-container>
@@ -55,8 +56,17 @@
           ></tr>
     </table>
   </div>
-<!--   light-theme -->
-  <table mat-table 
+  <div class="row paginator">
+    <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[100]"></mat-paginator>
+  </div>
+</div>
+<ng-template #elseBlock>
+  <div style="display: flex; justify-content: center;">
+    <mdb-spinner spinnerColor="blue"></mdb-spinner>
+  </div> 
+</ng-template>
+ 
+  <!-- <table mat-table 
          [dataSource]="blocks" 
          class="mat-elevation-z8 w-auto">
     
@@ -97,15 +107,4 @@
     <tr mat-row @rowsAnimation *matRowDef="let row; columns: displayedColumns;"
     [appBgHighlight]="'#383D4C'" defaultColor="#111923"
     ></tr>
-  </table>
-<!-- 
-  <div class="row paginator">
-    <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[100]"></mat-paginator>
-  </div>
-</div>
-<ng-template #elseBlock>
-  <div style="display: flex; justify-content: center;">
-    <mdb-spinner spinnerColor="blue"></mdb-spinner>
-  </div> 
-</ng-template> -->
- 
+  </table> -->
