@@ -21,9 +21,17 @@
         <div class="card-body card-body-cascade text-center">   
           <!-- <div class="list-group list-panel"> -->
             <!-- <a class="list-group-item d-flex justify-content-between dark-grey-text"> -->
-              Proposal: {{ proposals[i].proposal_id }}
+              Proposal {{ proposals[i].proposal_id }}
               <br>
-              Status: {{ proposals[i].proposal_status }}
+              <span *ngIf="proposals[i].proposal_status==='Passed'">
+                <mdb-badge color="green">{{ proposals[i].proposal_status }}</mdb-badge>
+              </span>
+              <span *ngIf="proposals[i].proposal_status==='Rejected'">
+                  <mdb-badge color="red">{{ proposals[i].proposal_status }}</mdb-badge>
+              </span>
+              <span *ngIf="proposals[i].proposal_status==='Voting Period'">
+                <mdb-badge color="indigo">{{ proposals[i].proposal_status }}</mdb-badge>
+              </span>
               <!-- <mdb-icon fas icon="wrench" class="ml-auto" mdbTooltip="Click to fix" placement="top"></mdb-icon> -->
             <!-- </a> -->
           <!-- </div>   -->

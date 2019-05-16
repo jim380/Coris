@@ -30,7 +30,7 @@ section {
 }
 
 .row {
-  max-width: 90%;
+  max-width: 100%;
   // background-color: #111923;
 }
 
@@ -38,10 +38,6 @@ section {
   max-width: 100%;
   // max-height: 800px;
   margin-bottom: 0;
-}
-
-.card-title h1 {
-  color: #4a4a4a;
 }
 
 a {
@@ -56,3 +52,15 @@ th, td {
   white-space: nowrap;
 }
 
+mdb-card-title i {
+  font-size: 150%;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 130%;
+}
+
+.card-title h1 {
+  color: black;
+}

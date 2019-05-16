@@ -1,5 +1,5 @@
 <span *ngIf="txs && txs.length >= INITIAL_TXS_COUNT; else elseLoading">
-  <div (scroll)="onScroll($event)" class="row table-responsive text-nowrap scrollbar-primary main-row">
+  <div (scroll)="onScroll($event)" class="row table-responsive text-nowrap scrollbar-primary main-row mat-elevation-z8">
     <div class="container">
       <div class="row">
         <div class="col-8">
@@ -20,14 +20,15 @@
       <ng-container matColumnDef="hash" sticky>
         <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-pound"></i>&nbsp;Hash</th>
         <td mat-cell *matCellDef="let tx" mdbWavesEffect> 
-          <span matTooltip="tx.hash" matTooltipPosition="above">
+          <span>
             {{tx.hash | slice:0:15 }}... 
             <i 
               class="ion-ios-copy copy-button" 
               style="cursor: pointer;" 
               ngxClipboard 
               [cbContent]="tx.hash" 
-              (click)="onCopySucceess()">
+              (click)="onCopySucceess()"
+              mdbTooltip="copy to clipboard" placement="left">
             </i>
           </span>
           </td>
