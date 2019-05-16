@@ -76,7 +76,10 @@
                   </li>
                 <li *ngIf="tx.sender && tx.sender[i]" class="list-group-item d-flex justify-content-between align-items-center">
                   From:
-                  <span class="badge badge-primary badge-pill">
+                  <span 
+                      class="badge badge-primary badge-pill"
+                      style="cursor:pointer;" 
+                      (click)="openTxsListDialog(tx.sender[i])">
                     <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.sender[i] ) : false; else elseSender">
                       {{ (appState | async).valsMap.get( tx.sender[i] )}}
                     </span>
@@ -85,16 +88,22 @@
                 </li>
                 <li *ngIf="tx.recipient && tx.recipient[i]" class="list-group-item d-flex justify-content-between align-items-center">
                   To:
-                  <span class="badge badge-primary badge-pill">
-                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.recipient[i] ) : false; else elseRecipient">
-                        {{ (appState | async).valsMap.get( tx.recipient[i] )}}
-                      </span>
-                      <ng-template #elseRecipient>{{tx.recipient[i]}}</ng-template>
+                  <span 
+                      class="badge badge-primary badge-pill"
+                      style="cursor:pointer;" 
+                      (click)="openTxsListDialog(tx.recipient[i])">
+                    <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.recipient[i] ) : false; else elseRecipient">
+                      {{ (appState | async).valsMap.get( tx.recipient[i] )}}
+                    </span>
+                    <ng-template #elseRecipient>{{tx.recipient[i]}}</ng-template>
                   </span>
                 </li>
                 <li *ngIf="tx.delegator && tx.delegator[i]" class="list-group-item d-flex justify-content-between align-items-center">
                   Delegator:
-                  <span style="cursor:pointer;" (click)="openTxsListDialog(tx.delegator[i])" class="badge badge-primary badge-pill">
+                  <span 
+                      style="cursor:pointer;" 
+                      (click)="openTxsListDialog(tx.delegator[i])" 
+                      class="badge badge-primary badge-pill">
                     <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.delegator[i] ) : false; else elseDelegator">
                       {{ (appState | async).valsMap.get( tx.delegator[i] )}}
                     </span>

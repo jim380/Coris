@@ -201,7 +201,6 @@ export class BlocksComponent implements OnInit, OnDestroy {
       }   
     },
     (error) => {
-
     },
     () => {
       this.openBlockDialog(block);

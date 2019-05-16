@@ -54,9 +54,15 @@ export class BlockComponent implements OnInit, AfterViewInit {
     this.ts.getTxsAtBlock(this.block.height).subscribe((data:any) => {
       data.result.txs.forEach((tx: any, index) => {
         this.initTx(tx.hash);
+      },
+      (error) => {
+        console.log('error', error);
+      },
+      () => {
+        console.log("resolved something");
       });
     });
-    this.initTable('All');
+    // this.initTable('All');
   }
 
   private initTx(hash) {
@@ -115,10 +121,8 @@ export class BlockComponent implements OnInit, AfterViewInit {
         console.log(dataTx);
       }
     },
-    err => {
-      // @aakatev some txs cause 500 errors
-      // otherwise would dump code in console
-      // console.log(err);
+    (error) => {
+      console.log('error', error);
     },
     () => {
       // TODO remove debugging
