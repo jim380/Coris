@@ -9,7 +9,9 @@ import { Observable } from 'rxjs';
 import { debounceTime, map } from "rxjs/operators";
 import { State } from 'src/app/interfaces/state.interface';
 import { rowsAnimation, expandableRow, staggerAnimation} from 'src/app/animations/animation';
-import { MatTable, MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTable, MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
+import { BlockComponent } from '../block/block.component';
+import { BlocksService } from 'src/app/services/blocks.service';
 // import {MatTableDataSource} from '@angular/material';
 
 @Component({
@@ -77,7 +79,10 @@ export class BlocksComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private store: Store <State> ) { }
+    private store: Store <State>,
+    private dialog: MatDialog,
+    private blocksService: BlocksService
+  ) { }
 
   ngOnInit() {
     this.appState = this.store.select('App');
@@ -140,17 +145,11 @@ export class BlocksComponent implements OnInit, OnDestroy {
     this.blocks = [];
   }
 
-  clickButton(value) {
-    // TODO remove debugging
-    // console.log(value);
-    this.router.navigate([`block/${value}`]);
-  }
-
   fetchBlocks() {
     this.http.get(`${nodeRpc2}/blockchain?minHeight=${this.currentBlock-this.blocksToDisplay+1}&maxHeight=${this.currentBlock}`)
-      .subscribe(data => {
+      .subscribe( (data:any) => {
         this.clearBlocks();
-        data['result'].block_metas.forEach(block => {
+        data.result.block_metas.forEach(block => {
           const datePipe = new DatePipe('en-US');
           const formattedTime = datePipe.transform(block.header.time, 'h:mm:ss a, MMM d, y');
           this.blocks.push({
@@ -185,7 +184,35 @@ export class BlocksComponent implements OnInit, OnDestroy {
     this.fetchBlocks();
     this.currentPage -=1 ;
   }
+
   queryBlock(blockHeight) {
-    this.router.navigate([`/block/${blockHeight}`]);
+    let block: Block;
+    this.blocksService.fetchBlockAtAlternative(blockHeight).subscribe((data:any) => {
+      // TODO remove debugging
+      // console.log(data);
+      const datePipe = new DatePipe('en-US');
+      const formattedTime = datePipe.transform(data.block_meta.header.time, 'h:mm:ss a, MMM d, y');
+      block = {
+        hash: data.block_meta.block_id.hash, 
+        height: data.block_meta.header.height, 
+        time: formattedTime,
+        txs: data.block_meta.header.num_txs,
+        proposer: data.block_meta.header.proposer_address
+      }   
+    },
+    (error) => {
+    },
+    () => {
+      this.openBlockDialog(block);
+    });
+  }
+
+  openBlockDialog(block) {
+    this.dialog.open( BlockComponent,  {
+      data: { 
+        block
+      },
+      height: '80vh'
+    });
   }
 }

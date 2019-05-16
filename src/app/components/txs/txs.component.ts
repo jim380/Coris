@@ -12,6 +12,9 @@ import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { TxsListCardComponent } from './txs-list-card/txs-list-card.component';
 import { TxComponent } from '../tx/tx.component';
+import { ValidatorComponent } from '../validator/validator.component';
+import { take } from 'rxjs/operators';
+import { PopupService } from 'src/app/services/popup.service.js';
 
 
 @Component({
@@ -90,7 +93,8 @@ export class TxsComponent implements OnInit {
     private store: Store <State>,
     private http: HttpClient,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private popupService: PopupService
   ) { }
 
   ngOnInit() {
@@ -421,6 +425,10 @@ export class TxsComponent implements OnInit {
       },
       height: '75vh'
     });
+  }
+
+  openValidatorDetailDialog(operatorAddress) {
+    this.popupService.openValidatorDetailDialog(operatorAddress, this.appState, this.dialog);
   }
 
   // TODO figuire out how to open on separate route

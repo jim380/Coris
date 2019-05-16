@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import { Observable, of } from 'rxjs';
-import { nodeRpc1 } from '../../config.js'
+import { nodeRpc1, nodeRpc2 } from '../../config.js'
 
 
 @Injectable({
@@ -11,6 +11,14 @@ export class TxsService {
 
   constructor(private http: HttpClient) { }
   
+  public getTxsAtBlock(height: number) {
+    return this.http.get(`${nodeRpc2}/tx_search?query="tx.height=${height}"`);
+  }
+
+  public getTxByHash(hash: string) {
+    return this.http.get(`${nodeRpc1}/txs/${hash}`);
+  }
+
   // sender is an account in cosmos-prefix format
   // e.g. cosmos1msy0nwz3q5ky9sj539mutajqye934sl2wexmaf
   public getTxs(sender: string, limit: number, page: number) {

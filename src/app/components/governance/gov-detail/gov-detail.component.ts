@@ -31,10 +31,7 @@ export class GovDetailComponent implements OnInit, AfterViewInit {
   votesDisplayedColumns: string[] = ['voter', 'vote'];
   depositDisplayedColumns: string[] = ['depositor', 'amount'];
 
-  // @ViewChild(MatPaginator) votesPaginator: MatPaginator;
-  // @ViewChild(MatPaginator) depositPaginator: MatPaginator;
   @ViewChildren(MatPaginator) paginators = new QueryList<MatPaginator>();
-
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public proposal: any, 
