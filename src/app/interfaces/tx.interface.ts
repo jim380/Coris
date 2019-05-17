@@ -17,6 +17,9 @@ export interface Tx {
   status?: string;
   tags?: Object;
   error?: any;
+  fee?: any;
+  memo?: string;
+  msg?: any;
 }
 
 export function decodeTag (tagsBase64) {

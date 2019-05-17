@@ -164,6 +164,20 @@ export class TxsComponent implements OnInit {
                   
                   // TODO remove debugging
                   // console.log(data);
+
+                  tx.fee = data.tx.value.fee;
+                  tx.memo = data.tx.value.memo;
+                  tx.msg = data.tx.value.msg;
+                  
+                  // tx.msg = data.tx.value.msg.forEach((msg:any) => {
+                  //   // if(msg.value.amount) {
+                  //     tx.
+                  //     console.log(data.height, data.txhash, msg);
+                  //   // } 
+                  //   // if()
+                  //   // console.log(data.height, msg);
+                  // }); 
+
                   tx.details = data;
                   if(data.tags) {
                     let index = -1;
@@ -274,6 +288,9 @@ export class TxsComponent implements OnInit {
                   
                   // TODO remove debugging
                   // console.log(data);
+                  tx.fee = data.tx.value.fee;
+                  tx.memo = data.tx.value.memo;
+                  
                   tx.details = data;
                   if(data.tags) {
                     let index = -1;

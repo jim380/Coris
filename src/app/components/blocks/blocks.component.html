@@ -19,7 +19,7 @@
           
           <ng-container matColumnDef="height" sticky>
             <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-soup-can"></i>&nbsp;Height</th>
-            <td (click)="openBlockDialog(block)" style="cursor: pointer" mat-cell *matCellDef="let block">
+            <td mat-cell *matCellDef="let block">
               {{block.height}}
             </td>
           </ng-container>
@@ -36,7 +36,7 @@
             <td mat-cell *matCellDef="let block">
               <mat-chip-list><mat-chip color = "primary" selected>
                 <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has(block.proposer) : false; else elseBlockProposer">
-                    {{ (appState | async).valsMap.get(block.proposer) }}
+                  {{ (appState | async).valsMap.get(block.proposer) }}
                 </span>
               </mat-chip></mat-chip-list>
               <ng-template #elseBlockProposer>{{block.proposer}}</ng-template>
@@ -47,6 +47,16 @@
             <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-clock"></i>&nbsp;Timestamp</th>
             <td mat-cell *matCellDef="let block">  
               {{block.time | ago | async }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="details">
+            <th mat-header-cell *matHeaderCellDef class="th-lg">Details</th>
+            <td mat-cell *matCellDef="let block">  
+              <span (click)="openBlockDialog(block)" 
+                    style="cursor: pointer" >
+                VIEW
+              </span>
             </td>
           </ng-container>
         
