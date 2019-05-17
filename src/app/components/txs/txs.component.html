@@ -80,163 +80,80 @@
       </ng-container>
 
       <ng-container matColumnDef="expandedDetail">
-        <td mat-cell *matCellDef="let tx" [attr.colspan]="displayedColumns.length">
+        <td mat-cell *matCellDef="let tx" [attr.colspan]="displayedColumns.length" class="tx-detail">
           <div
-              class="tx-detail"
               [@detailExpand]="tx == expandedElement ? 'expanded' : 'collapsed'">
             <!-- <span>
               <div *ngFor="let tag of tx.tags">
                 {{tag.key | titlecase}}: {{tag.value}}
               </div>
             </span> -->
-            <div class="row">
-              <ul class="list-group">
-                <span *ngFor="let action of tx.action; index as i">
-                  <li *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgSend'">
-                    {{ tx.msg[i].value.from_address }} send
-                    <span *ngIf="tx.msg[i].value.amount">
-                      {{ tx.msg[i].value.amount[0].amount }}
-                      {{ tx.msg[i].value.amount[0].denom }} 
-                    </span>
-                    to 
-                    <br>
-                    {{ tx.msg[i].value.to_address }}
-                  </li>
-                  <li *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgDelegate'">
-                    {{ tx.msg[i].value.delegator_address }} delegate 
-                    <span *ngIf="tx.msg[i].value.amount">
-                      {{ tx.msg[i].value.amount.amount }}
-                      {{ tx.msg[i].value.amount.denom }} 
-                    </span>
-                    to
-                    <br>
-                    {{ tx.msg[i].value.validator_address }}
-                  </li>
-                  <li *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgMultiSend'">
-                    <span *ngFor="let input of tx.msg[i].value.inputs">
-                      {{ input.address }} sent {{ input.coins[0].amount }} {{ input.coins[0].denom }}
-                    </span>
-                    <br>
-                    <span *ngFor="let output of tx.msg[i].value.outputs">
-                      {{ output.address }} recieved {{ output.coins[0].amount }} {{ output.coins[0].denom }}
-                    </span>
-                  </li>
-                  <li *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgWithdrawDelegationReward'">
-                    {{ tx.msg[i].value.delegator_address }} 
-                    withdraw reward 
-                    <br>
-                    form
-                    {{ tx.msg[i].value.validator_address }}
-                  </li>
-                  <li *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgWithdrawValidatorCommission'">
-                    {{ tx.msg[i].value.validator_address }}
-                    withdraw comission
-                  </li>  
-                </span>
 
-                  <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Type:
-                    <span class="badge badge-primary badge-pill">{{ action | titlecase}}</span>
-                  </li>
-                  <li *ngIf="tx.sender && tx.sender[i]" class="list-group-item d-flex justify-content-between align-items-center">
-                    From:
-                    <span class="badge badge-primary badge-pill"
-                          style="cursor:pointer;" 
-                          (click)="openTxsListDialog(tx.sender[i])">
-                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.sender[i] ) : false; else elseSender">
-                        {{ (appState | async).valsMap.get( tx.sender[i] )}}
+              <mdb-card class="text-left mb-3" bgColor="bg-light">
+                <mdb-card-body>
+                  <mdb-card-text class="text-left">
+                    <span *ngFor="let action of tx.action; index as i">
+
+                      <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgSend'">
+                        <a href="#">{{ tx.msg[i].value.from_address }}</a><br>
+                          <mdb-badge default="true">sent</mdb-badge>&nbsp;
+                          <span *ngIf="tx.msg[i].value.amount">
+                            <span class="txn-amount">{{ tx.msg[i].value.amount[0].amount/1e6 | number:".2-2" }}&nbsp;ATOM</span>
+                            <!-- {{ tx.msg[i].value.amount[0].denom }}  -->
+                          </span>
+                          to 
+                          <br>
+                        <a href="#">{{ tx.msg[i].value.to_address }}</a>                            
                       </span>
-                      <ng-template #elseSender>{{tx.sender[i]}}</ng-template>
-                    </span>
-                  </li>
-                  <li *ngIf="tx.recipient && tx.recipient[i]" class="list-group-item d-flex justify-content-between align-items-center">
-                    To:
-                    <span class="badge badge-primary badge-pill"
-                          style="cursor:pointer;" 
-                          (click)="openTxsListDialog(tx.recipient[i])">
-                        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.recipient[i] ) : false; else elseRecipient">
-                          {{ (appState | async).valsMap.get( tx.recipient[i] )}}
+
+                      <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgDelegate'">
+                        <a href="#">{{ tx.msg[i].value.delegator_address }}</a><br>
+                          <mdb-badge default="true">delegated</mdb-badge>&nbsp;
+                          <span *ngIf="tx.msg[i].value.amount">
+                            <span class="txn-amount">{{ tx.msg[i].value.amount.amount/1e6 | number:".2-2" }}&nbsp;ATOM</span>
+                          </span>
+                          to 
+                          <br>
+                        <a href="#">{{ tx.msg[i].value.validator_address }}</a>                            
+                      </span>
+
+                      <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgMultiSend'">
+                        <span *ngFor="let input of tx.msg[i].value.inputs">
+                            <a href="#">{{ input.address }}</a><br>
+                            <mdb-badge default="true">sent</mdb-badge>&nbsp;
+                            <span class="txn-amount">{{ input.coins[0].amount/1e6 | number:".2-2" }}&nbsp;ATOM</span>
                         </span>
-                        <ng-template #elseRecipient>{{tx.recipient[i]}}</ng-template>
-                    </span>
-                  </li>
-                  <li *ngIf="tx.delegator && tx.delegator[i]" class="list-group-item d-flex justify-content-between align-items-center">
-                    Delegator:
-                    <span style="cursor:pointer;" 
-                          (click)="openTxsListDialog(tx.delegator[i])" 
-                          class="badge badge-primary badge-pill">
-                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.delegator[i] ) : false; else elseDelegator">
-                        {{ (appState | async).valsMap.get( tx.delegator[i] )}}
+                        to
+                        <br>
+                        <span *ngFor="let output of tx.msg[i].value.outputs">
+                            <a href="#">{{ output.address }}</a>&nbsp;
+                            <!-- <mdb-badge default="true">sent</mdb-badge>&nbsp;{{ output.coins[0].amount/1e6 | number:".2-2" }}&nbsp;ATOM -->
+                        </span>                      
                       </span>
-                      <ng-template #elseDelegator>{{tx.delegator[i]}}</ng-template> 
-                    </span>
-                  </li>
-                  <li *ngIf="tx.source_validator && tx.source_validator[i]" class="list-group-item d-flex justify-content-between align-items-center">
-                    Validator:
-                    <span class="badge badge-primary badge-pill"
-                          (click)="openValidatorDetailDialog(tx.source_validator[i])"
-                          style="cursor: pointer">
-                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.source_validator[i] ) : false; else elseSourceVal">
-                        {{ (appState | async).valsMap.get( tx.source_validator[i] )}}
+
+                      <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgWithdrawDelegationReward'">
+                        <a href="#">{{ tx.msg[i].value.delegator_address }}</a><br>
+                          <mdb-badge default="true">withdrew rewards</mdb-badge>&nbsp;
+                          from 
+                          <br>
+                        <a href="#">{{ tx.msg[i].value.validator_address }}</a><br><hr>                            
                       </span>
-                      <ng-template #elseSourceVal>{{tx.source_validator[i]}}</ng-template> 
-                    </span>
-                  </li>
-                  <li *ngIf="tx.destination_validator && tx.destination_validator[i]" class="list-group-item d-flex justify-content-between align-items-center">
-                    Validator:
-                    <span class="badge badge-primary badge-pill"
-                          (click)="openValidatorDetailDialog(tx.destination_validator[i])"
-                          style="cursor: pointer">
-                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.destination_validator[i] ) : false; else elseDestVal">
-                        {{ (appState | async).valsMap.get( tx.destination_validator[i] )}}
+
+                      <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgWithdrawValidatorCommission'">
+                        <a href="#">{{ tx.msg[i].value.validator_address }}</a><br>
+                          <mdb-badge default="true">withdrew</mdb-badge>&nbsp;
+                          commission                           
                       </span>
-                      <ng-template #elseDestVal>{{tx.destination_validator[i]}}</ng-template>
+                      
                     </span>
-                  </li>
-                  <li *ngIf="tx.end_time && tx.end_time[i]" class="list-group-item d-flex justify-content-between align-items-center">
-                    Ends:
-                    <span class="badge badge-primary badge-pill">{{tx.end_time[i]|date: 'h:ma dd/MM/yy' }}</span>
-                  </li>
-                  <span *ngIf="action === 'vote'">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                      Voter:
-                      <span class="badge badge-primary badge-pill">
-                        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.voter[i] ) : false; else elseVoter">
-                          {{ (appState | async).valsMap.get( tx.voter[i] )}}
-                        </span>
-                        <ng-template #elseVoter>{{tx.voter[i]}}</ng-template>
-                      </span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                      Proposal:
-                      <span class="badge badge-primary badge-pill">{{tx.proposal_id[i]}}</span>
-                    </li>
-                  </span>
-                  <br>
-                </span> -->
-                <li *ngIf="tx.error" class="list-group-item d-flex justify-content-between align-items-center">
-                  Status:
-                  <span class="badge badge-primary badge-pill">{{tx.error|titlecase}}</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  Gas (used/wanted):
-                  <span class="badge badge-primary badge-pill">{{tx.gasUsed}}/{{tx.gasWanted}}</span>
-                </li>
-                <li *ngIf="tx.memo?.length > 0" class="list-group-item d-flex justify-content-between align-items-center">
-                  Memo:
-                  <span class="badge badge-primary badge-pill">{{ tx.memo }}</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <span 
-                      style="cursor: pointer;" 
-                      (click)="openTxDialog(tx)" 
-                      class="badge badge-primary badge-pill">
-                    Details
-                  </span>
-                </li>
-                
-              </ul>
-            </div>
+                    <span *ngIf="tx.error">
+                      <mdb-badge danger="true">Error</mdb-badge>&nbsp;{{tx.error|titlecase}}
+                    </span>
+                  </mdb-card-text>
+                  <button mdbBtn color="indigo" rounded="true" size="sm" mdbWavesEffect 
+                  style="cursor: pointer;" (click)="openTxDialog(tx)" class="detail-button">Detail</button>
+                </mdb-card-body>
+              </mdb-card>
           </div>
         </td>
       </ng-container>

@@ -138,7 +138,7 @@ p {
 /*-------------------------------------------------*/
 a:link,
 a:visited {
-    color: white;
+    color: black;
     text-decoration: none;
     /* padding-bottom: 10px; */
     /* border-bottom: 1px solid #e67e22; */
@@ -147,8 +147,9 @@ a:visited {
 
 a:hover,
 a:active {
-    color: #FC7D14;
+    color: #FF4081;
     /* border-bottom: 1px solid transparent; */
+    text-decoration: underline; 
 }
 
 /*-------------------------------------------------*/
@@ -297,7 +298,7 @@ footer p a:hover,
 footer p a:active,
 .footer-nav li a:hover,
 .footer-nav li a:active {
-    color: #FC7D14;
+  color: #FC7D14;
 }
 
 .social-links li a:link,
