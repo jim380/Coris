@@ -14,7 +14,8 @@ export class TxsListCardComponent implements OnInit, AfterViewInit {
     txs: {
       staking: [],
       transfer: []
-    }
+    },
+    coins: null
   }
   displayedColumns: string[] = ['hash', 'height'];
   dataSource = new MatTableDataSource<any>([]);
@@ -32,19 +33,24 @@ export class TxsListCardComponent implements OnInit, AfterViewInit {
     
   }
 
-  
   ngOnInit() {
     this.ts.getTxs(this.delegator.address, 20, 1).subscribe((data: any) => {
       // TODO remove debugging
-      // console.log(data);
+      console.log(data);
       this.delegator.txs.transfer = data;
     });
 
     this.ts.getStakingTxs(this.delegator.address).subscribe((data: any) => {
       // TODO remove debugging
-      // console.log(data);
+      console.log(data);
       this.initTable(data);
       this.delegator.txs.staking = data;
+    });
+
+    this.ts.getAccountInfo(this.delegator.address).subscribe((data: any) => {
+      // TODO remove debugging
+      console.log(data);
+      this.delegator.coins = data.value.coins;
     });
   }
 

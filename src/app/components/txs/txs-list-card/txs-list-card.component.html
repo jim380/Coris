@@ -3,7 +3,21 @@
     <div class="col-md-12">
       <mat-card alignment="left">
         <mat-card-title>Account: {{ delegator.address }}</mat-card-title>
-        <mat-card-subtitle>Transactions (last 100)</mat-card-subtitle>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Balance
+              <span class="badge badge-primary badge-pill">
+                {{ ( delegator.coins ? delegator.coins[0].amount/1e6 : 0 ) | number:".2-2" }}&nbsp;ATOM
+              </span>
+            </li>
+          </ul>
+        </div>
+      </mat-card>
+    </div>
+    <div class="col-md-12">
+      <mat-card alignment="left">
+        <mat-card-title>Transactions (last 100)</mat-card-title>
           <div class="card-body">
             <mat-tab-group (selectedTabChange)="onTabChange($event);">
               <mat-tab label="Staking">

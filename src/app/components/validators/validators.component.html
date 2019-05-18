@@ -18,7 +18,7 @@
     Unbonding BondStatus = 0x01
     Bonded BondStatus = 0x02 
   -->
-  <div class="dropdown" mdbDropdown>
+  <div class="dropdown" mdbDropdown  (isOpenChange)="isOpenChange(event$)">
     <button mdbDropdownToggle type="button" mdbBtn color="primary" class="dropdown-toggle waves-light" size="sm"
       mdbWavesEffect>
       Status

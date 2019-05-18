@@ -154,7 +154,7 @@ export class BlockComponent implements OnInit, AfterViewInit {
       data: { 
         tx
       },
-      height: '80vh'
+      height: '75vh'
     });
   }
 

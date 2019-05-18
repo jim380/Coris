@@ -72,12 +72,12 @@
             <ul class="list-group">
               <span *ngFor="let action of tx.action; index as i">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                  Type:
+                  Type
                   <span class="badge badge-primary badge-pill">{{ action | titlecase}}</span>
                 </li>
                 
                 <li *ngIf="tx.msg[i].value.from_address" class="list-group-item d-flex justify-content-between align-items-center">
-                  From:
+                  From
                   <span 
                       class="badge badge-primary badge-pill"
                       style="cursor:pointer;" 
@@ -90,11 +90,10 @@
                 </li>
                 
                 <li *ngIf="tx.msg[i].value.to_address" class="list-group-item d-flex justify-content-between align-items-center">
-                  To:
-                  <span 
-                      class="badge badge-primary badge-pill"
-                      style="cursor:pointer;" 
-                      (click)="openTxsListDialog(tx.msg[i].value.to_address)">
+                  To
+                  <span class="badge badge-primary badge-pill"
+                        style="cursor:pointer;" 
+                        (click)="openTxsListDialog(tx.msg[i].value.to_address)">
                     <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.msg[i].value.to_address ) : false; else elseRecipient">
                       {{ (appState | async).valsMap.get( tx.msg[i].value.to_address )}}
                     </span>
@@ -103,11 +102,10 @@
                 </li>
                 
                 <li *ngIf="tx.msg[i].value.delegator_address" class="list-group-item d-flex justify-content-between align-items-center">
-                  Delegator:
-                  <span 
-                      style="cursor:pointer;" 
-                      (click)="openTxsListDialog(tx.msg[i].value.delegator_address)" 
-                      class="badge badge-primary badge-pill">
+                  Delegator
+                  <span style="cursor:pointer;" 
+                        (click)="openTxsListDialog(tx.msg[i].value.delegator_address)" 
+                        class="badge badge-primary badge-pill">
                     <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.msg[i].value.delegator_address ) : false; else elseDelegator">
                       {{ (appState | async).valsMap.get( tx.msg[i].value.delegator_address )}}
                     </span>
@@ -116,7 +114,7 @@
                 </li>
                 
                 <li *ngIf="tx.msg[i].value.validator_address" class="list-group-item d-flex justify-content-between align-items-center">
-                  Validator:
+                  Validator
                   <span class="badge badge-primary badge-pill"
                         (click)="openValidatorDetailDialog( tx.msg[i].value.validator_address )"
                         style="cursor: pointer">
@@ -129,7 +127,7 @@
 
                 <li *ngIf="tx.msg[i].value.validator_src_address" 
                     class="list-group-item d-flex justify-content-between align-items-center">
-                  From:
+                  From
                   <span class="badge badge-primary badge-pill"
                         (click)="openValidatorDetailDialog( tx.msg[i].value.validator_src_address )"
                         style="cursor: pointer">
@@ -142,7 +140,7 @@
                 
                 <li *ngIf="tx.msg[i].value.validator_dst_address" 
                     class="list-group-item d-flex justify-content-between align-items-center">
-                  To:
+                  To
                   <span class="badge badge-primary badge-pill"
                         (click)="openValidatorDetailDialog( tx.msg[i].value.validator_dst_address )"
                         style="cursor: pointer">
@@ -157,7 +155,7 @@
                 <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgMultiSend'">
                   <li *ngFor="let input of tx.msg[i].value.inputs" 
                       class="list-group-item d-flex justify-content-between align-items-center">
-                    Sender:
+                    Sender
                     <span class="badge badge-primary badge-pill"
                           (click)="openTxsListDialog( input.address )"
                           style="cursor: pointer;"> 
@@ -171,7 +169,7 @@
                   </li>
                   <li *ngFor="let output of tx.msg[i].value.outputs" 
                       class="list-group-item d-flex justify-content-between align-items-center">
-                    Recipient:
+                    Recipient
                     <span class="badge badge-primary badge-pill"
                           (click)="openTxsListDialog( output.address )"
                           style="cursor: pointer;"> 
@@ -182,95 +180,23 @@
                       </span>
                       <ng-template #elseOutputMulti>{{ output.address }}</ng-template>
                     </span>
-                  </li>                          
-                </span>
-                  
-<!-- 
-
-                <li *ngIf="tx.sender && tx.sender[i]" class="list-group-item d-flex justify-content-between align-items-center">
-                  From:
-                  <span 
-                      class="badge badge-primary badge-pill"
-                      style="cursor:pointer;" 
-                      (click)="openTxsListDialog(tx.sender[i])">
-                    <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.sender[i] ) : false; else elseSender">
-                      {{ (appState | async).valsMap.get( tx.sender[i] )}}
-                    </span>
-                    <ng-template #elseSender>{{tx.sender[i]}}</ng-template>
-                  </span>
-                </li>
-                
-                
-                
-                <li *ngIf="tx.recipient && tx.recipient[i]" class="list-group-item d-flex justify-content-between align-items-center">
-                  To:
-                  <span 
-                      class="badge badge-primary badge-pill"
-                      style="cursor:pointer;" 
-                      (click)="openTxsListDialog(tx.recipient[i])">
-                    <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.recipient[i] ) : false; else elseRecipient">
-                      {{ (appState | async).valsMap.get( tx.recipient[i] )}}
-                    </span>
-                    <ng-template #elseRecipient>{{tx.recipient[i]}}</ng-template>
-                  </span>
-                </li>
-                <li *ngIf="tx.delegator && tx.delegator[i]" class="list-group-item d-flex justify-content-between align-items-center">
-                  Delegator:
-                  <span 
-                      style="cursor:pointer;" 
-                      (click)="openTxsListDialog(tx.delegator[i])" 
-                      class="badge badge-primary badge-pill">
-                    <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.delegator[i] ) : false; else elseDelegator">
-                      {{ (appState | async).valsMap.get( tx.delegator[i] )}}
-                    </span>
-                    <ng-template #elseDelegator>{{tx.delegator[i]}}</ng-template> 
-                  </span>
-                </li>
-                <li *ngIf="tx.source_validator && tx.source_validator[i]" class="list-group-item d-flex justify-content-between align-items-center">
-                  Validator:
-                  <span class="badge badge-primary badge-pill"
-                        (click)="openValidatorDetailDialog(tx.source_validator[i])"
-                        style="cursor: pointer">
-                    <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.source_validator[i] ) : false; else elseSourceVal">
-                      {{ (appState | async).valsMap.get( tx.source_validator[i] )}}
-                    </span>
-                    <ng-template #elseSourceVal>{{tx.source_validator[i]}}</ng-template> 
-                  </span>
-                </li>
-                <li *ngIf="tx.destination_validator && tx.destination_validator[i]" class="list-group-item d-flex justify-content-between align-items-center">
-                  Validator:
-                  <span class="badge badge-primary badge-pill"
-                        (click)="openValidatorDetailDialog(tx.destination_validator[i])"
-                        style="cursor: pointer">
-                    <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.destination_validator[i] ) : false; else elseDestVal">
-                      {{ (appState | async).valsMap.get( tx.destination_validator[i] )}}
-                    </span>
-                    <ng-template #elseDestVal>{{tx.destination_validator[i]}}</ng-template>
-                  </span>
-                </li>
-                <li *ngIf="tx.end_time && tx.end_time[i]" class="list-group-item d-flex justify-content-between align-items-center">
-                  Ends:
-                  <span class="badge badge-primary badge-pill">{{tx.end_time[i]|date: 'h:ma dd/MM/yy' }}</span>
-                </li>
-                <span *ngIf="action === 'vote'">
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Voter:
-                    <span class="badge badge-primary badge-pill">
-                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.voter[i] ) : false; else elseVoter">
-                        {{ (appState | async).valsMap.get( tx.voter[i] )}}
-                      </span>
-                      <ng-template #elseVoter>{{tx.voter[i]}}</ng-template>
+                  </li>
+                  <li *ngFor="let output of tx.msg[i].value.outputs; index as j" 
+                      class="list-group-item d-flex justify-content-between align-items-center">
+                    Amount {{j+1}}:
+                    <span class="badge badge-primary badge-pill"> 
+                      {{ output.coins[0].amount/1e6 | number:".2-2" }}&nbsp;ATOM
                     </span>
                   </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    Proposal:
-                    <span class="badge badge-primary badge-pill">{{tx.proposal_id[i]}}</span>
-                  </li>
-
-                  
                 </span>
-                <br> -->
 
+                <li *ngIf="tx.msg[i].value.amount" 
+                    class="list-group-item d-flex justify-content-between align-items-center">
+                  Amount
+                  <span class="badge badge-primary badge-pill">
+                    {{ ( tx.msg[i].value.amount.length ? tx.msg[i].value.amount[0].amount : tx.msg[i].value.amount.amount )/1e6 | number:".2-2" }}&nbsp;ATOM 
+                  </span>
+                </li>
               </span>
             </ul>
         </mdb-card-body>

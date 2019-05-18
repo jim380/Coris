@@ -213,7 +213,7 @@ export class BlocksComponent implements OnInit, OnDestroy {
       data: { 
         block
       },
-      height: '80vh'
+      height: '75vh'
     });
   }
 }

@@ -19,6 +19,11 @@ import { DelegatorCardComponent } from '../validator-profile/delegator-card/dele
 import { PowerEventCardComponent } from '../validator-profile/power-event-card/power-event-card.component'
 import { ProposedBlocksCardComponent } from '../validator-profile/proposed-blocks-card/proposed-blocks-card.component'
 
+export class SeletedOption {
+  public Id: number;
+  public Value: string;
+}
+
 @Component({
   selector: 'app-validators',
   templateUrl: './validators.component.html',
@@ -41,6 +46,8 @@ export class ValidatorsComponent implements OnInit {
   public statusChartOptions: any = {
     responsive: true
   };
+  private selectedOption: SeletedOption[];
+  private optionsSelect: Array<any>;
 
 
   @ViewChild(MatTable) table: MatTable<any>;
@@ -78,8 +85,15 @@ export class ValidatorsComponent implements OnInit {
     this.hideUnbondColumn();
   }
 
-  optionsSelect: Array<any>;
   ngOnInit() {
+    this.selectedOption = [
+      {Id: 1, Value: 'Bonded'},
+      {Id: 2, Value: 'Jailed'},
+      {Id: 3, Value: 'Unbonded'},
+      {Id: 4, Value: 'Unbonding'},
+      {Id: 5, Value: 'All'}
+    ];
+  
     if(this.dataSource) {
       this.dataSource.paginator = this.paginator;
     }
