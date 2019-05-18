@@ -181,3 +181,11 @@ mdb-badge {
 button {
   margin-left: 0;
 }
+
+
+a:not([href]):hover,
+a:not([href]):active {
+    color: #FF4081;
+    /* border-bottom: 1px solid transparent; */
+    text-decoration: underline; 
+}

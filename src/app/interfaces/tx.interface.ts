@@ -5,10 +5,10 @@ export interface Tag {
 
 
 export interface Tx {
-  hash: string;
-  height: number;
-  gasWanted: number;
-  gasUsed: number;
+  hash?: string;
+  height?: number;
+  gasWanted?: number;
+  gasUsed?: number;
   txBase64?: string;
   txDecod?: string;
   tagsBase64?: Array<Tag>;
@@ -20,6 +20,7 @@ export interface Tx {
   fee?: any;
   memo?: string;
   msg?: any;
+  action?: any[];
 }
 
 export function decodeTag (tagsBase64) {
