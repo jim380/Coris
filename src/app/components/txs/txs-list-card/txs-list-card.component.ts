@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, AfterViewInit, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatPaginator, MatTableDataSource } from '@angular/material';
 import { TxsService } from 'src/app/services/txs.service';
 import { ToastrService } from 'ngx-toastr';
@@ -15,43 +15,44 @@ export class TxsListCardComponent implements OnInit, AfterViewInit {
       staking: [],
       transfer: []
     },
-    coins: null
+    // coins: null
   }
   displayedColumns: string[] = ['hash', 'height'];
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @Input() address: string;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any, 
+    // @Inject(MAT_DIALOG_DATA) public data: any, 
     private ts: TxsService, 
     private toastr: ToastrService
   ) { 
-    this.delegator.address = data.address;
+    // this.delegator.address = data.address;
     // TODO remove debugging
     // console.log(data);
     
   }
 
   ngOnInit() {
-    this.ts.getTxs(this.delegator.address, 20, 1).subscribe((data: any) => {
+    this.ts.getTxs(this.address, 20, 1).subscribe((data: any) => {
       // TODO remove debugging
       console.log(data);
       this.delegator.txs.transfer = data;
     });
 
-    this.ts.getStakingTxs(this.delegator.address).subscribe((data: any) => {
+    this.ts.getStakingTxs(this.address).subscribe((data: any) => {
       // TODO remove debugging
       console.log(data);
       this.initTable(data);
       this.delegator.txs.staking = data;
     });
 
-    this.ts.getAccountInfo(this.delegator.address).subscribe((data: any) => {
-      // TODO remove debugging
-      console.log(data);
-      this.delegator.coins = data.value.coins;
-    });
+    // this.ts.getAccountInfo(this.delegator.address).subscribe((data: any) => {
+    //   // TODO remove debugging
+    //   console.log(data);
+    //   this.delegator.coins = data.value.coins;
+    // });
   }
 
   ngAfterViewInit() {

@@ -15,6 +15,7 @@ import { TxComponent } from '../tx/tx.component';
 import { ValidatorComponent } from '../validator/validator.component';
 import { take } from 'rxjs/operators';
 import { PopupService } from 'src/app/services/popup.service.js';
+import { AccountDetailComponent } from '../account-detail/account-detail.component';
 
 
 @Component({
@@ -304,10 +305,11 @@ export class TxsComponent implements OnInit {
   }
 
   openTxsListDialog(address) {
-    this.dialog.open( TxsListCardComponent,  {
+    this.dialog.open( AccountDetailComponent,  {
       data: { 
         address
-      }
+      },
+      height: '75vh'
     });
   }
 

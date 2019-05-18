@@ -133,9 +133,10 @@ export class MyHammerConfig extends HammerGestureConfig {
     PowerEventCardComponent,
     ProposedBlocksCardComponent,
     ValidatorComponent,
-    TxsListCardComponent,
+    // TxsListCardComponent,
     TxComponent,
-    BlockComponent
+    BlockComponent,
+    AccountDetailComponent
   ],
   imports: [
     BrowserModule,
