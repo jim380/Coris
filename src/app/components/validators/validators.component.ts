@@ -39,13 +39,24 @@ export class SeletedOption {
 export class ValidatorsComponent implements OnInit {
   // Mat-table
   private dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
-  private displayedColumns: string[] = [];
+  private displayedColumns: string[] = [
+    'rank',
+    'moniker', 
+    // 'status', 
+    'weight', 
+    'assets', 
+    'delegators',
+    'bond', 
+    'commission'
+  ];
+  private tableReady = false;
   private paginator: MatPaginator;
   private sort: MatSort;
-  private expandedElement: any | null;
+
   public statusChartOptions: any = {
     responsive: true
   };
+  
   private selectedOption: SeletedOption[];
   private optionsSelect: Array<any>;
 
@@ -53,12 +64,12 @@ export class ValidatorsComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<any>;
   @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
     this.paginator = mp;
-    this.setDataSourceAttributes();
+    // this.setDataSourceAttributes();
   }
-  @ViewChild(MatSort) set matSort(ms: MatSort) {
-    this.sort = ms;
-    this.setDataSourceAttributes();
-  }
+  // @ViewChild(MatSort) set matSort(ms: MatSort) {
+  //   this.sort = ms;
+  //   this.setDataSourceAttributes();
+  // }
   
   appState: Observable<State>;
   valsUptime: Map<string,string> = new Map;
@@ -82,7 +93,7 @@ export class ValidatorsComponent implements OnInit {
     private validatorsService: ValidatorsService,
     private dialog: MatDialog
   ) { 
-    this.hideUnbondColumn();
+    // this.hideUnbondColumn();
   }
 
   ngOnInit() {
@@ -93,23 +104,36 @@ export class ValidatorsComponent implements OnInit {
       {Id: 4, Value: 'Unbonding'},
       {Id: 5, Value: 'All'}
     ];
-  
+
+    this.validatorsService.getValidatorsCount$().subscribe((validatorsCount:any) => {
+      this.validatorsService.getValidators$().subscribe((data:any) => {
+        if(data.length === validatorsCount) {
+          // console.log(data);
+          this.dataSource = new MatTableDataSource<any>([...data]);
+          this.dataSource.paginator = this.paginator;
+          // if(!this.tableReady) {
+          //   this.tableReady = true;
+          // }
+        }
+      });  
+    });
+
     if(this.dataSource) {
       this.dataSource.paginator = this.paginator;
     }
     
     this.appState = this.store.select('App');
-    this.validators$ = this.appState.subscribe(data => {
-      this.dataSource = new MatTableDataSource<any>([...data.validators]);
-      // @aakatev remove debugging
-      // console.log(this.dataSource);
+    // this.validators$ = this.appState.subscribe(data => {
+    //   this.dataSource = new MatTableDataSource<any>([...data.validators]);
+    //   // @aakatev remove debugging
+    //   // console.log(this.dataSource);
 
-      if(this.validators$ && data.validators.length > 0) {
-        // console.log('Unsubscribed');
-        this.validators$.unsubscribe();
-      }
-      this.validatorsBondFilter(2);
-    });
+    //   if(this.validators$ && data.validators.length > 0) {
+    //     // console.log('Unsubscribed');
+    //     this.validators$.unsubscribe();
+    //   }
+    //   // this.validatorsBondFilter(2);
+    // });
     
   }
   
