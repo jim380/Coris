@@ -326,6 +326,12 @@ export class TxsComponent implements OnInit {
     this.popupService.openValidatorDetailDialog(operatorAddress, this.appState, this.dialog);
   }
 
+  // TEST ACCOUNT QUERY
+  // queryAccount(address) {
+  //   this.openTxsListDialog(address);
+  // }
+
+  // END TEST ACCOUNT QUERY
   // TODO figuire out how to open on separate route
   // routeToTxPage() {
   //   // let data = MAT_DIALOG_DATA();

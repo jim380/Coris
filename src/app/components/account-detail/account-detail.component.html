@@ -47,35 +47,31 @@
                       <div class="card-body">
                           <div class="row">
                               <div class="col-sm-4 col-12">
-                                  <small class="grey-text">Balance</small>
-                                  <h4> 
-                                    {{ delegator.coins | number:".2-2" }}&nbsp;ATOM
-                                  </h4>
+                                  <small class="grey-text">Available</small>
+                                  <h4>{{ delegator.balance.available/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
                               </div>
                               <div class="col-sm-4 col-12">
                                   <small class="grey-text">Delegated</small>
-                                  <h4>#FILLME!</h4>
+                                  <h4>{{ delegator.balance.delegated/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
                               </div>
                               <div class="col-sm-4 col-12">
                                   <small class="grey-text">Rewards</small>
-                                  <h4>#FILLME!</h4>
+                                  <h4>{{ delegator.balance.rewards/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
                               </div>
                           </div>
                           <div class="row">
                               <div class="col-sm-4 col-12">
                                   <small class="grey-text">Unbonding</small>
-                                  <h4>#FILLME!</h4>
+                                  <h4>{{ delegator.balance.unbonding/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
                               </div>
                               <div class="col-sm-4 col-12">
-                                  <small class="grey-text">Total (ATOM)</small>
-                                  <h4>
-                                    {{ delegator.total | number:".2-2" }}
-                                  </h4>
+                                  <small class="grey-text">Total</small>
+                                  <h4>{{ delegator.balance.total/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
                               </div>
                               <div class="col-sm-4 col-12">
-                                  <small class="grey-text">Total (USD)</small>
+                                  <small class="grey-text">Total</small>
                                   <h4> 
-                                    {{ delegator.total * quoteUsd | number:".2-2" }}
+                                    {{ ((delegator.balance.total/1e6) * quoteUsd) | number:".2-2" }}&nbsp;USD
                                   </h4>
                               </div>
                           </div>

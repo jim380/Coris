@@ -11,6 +11,18 @@
           <button (click) = "queryTx(queryInputRef.value)" mat-raised-button color="accent">Search</button>    
         </div>
       </div>
+      <!-- TEST ACCOUNT QUERY -->
+      <!-- <div class="row">
+        <div class="col-8">
+          <mat-form-field>
+            <input #queryInputRef2 matInput placeholder="Enter account address">
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <button (click) = "queryAccount(queryInputRef2.value)" mat-raised-button color="accent">Search</button>    
+        </div>
+      </div> -->
+      <!-- END TEST ACCOUNT QUERY -->
     </div>
     <table mat-table
           [dataSource]="dataSource" 

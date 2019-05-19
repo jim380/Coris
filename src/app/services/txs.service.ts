@@ -42,8 +42,16 @@ export class TxsService {
     return this.http.get(`${nodeRpc1}/staking/delegators/${delegator}/unbonding_delegations`);
   }
 
+  public getRedelegations(delegator: string) {
+    return this.http.get(`${nodeRpc1}/staking/redelegations?delegator=${delegator}`);
+  }
+
   public getDelegatorValidators(delegator: string) {
     return this.http.get(`${nodeRpc1}/staking/delegators/${delegator}/validators`);
+  }
+
+  public getDelegatorRewards(delegator: string) {
+    return this.http.get(`${nodeRpc1}/distribution/delegators/${delegator}/rewards`);
   }
 
   public getAccountInfo(delegator: string) {

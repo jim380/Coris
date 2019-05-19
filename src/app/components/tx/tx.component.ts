@@ -37,6 +37,7 @@ export class TxComponent implements OnInit {
     // private router: Router 
   ) {  
     // TODO remove debugging
+    // console.log(data.tx);
     this.tx = data.tx;
   }
 
