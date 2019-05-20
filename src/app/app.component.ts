@@ -6,6 +6,8 @@ import { ValidatorsService } from './services/validators.service';
 import { trigger, state, query, transition, animate, style, keyframes, animation, useAnimation, animateChild, group, stagger } from '@angular/animations';
 import { fadeInAnimation, fade } from './animations/animation';
 import {ToastService} from 'ng-uikit-pro-standard';
+import { State } from './interfaces/state.interface';
+import { PricingService } from './services/pricing.service';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +40,7 @@ import {ToastService} from 'ng-uikit-pro-standard';
   ]
 })
 export class AppComponent {
-  appState: Observable<{blocks:[], txs:[], validators:[], round:{}, roundStep: {}, valsMap: Map<string,string>}>;
+  appState: Observable<State>;
 
   networks = [
     {id: 1, name: 'mainnet'},
@@ -47,19 +49,14 @@ export class AppComponent {
 
   constructor(
     private ws:WsService, 
-    private store: Store <{App: {
-      blocks:[], 
-      txs:[], 
-      validators:[], 
-      round:{}, 
-      roundStep: {},
-      valsMap: Map<string,string>
-    }}>,
-    private vs:ValidatorsService
+    private store: Store <State>,
+    private pricingService: PricingService
+    // private vs:ValidatorsService
   ) {  }
 
   ngOnInit() { 
     this.appState = this.store.select('App');
+    this.pricingService.initStakingPool();
   }
 
   ngOnDestroy() {

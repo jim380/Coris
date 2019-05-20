@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { WsService } from 'src/app/services/ws.service';
 import { Store } from '@ngrx/store';
-import { ValidatorsService } from 'src/app/services/validators.service';
+// import { ValidatorsService } from 'src/app/services/validators.service';
 import { trigger, state, query, transition, animate, style, keyframes, animation, useAnimation, animateChild, group, stagger } from '@angular/animations';
 import { fadeInAnimation, fade } from '../../animations/animation';
 import { State } from 'src/app/interfaces/state.interface';

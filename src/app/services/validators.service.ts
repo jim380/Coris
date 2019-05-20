@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, of, from, forkJoin, BehaviorSubject, range } from 'rxjs';
+import { Observable, range } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import * as AppActions from '../state/app.actions';
 import * as ValidatorsActions from '../state/validators/validators.actions';
@@ -14,13 +14,8 @@ import { State } from '../interfaces/state.interface';
   providedIn: 'root'
 })
 export class ValidatorsService {
-  appState: Observable<State>;
-
-  totalStake = 0;
-  // validatorsStore = null;
+  validatorsStore = []; 
   validatorsMap: Map<string, string> = new Map;
-
-  numOfValidators = 0;
 
   constructor(
     private store: Store <State>,
@@ -29,8 +24,6 @@ export class ValidatorsService {
     this.initValidators();
   }
 
-  validatorsStore = []; 
-  
   // NEW LOGIC
   initValidators() {
     this.getValidators().subscribe((validators: any) => {
@@ -156,7 +149,6 @@ export class ValidatorsService {
     hash.update(bytes);
     return hash.hex().toUpperCase();
   }
-
 
   getValidators() {
     return this.http.get(`${nodeRpc1}/staking/validators`);
@@ -286,44 +278,17 @@ export class ValidatorsService {
   //   this.updateValidators();
   // }
 
-  getTotalStake() { return this.totalStake; }
+  // getTotalStake() { return this.totalStake; }
 
   // setValidators(validators) {
   //   this.validatorsStore = validators;
   //   // this.store.dispatch(new AppActions.UpdateValidators(this.validatorsStore));
   // }
 
-  setStakingPool() {
-    return new Promise(resolve => {
-      this.http.get(`${nodeRpc1}/staking/pool`).subscribe(async data => {
-        // TODO remove debugging
-        // console.log(data);
-        if (data !== null) {
-          this.setCommunityPool(data);
-        }
-        resolve();
-      });
-    });
-  }
 
-  setCommunityPool(stakingPool) {
-    return new Promise(resolve => {
-      this.http.get(`${nodeRpc1}/distribution/community_pool`).subscribe(async data => {
-        // TODO remove debugging
-        // console.log(data);
-        if (data !== null) {
-          stakingPool.community_pool = data[0];
-          this.store.dispatch(new AppActions.UpdateStakePool(stakingPool));
-          // console.log(stakingPool);
-        }
-        resolve();
-      });
-    });
-  }
-
-  updateValidators() {
-    // this.store.dispatch(new AppActions.UpdateValidators(this.validatorsStore));
-    this.store.dispatch(new AppActions.UpdateValsMap(this.validatorsMap));
+  // updateValidators() {
+  //   // this.store.dispatch(new AppActions.UpdateValidators(this.validatorsStore));
+  //   this.store.dispatch(new AppActions.UpdateValsMap(this.validatorsMap));
     
     // TODO remove debugging
     // @aakatev 05/09/19 
@@ -331,7 +296,7 @@ export class ValidatorsService {
     // OF CURRENT VLAIDATORS STATE
     // console.log(this.validatorsStore);
     // console.log(this.validatorsMap);
-  }
+  // }
 
   // getValidatorDistribution(validator:any) {
   //   return new Promise(resolve => {
@@ -365,45 +330,58 @@ export class ValidatorsService {
   //   });
   // }
   
-  getValidatorRewards(validator) {
-    return new Promise(resolve => {
-      this.http.get(`${nodeRpc1}/distribution/validators/${validator.operator_address}/rewards`)
-        .subscribe(
-          (data) => {
-            // TODO remove debugging
-            // console.log(data);
-            validator.rewards = data;
-            resolve();
-          },
-          (error) => {
-            // TODO remove debugging
-            // console.log(error);
-            validator.rewards = null;
-            resolve();
-          }
-        );
-    });
-  }
+  // calculateTotalVotingPower(validators) {
+  //   return new Promise (async resolve => {
+  //     let totalStake = 0;
+  //     for (let validator of validators) {
+  //       totalStake += await Number(validator.tokens);
+  //       this.store.dispatch(new AppActions.UpdateTotalStake(totalStake));
+  //       // TODO remove debugging
+  //       console.log(totalStake);
+  //     }
+  //     resolve();
+  //   });
+  // }
 
-  getValidatorOutstandingRewards(validator) {
-    return new Promise(resolve => {
-      this.http.get(`${nodeRpc1}/distribution/validators/${validator.operator_address}/outstanding_rewards`)
-        .subscribe(
-          (data) => {
-            // TODO remove debugging
-            // console.log(data);
-            validator.outstanding_rewards = data;
-            resolve();
-          },
-          (error) => {
-            // TODO remove debugging
-            // console.log(error);
-            validator.outstandning_rewards = null;
-            resolve();
-          }
-        );
-    });
-  }
+  // getValidatorRewards(validator) {
+  //   return new Promise(resolve => {
+  //     this.http.get(`${nodeRpc1}/distribution/validators/${validator.operator_address}/rewards`)
+  //       .subscribe(
+  //         (data) => {
+  //           // TODO remove debugging
+  //           // console.log(data);
+  //           validator.rewards = data;
+  //           resolve();
+  //         },
+  //         (error) => {
+  //           // TODO remove debugging
+  //           // console.log(error);
+  //           validator.rewards = null;
+  //           resolve();
+  //         }
+  //       );
+  //   });
+  // }
+
+  // getValidatorOutstandingRewards(validator) {
+  //   return new Promise(resolve => {
+  //     this.http.get(`${nodeRpc1}/distribution/validators/${validator.operator_address}/outstanding_rewards`)
+  //       .subscribe(
+  //         (data) => {
+  //           // TODO remove debugging
+  //           // console.log(data);
+  //           validator.outstanding_rewards = data;
+  //           resolve();
+  //         },
+  //         (error) => {
+  //           // TODO remove debugging
+  //           // console.log(error);
+  //           validator.outstandning_rewards = null;
+  //           resolve();
+  //         }
+  //       );
+  //   });
+  // }
 
   getValidatorAvatars(validator) {
     return new Promise(async resolve => {
@@ -445,27 +423,27 @@ export class ValidatorsService {
   // }
 
 
-  getValidatorUnbondDelegations(validator) {
-    validator.unbonding_total = 0;
-    return new Promise(resolve => {
-      this.http.get(`${nodeRpc1}/staking/validators/${validator.operator_address}/unbonding_delegations`)
-        .subscribe(data => {
-          // TODO remove debugging
-          // console.log(data);
-          validator.unbonding_delegations = data;
-          if(data) {
-            (<any[]>data).forEach(delegation => {
-              (<any[]>delegation.entries).forEach(entry => {
-                // TODO remove debugging
-                // console.log(parseInt(entry.balance));
-                validator.unbonding_total += parseInt(entry.balance, 10);
-              })
-            });
-          }
-          resolve();
-        });
-    });
-  }
+  // getValidatorUnbondDelegations(validator) {
+  //   validator.unbonding_total = 0;
+  //   return new Promise(resolve => {
+  //     this.http.get(`${nodeRpc1}/staking/validators/${validator.operator_address}/unbonding_delegations`)
+  //       .subscribe(data => {
+  //         // TODO remove debugging
+  //         // console.log(data);
+  //         validator.unbonding_delegations = data;
+  //         if(data) {
+  //           (<any[]>data).forEach(delegation => {
+  //             (<any[]>delegation.entries).forEach(entry => {
+  //               // TODO remove debugging
+  //               // console.log(parseInt(entry.balance));
+  //               validator.unbonding_total += parseInt(entry.balance, 10);
+  //             })
+  //           });
+  //         }
+  //         resolve();
+  //       });
+  //   });
+  // }
 
   // calculateTotalVotingPower() {
   //   return new Promise (async resolve => {

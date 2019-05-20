@@ -93,6 +93,10 @@ export class BlocksService {
       });
   }
 
+  fetch20Blocks(height) {
+    this.http.get(`${nodeRpc1}/blockchain?minHeight=${height-20}&maxHeight=${height}`);
+  }
+
   private getBlockTimesArray(blocks, array) {
     let blocksCounter$ = range( 0, (blocks.length-1) );
     let arrayFilled = 0;

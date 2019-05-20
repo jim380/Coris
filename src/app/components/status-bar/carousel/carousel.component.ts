@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PricingService } from 'src/app/services/pricing.service';
 import { BlocksService } from 'src/app/services/blocks.service';
-import { ValidatorsService } from 'src/app/services/validators.service';
+// import { ValidatorsService } from 'src/app/services/validators.service';
 import { State } from 'src/app/interfaces/state.interface';
 import { Store } from '@ngrx/store';
 import { WsService } from 'src/app/services/ws.service';
@@ -36,7 +36,7 @@ export class CarouselComponent implements OnInit {
   constructor(
     private ws:WsService, 
     private store: Store <State>,
-    private vs:ValidatorsService,
+    // private vs:ValidatorsService,
     private ps:PricingService,
     private bs:BlocksService
   ) { }
@@ -45,7 +45,6 @@ export class CarouselComponent implements OnInit {
     this.appState = this.store.select('App');
     this.getScreenSize();
 
-    this.setBlockTime();
     this.setInflation();
     this.setAtomPrice();
     this.appState
@@ -68,6 +67,7 @@ export class CarouselComponent implements OnInit {
         this.setBondedTokens(data.stakePool);
         this.setCommunityPool(data.stakePool);
       });
+      this.setBlockTime();
   }
 
   ngOnDestroy() {
