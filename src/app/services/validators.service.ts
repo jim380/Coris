@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, range } from 'rxjs';
+import { Observable, range, of, from, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import * as AppActions from '../state/app.actions';
 import * as ValidatorsActions from '../state/validators/validators.actions';
-import { nodeRpc1 } from '../../config.js'
+import { nodeRpc1 } from '../../config.js';
 import { decodeBech32, fromWords } from '../lib/bech32';
 import { hex } from '../lib/hex';
 import { sha256 } from 'js-sha256';
 import { State } from '../interfaces/state.interface';
+import { map, mergeMap, catchError, concatAll } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class ValidatorsService {
     private store: Store <State>,
     private http: HttpClient
   ) {
+    console.log("Validators Seervice injected!");
     this.initValidators();
   }
 
@@ -41,57 +43,105 @@ export class ValidatorsService {
         () => {
           this.validatorsStore = validators;
           this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validatorsStore));
-    
-          count$.subscribe((count) => {
-            this.getValidatorDistribution(this.validatorsStore[count].operator_address)
-              .subscribe((data: any) => {
-                this.validatorsStore[count].distribution = data;
-              },
-              (error) => {
-                // console.log(error);
-                this.validatorsStore[count].distribution = [];
-                this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validatorsStore));
-
-                this.initDelegations(this.validatorsStore[count]);
-              },
-              () => {
-                this.validatorsMap.set(
-                  this.validatorsStore[count].distribution.operator_address, 
-                  this.validatorsStore[count].description.moniker
-                );
-                this.validatorsMap.set(
-                  this.validatorsStore[count].operator_address, 
-                  this.validatorsStore[count].description.moniker
-                );
-
-                this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validatorsStore));
-                this.store.dispatch(new AppActions.UpdateValsMap(this.validatorsMap));
-
-                this.initDelegations(this.validatorsStore[count]);
-                this.initAccountBalance(this.validatorsStore[count]);
-              });
-
-            this.initValidatorHexAddress(this.validatorsStore[count]);
-          });
+          this.initValidatorsDetails();
         });
     });
   }
 
-  initDelegations(validator) {
-    this.getValidatorDelegations(validator.operator_address)
-      .subscribe((data: any) => {
-        // console.log(data);
-        validator.delegations = data;
+  precachedValidators = new BehaviorSubject(0); 
+  
+  getPrecachedValidators() {
+    return this.precachedValidators;
+  }
+
+  initValidatorsDetails() {
+    // from(this.validatorsStore)
+    // .pipe(
+    //   map(validator => validator.operator_address),
+    //   mergeMap(operator_address => this.getValidatorDistribution(operator_address)).OnErrorResumeNext(),
+    //   catchError(error => of(`I caught: ${error}`)),
+    //   concatAll()
+    // )
+    // .subscribe(
+    //   (data) => {
+    //     console.log(data);
+    //   },
+    //   (err) => { 
+    //     console.log('error:', err);
+    //   },
+    //   () => { 
+    //     console.log('the end');
+    //   }
+    // );
+    let index = 0;
+    this.validatorsStore.forEach((validator:any) => {
+      this.getValidatorDistribution(validator.operator_address).subscribe((data: any) => {
+        validator.distribution = data;
+        this.precachedValidators.next(++index);
       },
       (error) => {
         // console.log(error);
-        validator.delegations = [];
+        validator.distribution = [];
+        this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validatorsStore));
+        this.precachedValidators.next(++index);
+        // this.initDelegations(validator);
       },
       () => {
-        this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validatorsStore));    
-        this.calculateSelfBond(validator);
+        this.validatorsMap.set(
+          validator.distribution.operator_address, 
+          validator.description.moniker
+        );
+        this.validatorsMap.set(
+          validator.operator_address, 
+          validator.description.moniker
+        );
+
+        this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validatorsStore));
+        this.store.dispatch(new AppActions.UpdateValsMap(this.validatorsMap));
+        // console.log(index);
+        // this.initDelegations(validator);
+        // this.initAccountBalance(validator);
       });
+      this.initHexAddress(validator);
+    });
   }
+
+  // triggerDelegations() {
+  //   const count$ = range(0, this.validatorsStore.length);
+  //   count$.subscribe((count) => {
+  //     this.initDelegations(this.validatorsStore[count]);
+  //     this.initAccountBalance(this.validatorsStore[count]);
+  //   });
+  // };
+
+  // initDelegations(validator) {
+  //   this.getValidatorDelegations(validator.operator_address)
+  //     .subscribe((data: any) => {
+  //       // console.log(data);
+  //       validator.delegations = data;
+  //     },
+  //     (error) => {
+  //       // console.log(error);
+  //       validator.delegations = [];
+  //     },
+  //     () => {
+  //       this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validatorsStore));    
+  //       this.calculateSelfBond(validator);
+  //     });
+  // }
+
+  // initAccountBalance(validator) {
+  //   this.getAccountBalance(validator.distribution.operator_address).subscribe((data) => {
+  //     validator.distribution.balance = data;
+  //   },
+  //   (error) => {
+  //     console.log(validator);
+  //   },
+  //   () => {
+  //     this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validatorsStore));
+  //   });
+  // }
+
 
   sortValidators(validators) {
     validators.sort((validator1, validator2) => {
@@ -99,38 +149,7 @@ export class ValidatorsService {
     });
   }
 
-  calculateSelfBond(validator) {
-    let delegations = validator.delegations;
-    validator.self_bond = 0;
-
-    const count$ = range(0, delegations.length);
-
-    count$.subscribe((count) => {
-      if(delegations[count].delegator_address === validator.distribution.operator_address) {
-        validator.self_bond += Number(delegations[count].shares);
-      }
-    },
-    (error) => {
-      console.log(error);
-    },
-    () => {
-      this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validatorsStore));
-    });
-  }
-
-  initAccountBalance(validator) {
-    this.getAccountBalance(validator.distribution.operator_address).subscribe((data) => {
-      validator.distribution.balance = data;
-    },
-    (error) => {
-      console.log(validator);
-    },
-    () => {
-      this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validatorsStore));
-    });
-  }
-
-  initValidatorHexAddress(validator) {
+  initHexAddress(validator) {
     const hexAddr = this.getHexAddress(validator.consensus_pubkey);
     validator.hex_address = hexAddr;
     this.validatorsMap.set(hexAddr, validator.description.moniker);
@@ -158,13 +177,13 @@ export class ValidatorsService {
     return this.http.get(`${nodeRpc1}/distribution/validators/${address}`);
   }
 
-  getValidatorDelegations(address) {
-    return this.http.get(`${nodeRpc1}/staking/validators/${address}/delegations`);
-  }
+  // getValidatorDelegations(address) {
+  //   return this.http.get(`${nodeRpc1}/staking/validators/${address}/delegations`);
+  // }
 
-  getAccountBalance(address) {
-    return this.http.get(`${nodeRpc1}/bank/balances/${address}`);
-  }
+  // getAccountBalance(address) {
+  //   return this.http.get(`${nodeRpc1}/bank/balances/${address}`);
+  // }
   
   // END NEW LOGIC
 

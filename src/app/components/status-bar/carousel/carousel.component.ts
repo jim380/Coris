@@ -53,13 +53,12 @@ export class CarouselComponent implements OnInit {
         distinctUntilChanged()
       )
       .subscribe(data => {
-        // TODO remove debugging
-        if (data.roundStep && !this.blocksFetched) {
-          this.bs.fetchRecentBlocks( 
-            Number( (data.roundStep.height-1) ) 
-          );
-          this.blocksFetched = true;
-        }
+        // if (data.roundStep && !this.blocksFetched) {
+        //   this.bs.fetchRecentBlocks( 
+        //     Number( (data.roundStep.height-1) ) 
+        //   );
+        //   this.blocksFetched = true;
+        // }
 
         this.setConsensusState(data.roundStep);
         this.setLastBlock(data.blocks);

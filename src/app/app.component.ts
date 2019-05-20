@@ -50,8 +50,8 @@ export class AppComponent {
   constructor(
     private ws:WsService, 
     private store: Store <State>,
-    private pricingService: PricingService
-    // private vs:ValidatorsService
+    private pricingService: PricingService,
+    private vs:ValidatorsService
   ) {  }
 
   ngOnInit() { 

@@ -3,7 +3,8 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import { Store, createFeatureSelector, createSelector, select } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
-import { ValidatorsService } from '../../services/validators.service';
+// import { ValidatorsService } from '../../services/validators.service';
+import { ValidatorsHelperService } from '../../services/validators-helper.service';
 import { Sort, MatDialog, MatSort } from '@angular/material';
 import { ValidatorComponent } from '../validator/validator.component';
 import { State } from 'src/app/interfaces/state.interface';
@@ -50,7 +51,7 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
     'bond', 
     'commission'
   ];
-  private tableReady = false;
+
   private paginator: MatPaginator;
   private sort: MatSort;
 
@@ -91,8 +92,9 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
 
   constructor(
     private store: Store<State>, 
-    private validatorsService: ValidatorsService,
-    private dialog: MatDialog
+    // private validatorsService: ValidatorsService,
+    private dialog: MatDialog,
+    private validatorsHelperService: ValidatorsHelperService
   ) { 
     // this.hideUnbondColumn();
   }
@@ -120,6 +122,7 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
     ).subscribe((data:any) => {
       this.dataSource = new MatTableDataSource<any>([...data]);
       this.dataSource.paginator = this.paginator;
+      // console.log(data);
     });
   }
 
