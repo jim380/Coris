@@ -1,5 +1,5 @@
 import { TestComponent } from './../test/test.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import { Store, createFeatureSelector, createSelector, select } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
@@ -37,7 +37,7 @@ export class SeletedOption {
     ]),
   ],
 })
-export class ValidatorsComponent implements OnInit {
+export class ValidatorsComponent implements OnInit, AfterViewInit {
   // Mat-table
   private dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
   private displayedColumns: string[] = [
@@ -108,6 +108,11 @@ export class ValidatorsComponent implements OnInit {
     ];
 
     this.appState = this.store.select('App');
+
+    // this.appState.subscribe((data: any) => {
+    //   console.log(data);
+    // });
+
     let validators$ = this.store.select('Validators');
     
     validators$.pipe(
@@ -116,6 +121,10 @@ export class ValidatorsComponent implements OnInit {
       this.dataSource = new MatTableDataSource<any>([...data]);
       this.dataSource.paginator = this.paginator;
     });
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
   }
   
   openValidatorDialog(validator) {
