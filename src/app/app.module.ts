@@ -59,6 +59,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { ToastrModule } from 'ngx-toastr';
 import { TxsListCardComponent } from './components/txs/txs-list-card/txs-list-card.component';
 import { AccountDetailComponent } from './components/account-detail/account-detail.component';
+import { AppStateModule } from './state/app-state.module';
 
 declare var Hammer: any;
 
@@ -147,7 +148,10 @@ export class MyHammerConfig extends HammerGestureConfig {
     BrowserAnimationsModule,
     ChartsModule,
     ClipboardModule,
-    StoreModule.forRoot({ App: appReducer }),
+    [
+      StoreModule.forRoot({}), 
+      AppStateModule
+    ],
     LayoutModule,
     FormsModule,
     ReactiveFormsModule,

@@ -1,17 +1,6 @@
 import * as AppActions from './app.actions';
-import { State } from '../interfaces/state.interface';
+import { initialState } from './initial-state';
 
-
-const initialState: State = {
-  blocks:[],
-  txs: [],
-  validators: [],
-  round: {},
-  roundStep: {},
-  valsMap: Map,
-  totalStake: 0,
-  stakePool: {}
-};
 
 export function appReducer(state = initialState, action: AppActions.AppActions) {
   switch(action.type) {
@@ -71,7 +60,8 @@ export function appReducer(state = initialState, action: AppActions.AppActions) 
       }
     }
     
-    default: 
-      return state;;
+    default: {
+      return state;
+    }
   }
 }

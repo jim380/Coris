@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable, of, from, forkJoin, BehaviorSubject, range } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import * as AppActions from '../state/app.actions';
+import * as ValidatorsActions from '../state/validators/validators.actions';
 import { nodeRpc1 } from '../../config.js'
 import { decodeBech32, fromWords } from '../lib/bech32';
 import { hex } from '../lib/hex';
@@ -29,18 +30,7 @@ export class ValidatorsService {
   }
 
   validators = []; 
-  validators$ = new BehaviorSubject(this.validators);
   
-  getValidators$() {
-    return this.validators$;
-  }
-
-  validatorsCount$ = new BehaviorSubject(0);  
-
-  getValidatorsCount$() {
-    return this.validatorsCount$;
-  }
-
   // NEW LOGIC
   initValidators() {
     this.getValidators().subscribe((validators: any) => {
@@ -58,8 +48,7 @@ export class ValidatorsService {
           console.log(error);
         },
         () => {
-          this.validatorsCount$.next(this.validators.length);
-          this.validators$.next(this.validators);
+          this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validators));
     
           count$.subscribe((count) => {
             this.getValidatorDistribution(this.validators[count].operator_address)
@@ -71,11 +60,12 @@ export class ValidatorsService {
                 // console.log(error);
                 this.validators[count].distribution = [];
 
-                this.validators$.next(this.validators);
+                this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validators));
                 this.initDelegations(count);
               },
               () => {
-                this.validators$.next(this.validators);
+                this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validators));
+
                 this.initDelegations(count);
                 this.initAccountBalance(count);
               });
@@ -101,7 +91,7 @@ export class ValidatorsService {
         this.validators[index].delegations = [];
       },
       () => {
-        this.validators$.next(this.validators);
+        this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validators));    
         this.calculateSelfBond(index);
       });
   }
@@ -121,7 +111,8 @@ export class ValidatorsService {
       console.log(error);
     },
     () => {
-      this.validators$.next(this.validators);
+      this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validators));
+    
     });
   }
 
@@ -142,7 +133,7 @@ export class ValidatorsService {
       console.log(error);
     },
     () => {
-      this.validators$.next(this.validators);
+      this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validators));
     });
   }
 
@@ -163,8 +154,6 @@ export class ValidatorsService {
   }
   
   // END NEW LOGIC
-  
-
 
   
   // SLOW NEW LOGIC
@@ -280,7 +269,7 @@ export class ValidatorsService {
 
   setValidators(validators) {
     this.validatorsStore = validators;
-    this.store.dispatch(new AppActions.UpdateValidators(this.validatorsStore));
+    // this.store.dispatch(new AppActions.UpdateValidators(this.validatorsStore));
   }
 
   setStakingPool() {
@@ -312,7 +301,7 @@ export class ValidatorsService {
   }
 
   updateValidators() {
-    this.store.dispatch(new AppActions.UpdateValidators(this.validatorsStore));
+    // this.store.dispatch(new AppActions.UpdateValidators(this.validatorsStore));
     this.store.dispatch(new AppActions.UpdateValsMap(this.validatorsMap));
     
     // TODO remove debugging

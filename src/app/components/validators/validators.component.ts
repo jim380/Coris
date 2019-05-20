@@ -1,7 +1,7 @@
 import { TestComponent } from './../test/test.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { Store, createFeatureSelector, createSelector, select } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 import { ValidatorsService } from '../../services/validators.service';
 import { Sort, MatDialog, MatSort } from '@angular/material';
@@ -18,6 +18,7 @@ import { RewardsCardComponent } from '../validator-profile/rewards-card/rewards-
 import { DelegatorCardComponent } from '../validator-profile/delegator-card/delegator-card.component';
 import { PowerEventCardComponent } from '../validator-profile/power-event-card/power-event-card.component'
 import { ProposedBlocksCardComponent } from '../validator-profile/proposed-blocks-card/proposed-blocks-card.component'
+import { map } from 'rxjs/operators';
 
 export class SeletedOption {
   public Id: number;
@@ -96,6 +97,7 @@ export class ValidatorsComponent implements OnInit {
     // this.hideUnbondColumn();
   }
 
+
   ngOnInit() {
     this.selectedOption = [
       {Id: 1, Value: 'Bonded'},
@@ -105,36 +107,15 @@ export class ValidatorsComponent implements OnInit {
       {Id: 5, Value: 'All'}
     ];
 
-    this.validatorsService.getValidatorsCount$().subscribe((validatorsCount:any) => {
-      this.validatorsService.getValidators$().subscribe((data:any) => {
-        if(data.length === validatorsCount) {
-          // console.log(data);
-          this.dataSource = new MatTableDataSource<any>([...data]);
-          this.dataSource.paginator = this.paginator;
-          // if(!this.tableReady) {
-          //   this.tableReady = true;
-          // }
-        }
-      });  
-    });
-
-    if(this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-    }
-    
     this.appState = this.store.select('App');
-    // this.validators$ = this.appState.subscribe(data => {
-    //   this.dataSource = new MatTableDataSource<any>([...data.validators]);
-    //   // @aakatev remove debugging
-    //   // console.log(this.dataSource);
-
-    //   if(this.validators$ && data.validators.length > 0) {
-    //     // console.log('Unsubscribed');
-    //     this.validators$.unsubscribe();
-    //   }
-    //   // this.validatorsBondFilter(2);
-    // });
+    let validators$ = this.store.select('Validators');
     
+    validators$.pipe(
+      map(state => state.validators)
+    ).subscribe((data:any) => {
+      this.dataSource = new MatTableDataSource<any>([...data]);
+      this.dataSource.paginator = this.paginator;
+    });
   }
   
   openValidatorDialog(validator) {
@@ -193,14 +174,6 @@ export class ValidatorsComponent implements OnInit {
       }
     });
   }
-
-  // openGovDetailDialog(validator) {
-  //   this.dialog.open( GovDetailComponent,  {
-  //     data: { 
-  //       validator
-  //     }
-  //   });
-  // }
 
   displayUnbondColumn() {
     this.displayedColumns = [
