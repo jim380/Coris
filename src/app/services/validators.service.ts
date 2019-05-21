@@ -55,24 +55,6 @@ export class ValidatorsService {
   }
 
   initValidatorsDetails() {
-    // from(this.validatorsStore)
-    // .pipe(
-    //   map(validator => validator.operator_address),
-    //   mergeMap(operator_address => this.getValidatorDistribution(operator_address)).OnErrorResumeNext(),
-    //   catchError(error => of(`I caught: ${error}`)),
-    //   concatAll()
-    // )
-    // .subscribe(
-    //   (data) => {
-    //     console.log(data);
-    //   },
-    //   (err) => { 
-    //     console.log('error:', err);
-    //   },
-    //   () => { 
-    //     console.log('the end');
-    //   }
-    // );
     let index = 0;
     this.validatorsStore.forEach((validator:any) => {
       this.getValidatorDistribution(validator.operator_address).subscribe((data: any) => {

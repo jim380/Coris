@@ -22,6 +22,9 @@ export class ValidatorsHelperService {
     console.log("Validators-helper Service injected");
     
     this.validatorsService.getPrecachedValidators().subscribe((data: any) => {
+      // @aakatev
+      // TOFIX
+      // Look at this part, as 100 shouldnt be hardcoded
       if(data === 100) {
         this.store.select('Validators').pipe(first())
         .subscribe((data) => {

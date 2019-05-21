@@ -52,15 +52,13 @@ export class BlocksService {
       this.fetch20Blocks(startHeight-80)
     )
     .subscribe(([res1, res2, res3, res4, res5]) => {
-      console.log(
-        [
-          ...res1,
-          ...res2,
-          ...res3,
-          ...res4,
-          ...res5
-        ]
-      );
+      this.getBlockTimesArray([
+        ...res1,
+        ...res2,
+        ...res3,
+        ...res4,
+        ...res5
+      ], this.blocksTime);
     });
   }
 
@@ -112,28 +110,28 @@ export class BlocksService {
     return this.recentBlocks$;
   }
 
-  fetchRecentBlocks(lastBlock: number) {
-    let blocksCounter$ = range(0, 100);
-    let fetchedCounter = 0;
+  // fetchRecentBlocks(lastBlock: number) {
+  //   let blocksCounter$ = range(0, 100);
+  //   let fetchedCounter = 0;
 
-    blocksCounter$.subscribe(
-      (count: number) => {
-        this.fetchBlockAtAlternative(lastBlock - count)
-          .subscribe( 
-            (block: any) => {
-              this.recentBlocks[count] = block;
-              fetchedCounter += 1;
-            }, 
-            (error) => {
-              console.log(error);
-            },
-            () => {
-              if(fetchedCounter === 100) {
-                this.getBlockTimesArray(this.recentBlocks, this.blocksTime);
-              }
-            });
-      });
-  }
+  //   blocksCounter$.subscribe(
+  //     (count: number) => {
+  //       this.fetchBlockAtAlternative(lastBlock - count)
+  //         .subscribe( 
+  //           (block: any) => {
+  //             this.recentBlocks[count] = block;
+  //             fetchedCounter += 1;
+  //           }, 
+  //           (error) => {
+  //             console.log(error);
+  //           },
+  //           () => {
+  //             if(fetchedCounter === 100) {
+  //               this.getBlockTimesArray(this.recentBlocks, this.blocksTime);
+  //             }
+  //           });
+  //     });
+  // }
 
 
   private getBlockTimesArray(blocks, array) {
@@ -143,8 +141,8 @@ export class BlocksService {
     blocksCounter$.subscribe(
       (count: number) => {
         array[count] = ( 
-          Date.parse(blocks[count].block.header.time) 
-          - Date.parse(blocks[count+1].block.header.time) 
+          Date.parse(blocks[count].header.time) 
+          - Date.parse(blocks[count+1].header.time) 
         );
         arrayFilled++;
       },
