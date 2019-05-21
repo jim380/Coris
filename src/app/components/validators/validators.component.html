@@ -6,7 +6,7 @@
     Unbonding BondStatus = 0x01
     Bonded BondStatus = 0x02 
   -->
-  <!-- <div class="dropdown" mdbDropdown>
+  <div class="dropdown" mdbDropdown>
     <button mdbDropdownToggle type="button" mdbBtn color="primary" class="dropdown-toggle waves-light" size="sm"
       mdbWavesEffect>
       Status
@@ -19,7 +19,7 @@
       <a class="dropdown-item" (click)="validatorsBondFilter(1)" value="unbonding">Unbonding</a>
       <a class="dropdown-item" (click)="validatorsNoFilter()" value="all">All</a>
     </div>
-  </div> -->
+  </div>
 
   <div class="example-container mat-elevation-z8 scrollbar-primary table-responsive text-nowrap">
     <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8 w-auto">
@@ -29,8 +29,8 @@
         <td mat-cell *matCellDef="let validator"> {{validator.rank}} </td>
       </ng-container>
   
-      <ng-container  matColumnDef="moniker" sticky>
-        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-at"></i>&nbsp;Name</th>
+      <ng-container matColumnDef="moniker" sticky>
+        <th mat-sort-header="moniker" mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-at"></i>&nbsp;Name</th>
         <td mat-cell *matCellDef="let validator"> 
           <span>
             <div class="chip validator-avatar is-128x128">
@@ -68,12 +68,12 @@
       
   
       <ng-container matColumnDef="assets">
-        <th mat-sort-header="account.tokens" mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-social-usd"></i>&nbsp;Assets</th>
+        <th mat-sort-header="balance" mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-social-usd"></i>&nbsp;Assets</th>
         <td mat-cell *matCellDef="let validator">
           <span matTooltip="Balance" matTooltipPosition="above">
             {{ 
               (validator.distribution?.balance ? 
-                (validator.distribution?.balance[0].amount)/1e6 :
+                (validator.distribution?.balance.amount)/1e6 :
                 '0')                 
                 | number:'.2-2' 
             }}
@@ -83,10 +83,10 @@
       </ng-container>
   
       <ng-container matColumnDef="delegators">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-person-stalker"></i>&nbsp;Delegators</th>
+        <th mat-sort-header="delegations" mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-person-stalker"></i>&nbsp;Delegators</th>
         <td mat-cell *matCellDef="let validator"> 
           <span *ngIf="validator.delegations; else otherBlock">
-            {{validator.delegations?.length}}
+            {{ validator.delegations?.length }}
           </span>
           <ng-template #otherBlock>
             <span>-</span>
@@ -115,7 +115,7 @@
       </ng-container>
           
       <ng-container matColumnDef="commission">
-        <th mat-header-cell *matHeaderCellDef><i class="ion-cash"></i>&nbsp;Commission</th>
+        <th mat-sort-header="commission" mat-header-cell *matHeaderCellDef><i class="ion-cash"></i>&nbsp;Commission</th>
         <td mat-cell *matCellDef="let validator">
           <span matTooltip="Current Rate" matTooltipPosition="above">{{validator.commission?.rate | percent}}</span>
           <span class="table-subtitle">&nbsp;({{validator.commission?.max_rate | percent}} - {{validator.commission?.max_change_rate | percent}})</span>

@@ -66,12 +66,12 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatTable) table: MatTable<any>;
   @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
     this.paginator = mp;
-    // this.setDataSourceAttributes();
+    this.setDataSourceAttributes();
   }
-  // @ViewChild(MatSort) set matSort(ms: MatSort) {
-  //   this.sort = ms;
-  //   this.setDataSourceAttributes();
-  // }
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setDataSourceAttributes();
+  }
   
   appState: Observable<State>;
   valsUptime: Map<string,string> = new Map;
@@ -81,18 +81,25 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
   setDataSourceAttributes() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.dataSource.sortingDataAccessor = (data, sortHeaderId: any) => {
-      return this.getPropertyByPath(data, sortHeaderId);
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'rank': return item.rank;
+        case 'moniker': return item.description.moniker;
+        case 'tokens': return Number(item.tokens);
+        case 'balance': return item.distribution.balance.amount;
+        case 'delegations': return item.delegations.length;
+        case 'self_bond': return item.self_bond;
+        case 'commission': return item.commission.rate;
+        default: return item[property];
+      }
+    }
+    this.dataSource.filterPredicate = function(data, filter): boolean {
+      return data.status === Number(filter) || data.jailed === filter;
     };
   }
-
-  getPropertyByPath(obj: Object, pathString: string) {
-    return pathString.split('.').reduce((o, i) => o[i], obj);
-  }
-
+  
   constructor(
     private store: Store<State>, 
-    // private validatorsService: ValidatorsService,
     private dialog: MatDialog,
     private validatorsHelperService: ValidatorsHelperService
   ) { 
@@ -121,8 +128,9 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
       map(state => state.validators)
     ).subscribe((data:any) => {
       this.dataSource = new MatTableDataSource<any>([...data]);
-      this.dataSource.paginator = this.paginator;
-      // console.log(data);
+      this.setDataSourceAttributes();
+      // this.dataSource.paginator = this.paginator;
+      console.log(data);
     });
   }
 
@@ -215,62 +223,31 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
   }
 
 
-  validatorsFilter(bondStatus, isJailed) {
-    this.hideUnbondColumn();
+  // validatorsFilter(bondStatus, isJailed) {
+  //   // this.hideUnbondColumn();
 
-    this.appState.subscribe(data => {
-      // @aakatev remove debugging
-      // console.log(data.validators);
-      let filterSource = [];
+  //   this.appState.subscribe(data => {
+  //     // @aakatev remove debugging
+  //     // console.log(data.validators);
+  //     let filterSource = [];
 
-      data.validators.forEach(validator => {
-        if(validator.status === bondStatus && validator.jailed === isJailed) {
-          filterSource.push(validator);
-        }
-      });
-      this.dataSource = new MatTableDataSource<any>([...filterSource]);
-    }).unsubscribe();
-  }
+  //     data.validators.forEach(validator => {
+  //       if(validator.status === bondStatus && validator.jailed === isJailed) {
+  //         filterSource.push(validator);
+  //       }
+  //     });
+  //     this.dataSource = new MatTableDataSource<any>([...filterSource]);
+  //   }).unsubscribe();
+  // }
 
   validatorsJailedFilter(isJailed) {
-    this.hideUnbondColumn();
-
-    this.appState.subscribe(data => {
-      // @aakatev remove debugging
-      // console.log(data.validators);
-      let filterSource = [];
-
-      data.validators.forEach(validator => {
-        if(validator.jailed === isJailed) {
-          filterSource.push(validator);
-        }
-      });
-      this.dataSource = new MatTableDataSource<any>([...filterSource]);
-    }).unsubscribe();
+    this.dataSource.filter = isJailed;
   }
 
   validatorsBondFilter(bondStatus) {
-    this.appState.subscribe(data => {
-      // @aakatev remove debugging
-      // console.log(data.validators);
-      let filterSource = [];
-      bondStatus === 1 ? this.displayUnbondColumn() : this.hideUnbondColumn();
-      
-      data.validators.forEach(validator => {
-        if(validator.status === bondStatus) {
-          filterSource.push(validator);
-        }
-      });
-      this.dataSource = new MatTableDataSource<any>([...filterSource]);
-    }).unsubscribe();
+    
   }
 
   validatorsNoFilter() {
-    this.appState.subscribe(data => {
-      this.hideUnbondColumn();
-      // @aakatev remove debugging
-      // console.log(data.validators);
-      this.dataSource = new MatTableDataSource<any>([...data.validators]);
-    }).unsubscribe();
   }
 }

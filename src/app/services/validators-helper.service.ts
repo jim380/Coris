@@ -62,11 +62,16 @@ export class ValidatorsHelperService {
   }
 
   initAccountBalance(validator) {
-    this.getAccountBalance(validator.distribution.operator_address).subscribe((data) => {
-      validator.distribution.balance = data;
+    this.getAccountBalance(validator.distribution.operator_address).subscribe((data: any) => {
+      if(data) {
+        validator.distribution.balance = { amount: Number(data[0].amount), denom: data[0].denom };
+      } else {
+        validator.distribution.balance = { amount: 0, denom: "uatom"};
+      }
     },
     (error) => {
       console.log(validator);
+      validator.distribution.balance = { amount: 0, denom: "uatom"};
     },
     () => {
       this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validatorsStore));
