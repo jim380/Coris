@@ -83,19 +83,31 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
-        case 'rank': return item.rank;
-        case 'moniker': return item.description.moniker;
-        case 'tokens': return Number(item.tokens);
-        case 'balance': return item.distribution.balance.amount;
-        case 'delegations': return item.delegations.length;
-        case 'self_bond': return item.self_bond;
-        case 'commission': return item.commission.rate;
-        default: return item[property];
+      case 'rank': return item.rank;
+      case 'moniker': return item.description.moniker;
+      case 'tokens': return Number(item.tokens);
+      case 'balance': return item.distribution ? item.distribution.balance.amount : 0;
+      case 'delegations': return item.delegations ? item.delegations.length : 0;
+      case 'self_bond': return item.self_bond ? item.self_bond : 0;
+      case 'commission': return item.commission.rate;
+      default: return item[property];
       }
     }
-    this.dataSource.filterPredicate = function(data, filter): boolean {
-      return data.status === Number(filter) || data.jailed === filter;
-    };
+
+    // TOFIX @aakatev
+    // Super hacky way to check, but works
+    if( this.tableFilterState.length > 7 ) {
+      this.dataSource.filterPredicate = function(data, filter): boolean {
+        let parsedFilter = JSON.parse(filter);
+        return data.status === Number( parsedFilter.status )
+               && data.jailed === parsedFilter.jailed;
+      };
+    } else {
+      this.dataSource.filterPredicate = function(data, filter): boolean {
+        return data.status === Number(filter) || data.jailed === filter;
+      };      
+    }
+    this.dataSource.filter = this.tableFilterState;
   }
   
   constructor(
@@ -129,13 +141,13 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
     ).subscribe((data:any) => {
       this.dataSource = new MatTableDataSource<any>([...data]);
       this.setDataSourceAttributes();
-      // this.dataSource.paginator = this.paginator;
-      console.log(data);
+      // TODO remove debugging
+      // console.log(data);
     });
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    this.setDataSourceAttributes();
   }
   
   openValidatorDialog(validator) {
@@ -195,59 +207,56 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  displayUnbondColumn() {
-    this.displayedColumns = [
-      'rank',
-      'moniker', 
-      'status', 
-      'weight', 
-      'assets', 
-      'delegators',
-      'bond', 
-      'unbond', 
-      'commission'
-    ];  
-  }
-
-  hideUnbondColumn() {
-    this.displayedColumns = [
-      'rank',
-      'moniker', 
-      'status', 
-      'weight', 
-      'assets', 
-      'delegators',
-      'bond', 
-      'commission'
-    ];  
-  }
-
-
-  // validatorsFilter(bondStatus, isJailed) {
-  //   // this.hideUnbondColumn();
-
-  //   this.appState.subscribe(data => {
-  //     // @aakatev remove debugging
-  //     // console.log(data.validators);
-  //     let filterSource = [];
-
-  //     data.validators.forEach(validator => {
-  //       if(validator.status === bondStatus && validator.jailed === isJailed) {
-  //         filterSource.push(validator);
-  //       }
-  //     });
-  //     this.dataSource = new MatTableDataSource<any>([...filterSource]);
-  //   }).unsubscribe();
-  // }
+  tableFilterState:any = "";
 
   validatorsJailedFilter(isJailed) {
-    this.dataSource.filter = isJailed;
+    this.tableFilterState = isJailed;
+    this.setDataSourceAttributes();
   }
 
   validatorsBondFilter(bondStatus) {
-    
+    this.tableFilterState = bondStatus;
+    this.setDataSourceAttributes();
+  }
+
+  validatorsBondJailedFilter(bondStatus, isJailed) {
+    this.tableFilterState = JSON.stringify({ status: bondStatus, jailed: isJailed });
+    this.setDataSourceAttributes();
   }
 
   validatorsNoFilter() {
+    this.tableFilterState = "";
+    this.setDataSourceAttributes();
   }
+
+
+  // displayUnbondColumn() {
+  //   this.displayedColumns = [
+  //     'rank',
+  //     'moniker', 
+  //     'status', 
+  //     'weight', 
+  //     'assets', 
+  //     'delegators',
+  //     'bond', 
+  //     'unbond', 
+  //     'commission'
+  //   ];  
+  // }
+
+  // hideUnbondColumn() {
+  //   this.displayedColumns = [
+  //     'rank',
+  //     'moniker', 
+  //     'status', 
+  //     'weight', 
+  //     'assets', 
+  //     'delegators',
+  //     'bond', 
+  //     'commission'
+  //   ];  
+  // }
+
+
 }
+
