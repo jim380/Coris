@@ -21,11 +21,6 @@ import { PowerEventCardComponent } from '../validator-profile/power-event-card/p
 import { ProposedBlocksCardComponent } from '../validator-profile/proposed-blocks-card/proposed-blocks-card.component'
 import { map } from 'rxjs/operators';
 
-export class SeletedOption {
-  public Id: number;
-  public Value: string;
-}
-
 @Component({
   selector: 'app-validators',
   templateUrl: './validators.component.html',
@@ -39,29 +34,9 @@ export class SeletedOption {
   ]
 })
 export class ValidatorsComponent implements OnInit, AfterViewInit {
-  // Mat-table
-  private dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
-  private displayedColumns: string[] = [
-    'rank',
-    'moniker', 
-    // 'status', 
-    'weight', 
-    'assets', 
-    'delegators',
-    'bond', 
-    'commission'
-  ];
-
-  private paginator: MatPaginator;
-  private sort: MatSort;
-
   public statusChartOptions: any = {
     responsive: true
   };
-  
-  private selectedOption: SeletedOption[];
-  private optionsSelect: Array<any>;
-
 
   @ViewChild(MatTable) table: MatTable<any>;
   @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
@@ -77,7 +52,54 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
   valsUptime: Map<string,string> = new Map;
   totalTokens = 0;
   validators$;
+
+  constructor(
+    private store: Store<State>, 
+    private dialog: MatDialog,
+    private validatorsHelperService: ValidatorsHelperService
+  ) { 
+    // this.hideUnbondColumn();
+  }
+
+
+  ngOnInit() {
+    this.appState = this.store.select('App');
+
+    // this.appState.subscribe((data: any) => {
+    //   console.log(data);
+    // });
+
+    let validators$ = this.store.select('Validators');
+    
+    validators$.pipe(
+      map(state => state.validators)
+    ).subscribe((data:any) => {
+      this.dataSource = new MatTableDataSource<any>([...data]);
+      this.setDataSourceAttributes();
+      // TODO remove debugging
+      // console.log(data);
+    });
+  }
+
+  ngAfterViewInit() {
+    this.setDataSourceAttributes();
+  }
   
+  /* MAT TABLE SECTION */
+  private dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+  private displayedColumns: string[] = [
+    'rank',
+    'moniker', 
+    // 'status', 
+    'weight', 
+    'assets', 
+    'delegators',
+    'bond', 
+    'commission'
+  ];
+  private paginator: MatPaginator;
+  private sort: MatSort;
+
   setDataSourceAttributes() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -110,46 +132,39 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = this.tableFilterState;
   }
   
-  constructor(
-    private store: Store<State>, 
-    private dialog: MatDialog,
-    private validatorsHelperService: ValidatorsHelperService
-  ) { 
-    // this.hideUnbondColumn();
-  }
+  /* TABLE FILTERING */
+  // TODO @aakatev 
+  // Rewrite with observable as a state
+  tableFilterState:any = "";
+  tableFilterButtonLabel:string = "All";
 
-
-  ngOnInit() {
-    this.selectedOption = [
-      {Id: 1, Value: 'Bonded'},
-      {Id: 2, Value: 'Jailed'},
-      {Id: 3, Value: 'Unbonded'},
-      {Id: 4, Value: 'Unbonding'},
-      {Id: 5, Value: 'All'}
-    ];
-
-    this.appState = this.store.select('App');
-
-    // this.appState.subscribe((data: any) => {
-    //   console.log(data);
-    // });
-
-    let validators$ = this.store.select('Validators');
-    
-    validators$.pipe(
-      map(state => state.validators)
-    ).subscribe((data:any) => {
-      this.dataSource = new MatTableDataSource<any>([...data]);
-      this.setDataSourceAttributes();
-      // TODO remove debugging
-      // console.log(data);
-    });
-  }
-
-  ngAfterViewInit() {
+  validatorsJailedFilter(isJailed) {
+    this.tableFilterButtonLabel = "Jailed";
+    this.tableFilterState = isJailed;
     this.setDataSourceAttributes();
   }
-  
+
+  validatorsBondFilter(bondStatus) {
+    this.tableFilterButtonLabel = ( bondStatus === 2 ) ? "Bonded" : "Unbonding";
+    this.tableFilterState = bondStatus;
+    this.setDataSourceAttributes();
+  }
+
+  validatorsBondJailedFilter(bondStatus, isJailed) {
+    this.tableFilterButtonLabel = "Unbonded";
+    this.tableFilterState = JSON.stringify({ status: bondStatus, jailed: isJailed });
+    this.setDataSourceAttributes();
+  }
+
+  validatorsNoFilter() {
+    this.tableFilterButtonLabel = "All"; 
+    this.tableFilterState = "";
+    this.setDataSourceAttributes();
+  }
+  /* END TABLE FILTERING */
+  /* END MAT TABLE SECTION */
+
+  /* POPUPS */
   openValidatorDialog(validator) {
     this.dialog.open( ProfileCardComponent,  {
       data: { 
@@ -206,30 +221,9 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
       }
     });
   }
+  /* END POPUPS */
 
-  tableFilterState:any = "";
-
-  validatorsJailedFilter(isJailed) {
-    this.tableFilterState = isJailed;
-    this.setDataSourceAttributes();
-  }
-
-  validatorsBondFilter(bondStatus) {
-    this.tableFilterState = bondStatus;
-    this.setDataSourceAttributes();
-  }
-
-  validatorsBondJailedFilter(bondStatus, isJailed) {
-    this.tableFilterState = JSON.stringify({ status: bondStatus, jailed: isJailed });
-    this.setDataSourceAttributes();
-  }
-
-  validatorsNoFilter() {
-    this.tableFilterState = "";
-    this.setDataSourceAttributes();
-  }
-
-
+  /* OLD CODE
   // displayUnbondColumn() {
   //   this.displayedColumns = [
   //     'rank',
@@ -256,7 +250,6 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
   //     'commission'
   //   ];  
   // }
-
-
+  END OLD CODE */
 }
 
