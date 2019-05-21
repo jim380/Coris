@@ -60,7 +60,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { TxsListCardComponent } from './components/txs/txs-list-card/txs-list-card.component';
 import { AccountDetailComponent } from './components/account-detail/account-detail.component';
 import { AppStateModule } from './state/app-state.module';
-
+import { HttpModule } from '@angular/http'; 
 declare var Hammer: any;
 
 export class MyHammerConfig extends HammerGestureConfig {
@@ -163,8 +163,9 @@ export class MyHammerConfig extends HammerGestureConfig {
       progressBar: true,
       closeButton: true,
     }),
-    AgmCoreModule.forRoot({ apiKey: 'ULKdG4NuUxzJcpQFspxF' })
-
+    AgmCoreModule.forRoot({ apiKey: 'ULKdG4NuUxzJcpQFspxF' }),
+    HttpClientModule,
+    HttpModule
   ],
   providers: [SearchService,
               MDBSpinningPreloader,

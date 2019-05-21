@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { ValidatorsService } from './services/validators.service';
 import { trigger, state, query, transition, animate, style, keyframes, animation, useAnimation, animateChild, group, stagger } from '@angular/animations';
 import { fadeInAnimation, fade } from './animations/animation';
-import {ToastService} from 'ng-uikit-pro-standard';
+import { ToastService } from 'ng-uikit-pro-standard';
 import { State } from './interfaces/state.interface';
 import { PricingService } from './services/pricing.service';
 
@@ -39,6 +39,7 @@ import { PricingService } from './services/pricing.service';
     fade
   ]
 })
+
 export class AppComponent {
   appState: Observable<State>;
 
@@ -51,7 +52,7 @@ export class AppComponent {
     private ws:WsService, 
     private store: Store <State>,
     private pricingService: PricingService,
-    private vs:ValidatorsService
+    private vs:ValidatorsService,
   ) {  }
 
   ngOnInit() { 
@@ -62,5 +63,6 @@ export class AppComponent {
   ngOnDestroy() {
     this.ws.unsubscribe();
   }
+
 }
 

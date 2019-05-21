@@ -208,6 +208,24 @@
     <main>
         <body>
             <app-status-bar></app-status-bar>
+              <!----------------- Testing Firebase ----------------->
+              <div class="container">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+                    <!-- <h1>{{ appName | async }}</h1> -->
+                    <input type="text" #entryName>
+                    <button class="btn btn-primary" (click)="onAddServer(entryName.value)">Add</button>
+                    <br><br>
+                    <button class="btn btn-primary" (click)="onSave()">Push</button>
+                    <button class="btn btn-primary" (click)="onGet()">Fetch</button>
+                    <hr>
+                    <ul class="list-group" *ngFor="let entry of entries">
+                      <li class="list-group-item">{{ entry.name }} (ID: {{ entry.id }})</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!----------------- Testing Firebase ----------------->
             <!-- <app-validator></app-validator> -->
             <!-- <app-carousel></app-carousel> -->
             <!-- <app-test></app-test> -->
