@@ -16,11 +16,7 @@ import { BlocksService } from 'src/app/services/blocks.service';
 
 export class TestComponent implements OnInit {
   appState: Observable<State>;
-  storeSubscription$;
-  
-  recentBlocks = [];
-  blockTimes = [];
-  avgBlockTime = 0;
+  blocksState: Observable<State>;
 
   constructor(
     private store: Store <State>,
@@ -29,31 +25,28 @@ export class TestComponent implements OnInit {
   
 
   ngOnInit() {
-    this.appState = this.store.select('App');
+    // this.bs.fetch20Blocks().subscribe((blocks: any) => {
+    //   console.log(blocks);
+    // })
 
-    this.storeSubscription$ = this.appState
-    .pipe(
-      distinctUntilChanged()
-    )
-    .subscribe(data => {
-      if(data.blocks.length > 0 && this.storeSubscription$) {
-        let startBlock = Number(data.blocks[0].header.height);
-        this.bs.fetchRecentBlocks(startBlock);
-        
-        this.bs.avgBlockTime$.subscribe((data: any) => {
-          this.avgBlockTime = data;
-        })
 
-        this.storeSubscription$.unsubscribe();
-      }
-    });
+    // this.store.select('App').subscribe((data: any) => {
+    //   console.log(data);
+    // });
+
+
+    // this.store.select('Blocks').subscribe((state: State) => {
+    //   console.log(state.blocks);
+    // });
+
+
   }
 
-  ngOnDestroy() {
-    if(this.storeSubscription$) {
-      this.storeSubscription$.unsubscribe();
-    }
-  }
+  // ngOnDestroy() {
+  //   if(this.storeSubscription$) {
+  //     this.storeSubscription$.unsubscribe();
+  //   }
+  // }
   
 
   // getBlockTimesArray(blocks, array) {

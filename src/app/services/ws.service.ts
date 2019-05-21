@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import * as AppActions from '../state/app.actions';
+import * as BlocksActions from '../state/blocks/blocks.actions';
 import { nodeRpc2, nodeWs } from '../../config.js';
 import { 
   unsubBlockMsg, 
@@ -70,7 +71,7 @@ export class WsService {
           }
           this.blocksStore.push(json.result.data.value.block);
           
-          this.store.dispatch(new AppActions.UpdateBlocks(this.blocksStore));
+          this.store.dispatch(new BlocksActions.UpdateBlocks(this.blocksStore));
         } else if(json.result.data.type === 'tendermint/event/Tx') {
           // Debugging
           // console.log('NewTx!');

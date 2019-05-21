@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from '../interfaces/state.interface';
-import { Observable, of, Subject, range, BehaviorSubject } from 'rxjs';
+import { Observable, of, Subject, range, BehaviorSubject, forkJoin } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, takeLast, take, mergeMap, concatMap } from 'rxjs/operators';
 import { nodeRpc1, nodeRpc2 } from '../../config.js';
 
 @Injectable({
@@ -25,9 +25,51 @@ export class BlocksService {
     private store: Store<State>, 
     private http: HttpClient
   ) {
-    this.appState = this.store.select('App');   
+    this.appState = this.store.select('App'); 
+
+    this.getCurrentHeight$(
+      this.store.select('Blocks')
+    ).subscribe((height: any) => {
+      this.fetch100Blocks(height);
+    });
   }
 
+  getCurrentHeight$(blocksStore) {
+    return blocksStore
+    .pipe(
+      take(2),
+      takeLast(1),
+      map((state: State) => state.blocks[0].header.height)
+    )
+  }
+
+  fetch100Blocks(startHeight){ 
+    return forkJoin(
+      this.fetch20Blocks(startHeight),
+      this.fetch20Blocks(startHeight-20),
+      this.fetch20Blocks(startHeight-40),
+      this.fetch20Blocks(startHeight-60),
+      this.fetch20Blocks(startHeight-80)
+    )
+    .subscribe(([res1, res2, res3, res4, res5]) => {
+      console.log(
+        [
+          ...res1,
+          ...res2,
+          ...res3,
+          ...res4,
+          ...res5
+        ]
+      );
+    });
+  }
+
+  fetch20Blocks(height) {
+    return this.http.get(`${nodeRpc2}/blockchain?minHeight=${height-20}&maxHeight=${height}`)
+      .pipe(
+        map((res:any) => res.result.block_metas)
+      );
+  }
   
   // fetchBlocks() doesnt include precommits
   fetchBlocks(maxHeight) {
@@ -93,9 +135,6 @@ export class BlocksService {
       });
   }
 
-  fetch20Blocks(height) {
-    this.http.get(`${nodeRpc1}/blockchain?minHeight=${height-20}&maxHeight=${height}`);
-  }
 
   private getBlockTimesArray(blocks, array) {
     let blocksCounter$ = range( 0, (blocks.length-1) );
