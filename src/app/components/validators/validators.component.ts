@@ -77,7 +77,7 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
       this.dataSource = new MatTableDataSource<any>([...data]);
       this.setDataSourceAttributes();
       // TODO remove debugging
-      // console.log(data);
+      console.log(data);
     });
   }
 
@@ -87,16 +87,6 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
   
   /* MAT TABLE SECTION */
   private dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
-  private displayedColumns: string[] = [
-    'rank',
-    'moniker', 
-    // 'status', 
-    'weight', 
-    'assets', 
-    'delegators',
-    'bond', 
-    'commission'
-  ];
   private paginator: MatPaginator;
   private sort: MatSort;
 
@@ -132,6 +122,56 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = this.tableFilterState;
   }
   
+  /* COLUMNS UPDATE LOGIC */
+  displayUnbondColumn:any = false;
+
+  displayedColumns = [
+    { 
+      bond: true,
+      column: 'rank'
+    },
+    { 
+      bond: true,
+      column: 'moniker'
+    },
+    { 
+      bond: true,
+      column: 'weight'
+    },
+    // { 
+    //   bond: true,
+    //   column: 'status'
+    // },
+    { 
+      bond: true,
+      column: 'assets'
+    },
+    { 
+      bond: true,
+      column: 'delegators'
+    },
+    { 
+      bond: false,
+      column: 'unbond'
+    },
+    { 
+      bond: true,
+      column: 'bond'
+    },
+    { 
+      bond: true,
+      column: 'commission'
+    }
+  ];
+ 
+  getDisplayedColumns(): string[] {
+    return this.displayedColumns
+            .filter(columns => columns.bond || this.displayUnbondColumn)
+            .map(columns => columns.column);
+  }
+  
+  /* END COLUMNS UPDATE LOGIC */
+
   /* TABLE FILTERING */
   // TODO @aakatev 
   // Rewrite with observable as a state
@@ -139,24 +179,28 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
   tableFilterButtonLabel:string = "All";
 
   validatorsJailedFilter(isJailed) {
+    this.displayUnbondColumn = false;
     this.tableFilterButtonLabel = "Jailed";
     this.tableFilterState = isJailed;
     this.setDataSourceAttributes();
   }
 
   validatorsBondFilter(bondStatus) {
-    this.tableFilterButtonLabel = ( bondStatus === 2 ) ? "Bonded" : "Unbonding";
+    this.displayUnbondColumn = ( bondStatus === 1 ) ? true : false;
+    this.tableFilterButtonLabel = ( bondStatus === 1 ) ? "Unbonding" : "Bonded";
     this.tableFilterState = bondStatus;
     this.setDataSourceAttributes();
   }
 
   validatorsBondJailedFilter(bondStatus, isJailed) {
     this.tableFilterButtonLabel = "Unbonded";
+    this.displayUnbondColumn = ( bondStatus === 1 ) ? true : false;
     this.tableFilterState = JSON.stringify({ status: bondStatus, jailed: isJailed });
     this.setDataSourceAttributes();
   }
 
   validatorsNoFilter() {
+    this.displayUnbondColumn = false;
     this.tableFilterButtonLabel = "All"; 
     this.tableFilterState = "";
     this.setDataSourceAttributes();
