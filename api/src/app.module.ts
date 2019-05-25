@@ -1,11 +1,17 @@
 import { Module, HttpModule } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ValidatorsService } from './validators/validators.service';
+import { ScheduleModule } from 'nest-schedule';
+import { ValidatorsModule } from './validators/validators.module';
 
 @Module({
-  imports: [HttpModule],
-  controllers: [AppController],
-  providers: [AppService, ValidatorsService],
+  imports: [
+    HttpModule,
+    ValidatorsModule,
+    ScheduleModule.register(),
+  ],
+  controllers: [
+    AppController
+  ],
+  providers: [],
 })
 export class AppModule {}

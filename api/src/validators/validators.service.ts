@@ -1,32 +1,95 @@
-import { Injectable, HttpService } from '@nestjs/common';
-import { filter, map } from 'rxjs/operators';
-
+import { Injectable, HttpService, Inject } from '@nestjs/common';
+import { map } from 'rxjs/operators';
 import * as http from 'http';
 import * as fs from 'fs';
-import { range } from 'rxjs';
-
-export const nodeRpc1 = "http://149.28.228.142:1317"; 
+import { range, BehaviorSubject } from 'rxjs';
+import { nodeRpc1 } from '../config/config';
+import { Validator } from './interfaces/validator.interface';
+import { CreateValidatorDto } from './dto/create-validator.dto';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class ValidatorsService {
-  httpAgent = new http.Agent({ maxSockets: 15, keepAlive: true });
-  
-  validatorsStore = null;
-  validatorsMap: Map<string, string> = new Map;
+  httpAgent = new http.Agent({ maxSockets: 10, keepAlive: true });
+  validatorsStore = [];
+  validatorsStore$ = new BehaviorSubject([]);
 
-  numOfValidators = 0;
+  public getValidatorsStore$() { return this.validatorsStore$ }
 
   constructor(
-    private readonly httpService: HttpService
+    private httpService: HttpService,
+    @Inject('VALIDATOR_MODEL') private readonly validatorModel: Model<Validator>,
   ) {
-    this.initValidators();
+    console.log("VALIDATORS SERVICE STARTED!");
+    
+    this.getValidatorsStore$().subscribe((newValidators: any[]) => {
+      if(newValidators.length > 0) {
+        for(let validator of newValidators) {
+          this.findAndReplaceValidator(validator);
+        }
+      }
+    });
   }
 
+
+  async create(createValidatorDto: CreateValidatorDto): Promise<Validator> {
+    const validator = new this.validatorModel(createValidatorDto);
+    return await validator.save();
+  }
+
+  async findAll(): Promise<Validator[]> {
+    return await this.validatorModel.find().exec();
+  }
+
+  async findOne(operatorAddress): Promise<Validator[]> {
+    return await this.validatorModel.find({
+        operator_address: operatorAddress
+      }).exec();
+  }
+
+  async findAndReplaceValidator(updatedValidator) {
+    return await this.validatorModel.findOneAndUpdate(
+      { operator_address: updatedValidator.operator_address },
+      updatedValidator,
+      { useFindAndModify: false }
+    ).then(async (data) => {
+      if (!data) { 
+        console.log("Error updating:", updatedValidator, data);
+        await this.create(updatedValidator); 
+      }
+    });
+  }
+
+  private debugRequestsInterceptors() {
+    // @aakatev Call in constructor to debug axious requests
+    this.httpService.axiosRef.interceptors.request.use(request => {
+      console.log('Starting Request', request.url)
+      return request
+    });
+    this.httpService.axiosRef.interceptors.response.use(response => {
+      console.log('Response:', response.headers)
+      return response
+    })
+  }
+
+  private logValidators() {
+    fs.writeFile(`logs/out-${(new Date()).getTime()}.json`, JSON.stringify(this.validatorsStore), 'utf8', function (err) {
+      if (err) {
+        console.log("An error occured while writing JSON Object to File.");
+        return console.log(err);
+      }
+      console.log("JSON file has been saved.");
+    }); 
+  }
+
+
   async initValidators() { 
+    console.log("UPDATING VALIDATORS STATE!");
+
     await this.getValidatorsDetails();
 
     for(let validator of this.validatorsStore) {
-      this.getValidatorSlashing(validator);
+      this.getValidatorSignInfo(validator);
       this.getValidatorOutstandingRewards(validator);
       this.getValidatorRewards(validator);
       this.getValidatorUnbondDelegations(validator);
@@ -43,16 +106,8 @@ export class ValidatorsService {
     });
   }
 
-  logValidators() {
-    console.log(this.validatorsStore);
-    fs.writeFile("output.json", JSON.stringify(this.validatorsStore), 'utf8', function (err) {
-      if (err) {
-          console.log("An error occured while writing JSON Object to File.");
-          return console.log(err);
-      }
-   
-      console.log("JSON file has been saved.");
-  }); 
+  updateDatabase() {
+
   }
 
   setValidators(validators) {
@@ -65,10 +120,6 @@ export class ValidatorsService {
         // TODO remove debugging
         // console.log( data );
         if (data !== null) {
-          // this.validatorsStore = (data).sort((obj1, obj2) => {
-          //   return Number(obj1.tokens) < Number(obj2.tokens) ? 1 : 0;
-          // })
-
           this.validatorsStore = data;
           resolve();
         }
@@ -76,46 +127,13 @@ export class ValidatorsService {
     });
   }
 
-  getValidatorsRanking() {
-    return new Promise(resolve => {
-      this.httpService.get(`${nodeRpc1}/validatorsets/latest`, { httpAgent: this.httpAgent }).pipe( map(res => res.data)).subscribe(data => {
-        // TODO remove debugging
-        // console.log(data);
-        if (data !== null) {
-          this.mergeProperties(this.validatorsStore, 'consensus_pubkey', data['validators'], 'pub_key', 'ranking')
-            .then(() => {
-              // this.updateValidators();
-              resolve();
-            });
-        } else {
-          resolve();
-        }
-      });
-    });
-  }
-
-  mergeProperties(targetArray, targetArrayProperty, propertyArray, propertyArrayProperty, propertyName) {
-    return new Promise(resolve => {
-      for (const targetIndex in targetArray) {
-        for (const propertyIndex in propertyArray) {
-          if (propertyArray[propertyIndex][propertyArrayProperty] === targetArray[targetIndex][targetArrayProperty]) {
-            targetArray[targetIndex][propertyName] = propertyArray[propertyIndex];
-            // TODO remove debugging
-            // console.log(targetArray[targetIndex]);
-          }
-        }
-      }
-      resolve();
-    });
-  }
-
-  getValidatorSlashing(validator) {
+  getValidatorSignInfo(validator) {
     return new Promise(resolve => {
       this.httpService.get(`${nodeRpc1}/slashing/validators/${validator.consensus_pubkey}/signing_info`, { httpAgent: this.httpAgent }).pipe( map(res => res.data))
         .subscribe(data => {
           // TODO remove debugging
           // console.log(data);
-          validator.slashing = data;
+          validator.signing_info = data;
           resolve();
         });
     });
@@ -218,82 +236,6 @@ export class ValidatorsService {
     });
   }
 
-
-  // getValidatorDelegations(validatorIndex) {
-  //   return new Promise(resolve => {
-  //     this.httpService.get(`${nodeRpc1}/staking/validators/${this.validatorsStore[validatorIndex].operator_address}/delegations`, { httpAgent: this.httpAgent }).pipe( map(res => res.data))
-  //       .subscribe((data: Array<any>) => {
-  //         let validator = this.validatorsStore[validatorIndex];
-  //         validator.delegations = data;
-  //         validator.self_bond = 0;
-          
-  //         if(data && validator.account) {
-  //           data.forEach(delegation => {
-  //             switch (validator.account.type) {
-  //               case "auth/Account": {
-  //                 if(!validator.account.tokens && validator.account.value.coins) {
-  //                   // TODO remove debugging
-  //                   // console.log(validator.account.value.coins[0].amount);
-  //                   validator.account.tokens = validator.account.value.coins[0].amount;
-  //                 }
-  //                 if(delegation.delegator_address === validator.account.value.address) {
-  //                   // TODO remove debugging
-  //                   // console.log('triggered auth: ', delegation.shares);
-  //                   validator.self_bond += Number(delegation.shares);
-  //                 } 
-  //                 break;
-  //               }
-  //               case "auth/DelayedVestingAccount": {
-  //                 if(!validator.account.tokens && validator.account.value.BaseVestingAccount.BaseAccount.coins) {
-  //                   // TODO remove debugging
-  //                   // console.log(validator.account.value.BaseVestingAccount.BaseAccount.coins);
-  //                   validator.account.tokens = validator.account.value.BaseVestingAccount.BaseAccount.coins[0].amount;
-  //                 }
-
-  //                 if(delegation.delegator_address === validator.account.value.address) {
-  //                   // TODO remove debugging
-  //                   // console.log('triggered vest', delegation.shares);
-  //                   validator.self_bond += Number(delegation.shares);
-  //                 } 
-  //                 break;
-  //               }
-  //               default:{
-  //                 // TODO remove debugging
-  //                 // console.log('Unknown account type: ', validator.account.type);
-  //                 break;
-  //               }
-  //             }
-  //           });  
-  //         }
-  //         resolve();
-  //       });
-  //   });
-  // }
-
-  
-  // asyncGetDelegations() {
-  //   return new Promise (async resolve => {
-  //     for (const validator in this.validatorsStore) {
-  //       // TODO remove debugging
-  //       // console.log(this.validatorsStore[validator]);
-  //       await this.getValidatorDelegations(validator);
-  //     }
-  //     resolve();
-  //   });
-  // }
-
-  // getDelegations() {
-  //   return new Promise (async resolve => {
-  //     for (const validator in this.validatorsStore) {
-  //       // TODO remove debugging
-  //       // console.log(this.validatorsStore[validator]);
-  //       this.getValidatorDelegations(validator);
-  //     }
-  //     resolve();
-  //   });
-  // }
-
-
   triggerDelegations() {
     let validatorsPromises = [];
 
@@ -302,7 +244,10 @@ export class ValidatorsService {
     }
 
     Promise.all(validatorsPromises).then(()=> {
-      this.logValidators()
+      this.logValidators();
+      this.validatorsStore$.next(
+        this.validatorsStore
+      );
     });
   };
 
@@ -337,18 +282,14 @@ export class ValidatorsService {
       if(delegations[count].delegator_address === validator.distribution.operator_address) {
         validator.self_bond += Number(delegations[count].shares);
       }
-      // TODO add unbonding
     },
     (error) => {
       console.log(error);
     },
-    () => {
-
-    });
+    () => { });
   }
 
   getValidatorDelegations(address) {
     return this.httpService.get(`${nodeRpc1}/staking/validators/${address}/delegations`, { httpAgent: this.httpAgent }).pipe(map(res => res.data));
   }
-
 }

@@ -10,6 +10,7 @@ import { hex } from '../lib/hex';
 import { sha256 } from 'js-sha256';
 import { State } from '../interfaces/state.interface';
 import { map, mergeMap, catchError, concatAll } from 'rxjs/operators';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +21,16 @@ export class ValidatorsService {
 
   constructor(
     private store: Store <State>,
-    private http: HttpClient
+    private http: HttpClient,
+    private apiService: ApiService
   ) {
     console.log("Validators Seervice injected!");
-    this.initValidators();
+    // this.initValidators();
+    this.apiService.fetchValidators$()
+      .subscribe((data: any) => {
+        console.log(data);
+      })
+    
   }
 
   // NEW LOGIC

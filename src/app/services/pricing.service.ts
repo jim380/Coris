@@ -19,7 +19,7 @@ export class PricingService {
   ) { }
 
   getAtomPrice():Observable<any> {
-    return this.httpClient.get(appApi);
+    return this.httpClient.get(`${appApi}/marketcap/atom`);
   }
   getInflation():Observable<any> {
     return this.httpClient.get(`${nodeRpc1}/minting/inflation`);
