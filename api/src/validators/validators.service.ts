@@ -73,7 +73,7 @@ export class ValidatorsService {
   }
 
   private logValidators() {
-    fs.writeFile(`logs/out-${(new Date()).getTime()}.json`, JSON.stringify(this.validatorsStore), 'utf8', function (err) {
+    fs.writeFile(`../../.logs/out-${(new Date()).getTime()}.json`, JSON.stringify(this.validatorsStore), 'utf8', function (err) {
       if (err) {
         console.log("An error occured while writing JSON Object to File.");
         return console.log(err);
@@ -244,7 +244,6 @@ export class ValidatorsService {
     }
 
     Promise.all(validatorsPromises).then(()=> {
-      this.logValidators();
       this.validatorsStore$.next(
         this.validatorsStore
       );
