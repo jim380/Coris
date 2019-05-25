@@ -314,7 +314,7 @@ export class ValidatorsService {
         validator.delegations = data;
       },
       (error) => {
-        // console.log(error);
+        console.log(error);
         validator.delegations = [];
         resolve();
       },
@@ -348,7 +348,7 @@ export class ValidatorsService {
   }
 
   getValidatorDelegations(address) {
-    return this.httpService.get(`${nodeRpc1}/staking/validators/${address}/delegations`).pipe(map(res => res.data));
+    return this.httpService.get(`${nodeRpc1}/staking/validators/${address}/delegations`, { httpAgent: this.httpAgent }).pipe(map(res => res.data));
   }
 
 }
