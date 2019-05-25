@@ -17,3 +17,9 @@ export const cronInterval = "<RESCHEDULE-INTERVAL>"
 ```
 
 ### Runing 
+
+Clone Coris repo, then run
+
+```bash
+cd api && npm i && npm run start
+```

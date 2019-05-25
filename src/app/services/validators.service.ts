@@ -26,8 +26,7 @@ export class ValidatorsService {
   ) {
     console.log("Validators Seervice injected!");
     // this.initValidators();
-    this.apiService.fetchValidators$()
-      .subscribe((data: any) => {
+    this.apiService.fetchValidators$().subscribe((data: any) => {
         console.log(data);
       })
     
