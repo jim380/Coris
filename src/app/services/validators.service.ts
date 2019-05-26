@@ -25,32 +25,34 @@ export class ValidatorsService {
     private apiService: ApiService
   ) {
     console.log("Validators Seervice injected!");
-    // this.initValidators();
-    this.apiService.fetchValidators$().subscribe((data: any) => {
-        console.log(data);
-      })
-    
+    this.initValidators();
   }
 
   // NEW LOGIC
   initValidators() {
-    this.getValidators().subscribe((validators: any) => {
-      // console.log(validators);
-      this.sortValidators(validators);
-      const count$ = range(0, validators.length);
+    this.apiService.fetchValidators$().subscribe((validators: any) => {
+      validators.sort((validator1, validator2) => {
+        return Number(validator2.tokens) - Number(validator1.tokens);
+      });
+
+      for (const i in validators) {
+        validators[i].rank = (Number(i) + 1);
+      }
+      console.log(validators);
+      this.store.dispatch( new ValidatorsActions.UpdateValidators(validators) );
+      // const count$ = range(0, validators.length);
       
-      count$
-        .subscribe((count) => {
-          validators[count].rank = count + 1;
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          this.validatorsStore = validators;
-          this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validatorsStore));
-          this.initValidatorsDetails();
-        });
+      // count$
+      //   .subscribe((count) => {
+      //     validators[count].rank = count + 1;
+      //   },
+      //   (error) => {
+      //     console.log(error);
+      //   },
+      //   () => {
+      //     this.validatorsStore = validators;
+      //     this.store.dispatch(new ValidatorsActions.UpdateValidators(this.validatorsStore));
+      //   });
     });
   }
 

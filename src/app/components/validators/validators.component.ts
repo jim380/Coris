@@ -4,7 +4,7 @@ import { Observable, Subscriber } from 'rxjs';
 import { Store, createFeatureSelector, createSelector, select } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 // import { ValidatorsService } from '../../services/validators.service';
-import { ValidatorsHelperService } from '../../services/validators-helper.service';
+// import { ValidatorsHelperService } from '../../services/validators-helper.service';
 import { Sort, MatDialog, MatSort } from '@angular/material';
 import { ValidatorComponent } from '../validator/validator.component';
 import { State } from 'src/app/interfaces/state.interface';
@@ -56,7 +56,7 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
   constructor(
     private store: Store<State>, 
     private dialog: MatDialog,
-    private validatorsHelperService: ValidatorsHelperService
+    // private validatorsHelperService: ValidatorsHelperService
   ) { 
     // this.hideUnbondColumn();
   }
@@ -98,7 +98,7 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
       case 'rank': return item.rank;
       case 'moniker': return item.description.moniker;
       case 'tokens': return Number(item.tokens);
-      case 'balance': return item.distribution ? item.distribution.balance.amount : 0;
+      case 'balance': return ( item.account.value && item.account.value.coins ) ? Number( item.account.value.coins[0].amount ) : 0;
       case 'delegations': return item.delegations ? item.delegations.length : 0;
       case 'self_bond': return item.self_bond ? item.self_bond : 0;
       case 'commission': return item.commission.rate;
@@ -138,10 +138,10 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
       bond: true,
       column: 'weight'
     },
-    // { 
-    //   bond: true,
-    //   column: 'status'
-    // },
+    { 
+      bond: true,
+      column: 'status'
+    },
     { 
       bond: true,
       column: 'assets'
