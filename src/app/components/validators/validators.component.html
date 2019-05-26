@@ -52,7 +52,7 @@
         <td mat-cell *matCellDef="let validator">  
           <span *ngIf="validator.jailed"><i class="ion-record jailed"></i></span>
           <span *ngIf="!validator.jailed"><i class="ion-record jailedNot"></i></span>
-          <span *ngFor="let block of (appState | async).blocks.slice(0,1)">
+          <span *ngFor="let block of (blocksState | async).blocks.slice(0,1)">
           {{
             block.header?.height !== null
                 ? ( validator.signing_info 

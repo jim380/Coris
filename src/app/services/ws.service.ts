@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import * as AppActions from '../state/app.actions';
-import * as BlocksActions from '../state/blocks/blocks.actions';
+import { UpdateTxs, UpdateRound, UpdateRoundStep } from '../state/app.actions';
+import { UpdateBlocks } from '../state/blocks/blocks.actions';
 import { nodeRpc2, nodeWs } from '../../config.js';
 import { 
   unsubBlockMsg, 
@@ -11,8 +10,8 @@ import {
   subTxMsg, 
   subValMsg, 
   subRoundMsg, 
-  subRoundStepMsg } from './ws.messages'
-import { State } from '../interfaces/state.interface';
+  subRoundStepMsg } from './ws.messages';
+import { State } from '../state/app.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,38 +19,15 @@ import { State } from '../interfaces/state.interface';
 export class WsService {
   newWebSocket = new WebSocket(nodeWs);
 
-  // blocksState: Observable<{blocks: []}>;
-  // txsState: Observable<{txs: []}>;
-  // roundState: Observable<{round: []}>;
-  // roundStepState: Observable<{roundStep: []}>;
-
-  blocksStore = [];
+  blocksStorage = [];
   txsStore = [];
 
   MAX_STORE_INDEX = 1;
 
   constructor(
-    private store: Store<State>, 
-    private http: HttpClient ) { 
-
-    // TODO @aakatev remove with next commits
-    // Code to preload some txs and blocks
-    // ***
-    // this.http.get(`${nodeRpc2}/status`).subscribe(data => {
-    //   // Debugging
-    //   // let currValidators = data['result'].genesis.validators;
-    //   let lastBlock = data['result'].sync_info.latest_block_height;
-
-    //   this.http.get(`${nodeRpc2}/tx_search?query="tx.height>${lastBlock-100}"`).subscribe(data => {
-    //     this.txsStore = data['result'].txs.reverse();
-    //     this.store.dispatch(new AppActions.UpdateTxs(this.txsStore));
-    //   });
-
-    //   this.http.get(`${nodeRpc2}/blockchain?minHeight=${lastBlock-50}&maxHeight=${lastBlock}`).subscribe(data => {
-    //     this.blocksStore = data['result'].block_metas.reverse();
-    //     this.store.dispatch(new AppActions.UpdateBlocks(this.blocksStore));
-    //   });
-    // });
+    private appStore: Store<State>,
+    private http: HttpClient 
+  ) { 
 
      // WS handlers
     this.newWebSocket.onopen = (event) => {
@@ -66,12 +42,11 @@ export class WsService {
           // console.log('NewBlock!');
           // console.log(json.result.data.value);
           
-          if(Object.keys(this.blocksStore).length >= this.MAX_STORE_INDEX) {
-            this.blocksStore.shift();
+          if(Object.keys(this.blocksStorage).length >= this.MAX_STORE_INDEX) {
+            this.blocksStorage.shift();
           }
-          this.blocksStore.push(json.result.data.value.block);
-          
-          this.store.dispatch(new BlocksActions.UpdateBlocks(this.blocksStore));
+          this.blocksStorage.push(json.result.data.value.block);
+          this.appStore.dispatch(new UpdateBlocks(this.blocksStorage));
         } else if(json.result.data.type === 'tendermint/event/Tx') {
           // Debugging
           // console.log('NewTx!');
@@ -84,7 +59,7 @@ export class WsService {
             // console.log('Data', data);
             // console.log('Json', json.result);
             this.txsStore.unshift(data['result'].txs[json.result.data.value.TxResult.index]);
-            this.store.dispatch(new AppActions.UpdateTxs(this.txsStore));
+            this.appStore.dispatch(new UpdateTxs(this.txsStore));
           });
         // TODO call validator service to update
         // } else if(json.result.data.type === 'tendermint/event/ValidatorSetUpdates') {
@@ -93,17 +68,17 @@ export class WsService {
         } else if (json.result.data.type === 'tendermint/event/NewRound') {
           // TODO remove debugging
           // console.log(json.result.data.value);
-          this.store.dispatch(new AppActions.UpdateRound(json.result.data.value));
+          this.appStore.dispatch(new UpdateRound(json.result.data.value));
         } else if (json.result.data.type === 'tendermint/event/RoundState') {
           // TODO remove debugging
           // console.log(json.result.data.value);
-          this.store.dispatch(new AppActions.UpdateRoundStep(json.result.data.value));
+          this.appStore.dispatch(new UpdateRoundStep(json.result.data.value));
         }
       }
     };
   };
 
-  getWsBlockStore() { return this.blocksStore };
+  getWsBlockStore() { return this.blocksStorage };
   getWsTxStore() { return this.txsStore };
 
   subscribe() {

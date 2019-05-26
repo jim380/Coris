@@ -4,9 +4,10 @@ import { Store } from '@ngrx/store';
 // import { ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator } from '@angular/material';
 
-import { State } from 'src/app/interfaces/state.interface';
 import { ToastrService } from 'ngx-toastr';
 import { TxsService } from 'src/app/services/txs.service';
+import { AppState, State } from 'src/app/state/app.interface';
+import { selectAppState } from 'src/app/state/app.reducers';
 
 @Component({
   selector: 'app-validator',
@@ -15,7 +16,7 @@ import { TxsService } from 'src/app/services/txs.service';
 })
 
 export class ValidatorComponent implements OnInit {
-  appState: Observable<State>;
+  appState: Observable<AppState>;
 
   validator;
   delegations;
@@ -36,7 +37,7 @@ export class ValidatorComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private store: Store <State>,
+    private appStore: Store <State>,
     private ts: TxsService, 
     private toastr: ToastrService
     // private route: ActivatedRoute
@@ -49,7 +50,7 @@ export class ValidatorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.appState = this.store.select('App');
+    this.appState = this.appStore.select(selectAppState);
 
     this.delegations = this.validator.delegations.sort((a, b) => { 
       return Number(b.shares)-Number(a.shares); 

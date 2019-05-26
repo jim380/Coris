@@ -1,67 +1,55 @@
-import * as AppActions from './app.actions';
-import { initialState } from './initial-state';
+import { AppActionTypes } from './app.actions';
+import { initialAppState } from './app.interface';
+import { AppState } from './app.interface';
 
 
-export function appReducer(state = initialState, action: AppActions.AppActions) {
+export function appReducers(appState = initialAppState, action):AppState {
   switch(action.type) {
-    case AppActions.UPDATE_BLOCKS: {
+    case AppActionTypes.UPDATE_TXS: {
       return {
-        ...state,
-        blocks: action.payload,
-      }
-    }
-    
-    case AppActions.UPDATE_TXS: {
-      return {
-        ...state,
+        ...appState,
         txs: action.payload,
       }
     }
-
-    case AppActions.UPDATE_VALIDATORS: {
+    case AppActionTypes.UPDATE_ROUND: {
       return {
-        ...state,
-        validators: action.payload,
-      }
-    }
-    
-    case AppActions.UPDATE_ROUND: {
-      return {
-        ...state,
+        ...appState,
         round: action.payload,
       }
     }
 
-    case AppActions.UPDATE_ROUND_STEP: {
+    case AppActionTypes.UPDATE_ROUND_STEP: {
       return {
-        ...state,
+        ...appState,
         roundStep: action.payload,
       }
     }
 
-    case AppActions.UPDATE_VALS_MAP: {
+    case AppActionTypes.UPDATE_VALS_MAP: {
       return {
-        ...state, 
+        ...appState, 
         valsMap: action.payload,
       }
     }
       
-    case AppActions.UPDATE_TOTAL_STAKE: {
+    case AppActionTypes.UPDATE_TOTAL_STAKE: {
       return {
-        ...state,
+        ...appState,
         totalStake: action.payload,
       }
     }      
 
-    case AppActions.UPDATE_STAKE_POOL: {
+    case AppActionTypes.UPDATE_STAKE_POOL: {
       return {
-        ...state,
+        ...appState,
         stakePool: action.payload,
       }
     }
     
     default: {
-      return state;
+      return appState;
     }
   }
 }
+
+export const selectAppState = (state) => state.appState;

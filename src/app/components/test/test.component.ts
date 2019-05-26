@@ -3,7 +3,6 @@
 // TODO delete component
 import { Component, OnInit} from '@angular/core';
 import { Observable, range, Subject } from 'rxjs';
-import { State } from 'src/app/interfaces/state.interface';
 import { Store } from '@ngrx/store';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { BlocksService } from 'src/app/services/blocks.service';
@@ -15,12 +14,8 @@ import { BlocksService } from 'src/app/services/blocks.service';
 })
 
 export class TestComponent implements OnInit {
-  appState: Observable<State>;
-  blocksState: Observable<State>;
 
   constructor(
-    private store: Store <State>,
-    private bs: BlocksService
   ) { }
   
 

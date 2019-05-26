@@ -1,10 +1,10 @@
 import { Action } from '@ngrx/store';
 
-export const UPDATE_VALIDATORS = 'UPDATE_VALIDATORS';
+export enum ValidatorsActionTypes {
+  UPDATE_VALIDATORS = 'UPDATE_VALIDATORS'
+};
 
 export class UpdateValidators implements Action {
-  readonly type = UPDATE_VALIDATORS;
+  readonly type = ValidatorsActionTypes.UPDATE_VALIDATORS;
   constructor(public payload: any[]) {};
 }
-
-export type ValidatorsActions = UpdateValidators;

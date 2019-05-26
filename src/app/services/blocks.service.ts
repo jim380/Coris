@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State } from '../interfaces/state.interface';
+import { State } from '../state/app.interface';
 import { Observable, of, Subject, range, BehaviorSubject, forkJoin } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, takeLast, take, mergeMap, concatMap } from 'rxjs/operators';
 import { nodeRpc1, nodeRpc2 } from '../../config.js';
+import { BlocksState, AppState } from '../state/app.interface';
+import { selectBlocks } from '../state/blocks/blocks.reducers';
+import { selectAppState } from '../state/app.reducers';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlocksService {
-  appState: Observable<State>;
 
   avgBlockTime = 0;
   avgBlockTime$ = new BehaviorSubject(this.avgBlockTime);
@@ -22,25 +24,22 @@ export class BlocksService {
   blocksTime$ = new BehaviorSubject(this.blocksTime);
 
   constructor(
-    private store: Store<State>, 
+    private appStore: Store<State>,
     private http: HttpClient
   ) {
-    this.appState = this.store.select('App'); 
-
-    this.getCurrentHeight$(
-      this.store.select('Blocks')
-    ).subscribe((height: any) => {
-      this.fetch100Blocks(height);
-    });
+    // this.fetch100Blocks(
+    //   this.getCurrentHeight()
+    // );
+    // this.appStore.select(state => state).subscribe(console.log);
   }
 
-  getCurrentHeight$(blocksStore) {
-    return blocksStore
-    .pipe(
-      take(2),
-      takeLast(1),
-      map((state: State) => state.blocks[0].header.height)
-    )
+  getCurrentHeight() {
+    this.appStore
+      .select(selectBlocks)
+      .pipe(
+        take(2),
+        takeLast(1)
+      ).subscribe((blocks) => { return blocks[0].header.height });
   }
 
   fetch100Blocks(startHeight){ 

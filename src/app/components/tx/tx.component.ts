@@ -1,11 +1,13 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { State } from 'src/app/interfaces/state.interface';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { TxsListCardComponent } from '../txs/txs-list-card/txs-list-card.component';
 import { PopupService } from 'src/app/services/popup.service';
+import { State, AppState } from 'src/app/state/app.interface';
+import { selectAppState } from 'src/app/state/app.reducers';
+import { AccountDetailComponent } from '../account-detail/account-detail.component';
 
 // @aakatev
 // 05/15/19
@@ -31,7 +33,7 @@ export class TxComponent implements OnInit {
     private dialog: MatDialog,
     private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private store: Store <State>,
+    private appStore: Store <AppState>,
     private popupService: PopupService
     // private route: ActivatedRoute, 
     // private router: Router 
@@ -43,7 +45,7 @@ export class TxComponent implements OnInit {
 
   ngOnInit() {
     // console.log(this.tx);
-    this.appState = this.store.select('App');
+    this.appState = this.appStore.select(selectAppState);
   }
 
   onCopySucceess() {
@@ -52,10 +54,11 @@ export class TxComponent implements OnInit {
   }
 
   openTxsListDialog(address) {
-    this.dialog.open( TxsListCardComponent,  {
+    this.dialog.open( AccountDetailComponent,  {
       data: { 
         address
-      }
+      },
+      height: '75vh'
     });
   }
 

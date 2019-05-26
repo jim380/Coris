@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, range } from 'rxjs';
-import { State } from 'src/app/interfaces/state.interface';
-import { Store } from '@ngrx/store';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { 
   commissionChart,
@@ -10,6 +8,9 @@ import {
 import { BlocksService } from 'src/app/services/blocks.service';
 import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
+import { State, ValidatorsState } from 'src/app/state/app.interface';
+import { selectValidators, selectValidatorsState } from 'src/app/state/validators/validators.reducers';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-chart-cards',
@@ -34,24 +35,23 @@ export class ChartCardsComponent implements OnInit {
   public blockChartLabels = blockChart.labels;
   public blockChartColors = blockChart.colors;
 
-  appState: Observable<State>;
+  validatorsState: Observable<ValidatorsState>;
   storeSubscription$;
 
   constructor(
-    private store: Store <State>,
+    private appStore: Store <State>,
     private bs: BlocksService
   ) {
-    this.appState = this.store.select('App');
+    this.validatorsState = this.appStore.select(selectValidatorsState);
   }
 
   ngOnInit() {
-    this.storeSubscription$ = this.appState
+    this.storeSubscription$ = this.validatorsState
       .pipe(
-        // debounceTime(3000),
         distinctUntilChanged()
       )
       .subscribe(data => {
-        if(data.validators.serviceLoaded && this.storeSubscription$) {
+        if( this.storeSubscription$ ) {
           // TODO remove debugging
           // console.log(data);
           this.initCommissionChart(data.validators);

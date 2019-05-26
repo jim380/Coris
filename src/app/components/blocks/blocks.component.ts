@@ -6,12 +6,15 @@ import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { debounceTime, map } from "rxjs/operators";
-import { State } from 'src/app/interfaces/state.interface';
+import { debounceTime, map, skipWhile } from "rxjs/operators";
+import { State, BlocksState } from '../../state/app.interface';
 import { rowsAnimation, expandableRow, staggerAnimation} from 'src/app/animations/animation';
 import { MatTable, MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { BlockComponent } from '../block/block.component';
 import { BlocksService } from 'src/app/services/blocks.service';
+import { selectAppState } from 'src/app/state/app.reducers';
+import { AppState } from 'src/app/state/app.interface';
+import { selectBlocksState, selectBlocks } from 'src/app/state/blocks/blocks.reducers';
 // import {MatTableDataSource} from '@angular/material';
 
 @Component({
@@ -69,36 +72,40 @@ export class BlocksComponent implements OnInit, OnDestroy {
   
   // dataSource: MatTableDataSource<Block>;
 
-  appState: Observable<State>;
+  appState: Observable<AppState>;
+  blocksState: Observable<BlocksState>;
   
   blocks: Block[];
   currentBlock = 0;
   startBlock = 0;
   blocksToDisplay = 20;
-  blocks$;
+  blocks$ = null;
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private store: Store <State>,
+    private appStore: Store <State>,
     private dialog: MatDialog,
     private blocksService: BlocksService
   ) { }
 
   ngOnInit() {
-    this.appState = this.store.select('App');
-    this.blocks$ = this.appState.
-      pipe(
-        map(data => data.blocks),
-        debounceTime(300)
+    this.appState = this.appStore.select(selectAppState);
+    this.blocksState = this.appStore.select(selectBlocksState);
+
+    this.blocks$ = this.appStore
+      .select(selectBlocksState)
+      .pipe( 
+        map( (blocksState: BlocksState) => blocksState.blocks ),
+        skipWhile( blocks => blocks.length === 0 )
       )
-      .subscribe( data => { 
-        if( data.length === 1 && this.currentBlock !== data[0].header.height) {
+      .subscribe( blocks => { 
+        if( this.currentBlock !== blocks[0].header.height) {
           if(!this.blocks) {
-            this.startBlock = data[0].header.height;
+            this.startBlock = blocks[0].header.height;
             this.initBlocks();  
-          } else if (this.blocks[0].height !== data[0].header.height) {
-            this.addBlock(data[0].header.height);
+          } else if (this.blocks[0].height !== blocks[0].header.height) {
+            this.addBlock( blocks[0].header.height );
           }
           // TODO remove debugging
           // console.log(data[0]);

@@ -54,7 +54,7 @@ export class ValidatorsService {
       { useFindAndModify: false }
     ).then(async (data) => {
       if (!data) { 
-        console.log("Error updating:", updatedValidator, data);
+        console.log("Error updating:", updatedValidator.operator_address, data);
         await this.create(updatedValidator); 
       }
     });
@@ -84,7 +84,7 @@ export class ValidatorsService {
 
 
   async initValidators() { 
-    console.log("UPDATING VALIDATORS STATE!");
+    console.log(`UPDATING VALIDATORS STATE! *** ${new Date()} ***`);
 
     await this.getValidatorsDetails();
 
@@ -163,7 +163,9 @@ export class ValidatorsService {
           (error) => {
             // TODO remove debugging
             // console.log(error);
-            validator.distribution = [];
+            validator.distribution = {
+              operator_address: null
+            };
             validator.account = { tokens: 0 };
             resolve();
           }

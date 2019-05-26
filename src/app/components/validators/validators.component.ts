@@ -7,7 +7,6 @@ import { ActivatedRoute } from '@angular/router';
 // import { ValidatorsHelperService } from '../../services/validators-helper.service';
 import { Sort, MatDialog, MatSort } from '@angular/material';
 import { ValidatorComponent } from '../validator/validator.component';
-import { State } from 'src/app/interfaces/state.interface';
 import {MatTable} from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
@@ -19,7 +18,11 @@ import { RewardsCardComponent } from '../validator-profile/rewards-card/rewards-
 import { DelegatorCardComponent } from '../validator-profile/delegator-card/delegator-card.component';
 import { PowerEventCardComponent } from '../validator-profile/power-event-card/power-event-card.component'
 import { ProposedBlocksCardComponent } from '../validator-profile/proposed-blocks-card/proposed-blocks-card.component'
-import { map } from 'rxjs/operators';
+import { map, skipWhile, take } from 'rxjs/operators';
+import { AppState, BlocksState, State } from 'src/app/state/app.interface';
+import { selectValidatorsState, selectValidators } from 'src/app/state/validators/validators.reducers';
+import { selectAppState } from 'src/app/state/app.reducers';
+import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
 
 @Component({
   selector: 'app-validators',
@@ -47,37 +50,33 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
     this.sort = ms;
     this.setDataSourceAttributes();
   }
-  
-  appState: Observable<State>;
+  appState: Observable<AppState>;
+  blocksState: Observable<BlocksState>;
+
   valsUptime: Map<string,string> = new Map;
   totalTokens = 0;
   validators$;
 
   constructor(
-    private store: Store<State>, 
+    private appStore: Store<State>,
     private dialog: MatDialog,
-    // private validatorsHelperService: ValidatorsHelperService
   ) { 
-    // this.hideUnbondColumn();
+    // console.log(this.appStore);
   }
 
 
   ngOnInit() {
-    this.appState = this.store.select('App');
+    this.appState = this.appStore.select(selectAppState);
+    this.blocksState = this.appStore.select(selectBlocksState);
 
-    // this.appState.subscribe((data: any) => {
-    //   console.log(data);
-    // });
-
-    let validators$ = this.store.select('Validators');
-    
-    validators$.pipe(
-      map(state => state.validators)
-    ).subscribe((data:any) => {
+    this.appStore.select(selectValidators)
+    .pipe(
+      skipWhile( validators => validators.length === 0),
+      take(1)
+    )
+    .subscribe((data:any) => {
       this.dataSource = new MatTableDataSource<any>([...data]);
       this.setDataSourceAttributes();
-      // TODO remove debugging
-      console.log(data);
     });
   }
 
