@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { PricingService } from 'src/app/services/pricing.service';
 import { BlocksService } from 'src/app/services/blocks.service';
 // import { ValidatorsService } from 'src/app/services/validators.service';
-import { State } from 'src/app/interfaces/state.interface';
-import { Store } from '@ngrx/store';
 import { WsService } from 'src/app/services/ws.service';
 import { Observable } from 'rxjs';
 import { HostListener } from "@angular/core";
@@ -11,6 +9,11 @@ import { cards } from './carousel.content';
 import { DatePipe } from '@angular/common';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { BreadcrumbModule } from 'ng-uikit-pro-standard';
+import { State } from 'src/app/state/app.interface';
+import { selectAppState } from 'src/app/state/app.reducers';
+import { Store } from '@ngrx/store';
+import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
+import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
 
 export const BREAKPOINTS = {
   MD: 768,
@@ -35,24 +38,23 @@ export class CarouselComponent implements OnInit {
 
   constructor(
     private ws:WsService, 
-    private store: Store <State>,
+    private appStore: Store <State>,
     // private vs:ValidatorsService,
     private ps:PricingService,
     private bs:BlocksService
   ) { }
 
   ngOnInit() {
-    this.appState = this.store.select('App');
     this.getScreenSize();
 
     this.setInflation();
     this.setAtomPrice();
-    this.appState
+
+    this.appStore.select(selectAppState)
       .pipe(
-        // debounceTime(3000),
         distinctUntilChanged()
       )
-      .subscribe(data => {
+      .subscribe(appState => {
         // if (data.roundStep && !this.blocksFetched) {
         //   this.bs.fetchRecentBlocks( 
         //     Number( (data.roundStep.height-1) ) 
@@ -60,12 +62,21 @@ export class CarouselComponent implements OnInit {
         //   this.blocksFetched = true;
         // }
 
-        this.setConsensusState(data.roundStep);
-        this.setLastBlock(data.blocks);
-        this.setValidatorsCount(data.validators);
-        this.setBondedTokens(data.stakePool);
-        this.setCommunityPool(data.stakePool);
+        this.setConsensusState(appState.roundStep);
+        this.setBondedTokens(appState.stakePool);
+        this.setCommunityPool(appState.stakePool);
       });
+    
+      this.appStore.select(selectValidatorsState)
+      .subscribe(validatorsState => {
+        this.setValidatorsCount(validatorsState.validators);
+      });
+
+      this.appStore.select(selectBlocksState)
+      .subscribe(validatorsState => {
+        this.setLastBlock(validatorsState.blocks);
+      })
+
       this.setBlockTime();
   }
 

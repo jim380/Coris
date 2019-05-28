@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
-import { State } from 'src/app/interfaces/state.interface';
+import { State, AppState } from '../../state/app.interface';
 import { Store } from '@ngrx/store';
 import { nodeRpc1, nodeRpc2 } from '../../../config.js'
 import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
@@ -16,6 +16,7 @@ import { ValidatorComponent } from '../validator/validator.component';
 import { take } from 'rxjs/operators';
 import { PopupService } from 'src/app/services/popup.service.js';
 import { AccountDetailComponent } from '../account-detail/account-detail.component';
+import { selectAppState } from 'src/app/state/app.reducers';
 
 
 @Component({
@@ -87,11 +88,11 @@ export class TxsComponent implements OnInit {
   totalTxsCount = 0;
   // currentPage = 1;
   // lastPage = 1;
-  appState: Observable<State>;
+  appState: Observable<AppState>;
 
   constructor(
     private toastr: ToastrService,
-    private store: Store <State>,
+    private appStore: Store <State>,
     private http: HttpClient,
     private router: Router,
     private dialog: MatDialog,
@@ -99,7 +100,7 @@ export class TxsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.appState = this.store.select('App');
+    this.appState = this.appStore.select(selectAppState);
 
     this.http.get(`${nodeRpc1}/blocks/latest`).subscribe( async (data:any) => {
       // @aakatev remove debugging
@@ -322,8 +323,8 @@ export class TxsComponent implements OnInit {
     });
   }
 
-  openValidatorDetailDialog(operatorAddress) {
-    this.popupService.openValidatorDetailDialog(operatorAddress, this.appState, this.dialog);
+  openValidatorDialog(operatorAddress) {
+    this.popupService.openValidatorDialogAddr(operatorAddress, this.dialog);
   }
 
   // TEST ACCOUNT QUERY

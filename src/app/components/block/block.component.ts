@@ -1,11 +1,12 @@
 import { Component, OnInit, Inject, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State } from 'src/app/interfaces/state.interface';
 import { Observable, range } from 'rxjs';
 import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { TxsService } from 'src/app/services/txs.service';
 import { TxComponent } from '../tx/tx.component';
 import { PopupService } from 'src/app/services/popup.service';
+import { AppState } from 'src/app/state/app.interface';
+import { selectAppState } from 'src/app/state/app.reducers';
 // import { HttpClient } from '@angular/common/http';
 // import { ActivatedRoute, Router } from '@angular/router';
 // import { nodeRpc2 } from '../../../config.js';
@@ -17,7 +18,7 @@ import { PopupService } from 'src/app/services/popup.service';
 })
 
 export class BlockComponent implements OnInit, AfterViewInit {
-  appState: Observable<State>;
+  appState: Observable<AppState>;
   block;
   txs = [];
 
@@ -26,8 +27,7 @@ export class BlockComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginators = new QueryList<MatPaginator>();
 
   constructor(
-    private store: Store <State>,
-    // private dialog: MatDialog
+    private appStore: Store <AppState>,
     // private http: HttpClient, 
     // private route: ActivatedRoute, 
     // private router: Router
@@ -42,7 +42,7 @@ export class BlockComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.appState = this.store.select('App');
+    this.appState = this.appStore.select(selectAppState);
     this.initTxs();
   }
 
@@ -159,8 +159,8 @@ export class BlockComponent implements OnInit, AfterViewInit {
   }
 
 
-  openValidatorDetailDialogHEX(addressHEX) {
-    this.popupService.openValidatorDetailDialogHEX(addressHEX, this.appState, this.dialog);
+  openValidatorDialog(addressHEX) {
+    this.popupService.openValidatorDialogAddrHEX(addressHEX, this.dialog);
   }
 
 

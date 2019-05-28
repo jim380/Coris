@@ -3,22 +3,25 @@
     <!-- <h1 class="title header-title" [appBgHighlight]="'orange'" defaultColor="transparent">
       Coris Explorer 
     </h1> -->
-    <h2 class="subtitle header-subtitle" @fadeInAnimation>{{(appState | async).blocks[0]?.header.chain_id}}</h2>
+    <h2 class="subtitle header-subtitle" @fadeInAnimation>{{(blocksState | async).blocks[0]?.header.chain_id}}</h2>
   </div>
   <!-- <app-universal-search-bar (onSelectedOption)="onSelectedFilter($event)"></app-universal-search-bar> -->
   <div class="row proposer-row">
-    <div style="cursor: pointer;" routerLink="/validators" fragment="{{(appState | async).round.proposer?.address}}">
-      <h2 *ngIf="(appState | async).valsMap.size" class="title proposer-title">
+    <div>
+      <h2 *ngIf="(appState | async).valsMap.size" 
+          class="title proposer-title"
+          (click)="openValidatorDialog(proposer)" 
+          style="cursor: pointer;">
         <i class="ion-person"></i>&nbsp; Proposer - 
-        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( (appState | async).round.proposer?.address ) : false; else elseBlockProposer">
-            {{ (appState | async).valsMap.get( (appState | async).round.proposer?.address )}}
+        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( proposer ) : false; else elseBlockProposer">
+            {{ (appState | async).valsMap.get( proposer )}}
         </span>
-        <ng-template #elseBlockProposer>{{ (appState | async).round.proposer?.address }}</ng-template> 
+        <ng-template #elseBlockProposer>{{ proposer }}</ng-template> 
       </h2>
     </div>
   </div>
   <div @fadeInAnimation class="container">
-    <span *ngIf="(appState | async).blocks.length; else elseBlock">
+    <span *ngIf="(blocksState | async).blocks.length; else elseBlock">
       <app-carousel></app-carousel>
     </span>
   </div>

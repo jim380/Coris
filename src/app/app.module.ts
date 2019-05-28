@@ -15,7 +15,7 @@ import { BlocksComponent } from './components/blocks/blocks.component';
 import { TxsComponent } from './components/txs/txs.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LastBlockComponent } from './components/last-block/last-block.component';
-import { appReducer } from './state/app.reducers';
+import { reducers } from './state/index';
 import { BlockComponent } from './components/block/block.component';
 import { TxComponent } from './components/tx/tx.component';
 import { ValidatorComponent } from './components/validator/validator.component';
@@ -33,7 +33,6 @@ import { BgHighlightDirective } from './Directives/bg-highlight.directive';
 import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
 import { SearchService } from './services/search.service';
 import { AgoPipe } from './pipes/ago.pipe';
-// import {TimeAgoPipe} from 'time-ago-pipe';
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { AgmCoreModule } from '@agm/core';
@@ -59,7 +58,6 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { ToastrModule } from 'ngx-toastr';
 import { TxsListCardComponent } from './components/txs/txs-list-card/txs-list-card.component';
 import { AccountDetailComponent } from './components/account-detail/account-detail.component';
-import { AppStateModule } from './state/app-state.module';
 
 declare var Hammer: any;
 
@@ -134,7 +132,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     PowerEventCardComponent,
     ProposedBlocksCardComponent,
     ValidatorComponent,
-    // TxsListCardComponent,
+    TxsListCardComponent,
     TxComponent,
     BlockComponent,
     AccountDetailComponent
@@ -149,8 +147,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     ChartsModule,
     ClipboardModule,
     [
-      StoreModule.forRoot({}), 
-      AppStateModule
+      StoreModule.forRoot(reducers)
     ],
     LayoutModule,
     FormsModule,

@@ -1,25 +1,39 @@
 import { Injectable } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { ValidatorComponent } from '../components/validator/validator.component';
+import { Store } from '@ngrx/store';
+import { State, AppState } from '../state/app.interface';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PopupService {
+  appState: Observable<State>;
+  constructor(
+    private appStore: Store<State>
+  ) {
+    this.appState = this.appStore.select(state => state);
+    console.log("new popup service created!");
+  }
 
-  constructor() { }
+  openValidatorDialog(validator, dialog) {
+    console.log(validator);
+    dialog.open( ValidatorComponent,  {
+      data: { 
+        validator
+      },
+      height: '75vh',
+    });
+  }
 
-  openValidatorDetailDialog(operatorAddress, appState, dialog) {
+  openValidatorDialogAddr(operatorAddress, dialog) {
     // console.log(operatorAddress);
-    appState.pipe(
+    this.appState.pipe(
       take(1)
-    ).subscribe((data) => {
-      // @aakatev 05/16/19
-      // Some validators are not available at state
-      // TOFIX figuire out other way to query missing validators
-      // Might need major changes in validator.service.ts
-      let validatorQuery = data.validators
-        .filter(x => x.operator_address == operatorAddress);
+    ).subscribe((state) => {
+      let validatorQuery = state.validatorsState.validators
+        .filter(val => val.operator_address === operatorAddress);
       if( validatorQuery.length === 1) {
         dialog.open( ValidatorComponent,  {
           data: { 
@@ -32,17 +46,13 @@ export class PopupService {
     });
   }
 
-  openValidatorDetailDialogHEX(addressHEX, appState, dialog) {
+  openValidatorDialogAddrHEX(addressHEX, dialog) {
     console.log(addressHEX);
-    appState.pipe(
+    this.appState.pipe(
       take(1)
-    ).subscribe((data) => {
-      // @aakatev 05/16/19
-      // Some validators are not available at state
-      // TOFIX figuire out other way to query missing validators
-      // Might need major changes in validator.service.ts
-      let validatorQuery = data.validators
-        .filter(x => x.hex_address == addressHEX);
+    ).subscribe((state) => {
+      let validatorQuery = state.validatorsState.validators
+        .filter(val => val.description.moniker === state.appState.valsMap.get(addressHEX));
       if( validatorQuery.length === 1) {
         dialog.open( ValidatorComponent,  {
           data: { 

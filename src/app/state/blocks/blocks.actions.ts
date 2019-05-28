@@ -1,10 +1,10 @@
 import { Action } from '@ngrx/store';
 
-export const UPDATE_BLOCKS = 'UPDATE_BLOCKS';
-
-export class UpdateBlocks implements Action {
-  readonly type = UPDATE_BLOCKS;
-  constructor(public payload: any[]) {};
+export enum BlocksActionTypes {
+  UPDATE_BLOCKS = 'UPDATE_BLOCKS'
 }
 
-export type BlocksActions = UpdateBlocks;
+export class UpdateBlocks implements Action {
+  readonly type = BlocksActionTypes.UPDATE_BLOCKS;
+  constructor(public payload: any[]) {};
+}

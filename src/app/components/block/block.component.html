@@ -13,13 +13,13 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Proposer
-                        <span class="badge badge-primary badge-pill"
-                              style="cursor: pointer;"
-                              (click)="openValidatorDetailDialogHEX(block.proposer)">
+                        <span class="badge badge-primary badge-pill">
                           <span *ngIf="(appState | async).valsMap.size 
                                   ? (appState | async).valsMap.has(block.proposer) 
-                                  : false; else elseBlockProposer">
-                            {{ (appState | async).valsMap.get(block.proposer) }}
+                                  : false; else elseBlockProposer"
+                                style="cursor: pointer;"
+                                (click)="openValidatorDialog( block.proposer )">
+                                {{ (appState | async).valsMap.get(block.proposer) }}
                           </span>
                           <ng-template #elseBlockProposer>{{block.proposer}}</ng-template>
                         </span>

@@ -153,7 +153,7 @@
                           from 
                         </ng-template>
                         <br>
-                        <a (click)="openValidatorDetailDialog( tx.msg[i].value.validator_address )"> 
+                        <a (click)="openValidatorDialog( tx.msg[i].value.validator_address )"> 
                           <span *ngIf="(appState | async).valsMap.size 
                                         ? (appState | async).valsMap.has( tx.msg[i].value.validator_address ) 
                                         : false; else elseValidatorDelegate">
@@ -204,7 +204,7 @@
                         <mdb-badge default="true">withdrew rewards</mdb-badge>&nbsp;
                         from 
                         <br>
-                        <a (click)="openValidatorDetailDialog( tx.msg[i].value.validator_address )"> 
+                        <a (click)="openValidatorDialog( tx.msg[i].value.validator_address )"> 
                           <span *ngIf="(appState | async).valsMap.size 
                                         ? (appState | async).valsMap.has( tx.msg[i].value.validator_address ) 
                                         : false; else elseValidatorWithdraw">
@@ -232,7 +232,7 @@
                         </span>
                         from 
                         <br>
-                        <a (click)="openValidatorDetailDialog( tx.msg[i].value.validator_src_address )"> 
+                        <a (click)="openValidatorDialog( tx.msg[i].value.validator_src_address )"> 
                           <span *ngIf="(appState | async).valsMap.size 
                                         ? (appState | async).valsMap.has( tx.msg[i].value.validator_src_address ) 
                                         : false; else elseSrcValidatorRedelegate">
@@ -244,7 +244,7 @@
                           </ng-template>
                         </a>
                         to 
-                        <a (click)="openValidatorDetailDialog( tx.msg[i].value.validator_dst_address )"> 
+                        <a (click)="openValidatorDialog( tx.msg[i].value.validator_dst_address )"> 
                           <span *ngIf="(appState | async).valsMap.size 
                                         ? (appState | async).valsMap.has( tx.msg[i].value.validator_dst_address ) 
                                         : false; else elseDstValidatorRedelegate">
@@ -260,7 +260,7 @@
                       </span>
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgWithdrawValidatorCommission'">
-                        <a (click)="openValidatorDetailDialog( tx.msg[i].value.validator_address )"> 
+                        <a (click)="openValidatorDialog( tx.msg[i].value.validator_address )"> 
                           <span *ngIf="(appState | async).valsMap.size 
                                         ? (appState | async).valsMap.has( tx.msg[i].value.validator_address ) 
                                         : false; else elseValidatorWithdrawCommission">

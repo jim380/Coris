@@ -139,14 +139,14 @@ tbody {
 }
 
 /* Expandable rows */
-tr {
-  cursor: pointer;
-}
+// tr {
+//   cursor: pointer;
+// }
 
-tr.validator-detail-row {
-  height: 0;
-  cursor: default;
-}
+// tr.validator-detail-row {
+//   height: 0;
+//   cursor: default;
+// }
 
 /* Description formatting */
 .overflowed-text {

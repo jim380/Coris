@@ -5,10 +5,15 @@ import { Store } from '@ngrx/store';
 // import { ValidatorsService } from 'src/app/services/validators.service';
 import { trigger, state, query, transition, animate, style, keyframes, animation, useAnimation, animateChild, group, stagger } from '@angular/animations';
 import { fadeInAnimation, fade } from '../../animations/animation';
-import { State } from 'src/app/interfaces/state.interface';
-import { PricingService } from 'src/app/services/pricing.service';
-import { BlocksService } from 'src/app/services/blocks.service';
-import { map } from 'rxjs/operators';
+// import { State } from 'src/app/interfaces/state.interface';
+// import { PricingService } from 'src/app/services/pricing.service';
+// import { BlocksService } from 'src/app/services/blocks.service';
+// import { map } from 'rxjs/operators';
+import { AppState, State, BlocksState } from 'src/app/state/app.interface';
+import { selectAppState } from 'src/app/state/app.reducers';
+import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
+import { MatDialog } from '@angular/material';
+import { PopupService } from 'src/app/services/popup.service';
 
 @Component({
   selector: 'app-status-bar',
@@ -41,21 +46,37 @@ import { map } from 'rxjs/operators';
   ]
 })
 export class StatusBarComponent implements OnInit {
-  appState: Observable<State>;
-
+  proposer;
+  appState: Observable<AppState>;
+  blocksState: Observable<BlocksState>;
   networks = [
     {id: 1, name: 'mainnet'},
     {id: 2, name: 'testnet'},
   ];
 
   constructor(
+    private dialog: MatDialog,
+    private popupService: PopupService,
     // private ws:WsService, 
-    private store: Store <State>
+    private appStore: Store <State>
   ) { }
 
   ngOnInit() { 
-    this.appState = this.store.select('App');
+    this.appState = this.appStore.select(selectAppState);
+    this.blocksState = this.appStore.select(selectBlocksState);
+
+    this.appState.subscribe((state) => {
+      if(state.round.proposer) {
+        this.proposer = state.round.proposer.address;
+      }
+    });
   }
+  ngAfterInit() { }
 
   ngOnDestroy() { }
+
+  openValidatorDialog(addressHEX) {
+    this.popupService.openValidatorDialogAddrHEX(addressHEX, this.dialog);
+  }
+
 }

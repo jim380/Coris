@@ -1,19 +1,22 @@
-import * as BlocksActions from './blocks.actions';
-import { initialState } from '../initial-state';
+import { BlocksActionTypes } from './blocks.actions';
+import { initialBlocksState, BlocksState } from '../app.interface';
+import { createSelector } from '@ngrx/store';
 
 
-export function blocksReducer(state = initialState, action: BlocksActions.BlocksActions) {
+export function blocksReducers(blocksState = initialBlocksState, action): BlocksState {
   switch(action.type) {
     
-    case BlocksActions.UPDATE_BLOCKS: {
+    case BlocksActionTypes.UPDATE_BLOCKS: {
       return {
-        ...state,
+        ...blocksState,
         blocks: action.payload,
       }
     }
 
     default: {
-      return state;
+      return blocksState;
     }
   }
 }
+export const selectBlocksState = (state) => state.blocksState;
+export const selectBlocks = createSelector(selectBlocksState, (state) => state.blocks);

@@ -6,7 +6,6 @@ import { ValidatorsService } from './services/validators.service';
 import { trigger, state, query, transition, animate, style, keyframes, animation, useAnimation, animateChild, group, stagger } from '@angular/animations';
 import { fadeInAnimation, fade } from './animations/animation';
 import {ToastService} from 'ng-uikit-pro-standard';
-import { State } from './interfaces/state.interface';
 import { PricingService } from './services/pricing.service';
 
 @Component({
@@ -40,7 +39,6 @@ import { PricingService } from './services/pricing.service';
   ]
 })
 export class AppComponent {
-  appState: Observable<State>;
 
   networks = [
     {id: 1, name: 'mainnet'},
@@ -49,13 +47,11 @@ export class AppComponent {
 
   constructor(
     private ws:WsService, 
-    private store: Store <State>,
     private pricingService: PricingService,
     private vs:ValidatorsService
   ) {  }
 
   ngOnInit() { 
-    this.appState = this.store.select('App');
     this.pricingService.initStakingPool();
   }
 

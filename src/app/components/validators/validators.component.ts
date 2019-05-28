@@ -4,10 +4,9 @@ import { Observable, Subscriber } from 'rxjs';
 import { Store, createFeatureSelector, createSelector, select } from '@ngrx/store';
 import { ActivatedRoute } from '@angular/router';
 // import { ValidatorsService } from '../../services/validators.service';
-import { ValidatorsHelperService } from '../../services/validators-helper.service';
+// import { ValidatorsHelperService } from '../../services/validators-helper.service';
 import { Sort, MatDialog, MatSort } from '@angular/material';
 import { ValidatorComponent } from '../validator/validator.component';
-import { State } from 'src/app/interfaces/state.interface';
 import {MatTable} from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
@@ -19,7 +18,12 @@ import { RewardsCardComponent } from '../validator-profile/rewards-card/rewards-
 import { DelegatorCardComponent } from '../validator-profile/delegator-card/delegator-card.component';
 import { PowerEventCardComponent } from '../validator-profile/power-event-card/power-event-card.component'
 import { ProposedBlocksCardComponent } from '../validator-profile/proposed-blocks-card/proposed-blocks-card.component'
-import { map } from 'rxjs/operators';
+import { map, skipWhile, take } from 'rxjs/operators';
+import { AppState, BlocksState, State } from 'src/app/state/app.interface';
+import { selectValidatorsState, selectValidators } from 'src/app/state/validators/validators.reducers';
+import { selectAppState } from 'src/app/state/app.reducers';
+import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
+import { PopupService } from 'src/app/services/popup.service';
 
 @Component({
   selector: 'app-validators',
@@ -47,37 +51,34 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
     this.sort = ms;
     this.setDataSourceAttributes();
   }
-  
-  appState: Observable<State>;
+  appState: Observable<AppState>;
+  blocksState: Observable<BlocksState>;
+
   valsUptime: Map<string,string> = new Map;
   totalTokens = 0;
   validators$;
 
   constructor(
-    private store: Store<State>, 
+    private appStore: Store<State>,
     private dialog: MatDialog,
-    private validatorsHelperService: ValidatorsHelperService
+    private popupService: PopupService
   ) { 
-    // this.hideUnbondColumn();
+    // console.log(this.appStore);
   }
 
 
   ngOnInit() {
-    this.appState = this.store.select('App');
+    this.appState = this.appStore.select(selectAppState);
+    this.blocksState = this.appStore.select(selectBlocksState);
 
-    // this.appState.subscribe((data: any) => {
-    //   console.log(data);
-    // });
-
-    let validators$ = this.store.select('Validators');
-    
-    validators$.pipe(
-      map(state => state.validators)
-    ).subscribe((data:any) => {
+    this.appStore.select(selectValidators)
+    .pipe(
+      skipWhile( validators => validators.length === 0),
+      take(1)
+    )
+    .subscribe((data:any) => {
       this.dataSource = new MatTableDataSource<any>([...data]);
       this.setDataSourceAttributes();
-      // TODO remove debugging
-      console.log(data);
     });
   }
 
@@ -98,7 +99,7 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
       case 'rank': return item.rank;
       case 'moniker': return item.description.moniker;
       case 'tokens': return Number(item.tokens);
-      case 'balance': return item.distribution ? item.distribution.balance.amount : 0;
+      case 'balance': return ( item.account.value && item.account.value.coins ) ? Number( item.account.value.coins[0].amount ) : 0;
       case 'delegations': return item.delegations ? item.delegations.length : 0;
       case 'self_bond': return item.self_bond ? item.self_bond : 0;
       case 'commission': return item.commission.rate;
@@ -138,10 +139,10 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
       bond: true,
       column: 'weight'
     },
-    // { 
-    //   bond: true,
-    //   column: 'status'
-    // },
+    { 
+      bond: true,
+      column: 'status'
+    },
     { 
       bond: true,
       column: 'assets'
@@ -210,15 +211,11 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
 
   /* POPUPS */
   openValidatorDialog(validator) {
-    this.dialog.open( ProfileCardComponent,  {
-      data: { 
-        validator
-      }
-    });
+    this.popupService.openValidatorDialog(validator, this.dialog);
   }
 
   openValidatorDetailDialog(validator) {
-    this.dialog.open( ValidatorComponent,  {
+    this.dialog.open( ProfileCardComponent,  {
       data: { 
         validator
       },
