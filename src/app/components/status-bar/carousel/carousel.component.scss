@@ -82,6 +82,12 @@ h1 {
   font-size: 150%; 
 }
 
+@media (max-width: 767px) { 
+  .cascading-admin-card .admin-up .data h4 {
+    font-size: 100%; 
+  }
+ }
+
 .classic-admin-card .card-body {
   color: #fff;
   margin-bottom: 0;

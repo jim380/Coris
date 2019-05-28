@@ -1,15 +1,15 @@
 export interface Validator {
-  operator_address: String;
-  consensus_pubkey: String;
+  operator_address: string;
+  consensus_pubkey: string;
   jailed: Boolean;
   status:	Number;
-  tokens:	String;
-  delegator_shares:	String;
+  tokens:	string;
+  delegator_shares:	string;
   description: any;
-  unbonding_height: String;
-  unbonding_time: String;
+  unbonding_height: string;
+  unbonding_time: string;
   commission: any;
-  min_self_delegation: String;
+  min_self_delegation: string;
   unbonding_total: Number;
   signing_info: any;
   outstanding_rewards: any;

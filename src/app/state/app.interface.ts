@@ -9,7 +9,11 @@ export const initialAppState: AppState = {
   round: {
     proposer: null,
   },
-  roundStep: {},
+  roundStep: {
+    height: null,
+    round: null,
+    step: null
+  },
   valsMap: new Map(),
   totalStake: 0,
   stakePool: {}
@@ -30,7 +34,11 @@ export interface AppState {
   round: { 
     proposer: any,
   } | null;
-  roundStep: {} | null;
+  roundStep: {
+    height: string | null,
+    round: string | null,
+    step: string | null
+  } | null;
   valsMap: any;
   totalStake: Number | null;
   stakePool: {} | null;

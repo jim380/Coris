@@ -77,6 +77,8 @@ export class CarouselComponent implements OnInit {
         this.setLastBlock(validatorsState.blocks);
       })
 
+      this.bs.fetch100Blocks();
+
       this.setBlockTime();
   }
 
@@ -164,7 +166,7 @@ export class CarouselComponent implements OnInit {
     // console.log(data);
     // TOFIX this place has async bug that is hard to replicate
     // look into it more
-    if(data) {
+    if(data.step) {
       let consensus = data;
       let currentTime = this.getCurrentTime();
       let formattedStep;

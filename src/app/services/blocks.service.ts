@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, takeLast, take, mergeMap, concatMap } from 'rxjs/operators';
 import { nodeRpc1, nodeRpc2 } from '../../config.js';
 import { BlocksState, AppState } from '../state/app.interface';
-import { selectBlocks } from '../state/blocks/blocks.reducers';
+import { selectBlocks, selectBlocksState } from '../state/blocks/blocks.reducers';
 import { selectAppState } from '../state/app.reducers';
 
 @Injectable({
@@ -26,38 +26,27 @@ export class BlocksService {
   constructor(
     private appStore: Store<State>,
     private http: HttpClient
-  ) {
-    // this.fetch100Blocks(
-    //   this.getCurrentHeight()
-    // );
-    // this.appStore.select(state => state).subscribe(console.log);
-  }
+  ) { }
 
-  getCurrentHeight() {
-    this.appStore
-      .select(selectBlocks)
-      .pipe(
-        take(2),
-        takeLast(1)
-      ).subscribe((blocks) => { return blocks[0].header.height });
-  }
-
-  fetch100Blocks(startHeight){ 
-    return forkJoin(
-      this.fetch20Blocks(startHeight),
-      this.fetch20Blocks(startHeight-20),
-      this.fetch20Blocks(startHeight-40),
-      this.fetch20Blocks(startHeight-60),
-      this.fetch20Blocks(startHeight-80)
-    )
-    .subscribe(([res1, res2, res3, res4, res5]) => {
-      this.getBlockTimesArray([
-        ...res1,
-        ...res2,
-        ...res3,
-        ...res4,
-        ...res5
-      ], this.blocksTime);
+  fetch100Blocks(){ 
+    this.appStore.select(selectBlocks).subscribe( blocks => {
+      let startHeight = blocks[0].header.height;
+      forkJoin(
+        this.fetch20Blocks(startHeight),
+        this.fetch20Blocks(startHeight-20),
+        this.fetch20Blocks(startHeight-40),
+        this.fetch20Blocks(startHeight-60),
+        this.fetch20Blocks(startHeight-80)
+      )
+      .subscribe(([res1, res2, res3, res4, res5]) => {
+        this.getBlockTimesArray([
+          ...res1,
+          ...res2,
+          ...res3,
+          ...res4,
+          ...res5
+        ], this.blocksTime);
+      });
     });
   }
 
