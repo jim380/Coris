@@ -21,8 +21,11 @@
           
           <ng-container matColumnDef="height" sticky>
             <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-soup-can"></i>&nbsp;Height</th>
-            <td mat-cell *matCellDef="let block">
-              {{block.height}}
+            <td mat-cell *matCellDef="let block" >
+              <!-- <span (click)="openBlockDialog(block)" 
+              style="cursor: pointer">{{block.height}}</span> -->
+              <mdb-badge (click)="openBlockDialog(block)" 
+              style="cursor: pointer" color="pink">{{block.height}}</mdb-badge>
             </td>
           </ng-container>
         
@@ -52,7 +55,7 @@
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="details">
+          <!-- <ng-container matColumnDef="details">
             <th mat-header-cell *matHeaderCellDef class="th-lg">Details</th>
             <td mat-cell *matCellDef="let block">  
               <span (click)="openBlockDialog(block)" 
@@ -60,10 +63,10 @@
                 VIEW
               </span>
             </td>
-          </ng-container>
+          </ng-container> -->
         
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row @rowsAnimation *matRowDef="let row; columns: displayedColumns;"
+          <tr mat-row @rowsAnimation *matRowDef="let row; columns: displayedColumns"
           [appBgHighlight]="'#d1d1d1'" defaultColor="#ffffff"
           ></tr>
     </table>

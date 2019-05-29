@@ -67,8 +67,8 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
     'height', 
     'transactions', 
     'proposer',
-    'timestamp',
-    'details'
+    'timestamp'
+    // 'details'
   ];
   
   // dataSource: MatTableDataSource<Block>;

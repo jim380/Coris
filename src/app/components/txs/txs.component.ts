@@ -72,9 +72,9 @@ export class TxsComponent implements OnInit {
 
   txs: Tx[];
   displayedColumns: string[] = [
-    'hash', 
-    'type',
+    'hash',
     'status',
+    'type',
     'fee',
     'height',
     'timestamp'
