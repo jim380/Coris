@@ -146,16 +146,16 @@
                     <mdb-badge color="purple darken-2">
                         Rewards
                     </mdb-badge>
-                    <h4 *ngIf="validator.outstanding_rewards">
-                      {{validator.outstanding_rewards[0].amount/1e6 | number:'.2-2'}}
+                    <h4 *ngIf="validator.rewards">
+                      {{validator.rewards[0].amount/1e6 | number:'.2-2'}}
                     </h4>
                   </div>
                   <div class="col-sm-4 col-12">
                     <mdb-badge color="indigo">
                       Outstanding Rewards
                     </mdb-badge>
-                    <h4 *ngIf="validator.rewards">
-                      {{validator.rewards[0].amount/1e6 | number:'.2-2'}} 
+                    <h4 *ngIf="validator.outstanding_rewards">
+                      {{validator.outstanding_rewards[0].amount/1e6 | number:'.2-2'}} 
                     </h4>
                   </div>
                 </div>
