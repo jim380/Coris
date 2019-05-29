@@ -1,98 +1,111 @@
 <section>
     <div class="row">
       <div class="col-12">  
-        <mat-card class="card-1 mat-elevation-z8">
-            <mat-card-header>
-                <mat-card-title>Block {{ block.height }}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
+        <mdb-card class="card-1 mat-elevation-z8">
+            <mdb-card-header>
+                <mdb-card-title>Block {{ block.height }}</mdb-card-title>
+            </mdb-card-header>
+            <mdb-card-body>
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Hash
-                        <span class="badge badge-primary badge-pill">{{ block.hash }}</span>
+                        <h3 class="glance-title"><mdb-badge color="pink">
+                          {{ block.hash | slice:0:15 }} ...
+                          <i 
+                            class="ion-ios-copy copy-button" 
+                            style="cursor: pointer;" 
+                            ngxClipboard 
+                            [cbContent]="block.hash" 
+                            (click)="onCopySucceess()"
+                            mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                          </i>
+                        </mdb-badge></h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Proposer
-                        <span class="badge badge-primary badge-pill">
+                        <h3 class="glance-title"><mdb-badge color="pink">
                           <span *ngIf="(appState | async).valsMap.size 
-                                  ? (appState | async).valsMap.has(block.proposer) 
-                                  : false; else elseBlockProposer"
-                                style="cursor: pointer;"
-                                (click)="openValidatorDialog( block.proposer )">
-                                {{ (appState | async).valsMap.get(block.proposer) }}
+                            ? (appState | async).valsMap.has(block.proposer) 
+                            : false; else elseBlockProposer"
+                          style="cursor: pointer;"
+                          (click)="openValidatorDialog( block.proposer )">
+                          {{ (appState | async).valsMap.get(block.proposer) }}
                           </span>
                           <ng-template #elseBlockProposer>{{block.proposer}}</ng-template>
-                        </span>
+                        </mdb-badge>
+                      </h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Transactions
-                        <span class="badge badge-primary badge-pill">{{ block.txs }}</span>
+                        <h3 class="glance-title"><mdb-badge color="pink">{{ block.txs }}</mdb-badge></h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Timestamp
-                        <span class="badge badge-primary badge-pill">{{ block.time | ago | async }}</span>
+                        <h3 class="glance-title"><mdb-badge color="pink">{{ block.time | ago | async }}</mdb-badge></h3>
                     </li>
                 </ul>
-            </mat-card-content>
-        </mat-card>
+            </mdb-card-body>
+        </mdb-card>
     </div>
     <div class="col-12">
       <div class="my-5">
-        <mat-card alignment="left">
-          <mat-card-title>Transactions</mat-card-title>
-            <div class="card-body">
-              <mat-tab-group (selectedTabChange)="onTabChange($event);">
-                <mat-tab label="All">
-                  <div class="row table-responsive text-nowrap scrollbar-primary">
-                    <table mat-table [dataSource]="txsDataSource" class="table large-header">
-                      <ng-container matColumnDef="hash">
-                        <th mat-header-cell *matHeaderCellDef> Hash </th>
-                        <td (click)="openTxDialog(tx)" style="cursor: pointer;" mat-cell *matCellDef="let tx">
-                        {{ tx.hash | slice:0:12 }}...
-                        </td>
-                      </ng-container>
-                  
-                      <ng-container matColumnDef="type">
-                        <th mat-header-cell *matHeaderCellDef> Type </th>
-                        <td mat-cell *matCellDef="let tx">
-                          <p *ngFor="let action of tx.action">
-                            {{ action }}
-                          </p>
-                        </td>
-                      </ng-container>
-                  
-                      <tr mat-header-row *matHeaderRowDef="txsDisplayedColumns"></tr>
-                      <tr mat-row *matRowDef="let row; columns: txsDisplayedColumns;"></tr>
-                    </table>
-                  </div>
-                </mat-tab>
-                <mat-tab label="Transfer">
-                  <div class="row table-responsive text-nowrap scrollbar-primary">
+        <mdb-card alignment="left" class="mat-elevation-z8">
+          <mdb-card-header>
+            <mdb-card-title>Transactions</mdb-card-title>
+          </mdb-card-header>
+          <mdb-card-body>
+            <mat-tab-group (selectedTabChange)="onTabChange($event);">
+                  <mat-tab label="All">
+                    <div class="row table-responsive text-nowrap scrollbar-primary">
+                      <table mat-table [dataSource]="txsDataSource" class="table large-header">
+                        <ng-container matColumnDef="hash">
+                          <th mat-header-cell *matHeaderCellDef> Hash </th>
+                          <td (click)="openTxDialog(tx)" style="cursor: pointer;" mat-cell *matCellDef="let tx">
+                          {{ tx.hash | slice:0:12 }}...
+                          </td>
+                        </ng-container>
                     
-                  </div>
-                </mat-tab>
-                <mat-tab label="Staking">
-                  <div class="row table-responsive text-nowrap scrollbar-primary">
+                        <ng-container matColumnDef="type">
+                          <th mat-header-cell *matHeaderCellDef> Type </th>
+                          <td mat-cell *matCellDef="let tx">
+                            <p *ngFor="let action of tx.action">
+                              {{ action }}
+                            </p>
+                          </td>
+                        </ng-container>
                     
-                  </div>
-                </mat-tab>
-                <mat-tab label="Distribution">
-                  <div class="row table-responsive text-nowrap scrollbar-primary">
+                        <tr mat-header-row *matHeaderRowDef="txsDisplayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: txsDisplayedColumns;"></tr>
+                      </table>
+                    </div>
+                  </mat-tab>
+                  <mat-tab label="Transfer">
+                    <div class="row table-responsive text-nowrap scrollbar-primary">
+                      
+                    </div>
+                  </mat-tab>
+                  <mat-tab label="Staking">
+                    <div class="row table-responsive text-nowrap scrollbar-primary">
+                      
+                    </div>
+                  </mat-tab>
+                  <mat-tab label="Distribution">
+                    <div class="row table-responsive text-nowrap scrollbar-primary">
+                      
+                    </div>
+                  </mat-tab>
+                  <mat-tab label="Governance">
                     
-                  </div>
-                </mat-tab>
-                <mat-tab label="Governance">
-                  
-                </mat-tab>
-                <mat-tab label="Slashing">
-                  <div class="row table-responsive text-nowrap scrollbar-primary">
-                    
-                  </div>
-                </mat-tab>
-              </mat-tab-group>
-              <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
-            </div>
-        </mat-card>
+                  </mat-tab>
+                  <mat-tab label="Slashing">
+                    <div class="row table-responsive text-nowrap scrollbar-primary">
+                      
+                    </div>
+                  </mat-tab>
+            </mat-tab-group>
+            <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
+          </mdb-card-body>
+        </mdb-card>
       </div>
     </div>
   </div>

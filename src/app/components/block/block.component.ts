@@ -7,6 +7,7 @@ import { TxComponent } from '../tx/tx.component';
 import { PopupService } from 'src/app/services/popup.service';
 import { AppState } from 'src/app/state/app.interface';
 import { selectAppState } from 'src/app/state/app.reducers';
+import { ToastrService } from 'ngx-toastr';
 // import { HttpClient } from '@angular/common/http';
 // import { ActivatedRoute, Router } from '@angular/router';
 // import { nodeRpc2 } from '../../../config.js';
@@ -34,7 +35,8 @@ export class BlockComponent implements OnInit, AfterViewInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ts: TxsService,
     private dialog: MatDialog,
-    private popupService: PopupService
+    private popupService: PopupService,
+    private toastr: ToastrService,
   ) { 
     // TODO remove debugging
     console.log(data.block);
@@ -161,6 +163,11 @@ export class BlockComponent implements OnInit, AfterViewInit {
 
   openValidatorDialog(addressHEX) {
     this.popupService.openValidatorDialogAddrHEX(addressHEX, this.dialog);
+  }
+
+  onCopySucceess() {
+    // const options = { toastClass: 'opacity' };
+    this.toastr.success('Copied to clipboard');
   }
 
 

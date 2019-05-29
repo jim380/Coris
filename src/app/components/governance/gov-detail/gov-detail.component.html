@@ -19,34 +19,30 @@
                   <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Proposer
-                      <span class="badge badge-primary badge-pill" *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( proposal.proposer ) : false; else elseVetoVoter">
-                        {{ (appState | async).valsMap.get( proposal.proposer )}}
-                      </span>
-                      <ng-template #elseVetoVoter>{{proposal.proposer}}</ng-template>
+                      <h3 class="glance-title"><mdb-badge color="pink">
+                        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( proposal.proposer ) : false; else elseVetoVoter">
+                          {{ (appState | async).valsMap.get( proposal.proposer )}}
+                        </span>
+                        <ng-template #elseVetoVoter>{{proposal.proposer}}</ng-template>
+                      </mdb-badge></h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Deposit
-                      <span class="badge badge-primary badge-pill">
-                        {{proposal.total_deposit[0].amount/1e6 | number:".2-2"}} ATOM
-                      </span>
+                      <h3 class="glance-title"><mdb-badge color="pink">{{proposal.total_deposit[0].amount/1e6 | number:".2-2"}} ATOM</mdb-badge></h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Status
-                      <span class="badge badge-primary badge-pill">
+                      <h3 class="glance-title"><mdb-badge color="pink">
                         {{proposal.proposal_status}}
-                      </span>
+                      </mdb-badge></h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Voting Start
-                      <span class="badge badge-primary badge-pill">
-                          {{ proposal.voting_start_time | date :'short' }}
-                      </span>
+                      <h3 class="glance-title"><mdb-badge color="pink">{{ proposal.voting_start_time | date :'short' }}</mdb-badge></h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Voting End
-                      <span class="badge badge-primary badge-pill">
-                          {{ proposal.voting_end_time | date :'short' }}
-                      </span>
+                      <h3 class="glance-title"><mdb-badge color="pink">{{ proposal.voting_end_time | date :'short' }}</mdb-badge></h3>
                     </li>
                   </ul>
                 </mdb-card-body>

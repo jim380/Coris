@@ -171,7 +171,7 @@
                           </span>
                           <ng-template #elseValidatorDelegate>{{ tx.msg[i].value.validator_address }}</ng-template>
                         </a>                                              
-                      </span>
+                      </span>&nbsp;
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgMultiSend'">
                         <span *ngFor="let input of tx.msg[i].value.inputs">
@@ -210,7 +210,7 @@
                             {{ (appState | async).valsMap.get( tx.msg[i].value.delegator_address )}}
                           </span>
                           <ng-template #elseDelegatorWithdraw>{{ tx.msg[i].value.delegator_address }}</ng-template>
-                        </a>&nbsp;
+                        </a><br>
                         <mdb-badge default="true">withdrew rewards</mdb-badge>&nbsp;
                         from 
                         <br>
@@ -311,7 +311,7 @@
                         <mdb-badge default="true">voted</mdb-badge>&nbsp;
                         {{ tx.msg[i].value.option }} on prop.{{ tx.msg[i].value.proposal_id }}                           
                       </span>        
-                    </span>
+                    </span><br>
                     <span *ngIf="tx.error">
                       <mdb-badge danger="true">Error</mdb-badge>&nbsp;{{ tx.error|titlecase }}
                     </span>

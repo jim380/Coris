@@ -4,9 +4,9 @@
 }
 
 .card.card-cascade h3,
-.card.card-cascade h4,
+.card.card-cascade h4
 {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .blue-gradient {
@@ -41,4 +41,21 @@
 a {
   color: #4a4a4a;
   // font-size: 200%;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 130%;
+}
+
+.glance-title {
+  margin: 0 !important
+}
+
+mdb-card-title {
+  color: white;
+}
+
+mdb-card-header {
+background-color: #3F51B5;
 }

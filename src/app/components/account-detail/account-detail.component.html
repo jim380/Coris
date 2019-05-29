@@ -1,57 +1,58 @@
 <section>
   <div class="row">
     <div class="col-12">
-      <mdb-card class="testimonial-card mb-5">
-        <div class="card-up indigo lighten-1">
-        </div>
+      <mdb-card class="testimonial-card mat-elevation-z8 mb-3">
+        <mdb-card-header>
+          <mdb-card-title>{{ delegator.address }}</mdb-card-title>
+        </mdb-card-header>
         <mdb-card-body>
-          <mdb-card-title>
-            <h1>Account {{ delegator.address }}</h1>
-          </mdb-card-title>
-          <hr>
-          <div class="card my-5">
+          <div class="card">
             <div class="card-body">
               
               <div class="row">
                 <div class="col-sm-4 col-12">
-                  <small class="grey-text">Available</small>
+                  <h4 class="glance-title"><mdb-badge color="red">Available</mdb-badge></h4>
                   <h4>{{ delegator.balance.available/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
                 </div>
                 <div class="col-sm-4 col-12">
-                  <small class="grey-text">Delegated</small>
+                  <h4 class="glance-title"><mdb-badge color="cyan">Delegated</mdb-badge></h4>
                   <h4>{{ delegator.balance.delegated/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
                 </div>
                 <div class="col-sm-4 col-12">
-                  <small class="grey-text">Rewards</small>
+                  <h4 class="glance-title"><mdb-badge color="amber darken-2">Rewards</mdb-badge></h4>
                   <h4>{{ delegator.balance.rewards/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-sm-4 col-12">
-                  <small class="grey-text">Unbonding</small>
+                  <h4 class="glance-title"><mdb-badge color="lime">Unbonding</mdb-badge></h4>
                   <h4>{{ delegator.balance.unbonding/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
                 </div>
                 <div class="col-sm-4 col-12">
-                  <small class="grey-text">Total</small>
+                  <h4 class="glance-title"><mdb-badge color="purple darken-2">Total</mdb-badge></h4>
                   <h4>{{ delegator.balance.total/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
                 </div>
                 <div class="col-sm-4 col-12">
-                  <small class="grey-text">Total</small>
+                  <h4 class="glance-title"><mdb-badge color="indigo">Total $</mdb-badge></h4>
                   <h4> 
                   {{ ((delegator.balance.total/1e6) * quoteUsd) | number:".2-2" }}&nbsp;USD
                   </h4>
                 </div>
               </div>
-    
-              <a class="btn grey btn-rounded waves-effect waves-light text-white" mdbWavesEffect>At a Glance</a>
+              <a class="btn pink btn-rounded waves-effect waves-light text-white" mdbWavesEffect>At a Glance</a>
             </div>
           </div>
         </mdb-card-body>
       </mdb-card>
       <div class="col-12">
-        <div class="card my-5">
-          <app-txs-list-card [address]="delegator.address"></app-txs-list-card>
+        <div class="card mat-elevation-z8 mb-3">
+          <mdb-card-header>
+            <mdb-card-title>Transactions</mdb-card-title>
+          </mdb-card-header>
+          <mdb-card-body>
+            <app-txs-list-card [address]="delegator.address"></app-txs-list-card>
+          </mdb-card-body>
         </div>
       </div>
     </div>   
