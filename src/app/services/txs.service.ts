@@ -21,10 +21,40 @@ export class TxsService {
 
   // sender is an account in cosmos-prefix format
   // e.g. cosmos1msy0nwz3q5ky9sj539mutajqye934sl2wexmaf
-  public getTxs(sender: string, limit: number, page: number) {
+  public getTransferTxs(sender: string, limit: number, page: number) {
     // TODO remove debugging
     // console.log(`${nodeRpc1}/txs?sender=${sender}&limit=${limit}&page=${page}`);
     return this.http.get(`${nodeRpc1}/txs?sender=${sender}&limit=${limit}&page=${page}`);
+  }
+
+  // @aakatev 
+  // Very slow, not recommended to run on front end
+  public getAllTransferTxs(sender:string) {
+    return new Promise (async resolve => {
+      let transfer_txs = await this.getTransferTxsPromise(sender, 100, 1);
+      resolve(transfer_txs);
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
+  private getTransferTxsPromise(sender: string, limit: number, page: number) {
+    return new Promise(resolve => {
+      this.http.get(`${nodeRpc1}/txs?sender=${sender}&limit=${limit}&page=${page}`)
+      .toPromise().then( async (response: any) => {
+        if(response.length < 100) {
+          resolve(response);
+        } else {
+          let txs_part = await this.getTransferTxsPromise(sender, limit, ++page);
+          resolve(
+            response.concat(txs_part)
+          );
+        }
+      }).catch(error => {
+        console.log(error);
+        resolve(null);
+      });
+    });
   }
 
   // delegator is an account in cosmos-prefix format

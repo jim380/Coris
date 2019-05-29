@@ -107,16 +107,6 @@ th:nth-child(6) {
   width: 20%;
 }
 
- /* Expandable rows */
- tr {
-  cursor: pointer;
-}
-
-tr.proposal-detail-row {
-  height: 0;
-  cursor: default;
-}
-
 .list-group-item {
   color: black;
 }

@@ -133,11 +133,9 @@
                         Balance
                     </mdb-badge>
                     <h4>
-                      <span 
-                          *ngIf="validator.account?.tokens; else balanceElseBlock" 
-                          matTooltipPosition="above"
-                      >
-                        {{validator.account.tokens/1e6 | number:'.2-2'}}
+                      <span *ngIf="validator.account.type; else balanceElseBlock" 
+                              matTooltipPosition="above">
+                        {{ validator.account.value.coins[0].amount /1e6 | number:'.2-2'}}
                       </span>
                       <ng-template #balanceElseBlock>
                         0

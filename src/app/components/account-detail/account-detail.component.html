@@ -1,107 +1,59 @@
 <section>
-    <div class="row">
-        <!-- First column -->
-        <div class="col-12">
-          <mdb-card class="testimonial-card mb-5">
-              <!--Bacground color-->
-              <div class="card-up indigo lighten-1">
+  <div class="row">
+    <div class="col-12">
+      <mdb-card class="testimonial-card mb-5">
+        <div class="card-up indigo lighten-1">
+        </div>
+        <mdb-card-body>
+          <mdb-card-title>
+            <h1>Account {{ delegator.address }}</h1>
+          </mdb-card-title>
+          <hr>
+          <div class="card my-5">
+            <div class="card-body">
+              
+              <div class="row">
+                <div class="col-sm-4 col-12">
+                  <small class="grey-text">Available</small>
+                  <h4>{{ delegator.balance.available/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
+                </div>
+                <div class="col-sm-4 col-12">
+                  <small class="grey-text">Delegated</small>
+                  <h4>{{ delegator.balance.delegated/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
+                </div>
+                <div class="col-sm-4 col-12">
+                  <small class="grey-text">Rewards</small>
+                  <h4>{{ delegator.balance.rewards/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
+                </div>
               </div>
-        
-              <!--Avatar-->
-              <!-- <div class="avatar mx-auto">
-                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(10).jpg" class="rounded-circle">
+
+              <div class="row">
+                <div class="col-sm-4 col-12">
+                  <small class="grey-text">Unbonding</small>
+                  <h4>{{ delegator.balance.unbonding/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
+                </div>
+                <div class="col-sm-4 col-12">
+                  <small class="grey-text">Total</small>
+                  <h4>{{ delegator.balance.total/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
+                </div>
+                <div class="col-sm-4 col-12">
+                  <small class="grey-text">Total</small>
+                  <h4> 
+                  {{ ((delegator.balance.total/1e6) * quoteUsd) | number:".2-2" }}&nbsp;USD
+                  </h4>
+                </div>
               </div>
-         -->
-              <mdb-card-body>
-                <!--Name-->
-                <mdb-card-title>
-                  <h1>Account {{ delegator.address }}</h1>
-                  <!-- <a href="#" target=" "><i class="ion-social-chrome"></i></a> -->
-                </mdb-card-title>
-                <hr>
-                <!--Quotation-->
-                <!-- <p>
-                  <i class="fas fa-quote-left"></i>Description
-                </p> -->
-        
-                <!-- <mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-4 pills-secondary white mb-2'" [contentClass]="'card'">
-                  <mdb-tab heading="Operator address">
-                    <div class="row">
-                      <div class="col-12">
-                        <p>operator address</p>
-                      </div>
-                    </div>
-                  </mdb-tab>
-        
-                  <mdb-tab heading="Delegator address">
-                    <div class="row">
-                      <div class="col-12">
-                        <p>validator address</p>
-                      </div>
-                    </div>
-                  </mdb-tab>
-          
-                </mdb-tabset> -->
-                  <!--Panel-->
-                  <div class="card my-5">
-                      <div class="card-body">
-                          <div class="row">
-                              <div class="col-sm-4 col-12">
-                                  <small class="grey-text">Available</small>
-                                  <h4>{{ delegator.balance.available/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
-                              </div>
-                              <div class="col-sm-4 col-12">
-                                  <small class="grey-text">Delegated</small>
-                                  <h4>{{ delegator.balance.delegated/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
-                              </div>
-                              <div class="col-sm-4 col-12">
-                                  <small class="grey-text">Rewards</small>
-                                  <h4>{{ delegator.balance.rewards/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-sm-4 col-12">
-                                  <small class="grey-text">Unbonding</small>
-                                  <h4>{{ delegator.balance.unbonding/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
-                              </div>
-                              <div class="col-sm-4 col-12">
-                                  <small class="grey-text">Total</small>
-                                  <h4>{{ delegator.balance.total/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
-                              </div>
-                              <div class="col-sm-4 col-12">
-                                  <small class="grey-text">Total</small>
-                                  <h4> 
-                                    {{ ((delegator.balance.total/1e6) * quoteUsd) | number:".2-2" }}&nbsp;USD
-                                  </h4>
-                              </div>
-                          </div>
-      
-                          <!-- <div class="row">
-                              <div class="col-sm-4 col-12">
-                                  <small class="grey-text">Commission</small>
-                                  <h4>10%</h4>
-                              </div>
-                              <div class="col-sm-4 col-12">
-                                  <small class="grey-text">Commission Max</small>
-                                  <h4>25%</h4>
-                              </div>
-                              <div class="col-sm-4 col-12">
-                                  <small class="grey-text">Commission Max Change</small>
-                                  <h4>1%</h4>
-                              </div>
-                          </div> -->
-                          <a class="btn grey btn-rounded waves-effect waves-light text-white" mdbWavesEffect>At a Glance</a>
-                      </div>
-                  </div>
-                  <!--/.Panel-->
-              </mdb-card-body>
-            </mdb-card>
-            <!-- Panel -->
-            <div class="col-12">
-              <div class="card my-5">
-                <app-txs-list-card [address]="delegator.address"></app-txs-list-card>
-              </div>
+    
+              <a class="btn grey btn-rounded waves-effect waves-light text-white" mdbWavesEffect>At a Glance</a>
             </div>
-        </div>   
+          </div>
+        </mdb-card-body>
+      </mdb-card>
+      <div class="col-12">
+        <div class="card my-5">
+          <app-txs-list-card [address]="delegator.address"></app-txs-list-card>
+        </div>
+      </div>
+    </div>   
   </div>
 </section>

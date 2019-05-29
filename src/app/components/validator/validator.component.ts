@@ -59,7 +59,7 @@ export class ValidatorComponent implements OnInit {
 
   ngAfterViewInit() {
     if(this.validator.account.value.address) {
-      this.ts.getTxs(this.validator.account.value.address, 20, 1).subscribe((data: any) => {
+      this.ts.getTransferTxs(this.validator.account.value.address, 100, 1).subscribe((data: any) => {
         // TODO remove debugging
         // console.log(data);
         this.transactions.transfer = data;

@@ -36,17 +36,17 @@ export class AccountDetailComponent implements OnInit {
   ngOnInit() {
     this.ts.getAccountInfo(this.delegator.address).subscribe((data: any) => {
       // TODO remove debugging
-      // console.log("Account", data);
+      console.log("Account", data);
       if(data.value.coins) {
         this.delegator.balance.available = Number(data.value.coins[0].amount);
         this.delegator.balance.total += Number(data.value.coins[0].amount);
-        console.log(this.delegator.balance.total);
+        // console.log(this.delegator.balance.total);
       }
     });
 
     this.ts.getDelegations(this.delegator.address).subscribe((data: any) => {
       // TODO remove debugging
-      // console.log("Delegations:", data);
+      console.log("Delegations:", data);
 
       if(data) {
         this.delegator.delegations = data;
@@ -56,7 +56,7 @@ export class AccountDetailComponent implements OnInit {
           this.delegator.balance.delegated += Number(delegation.shares);
           this.delegator.balance.total += Number(delegation.shares);
           
-          console.log(this.delegator.balance.total);
+          // console.log(this.delegator.balance.total);
         });
       }
     });
@@ -79,7 +79,7 @@ export class AccountDetailComponent implements OnInit {
 
     this.ts.getRedelegations(this.delegator.address).subscribe((data: any) => {
       // TODO remove debugging
-      // console.log("Redelegations:", data);
+      console.log("Redelegations:", data);
       if(data) {
         this.delegator.redelegations = data;
       }
@@ -87,7 +87,7 @@ export class AccountDetailComponent implements OnInit {
 
     this.ts.getDelegatorRewards(this.delegator.address).subscribe((data: any) => {
       // TODO remove debugging
-      // console.log("Rewards:", data);
+      console.log("Rewards:", data);
       if(data) {
         this.delegator.rewards = data;
         data.forEach((reward: any) => {

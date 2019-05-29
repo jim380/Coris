@@ -38,6 +38,18 @@ export class ValidatorsService {
 
       for (const i in validators) {
         validators[i].rank = (Number(i) + 1);
+
+        // TODO @aakatev 5/28/19
+        // Do this mapping on backend
+        if(validators[i].account.tokens === 0) {
+          validators[i].account = { type: null, value: null }
+        } else if (
+          validators[i].account.type === "auth/DelayedVestingAccount"
+        ) {
+          validators[i].account.value = validators[i].account.value.BaseVestingAccount.BaseAccount; 
+        }
+
+        console.log(validators[i].account)
       }
       // console.log(validators);
       this.appStore.dispatch( new UpdateValidators(validators) );

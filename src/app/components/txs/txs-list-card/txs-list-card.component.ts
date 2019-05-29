@@ -35,9 +35,9 @@ export class TxsListCardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.ts.getTxs(this.address, 50, 1).subscribe((data: any) => {
+    this.ts.getTransferTxs(this.address, 100, 1).subscribe((data: any) => {
       // TODO remove debugging
-      // console.log("Txs:", data);
+      console.log("Txs:", data);
       this.delegator.txs.transfer = data;
     });
 
