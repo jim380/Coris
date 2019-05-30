@@ -6,42 +6,50 @@ let cards = [
   {
     data: 0,
     title: 'Last Block',
-    timestamp: formattedTime
+    timestamp: formattedTime,
+    icon: 'cubes'
   },
   {
     data: 0,
     title: 'Consensus',
-    timestamp: formattedTime
+    timestamp: formattedTime,
+    icon: 'atom'
   },
   {
     data: 0,
     title: 'Validators',
-    timestamp: formattedTime
+    timestamp: formattedTime,
+    icon: 'user-tie'
   },
   {
     data: 0,
     title: 'Bonded',
-    timestamp: formattedTime
+    timestamp: formattedTime,
+    icon: 'database'
   },
   {
     data: 0,
     title: 'Block Time',
-    timestamp: formattedTime
+    timestamp: formattedTime,
+    icon: 'clock'
   },
   {
     data: 0,
     title: 'Community Pool',
-    timestamp: formattedTime
+    timestamp: formattedTime,
+    icon: 'hand-holding-heart'
   },
   {
     data: 0,
     title: 'Inflation',
-    timestamp: formattedTime
+    timestamp: formattedTime,
+    icon: 'arrow-up'
   },
   {
     data: 0,
     title: 'Price (USD)',
-    timestamp: formattedTime
+    timestamp: formattedTime,
+    icon: 'hand-holding-usd'
   }
 ];
 export { cards };

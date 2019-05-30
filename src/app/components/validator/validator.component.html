@@ -18,7 +18,7 @@
                   <!--Name-->
                   <mdb-card-title>
                     <h1>{{ validator.description.moniker }}</h1>
-                    <a href="{{ validator.description.website }}" target=" "><i class="ion-social-chrome"></i></a>
+                    <a *ngIf="validator.description.website" href="{{ validator.description.website }}" target=" "><i class="ion-social-chrome"></i></a>
                   </mdb-card-title>
                   <hr>
                   <!--Quotation-->
@@ -193,7 +193,7 @@
               <mdb-card-header>
                 <!-- <mdb-card-title>Account: {{ validator.account.value.address }}</mdb-card-title> -->
                 <!-- <mat-card-subtitle>Transactions (last 100)</mat-card-subtitle> -->
-                <mdb-card-title>Power Events</mdb-card-title>
+                <mdb-card-title>Transactions</mdb-card-title>
               </mdb-card-header>
               <mdb-card-body>
                 <div class="card-body">
