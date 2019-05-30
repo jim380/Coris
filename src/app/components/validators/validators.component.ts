@@ -177,7 +177,7 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
   // TODO @aakatev 
   // Rewrite with observable as a state
   tableFilterState:any = "";
-  tableFilterButtonLabel:string = "All";
+  tableFilterButtonLabel:string = "Bonded";
 
   validatorsJailedFilter(isJailed) {
     this.displayUnbondColumn = false;

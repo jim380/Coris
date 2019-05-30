@@ -19,8 +19,8 @@ const commissionChart = {
   colors: [
     {
       backgroundColor: 'rgba(255,255,255,0.2)',
-      // borderColor: 'rgba(255,255,255,1)',
-      // borderWidth: 1,
+      hoverBorderColor: 'rgba(255,255,255,1)',
+      hoverBorderWidth: 1,
       pointBackgroundColor: 'rgba(255,255,255,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
@@ -28,8 +28,8 @@ const commissionChart = {
     },
     {
       backgroundColor: 'rgba(255,255,255,0.2)',
-      // borderColor: 'rgba(255,255,255,1)',
-      // borderWidth: 1,
+      hoverBorderColor: 'rgba(255,255,255,1)',
+      hoverBorderWidth: 1,
       pointBackgroundColor: 'rgba(255,255,255,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
@@ -37,8 +37,8 @@ const commissionChart = {
     },
     {
       backgroundColor: 'rgba(255,255,255,0.2)',
-      // borderColor: 'rgba(255,255,255,1)',
-      // borderWidth: 1,
+      hoverBorderColor: 'rgba(255,255,255,1)',
+      hoverBorderWidth: 1,
       pointBackgroundColor: 'rgba(255,255,255,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
@@ -55,15 +55,41 @@ const commissionChart = {
     },
     scales: {
       yAxes: [{
+        scaleLabel: {   // To format the scale Lebel
+          display: true,
+          labelString: 'Validator Count',
+          fontColor: 'white'
+        },
         ticks: {
           fontColor: 'white',
         }
       }],
       xAxes: [{
+        scaleLabel: {   // To format the scale Lebel
+          display: true,
+          labelString: 'Commission Rate (%)',
+          fontColor: 'white',
+        },
         ticks: {
           fontColor: 'white',
+          callback: function (value) {
+            return (value*100).toFixed(1); // convert it to percentage
+          }
         }
       }]
+    },
+    tooltip: {
+      callbacks: {
+        // Not working. Needs fixed
+        label: function(tooltipItem, datasets) {
+          var label = datasets.data[tooltipItem.datasetIndex].label
+          return label;
+        },
+        value: function(tooltipItem, datasets) {
+          var value = datasets.data[tooltipItem.datasetIndex].value
+          return value;
+        }
+      }
     }
   }
 };
@@ -84,7 +110,39 @@ const blockChart = {
       pointHoverBorderColor: 'rgba(220,220,220,1)'
     }
   ],
-  type: 'line'
+  type: 'line',
+  options: {
+    responsive: true,
+    legend: {
+      labels: {
+        fontColor: 'white',
+      }
+    },
+    scales: {
+      yAxes: [{
+        display: true,
+        scaleLabel: {   // To format the scale Lebel
+          display: true,
+          labelString: 'Time (sec)',
+          fontColor: 'white'
+        },
+        ticks: {
+          fontColor: 'white',
+        }
+      }],
+      xAxes: [{
+        display: true,
+        scaleLabel: {   // To format the scale Lebel
+          display: true,
+          labelString: 'Last X Blocks',
+          fontColor: 'white',
+        },
+        ticks: {
+          fontColor: 'white',
+        }
+      }]
+    }
+  }
 };
 
 
@@ -110,10 +168,42 @@ const scatterChart = {
     }
   ],
   colors: [],
+  type: 'scatter',
   options: {
     responsive: true,
-  },
-  type: 'scatter'
+    legend: {
+      labels: {
+        // fontColor: 'white',
+      }
+    },
+    scales: {
+      yAxes: [{
+        display: true,
+        scaleLabel: {   // To format the scale Lebel
+          display: true,
+          labelString: 'Voting Power',
+          // fontColor: 'white',
+        },
+        ticks: {
+          // fontColor: 'white',
+          callback: function (value) {
+            return (Math.floor(value / 1000000)).toLocaleString(); // convert it to percentage
+          }
+        }
+      }],
+      xAxes: [{
+        display: true,
+        scaleLabel: {   // To format the scale Lebel
+          display: true,
+          labelString: 'Validator Count',
+          // fontColor: 'white',
+        },
+        ticks: {
+          // fontColor: 'white',
+        }
+      }]
+    }
+  }
 };
 
 export { 

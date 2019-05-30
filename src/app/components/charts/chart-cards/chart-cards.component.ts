@@ -34,6 +34,7 @@ export class ChartCardsComponent implements OnInit {
   public blockChartDatasets = blockChart.datasets;
   public blockChartLabels = blockChart.labels;
   public blockChartColors = blockChart.colors;
+  public blockChartOptions = blockChart.options;
 
   validatorsState: Observable<ValidatorsState>;
   storeSubscription$;
