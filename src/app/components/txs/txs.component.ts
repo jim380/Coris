@@ -32,7 +32,7 @@ import { selectAppState } from 'src/app/state/app.reducers';
   ],
 })
 export class TxsComponent implements OnInit {
-  private INITIAL_TXS_COUNT = 15;
+  public INITIAL_TXS_COUNT = 15;
 
   private dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
   // private paginator: MatPaginator;

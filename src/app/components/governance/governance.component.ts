@@ -19,9 +19,9 @@ import { GovService } from 'src/app/services/gov.service';
 })
 export class GovernanceComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<any>;
-  private expandedElement: any | null;
-  private dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
-  private proposals: any[];
+  public expandedElement: any | null;
+  public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+  public proposals: any[];
   
   displayedColumns: string[] = [
     'id', 
