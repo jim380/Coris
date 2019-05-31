@@ -96,19 +96,30 @@ const commissionChart = {
 
 const blockChart = {
   datasets: [
-    {data: [], label: 'Block Time'}
+    {data: [], label: 'Block Time'},
+    {data: [], label: 'Avg. Block Time'}
   ],
   labels: [0, 40, 60, 80, 100],
   colors: [
     {
-      backgroundColor: 'rgba(220,220,220,0.2)',
+      backgroundColor: 'rgba(220,220,220,0.32)',
       borderColor: 'rgba(220,220,220,1)',
       borderWidth: 2,
       pointBackgroundColor: 'rgba(220,220,220,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(220,220,220,1)'
-    }
+    },
+    {
+      backgroundColor: 'rgba(63,103,113,0.0)',
+      borderColor: 'rgba(176,48,150,1)',
+      borderWidth: 2,
+      pointBackgroundColor: 'rgba(220,220,220,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(220,220,220,1)'
+    },
+        
   ],
   type: 'line',
   options: {
@@ -151,18 +162,24 @@ const scatterChart = {
   datasets: [
     {
       data: [],
-      label: 'Top100',
+      label: 'Voting Weight',
       pointRadius: 5,
     },
     {
       data: [],
-      label: 'Top50',
+      label: 'Self Bond',
       pointRadius: 5,
       hidden: true
     },
     {
       data: [],
-      label: 'Top25',
+      label: 'Assets',
+      pointRadius: 5,
+      hidden: true
+    },
+    {
+      data: [],
+      label: 'Rewards',
       pointRadius: 5,
       hidden: true
     }
@@ -181,7 +198,7 @@ const scatterChart = {
         display: true,
         scaleLabel: {   // To format the scale Lebel
           display: true,
-          labelString: 'Voting Power',
+          labelString: 'Uatom',
           // fontColor: 'white',
         },
         ticks: {

@@ -66,10 +66,21 @@ export class ChartCardsComponent implements OnInit {
       let formattedBlocksTime = blocksTime.map(x => x/1000);
       if(formattedBlocksTime.length === 99) {
         // TODO remove debugging
-        // console.log( formattedBlocksTime );
-        this.blockChartDatasets = [ { data: formattedBlocksTime, label: 'Block Time'} ];;
+        console.log( formattedBlocksTime );
+        this.blockChartDatasets = [ { data: formattedBlocksTime, label: 'Block Time'}, this.blockChartDatasets[1] ];
       }
     });
+
+    this.bs.getAvgBlockTime$()
+    .subscribe(data => {
+      // TODO remove debugging
+      console.log(data);
+      let avgBlockTime = [];
+      for (let i = 0; i < 100; i++) {
+        avgBlockTime[i] = data/1000;
+      }
+      this.blockChartDatasets = [ this.blockChartDatasets[0], { data: avgBlockTime, label: 'Avg. Block Time'} ];
+    })
   }
 
   ngOnDestroy() {
@@ -85,13 +96,17 @@ export class ChartCardsComponent implements OnInit {
   //output: 1,2,3,4,5,6,7,8,9,10
   const example = validatorsCounter$
     .subscribe( (count) => { 
+      // console.log(validatorsArray[count]);
+
       this.scatterChartData[0].data.push({ x: count+1, y: validatorsArray[count].tokens });
-      if(count < 50) {
-        this.scatterChartData[1].data.push({ x: count+1, y: validatorsArray[count].tokens });
+      this.scatterChartData[1].data.push({ x: count+1, y: validatorsArray[count].self_bond });
+      this.scatterChartData[2].data.push({ x: count+1, y: Number(validatorsArray[count].account.value.coins[0].amount) });
+      
+      if( validatorsArray[count].outstanding_rewards ) {
+        this.scatterChartData[3].data.push({ x: count+1, y: Number(validatorsArray[count].outstanding_rewards[0].amount) });
+      } else {
+        this.scatterChartData[3].data.push({ x: count+1, y: 0 });
       }
-      if(count < 25) {
-        this.scatterChartData[2].data.push({ x: count+1, y: validatorsArray[count].tokens });
-      } 
     });
 
 

@@ -42,14 +42,23 @@ export class ValidatorsService {
         // TODO @aakatev 5/28/19
         // Do this mapping on backend
         if(validators[i].account.tokens === 0) {
-          validators[i].account = { type: null, value: null }
+          validators[i].account = { 
+            type: null, 
+            value: { 
+              coins: [{ amount: 0, denom: 'uatom' }] 
+            } 
+          }
         } else if (
           validators[i].account.type === "auth/DelayedVestingAccount"
         ) {
           validators[i].account.value = validators[i].account.value.BaseVestingAccount.BaseAccount; 
+        } else if (
+          !validators[i].account.value.coins
+        ) {
+          validators[i].account.value.coins = [{ amount: 0, denom: 'uatom' }];
         }
 
-        console.log(validators[i].account)
+        // console.log(validators[i].account)
       }
       // console.log(validators);
       this.appStore.dispatch( new UpdateValidators(validators) );
