@@ -143,9 +143,9 @@
                           <span *ngIf="(appState | async).valsMap.size 
                                         ? (appState | async).valsMap.has( tx.msg[i].value.delegator_address ) 
                                         : false; else elseDelegatorDelegate">
-                            {{ (appState | async).valsMap.get( tx.msg[i].value.delegator_address )}}
+                          <mdb-badge color="cyan">{{ i+1 }}</mdb-badge> {{ (appState | async).valsMap.get( tx.msg[i].value.delegator_address )}}
                           </span>
-                          <ng-template #elseDelegatorDelegate>{{ tx.msg[i].value.delegator_address }}</ng-template>
+                          <ng-template #elseDelegatorDelegate><mdb-badge color="cyan">{{ i+1 }}</mdb-badge> {{ tx.msg[i].value.delegator_address }}</ng-template>
                         </a>                          
                         <br>
                         <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgDelegate'; else elseDelegateBlock">
@@ -171,7 +171,7 @@
                           </span>
                           <ng-template #elseValidatorDelegate>{{ tx.msg[i].value.validator_address }}</ng-template>
                         </a>                                              
-                      </span>&nbsp;
+                      </span><br>
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgMultiSend'">
                         <span *ngFor="let input of tx.msg[i].value.inputs">
@@ -207,9 +207,9 @@
                           <span *ngIf="(appState | async).valsMap.size 
                                         ? (appState | async).valsMap.has( tx.msg[i].value.delegator_address ) 
                                         : false; else elseDelegatorWithdraw">
-                            {{ (appState | async).valsMap.get( tx.msg[i].value.delegator_address )}}
+                          <mdb-badge color="cyan">{{ i+1 }}</mdb-badge> {{ (appState | async).valsMap.get( tx.msg[i].value.delegator_address ) }}
                           </span>
-                          <ng-template #elseDelegatorWithdraw>{{ tx.msg[i].value.delegator_address }}</ng-template>
+                          <ng-template #elseDelegatorWithdraw><mdb-badge color="cyan">{{ i+1 }}</mdb-badge> {{ tx.msg[i].value.delegator_address }}</ng-template>
                         </a><br>
                         <mdb-badge default="true">withdrew rewards</mdb-badge>&nbsp;
                         from 
@@ -221,10 +221,8 @@
                             {{ (appState | async).valsMap.get( tx.msg[i].value.validator_address )}}
                           </span>
                           <ng-template #elseValidatorWithdraw>{{ tx.msg[i].value.validator_address }}</ng-template>
-                        </a>    
-                        <br>
-                        <hr>                            
-                      </span>
+                        </a><br>                          
+                      </span><br>
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgBeginRedelegate'">
                         <a (click)="openTxsListDialog( tx.msg[i].value.delegator_address )"> 
@@ -235,8 +233,7 @@
                           </span>
                           <ng-template #elseDelegatorRedelegate>{{ tx.msg[i].value.delegator_address }}</ng-template>
                         </a>
-                        <br> 
-                        <mdb-badge default="true">redelegated</mdb-badge>&nbsp;
+                        &nbsp;<mdb-badge default="true">redelegated</mdb-badge>&nbsp;
                         <span *ngIf="tx.msg[i].value.amount">
                           <span class="txn-amount">{{ tx.msg[i].value.amount.amount/1e6 | number:".2-2" }}&nbsp;ATOM</span>
                         </span>
@@ -265,8 +262,7 @@
                             {{ tx.msg[i].value.validator_dst_address }}
                           </ng-template>
                         </a>    
-                        <br>
-                        <hr>                            
+                        <br>                         
                       </span>
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgWithdrawValidatorCommission'">
@@ -311,7 +307,7 @@
                         <mdb-badge default="true">voted</mdb-badge>&nbsp;
                         {{ tx.msg[i].value.option }} on prop.{{ tx.msg[i].value.proposal_id }}                           
                       </span>        
-                    </span><br>
+                    </span>
                     <span *ngIf="tx.error">
                       <mdb-badge danger="true">Error</mdb-badge>&nbsp;{{ tx.error|titlecase }}
                     </span>

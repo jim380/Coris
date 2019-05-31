@@ -10,14 +10,7 @@ import { ValidatorComponent } from '../validator/validator.component';
 import {MatTable} from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
-import { ProfileCardComponent } from '../validator-profile/profile-card/profile-card.component';
 // import { GovDetailComponent } from '../governance/gov-detail/gov-detail.component';
-import { MetricsCardComponent } from '../validator-profile/metrics-card/metrics-card.component';
-import { AddressCardComponent } from '../validator-profile/address-card/address-card.component';
-import { RewardsCardComponent } from '../validator-profile/rewards-card/rewards-card.component';
-import { DelegatorCardComponent } from '../validator-profile/delegator-card/delegator-card.component';
-import { PowerEventCardComponent } from '../validator-profile/power-event-card/power-event-card.component'
-import { ProposedBlocksCardComponent } from '../validator-profile/proposed-blocks-card/proposed-blocks-card.component'
 import { map, skipWhile, take } from 'rxjs/operators';
 import { AppState, BlocksState, State } from 'src/app/state/app.interface';
 import { selectValidatorsState, selectValidators } from 'src/app/state/validators/validators.reducers';
@@ -214,54 +207,6 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
     this.popupService.openValidatorDialog(validator, this.dialog);
   }
 
-  openValidatorDetailDialog(validator) {
-    this.dialog.open( ProfileCardComponent,  {
-      data: { 
-        validator
-      },
-      height: '75vh',
-    });
-  }
-
-  openRewardsDialog(validator) {
-    this.dialog.open( RewardsCardComponent,  {
-      data: { 
-        validator
-      }
-    });
-  }
-
-  openDelegatorDialog(validator) {
-    this.dialog.open( DelegatorCardComponent,  {
-      data: { 
-        validator
-      }
-    });
-  }
-
-  openPowerEventsDialog(validator) {
-    this.dialog.open( PowerEventCardComponent,  {
-      data: { 
-        validator
-      }
-    });
-  }
-
-  openProposedBlocksDialog(validator) {
-    this.dialog.open( ProposedBlocksCardComponent,  {
-      data: { 
-        validator
-      }
-    });
-  }
-
-  openAddressDialog(validator) {
-    this.dialog.open( AddressCardComponent,  {
-      data: { 
-        validator
-      }
-    });
-  }
   /* END POPUPS */
 
   /* OLD CODE

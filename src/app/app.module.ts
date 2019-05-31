@@ -1,4 +1,3 @@
-// import { UniversalSearchBarComponent } from './components/universal-search-bar/universal-search-bar.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -22,10 +21,8 @@ import { GovernanceComponent } from './components/governance/governance.componen
 import { NewTxComponent } from './components/new-tx/new-tx.component';
 import { MaterialModule } from './material.module';
 
-import { DummyComponent } from './components/dummy/dummy.component';
 import { StatusBarComponent } from './components/status-bar/status-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { MainNavComponent } from './components/navigation/main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { DropdownDirective } from './Directives/dropdown.directive';
 import { BgHighlightDirective } from './Directives/bg-highlight.directive';
@@ -37,18 +34,10 @@ import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { AgmCoreModule } from '@agm/core';
 import { TestComponent } from './components/test/test.component';
 import { SidenavComponent } from './components/navigation/sidenav/sidenav.component';
-import { VerticalTabsComponent } from './components/validator-profile/vertical-tabs/vertical-tabs.component';
-import { ProfileCardComponent } from './components/validator-profile/profile-card/profile-card.component';
 import { CarouselComponent } from './components/status-bar/carousel/carousel.component';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import {TimeAgoPipe} from 'time-ago-pipe';
 import { GovDetailComponent } from './components/governance/gov-detail/gov-detail.component';
-import { MetricsCardComponent } from './components/validator-profile/metrics-card/metrics-card.component';
-import { RewardsCardComponent } from './components/validator-profile/rewards-card/rewards-card.component';
-import { AddressCardComponent } from './components/validator-profile/address-card/address-card.component';
-import { DelegatorCardComponent } from './components/validator-profile/delegator-card/delegator-card.component';
-import { PowerEventCardComponent } from './components/validator-profile/power-event-card/power-event-card.component';
-import { ProposedBlocksCardComponent } from './components/validator-profile/proposed-blocks-card/proposed-blocks-card.component';
 import { StatusCard1Component } from './components/test/status-card1/status-card1.component';
 import { StatusCard2Component } from './components/test/status-card2/status-card2.component';
 import { ChartCardsComponent } from './components/charts/chart-cards/chart-cards.component';
@@ -92,43 +81,26 @@ export class MyHammerConfig extends HammerGestureConfig {
     TxComponent,
     ValidatorComponent,
     NewTxComponent,
-    DummyComponent,
     StatusBarComponent,
     FooterComponent,
-    MainNavComponent,
     DropdownDirective,
     BgHighlightDirective,
     ScrollTopComponent,
     AgoPipe,
     TestComponent,
     SidenavComponent,
-    VerticalTabsComponent,
-    ProfileCardComponent,
     CarouselComponent,
     TimeAgoPipe,
     GovDetailComponent,
-    MetricsCardComponent,
-    RewardsCardComponent,
-    AddressCardComponent,
-    DelegatorCardComponent,
-    PowerEventCardComponent,
-    ProposedBlocksCardComponent,
     StatusCard1Component,
     StatusCard2Component,
     ChartCardsComponent,
     ChartCardsGovComponent,
     TxsListCardComponent,
     AccountDetailComponent,
-    // UniversalSearchBarComponent,
   ],
   entryComponents: [
-    ProfileCardComponent,
     GovDetailComponent,
-    RewardsCardComponent,
-    AddressCardComponent,
-    DelegatorCardComponent,
-    PowerEventCardComponent,
-    ProposedBlocksCardComponent,
     ValidatorComponent,
     TxsListCardComponent,
     TxComponent,
