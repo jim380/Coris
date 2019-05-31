@@ -6,6 +6,7 @@ import { Observable, range, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { BlocksService } from 'src/app/services/blocks.service';
+import * as LedgerApp from './lib/ledger-cosmos-js/src/index-browserify'
 
 @Component({
   selector: 'app-test',
@@ -19,48 +20,68 @@ export class TestComponent implements OnInit {
   ) { }
   
 
-  ngOnInit() {
-    // this.bs.fetch20Blocks().subscribe((blocks: any) => {
-    //   console.log(blocks);
-    // })
-
-
-    // this.store.select('App').subscribe((data: any) => {
-    //   console.log(data);
-    // });
-
-
-    // this.store.select('Blocks').subscribe((state: State) => {
-    //   console.log(state.blocks);
-    // });
-
-
+  ngOnInit() { 
+    console.log(LedgerApp);
+    
+    this.getAddrAndPubkey();
+    // this.signTx();
   }
 
-  // ngOnDestroy() {
-  //   if(this.storeSubscription$) {
-  //     this.storeSubscription$.unsubscribe();
-  //   }
-  // }
-  
+  getCosmosAppVersion() {
+    const TIMEOUT = 2;
 
-  // getBlockTimesArray(blocks, array) {
-  //   let blocksCounter$ = range( 0, (blocks.length-1) );
+    return LedgerApp.comm_u2f.create_async(TIMEOUT, true).then(
+      function (comm) {
+        try {
+          let dev = new LedgerApp.App(comm);
+          return dev.get_version().then(function (result) {
+            console.log(result);
+          })
+        }
+        catch (e) {
+          console.log(e)
+        }
+      });
+  }
+
+
+  signTx () {
+    const TIMEOUT = 120;
+    const path = [44, 118, 0, 0, 0];
+
+    let response;
+    let tx = `{"account_number":1,"chain_id":"some_chain","fee":{"amount":[{"amount":10,"denom":"DEN"}],"gas":5},"memo":"MEMO","msgs":["SOMETHING"],"sequence":3}`;
     
-  //   blocksCounter$.subscribe((count: number) => {
-  //     console.log(count);
-  //     array[count] = ( 
-  //       Date.parse(blocks[count].block.header.time) 
-  //       - Date.parse(blocks[count+1].block.header.time) 
-  //     );
-  //   });
-  // }
+    return LedgerApp.comm_u2f.create_async(TIMEOUT, true).then(
+      async function (comm) {
+        try {
+          let app = new LedgerApp.App(comm);
+          response = await app.sign(path, tx);
+          console.log(response);
+        }
+        catch (e) {
+          console.log(e)
+        }
+      })
+  }
 
-  // getArrayAverage(array: number[]) {
-  //   let total = 0;
-  //   array.forEach((element:number) => {
-  //     total += element;
-  //   });
-  //   return total/array.length
-  // }
+  getAddrAndPubkey () {
+    const TIMEOUT = 120;
+    const path = [44, 118, 0, 0, 0];
+
+    let response;
+    let tx = `{"account_number":1,"chain_id":"some_chain","fee":{"amount":[{"amount":10,"denom":"DEN"}],"gas":5},"memo":"MEMO","msgs":["SOMETHING"],"sequence":3}`;
+    
+    return LedgerApp.comm_u2f.create_async(TIMEOUT, true).then(
+      async function (comm) {
+        try {
+          let app = new LedgerApp.App(comm);
+          response = await app.getAddressAndPubKey("cosmos", path);
+          console.log(response);
+        }
+        catch (e) {
+          console.log(e)
+        }
+      })
+  }
 }

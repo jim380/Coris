@@ -1,0 +1,9 @@
+localhost:2020 {
+  bind {$ADDRESS}
+  log stdout
+  root .
+  tls self_signed
+  errors {
+    * index.html
+  }
+}

@@ -49,7 +49,7 @@ export class ValidatorsService {
           validators[i].account.value = validators[i].account.value.BaseVestingAccount.BaseAccount; 
         }
 
-        console.log(validators[i].account)
+        // console.log(validators[i].account)
       }
       // console.log(validators);
       this.appStore.dispatch( new UpdateValidators(validators) );
