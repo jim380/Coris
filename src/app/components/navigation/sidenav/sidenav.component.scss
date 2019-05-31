@@ -12,7 +12,7 @@
 
 .d-sm-inline-block {
   margin-bottom: 0;
-  color: white;
+  // color: white;
   padding-left: 5px;
   font-size: 120%;
 }
@@ -21,8 +21,8 @@ h5 .mb-0 {
   padding-left: 0;
 }
 
-.active-list-item {
-  color:#FFC107;
+.active {
+  color: #F8BBD0 !important
 }
 
 .alpha-chip {

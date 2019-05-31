@@ -6,6 +6,7 @@ import { Observable, range, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { BlocksService } from 'src/app/services/blocks.service';
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-test',
@@ -15,7 +16,10 @@ import { BlocksService } from 'src/app/services/blocks.service';
 
 export class TestComponent implements OnInit {
 
+  user: {address: string};
+
   constructor(
+    private route: ActivatedRoute
   ) { }
   
 
@@ -34,6 +38,9 @@ export class TestComponent implements OnInit {
     //   console.log(state.blocks);
     // });
 
+    this.user = {
+      address: this.route.snapshot.params['address']
+    };
 
   }
 

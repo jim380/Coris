@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChildren, QueryList } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { Store } from '@ngrx/store';
 // import { ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator } from '@angular/material';
@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TxsService } from 'src/app/services/txs.service';
 import { AppState, State } from 'src/app/state/app.interface';
 import { selectAppState } from 'src/app/state/app.reducers';
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-validator',
@@ -25,7 +26,8 @@ export class ValidatorComponent implements OnInit {
     transfer: []
   };
   
-  
+  user: {address: string};
+
   delegationsDataSource = new MatTableDataSource<any>([]);
   delegationsDisplayedColumns: string[] = ['address', 'amount'];
 
@@ -39,8 +41,8 @@ export class ValidatorComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private appStore: Store <State>,
     private ts: TxsService, 
-    private toastr: ToastrService
-    // private route: ActivatedRoute
+    private toastr: ToastrService,
+    private route: ActivatedRoute
   ) { 
     // let address = this.route.snapshot.paramMap.get('address');
     // TODO remove debugging
@@ -55,6 +57,10 @@ export class ValidatorComponent implements OnInit {
     this.delegations = this.validator.delegations.sort((a, b) => { 
       return Number(b.shares)-Number(a.shares); 
     });
+
+    this.user = {
+      address: this.route.snapshot.params['address']
+    };
   } 
 
   ngAfterViewInit() {

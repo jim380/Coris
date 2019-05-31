@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 
 import { ValidatorsComponent } from './components/validators/validators.component';
-import { LastBlockComponent } from './components/last-block/last-block.component';
 import { BlockComponent } from './components/block/block.component';
 import { BlocksComponent } from './components/blocks/blocks.component';
 import { TxComponent } from './components/tx/tx.component';
@@ -22,13 +21,12 @@ const routerOptions: ExtraOptions = {
 const routes: Routes = [
   { path: '', redirectTo: '/validators', pathMatch: 'full'},
   { path: 'validators', component: ValidatorsComponent },
-  // { path: 'dashboard', component: DashboardComponent },
   { path: 'block/:height', component: BlockComponent },
-  { path: 'last-block', component: LastBlockComponent },
   { path: 'blocks', component: BlocksComponent },
   { path: 'tx/:hash', component: TxComponent },
   { path: 'txs', component: TxsComponent },
-  { path: 'validator/:address', component: ValidatorComponent },
+  { path: 'validators/:address', component: ValidatorComponent },
+  // { path: 'validators/:address', component: TestComponent },
   { path: 'new/tx/:delegator', component: NewTxComponent},
   { path: 'gov', component: GovernanceComponent },
   { path: 'test', component: TestComponent }

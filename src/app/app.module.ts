@@ -14,7 +14,6 @@ import { ValidatorsComponent } from './components/validators/validators.componen
 import { BlocksComponent } from './components/blocks/blocks.component';
 import { TxsComponent } from './components/txs/txs.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { LastBlockComponent } from './components/last-block/last-block.component';
 import { reducers } from './state/index';
 import { BlockComponent } from './components/block/block.component';
 import { TxComponent } from './components/tx/tx.component';
@@ -89,7 +88,6 @@ export class MyHammerConfig extends HammerGestureConfig {
     TxsComponent,
     DashboardComponent,
     GovernanceComponent,
-    LastBlockComponent,
     BlockComponent,
     TxComponent,
     ValidatorComponent,
@@ -120,7 +118,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     ChartCardsComponent,
     ChartCardsGovComponent,
     TxsListCardComponent,
-    AccountDetailComponent
+    AccountDetailComponent,
     // UniversalSearchBarComponent,
   ],
   entryComponents: [
