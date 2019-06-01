@@ -293,6 +293,20 @@
                         <mdb-badge default="true">created validator</mdb-badge>&nbsp;
                         {{ tx.msg[i].value.description.moniker }}                           
                       </span>   
+
+
+                      <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgEditValidator'">
+                        <a (click)="openTxsListDialog( tx.msg[i].value.delegator_address )"> 
+                          <span *ngIf="(appState | async).valsMap.size 
+                                        ? (appState | async).valsMap.has( tx.msg[i].value.delegator_address ) 
+                                        : false; else elseValidatorEdit">
+                            {{ (appState | async).valsMap.get( tx.msg[i].value.address )}}
+                          </span>
+                          <ng-template #elseValidatorEdit>{{ tx.msg[i].value.address }}</ng-template>
+                        </a>
+                        <br> 
+                        <mdb-badge default="true">validator updated</mdb-badge>&nbsp;                        
+                      </span>   
                       
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgVote'">
                         <a (click)="openTxsListDialog( tx.msg[i].value.voter )"> 

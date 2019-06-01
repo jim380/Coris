@@ -28,6 +28,7 @@ import { AccountDetailComponent } from '../account-detail/account-detail.compone
 export class TxComponent implements OnInit {
   appState: Observable<State>;
   tx;
+  objectKeys = Object.keys;
 
   constructor(
     private dialog: MatDialog,
@@ -39,7 +40,7 @@ export class TxComponent implements OnInit {
     // private router: Router 
   ) {  
     // TODO remove debugging
-    // console.log(data.tx);
+    console.log(data.tx);
     this.tx = data.tx;
   }
 
@@ -63,7 +64,7 @@ export class TxComponent implements OnInit {
   }
 
   openValidatorDetailDialog(operatorAddress) {
-    this.popupService.openValidatorDialog(operatorAddress, this.dialog);
+    this.popupService.openValidatorDialogAddr(operatorAddress, this.dialog);
   }
 
   
