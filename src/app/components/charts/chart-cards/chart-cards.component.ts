@@ -22,7 +22,8 @@ export class ChartCardsComponent implements OnInit {
   public scatterChartOptions = scatterChart.options;
   public scatterChartData = scatterChart.datasets;
   public scatterChartType = scatterChart.type;
-
+  public scatterChartLabels = scatterChart.labels;
+  public scatterChartColors = scatterChart.colors;
 
   public commissionChartType = commissionChart.type;
   public commissionChartDatasets = commissionChart.datasets;
@@ -98,14 +99,14 @@ export class ChartCardsComponent implements OnInit {
     .subscribe( (count) => { 
       // console.log(validatorsArray[count]);
 
-      this.scatterChartData[0].data.push({ x: count+1, y: validatorsArray[count].tokens });
-      this.scatterChartData[1].data.push({ x: count+1, y: validatorsArray[count].self_bond });
-      this.scatterChartData[2].data.push({ x: count+1, y: Number(validatorsArray[count].account.value.coins[0].amount) });
+      this.scatterChartData[0].data.push({ x: count+1, y: validatorsArray[count].tokens, r: 3});
+      this.scatterChartData[1].data.push({ x: count+1, y: validatorsArray[count].self_bond, r: 3 });
+      this.scatterChartData[2].data.push({ x: count+1, y: Number(validatorsArray[count].account.value.coins[0].amount), r: 3});
       
       if( validatorsArray[count].outstanding_rewards ) {
-        this.scatterChartData[3].data.push({ x: count+1, y: Number(validatorsArray[count].outstanding_rewards[0].amount) });
+        this.scatterChartData[3].data.push({ x: count+1, y: Number(validatorsArray[count].rewards[0].amount), r: 3 });
       } else {
-        this.scatterChartData[3].data.push({ x: count+1, y: 0 });
+        this.scatterChartData[3].data.push({ x: count+1, y: 0, r: 3 });
       }
     });
 

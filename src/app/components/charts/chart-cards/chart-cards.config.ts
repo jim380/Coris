@@ -11,7 +11,7 @@ const commissionChart = {
     },
     {
       data: [],
-      label: 'Rate Change',
+      label: 'Max Change',
       hidden: true
     }
   ],
@@ -99,25 +99,25 @@ const blockChart = {
     {data: [], label: 'Block Time'},
     {data: [], label: 'Avg. Block Time'}
   ],
-  labels: [0, 40, 60, 80, 100],
+  labels: [0, 20, 40, 60, 80, 100],
   colors: [
     {
-      backgroundColor: 'rgba(220,220,220,0.32)',
+      // backgroundColor: 'rgba(220,220,220,0.32)',
       borderColor: 'rgba(220,220,220,1)',
-      borderWidth: 2,
+      borderWidth: 1,
       pointBackgroundColor: 'rgba(220,220,220,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(220,220,220,1)'
     },
     {
-      backgroundColor: 'rgba(63,103,113,0.0)',
-      borderColor: 'rgba(176,48,150,1)',
-      borderWidth: 2,
-      pointBackgroundColor: 'rgba(220,220,220,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(220,220,220,1)'
+      // backgroundColor: 'rgba(6233,30,99,0.32)',
+      borderColor: 'rgba(248,187,208,1)',
+      borderWidth: 1,
+      pointBackgroundColor: 'rgba(248,187,208,1)',
+      pointBorderColor: '#F8BBD0',
+      pointHoverBackgroundColor: '#F8BBD0',
+      pointHoverBorderColor: 'rgba(248,187,208,1)'
     },
         
   ],
@@ -163,29 +163,43 @@ const scatterChart = {
     {
       data: [],
       label: 'Voting Weight',
-      pointRadius: 5,
+      pointRadius: 3,
     },
     {
       data: [],
       label: 'Self Bond',
-      pointRadius: 5,
+      pointRadius: 3,
       hidden: true
     },
     {
       data: [],
       label: 'Assets',
-      pointRadius: 5,
+      pointRadius: 3,
       hidden: true
     },
     {
       data: [],
       label: 'Rewards',
-      pointRadius: 5,
+      pointRadius: 3,
       hidden: true
     }
   ],
-  colors: [],
-  type: 'scatter',
+  labels: [],
+  colors: [
+    {
+      backgroundColor: 'rgba(248,187,208,0.4)',
+    },
+    {
+      backgroundColor: 'rgba(0,188,212,0.4)',
+    },
+    {
+      backgroundColor: 'rgba(255,152,0,0.4)',
+    },
+    {
+      backgroundColor: 'rgba(76,175,80,0.4)',
+    },
+  ],
+  type: 'bubble',
   options: {
     responsive: true,
     legend: {
@@ -198,13 +212,15 @@ const scatterChart = {
         display: true,
         scaleLabel: {   // To format the scale Lebel
           display: true,
-          labelString: 'Uatom',
+          labelString: 'ATOM',
           // fontColor: 'white',
         },
         ticks: {
           // fontColor: 'white',
+          // stepSize: 1000000,
+          beginAtZero: true,
           callback: function (value) {
-            return (Math.floor(value / 1000000)).toLocaleString(); // convert it to percentage
+            return (Math.floor(value / 1000000)).toLocaleString();
           }
         }
       }],
@@ -212,7 +228,7 @@ const scatterChart = {
         display: true,
         scaleLabel: {   // To format the scale Lebel
           display: true,
-          labelString: 'Validator Count',
+          labelString: 'Validator Index',
           // fontColor: 'white',
         },
         ticks: {
@@ -220,7 +236,7 @@ const scatterChart = {
         }
       }]
     }
-  }
+  },
 };
 
 export { 

@@ -9,14 +9,14 @@
   <div class="row proposer-row">
     <div>
       <h2 *ngIf="(appState | async).valsMap.size" 
-          class="title proposer-title"
-          (click)="openValidatorDialog(proposer)" 
-          style="cursor: pointer;">
+          class="title proposer-title">
         <i class="ion-person"></i>&nbsp; Proposer - 
-        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( proposer ) : false; else elseBlockProposer">
+        <a href="javascript:undefined" (click)="openValidatorDialog(proposer)" style="cursor: pointer;">
+          <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( proposer ) : false; else elseBlockProposer">
             {{ (appState | async).valsMap.get( proposer )}}
         </span>
         <ng-template #elseBlockProposer>{{ proposer }}</ng-template> 
+        </a>
       </h2>
     </div>
   </div>

@@ -7,6 +7,10 @@
     font-size: 150%;
 }
 
+.proposer-title {
+    vertical-align: middle;
+}
+
 .query-card-wrapper {
     padding: 20px 15px 0 0;
 }
@@ -54,4 +58,11 @@
 
 .col-12, .col-lg-3, .col-md-6, .w-25, .query-card-wrapper {
     padding-right: 0;
+}
+
+a:hover,
+a:active {
+    color: #FF4081;
+    /* border-bottom: 1px solid transparent; */
+    text-decoration: none; 
 }
