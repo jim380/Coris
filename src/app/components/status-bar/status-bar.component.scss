@@ -5,6 +5,7 @@
 
 .header-subtitle {
     font-size: 150%;
+    margin-bottom: 0;
 }
 
 .proposer-title {
@@ -65,4 +66,12 @@ a:active {
     color: #FF4081;
     /* border-bottom: 1px solid transparent; */
     text-decoration: none; 
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
 }

@@ -163,7 +163,7 @@ const scatterChart = {
     {
       data: [],
       label: 'Voting Weight',
-      pointRadius: 3,
+      pointRadius: 3
     },
     {
       data: [],
@@ -208,7 +208,8 @@ const scatterChart = {
       }
     },
     scales: {
-      yAxes: [{
+      yAxes: [
+      {
         display: true,
         scaleLabel: {   // To format the scale Lebel
           display: true,
