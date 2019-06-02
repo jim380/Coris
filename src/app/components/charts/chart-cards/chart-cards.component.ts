@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Observable, range } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, filter, first } from 'rxjs/operators';
 import { 
   commissionChart,
   scatterChart,
@@ -48,26 +48,24 @@ export class ChartCardsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.storeSubscription$ = this.validatorsState
-      .pipe(
-        distinctUntilChanged()
-      )
-      .subscribe(data => {
-        if( this.storeSubscription$ ) {
-          // TODO remove debugging
-          // console.log(data);
-          this.initCommissionChart(data.validators);
-          this.initScatterChart(data.validators);
 
-          this.storeSubscription$.unsubscribe();
-        }
-      });
+    this.storeSubscription$ = this.validatorsState
+    .pipe(
+      filter(state => state.validators.length > 0),
+      first()
+    )
+    .subscribe(data => {
+        // TODO remove debugging
+        // console.log(data);
+        this.initCommissionChart(data.validators);
+        this.initScatterChart(data.validators);
+    });
 
     this.bs.getBlocksTime$().subscribe((blocksTime: any[]) => {
       let formattedBlocksTime = blocksTime.map(x => x/1000);
       if(formattedBlocksTime.length === 99) {
         // TODO remove debugging
-        console.log( formattedBlocksTime );
+        // console.log( formattedBlocksTime );
         this.blockChartDatasets = [ { data: formattedBlocksTime, label: 'Block Time'}, this.blockChartDatasets[1] ];
       }
     });
@@ -75,7 +73,7 @@ export class ChartCardsComponent implements OnInit {
     this.bs.getAvgBlockTime$()
     .subscribe(data => {
       // TODO remove debugging
-      console.log(data);
+      // console.log(data);
       let avgBlockTime = [];
       for (let i = 0; i < 100; i++) {
         avgBlockTime[i] = data/1000;
