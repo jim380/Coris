@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PopupService } from 'src/app/services/popup.service';
 import { AccountDetailComponent } from '../../account-detail/account-detail.component';
 import { MatDialog } from '@angular/material';
@@ -12,6 +12,8 @@ import { BlockComponent } from '../../block/block.component';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
+  activeRoute: string = "Pages";
+  @ViewChild('sidenavRef') sidenav;
 
   constructor(
     private popupService: PopupService,
@@ -31,9 +33,40 @@ export class SidenavComponent implements OnInit {
     } else if(!isNaN(query)) {
       this.popupService.openBlockDialog(query, this.dialog, BlockComponent);
     } else {
-
+      this.popupService.openValidatorDialogMoniker(query, this.dialog, ValidatorComponent);
     }
   }
+
+  onMobileSearchBtnClick(query) {
+    this.sidenav.hide();
+    this.onSearchBtnClick(query);
+  }
+
+  onRouterEvent(e) {
+    console.log(e.constructor.name);
+    switch (e.constructor.name) {
+      case "ValidatorsComponent":
+          this.activeRoute = "Validator";
+        break;
+      
+      case "BlocksComponent":
+          this.activeRoute = "Blocks";
+        break;
+  
+      case "TxsComponent":
+          this.activeRoute = "Transactions";
+        break;
+    
+      case "GovernanceComponent":
+          this.activeRoute = "Governance";
+        break;
+      
+      default:
+        this.activeRoute = "Pages";
+        break;
+    }
+  }
+
 
   
 }

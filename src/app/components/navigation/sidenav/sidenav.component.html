@@ -2,7 +2,7 @@
     <!--Double navigation-->
   <header>
       <!-- Sidebar navigation -->
-      <mdb-side-nav #sidenav class="sn-bg-1" [fixed]="false">
+      <mdb-side-nav #sidenavRef class="sn-bg-1" [fixed]="false">
     
         <mdb-navbar-brand>
           <li>
@@ -47,7 +47,8 @@
           <li>
             <form class="search-form" role="search">
               <div class="form-group md-form mt-0 pt-1 waves-light" mdbWavesEffect>
-                <input type="text" class="form-control" placeholder="Search">
+                <input #mobileSearchQueryRef type="text" class="form-control" placeholder="Search">
+                <button (click)="onMobileSearchBtnClick(mobileSearchQueryRef.value)" mdbBtn color="white" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
               </div>
             </form>
           </li>
@@ -137,7 +138,7 @@
         <navlinks class="navbar-container">
           <!-- SideNav slide-out button -->
           <div class="float-left">
-            <a (click)="sidenav.show()" class="button-collapse hidden-nav-button-collapse">
+            <a (click)="sidenavRef.show()" class="button-collapse hidden-nav-button-collapse">
               <i class="fas fa-bars"></i>
             </a>
           </div>
@@ -198,7 +199,7 @@
             <li class="nav-item dropdown btn-group" dropdown>
               <a dropdownToggle type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
                 <i class="fa fa-bookmark"></i>
-                <h3 class="clearfix d-none d-sm-inline-block">Pages</h3>
+                <h3 class="clearfix d-none d-sm-inline-block">{{ activeRoute }}</h3>
               </a>
               <div class="dropdown-menu dropdown-primary dropdown-menu-right" role="menu">
                 <a class="dropdown-item" mdbWavesEffect routerLink="/validators">
@@ -252,7 +253,7 @@
           <!-- <app-validator></app-validator> -->
           <!-- <app-carousel></app-carousel> -->
           <!-- <app-test></app-test> -->
-          <router-outlet></router-outlet>
+          <router-outlet (activate)="onRouterEvent($event)"></router-outlet>
           <app-scroll-top></app-scroll-top>
           <app-footer></app-footer>
         </body>

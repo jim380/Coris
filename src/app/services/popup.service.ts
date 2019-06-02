@@ -70,6 +70,25 @@ export class PopupService {
     });
   }
 
+  openValidatorDialogMoniker(moniker, dialog, component) {
+    // console.log(moniker);
+    this.appState.pipe(
+      take(1)
+    ).subscribe((state) => {
+      let validatorQuery = state.validatorsState.validators
+        .filter( val => (val.description.moniker.replace(/\W/g, '').toLowerCase()).includes(moniker.replace(/\W/g, '').toLowerCase()) );
+      if( validatorQuery.length === 1) {
+        dialog.open( component,  {
+          data: { 
+            validator: validatorQuery[0]          },
+          height: '75vh',
+        });
+      } else {
+        console.log("Validator was not found! Moniker: ", moniker)
+      }
+    });
+  }
+
   openAccountDialogAddr(delegatorAddress, dialog, component) {
     dialog.open( component,  {
       data: { 
