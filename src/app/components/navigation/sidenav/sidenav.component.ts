@@ -45,22 +45,23 @@ export class SidenavComponent implements OnInit {
     this.onSearchBtnClick(query);
   }
 
+
   onRouterEvent(e) {
-    console.log(e.constructor.name);
-    switch (e.constructor.name) {
-      case "ValidatorsComponent":
+    // console.log(this.router.url);
+    switch (this.router.url) {
+      case "/validators":
           this.activeRoute = "Validator";
         break;
       
-      case "BlocksComponent":
+      case "/blocks":
           this.activeRoute = "Blocks";
         break;
   
-      case "TxsComponent":
+      case "/txs":
           this.activeRoute = "Transactions";
         break;
     
-      case "GovernanceComponent":
+      case "/gov":
           this.activeRoute = "Governance";
         break;
       
@@ -69,7 +70,6 @@ export class SidenavComponent implements OnInit {
         break;
     }
   }
-
 
   
 }
