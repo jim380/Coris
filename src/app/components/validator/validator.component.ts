@@ -11,6 +11,7 @@ import { selectAppState } from 'src/app/state/app.reducers';
 import { ActivatedRoute } from '@angular/router'
 import { PopupService } from 'src/app/services/popup.service';
 import { AccountDetailComponent } from '../account-detail/account-detail.component';
+import { TxComponent } from '../tx/tx.component';
 
 @Component({
   selector: 'app-validator',
@@ -109,8 +110,12 @@ export class ValidatorComponent implements OnInit {
   }
 
   public openDelegatorDialog(address) {
-    console.log(address)
+    // console.log(address)
     this.popupService.openAccountDialogAddr(address, this.dialog, AccountDetailComponent);
+  }
+
+  public openTxDialog(hash) {
+    this.popupService.openTxDialog(hash, this.dialog, TxComponent);
   }
 
 }

@@ -17,9 +17,9 @@
                     {{proposal.proposal_content.value.description}}
                   </mdb-card-text>
                   <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <li *ngIf="proposal.proposer" class="list-group-item d-flex justify-content-between align-items-center">
                       Proposer
-                      <h3 class="glance-title"><mdb-badge color="pink">
+                      <h3 style="cursor: pointer;" (click)="openAccountDialog(proposal.proposer)" class="glance-title"><mdb-badge color="pink">
                         <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( proposal.proposer ) : false; else elseVetoVoter">
                           {{ (appState | async).valsMap.get( proposal.proposer )}}
                         </span>
@@ -85,7 +85,7 @@
                                 <table mat-table [dataSource]="votesDataSource" class="table large-header">
                                   <ng-container matColumnDef="voter">
                                     <th mat-header-cell *matHeaderCellDef> Voter </th>
-                                    <td mat-cell *matCellDef="let vote">
+                                    <td style="cursor:pointer;" (click)="openAccountDialog(vote.voter)" mat-cell *matCellDef="let vote">
                                       <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( vote.voter ) : false; else elseVetoVoter">
                                         {{ (appState | async).valsMap.get( vote.voter )}}
                                       </span>
@@ -95,7 +95,7 @@
                               
                                   <ng-container matColumnDef="vote">
                                     <th mat-header-cell *matHeaderCellDef> Vote </th>
-                                    <td mat-cell *matCellDef="let vote"> {{vote.option}} </td>
+                                    <td style="cursor:pointer;" (click)="openAccountDialog(vote.voter)" mat-cell *matCellDef="let vote"> {{vote.option}} </td>
                                   </ng-container>
                               
                                   <tr mat-header-row *matHeaderRowDef="votesDisplayedColumns"></tr>
@@ -108,7 +108,7 @@
                                 <table mat-table [dataSource]="votesDataSource" class="table large-header">
                                   <ng-container matColumnDef="voter">
                                     <th mat-header-cell *matHeaderCellDef> Voter </th>
-                                    <td mat-cell *matCellDef="let vote"> 
+                                    <td style="cursor:pointer;" (click)="openAccountDialog(vote.voter)" mat-cell *matCellDef="let vote"> 
                                       <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( vote.voter ) : false; else elseVetoVoter">
                                         {{ (appState | async).valsMap.get( vote.voter )}}
                                       </span>
@@ -118,7 +118,7 @@
                               
                                   <ng-container matColumnDef="vote">
                                     <th mat-header-cell *matHeaderCellDef> Vote </th>
-                                    <td mat-cell *matCellDef="let vote"> {{vote.option}} </td>
+                                    <td style="cursor:pointer;" (click)="openAccountDialog(vote.voter)" mat-cell *matCellDef="let vote"> {{vote.option}} </td>
                                   </ng-container>
                               
                                   <tr mat-header-row *matHeaderRowDef="votesDisplayedColumns"></tr>
@@ -131,7 +131,7 @@
                                 <table mat-table [dataSource]="votesDataSource" class="table large-header">
                                   <ng-container matColumnDef="voter">
                                     <th mat-header-cell *matHeaderCellDef> Voter </th>
-                                    <td mat-cell *matCellDef="let vote">
+                                    <td style="cursor:pointer;" (click)="openAccountDialog(vote.voter)" mat-cell *matCellDef="let vote">
                                       <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( vote.voter ) : false; else elseVetoVoter">
                                         {{ (appState | async).valsMap.get( vote.voter )}}
                                       </span>
@@ -141,7 +141,7 @@
                               
                                   <ng-container matColumnDef="vote">
                                     <th mat-header-cell *matHeaderCellDef> Vote </th>
-                                    <td mat-cell *matCellDef="let vote"> {{vote.option}} </td>
+                                    <td style="cursor:pointer;" (click)="openAccountDialog(vote.voter)" mat-cell *matCellDef="let vote"> {{vote.option}} </td>
                                   </ng-container>
                               
                                   <tr mat-header-row *matHeaderRowDef="votesDisplayedColumns"></tr>
@@ -154,7 +154,7 @@
                                 <table mat-table [dataSource]="votesDataSource" class="table large-header">
                                   <ng-container matColumnDef="voter">
                                     <th mat-header-cell *matHeaderCellDef> Voter </th>
-                                    <td mat-cell *matCellDef="let vote">
+                                    <td style="cursor:pointer;" (click)="openAccountDialog(vote.voter)" mat-cell *matCellDef="let vote">
                                       <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( vote.voter ) : false; else elseVetoVoter">
                                         {{ (appState | async).valsMap.get( vote.voter )}}
                                       </span>
@@ -164,7 +164,7 @@
                               
                                   <ng-container matColumnDef="vote">
                                     <th mat-header-cell *matHeaderCellDef> Vote </th>
-                                    <td mat-cell *matCellDef="let vote"> {{vote.option}} </td>
+                                    <td style="cursor:pointer;" (click)="openAccountDialog(vote.voter)" mat-cell *matCellDef="let vote"> {{vote.option}} </td>
                                   </ng-container>
                               
                                   <tr mat-header-row *matHeaderRowDef="votesDisplayedColumns"></tr>
@@ -177,7 +177,7 @@
                                 <table mat-table [dataSource]="votesDataSource" class="table large-header">
                                   <ng-container matColumnDef="voter">
                                     <th mat-header-cell *matHeaderCellDef> Voter </th>
-                                    <td mat-cell *matCellDef="let vote">
+                                    <td style="cursor:pointer;" (click)="openAccountDialog(vote.voter)" mat-cell *matCellDef="let vote">
                                       <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( vote.voter ) : false; else elseVetoVoter">
                                         {{ (appState | async).valsMap.get( vote.voter )}}
                                       </span>
@@ -187,7 +187,7 @@
                               
                                   <ng-container matColumnDef="vote">
                                     <th mat-header-cell *matHeaderCellDef> Vote </th>
-                                    <td mat-cell *matCellDef="let vote"> {{vote.option}} </td>
+                                    <td style="cursor:pointer;" (click)="openAccountDialog(vote.voter)" mat-cell *matCellDef="let vote"> {{vote.option}} </td>
                                   </ng-container>
                               
                                   <tr mat-header-row *matHeaderRowDef="votesDisplayedColumns"></tr>
@@ -212,7 +212,7 @@
                           <table mat-table [dataSource]="depositDataSource" class="table large-header">
                             <ng-container matColumnDef="depositor">
                               <th mat-header-cell *matHeaderCellDef> Depositor </th>
-                              <td mat-cell *matCellDef="let deposit"> 
+                              <td style="cursor:pointer;" (click)="openAccountDialog(deposit.depositor)" mat-cell *matCellDef="let deposit"> 
                                 <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( deposit.depositor ) : false; else elseVetoVoter">
                                   {{ (appState | async).valsMap.get( deposit.depositor )}}
                                 </span>

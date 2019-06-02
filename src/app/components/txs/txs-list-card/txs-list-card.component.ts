@@ -1,7 +1,9 @@
 import { Component, OnInit, Inject, ViewChild, AfterViewInit, Input } from '@angular/core';
-import { MAT_DIALOG_DATA, MatPaginator, MatTableDataSource } from '@angular/material';
+import { MAT_DIALOG_DATA, MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { TxsService } from 'src/app/services/txs.service';
 import { ToastrService } from 'ngx-toastr';
+import { PopupService } from 'src/app/services/popup.service';
+import { TxComponent } from '../../tx/tx.component';
 
 @Component({
   selector: 'app-txs-list-card',
@@ -25,8 +27,10 @@ export class TxsListCardComponent implements OnInit, AfterViewInit {
 
   constructor(
     // @Inject(MAT_DIALOG_DATA) public data: any, 
+    private dialog: MatDialog,
     private ts: TxsService, 
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private popupService: PopupService
   ) { 
     // this.delegator.address = data.address;
     // TODO remove debugging
@@ -74,6 +78,10 @@ export class TxsListCardComponent implements OnInit, AfterViewInit {
 
   public onCopySuccess() {
     this.toastr.success('Copied to clipboard');
+  }
+
+  public openTxDialog(hash) {
+    this.popupService.openTxDialog(hash, this.dialog, TxComponent);
   }
 
 }

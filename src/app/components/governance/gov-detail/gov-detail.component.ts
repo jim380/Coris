@@ -1,9 +1,11 @@
 import { Component, OnInit, Inject, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator } from '@angular/material';
+import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState, State } from 'src/app/state/app.interface';
 import { selectAppState } from 'src/app/state/app.reducers';
+import { PopupService } from 'src/app/services/popup.service';
+import { AccountDetailComponent } from '../../account-detail/account-detail.component';
 
 @Component({
   selector: 'app-gov-detail',
@@ -35,6 +37,8 @@ export class GovDetailComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginators = new QueryList<MatPaginator>();
 
   constructor(
+    private popupService: PopupService,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public proposal: any, 
     private store: Store <State>
   ) { 
@@ -91,4 +95,7 @@ export class GovDetailComponent implements OnInit, AfterViewInit {
     this.depositDataSource.paginator = this.paginators.toArray()[1];
   }
 
+  openAccountDialog(address) {
+    this.popupService.openAccountDialogAddr(address, this.dialog, AccountDetailComponent);
+  }
 }

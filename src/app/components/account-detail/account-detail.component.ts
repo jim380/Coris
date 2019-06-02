@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { TxsService } from 'src/app/services/txs.service';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { PricingService } from 'src/app/services/pricing.service';
 
 @Component({
@@ -106,10 +106,12 @@ export class AccountDetailComponent implements OnInit {
         this.quoteUsd = data.data['3794'].quote.USD.price;
     });
 
+
     // this.ts.getDelegatorValidators(this.delegator.address).subscribe((data: any) => {
     //   // TODO remove debugging
     //   console.log("Validators:", data);
     // });
 
   }
+
 }
