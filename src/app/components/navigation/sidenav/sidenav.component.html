@@ -47,7 +47,7 @@
           <li>
             <form class="search-form" role="search">
               <div class="form-group md-form mt-0 pt-1 waves-light" mdbWavesEffect>
-                <input #mobileSearchQueryRef type="text" class="form-control" placeholder="Search">
+                <input #mobileSearchQueryRef type="text" class="form-control" placeholder="enter here">
                 <button (click)="onMobileSearchBtnClick(mobileSearchQueryRef.value)" mdbBtn color="white" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
               </div>
             </form>
@@ -163,14 +163,15 @@
         <navlinks>
           <ul class="nav navbar-nav nav-flex-icons ml-auto ie-double-nav ie-hidden-double-nav">
             <li class="nav-item">
-              <form class="form-inline waves-light waves-light ml-auto clearfix d-none d-sm-inline-block" mdbWavesEffect>
+              <form class="form-inline waves-light waves-light ml-auto clearfix d-none d-xl-inline-block" mdbWavesEffect>
                 <div  class="md-form my-0">
                   <input style="width: 30vw;" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="enter moniker / address / height / hash" aria-label="Search">
                   <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn color="white" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
                 </div>
               </form>
             </li>
-            <!-- <li class="nav-item">
+
+            <li class="nav-item">
               <a class="nav-link waves-light" mdbWavesEffect routerLink="/validators" routerLinkActive="active">
                 <i class="fa fa-users"></i>
                 <h3 class="clearfix d-none d-sm-inline-block">Validator</h3>
@@ -194,9 +195,9 @@
                 <i class="fa fa-university"></i>
                 <h3 class="clearfix d-none d-sm-inline-block">Governance</h3>
               </a>
-            </li> -->
+            </li>
 
-            <li class="nav-item dropdown btn-group" dropdown>
+            <!-- <li class="nav-item dropdown btn-group" dropdown>
               <a dropdownToggle type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
                 <i class="fa fa-bookmark"></i>
                 <h3 class="clearfix d-none d-sm-inline-block">{{ activeRoute }}</h3>
@@ -219,9 +220,9 @@
                   Governance
                 </a>
               </div>
-            </li>
+            </li> -->
 
-            <li class="nav-item dropdown btn-group" dropdown>
+            <!-- <li class="nav-item dropdown btn-group" dropdown>
               <a dropdownToggle type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
                 <i class="fa fa-globe"></i>
                 <h3 class="clearfix d-none d-sm-inline-block">Network</h3>
@@ -231,7 +232,7 @@
                 <a class="dropdown-item">Testnet</a>
                 <a class="dropdown-item">Stay tuned</a>
               </div>
-            </li>
+            </li> -->
           </ul>
         </navlinks>
       </mdb-navbar>
