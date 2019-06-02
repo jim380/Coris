@@ -2,7 +2,7 @@
 
 # Coris Explorer
 A community-built Blockchain explorer for the cosmos ecosystem, brought to you by Cypher Core LLC.
-<hr>
+
 ## Documentation
 [Coris Docs](http://docs.coris.network/index.html)
 
