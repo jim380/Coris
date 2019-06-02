@@ -71,58 +71,54 @@ export class BlockComponent implements OnInit, AfterViewInit {
 
   private initTx(hash) {
     let tx;
-    this.ts.getTxByHash(hash).subscribe((dataTx:any) => {
+    this.ts.getTxByHash(hash).subscribe((data:any) => {
       tx = {
-        hash: dataTx.txhash, 
-        height: dataTx.height,
-        gasUsed: dataTx.gas_used,
-        gasWanted: dataTx.gas_wanted,
-        details: dataTx,
+        hash: data.txhash, 
+        height: data.height,
+        gasUsed: data.gasUsed,
+        gasWanted: data.gasWanted,
+        details: data,
+        fee: data.tx.value.fee,
+        memo: data.tx.value.memo,
+        msg: data.tx.value.msg,
         error: null,
+        action: []
       };
-      // TODO remove debugging
-      // console.log(dataTx);
-      if(dataTx.tags) {
-        let index = -1;
-        dataTx.tags.forEach((tag:any) => {
+
+      if(data.tags) {
+        let index = 0;
+        data.tags.forEach((tag:any) => {
           // TODO remove debugging
           // console.log(tag);
           if(tag.key === 'action') {
+            tx.action[index] = tag.value.replace(/_/g, ' ');
             index += 1;
-          }
-          let formattedKey = tag.key.replace(/-/g, '_');
-
-          if(!tx[formattedKey]) {
-            tx[formattedKey] = [];
-            tx[formattedKey][index] = tag.value.replace(/_/g, ' ');
-          } else {
-            tx[formattedKey][index] = tag.value.replace(/_/g, ' ');
           }
         });
       }
       // END LOGIC FOR NOT-FAULTY  
 
-      if(dataTx.code === 12) {
+      if(data.code === 12) {
         // TODO remove debugging
-        // console.log(dataTx);
+        // console.log(data);
         // tx['action'] = "out of gas";
         tx.error = "out of gas";
-      } else if (dataTx.code === 104) {
+      } else if (data.code === 104) {
         tx.error = "no delegation distribution info";
         // TODO remove debugging
-        // console.log(dataTx);
-      } else if (dataTx.code === 10) {
+        // console.log(data);
+      } else if (data.code === 10) {
         tx.error = "insufficient account funds";
         // TODO remove debugging
-        // console.log(dataTx);
-      } else if (dataTx.code === 102) {
+        // console.log(data);
+      } else if (data.code === 102) {
         tx.error = "no delegation for this (address, validator) pair";
         // TODO remove debugging
-        // console.log(dataTx);
-      } else if (dataTx.code) {
+        // console.log(data);
+      } else if (data.code) {
         // TODO @aakatev find more failed tx codes
         tx.error = "TEST"
-        console.log(dataTx);
+        console.log(data);
       }
     },
     (error) => {
