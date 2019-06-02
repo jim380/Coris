@@ -7,7 +7,7 @@
         <mdb-navbar-brand>
           <li>
             <div class="logo-wrapper waves-light">
-              <a href="#">
+              <a [routerLink]="['/validators']">
                 <!-- <img src="https://mdbootstrap.com/img/logo/mdb-transparent.png" class="img-fluid flex-center"> -->
                 <img src="../../../../assets/img/Coris_logo.png" class="img-fluid flex-center logo">
               </a>
@@ -165,7 +165,7 @@
             <li class="nav-item">
               <form class="form-inline waves-light waves-light ml-auto clearfix d-none d-sm-inline-block" mdbWavesEffect>
                 <div  class="md-form my-0">
-                  <input style="width: 30vw;" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="Enter tx hash / block height / address" aria-label="Search">
+                  <input style="width: 30vw;" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="enter moniker / address / height / hash" aria-label="Search">
                   <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn color="white" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
                 </div>
               </form>

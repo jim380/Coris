@@ -96,7 +96,7 @@ const commissionChart = {
 
 const blockChart = {
   datasets: [
-    {data: [], label: 'Block Time'},
+    {data: [], label: 'Block Interval'},
     {data: [], label: 'Avg. Block Time'}
   ],
   labels: [0, 20, 40, 60, 80, 100],
