@@ -8,6 +8,7 @@ import { PopupService } from 'src/app/services/popup.service';
 import { AppState } from 'src/app/state/app.interface';
 import { selectAppState } from 'src/app/state/app.reducers';
 import { ToastrService } from 'ngx-toastr';
+import { ValidatorComponent } from '../validator/validator.component';
 // import { HttpClient } from '@angular/common/http';
 // import { ActivatedRoute, Router } from '@angular/router';
 // import { nodeRpc2 } from '../../../config.js';
@@ -158,7 +159,7 @@ export class BlockComponent implements OnInit, AfterViewInit {
 
 
   openValidatorDialog(addressHEX) {
-    this.popupService.openValidatorDialogAddrHEX(addressHEX, this.dialog);
+    this.popupService.openValidatorDialogAddrHEX(addressHEX, this.dialog, ValidatorComponent);
   }
 
   onCopySucceess() {

@@ -14,6 +14,7 @@ import { selectAppState } from 'src/app/state/app.reducers';
 import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
 import { MatDialog } from '@angular/material';
 import { PopupService } from 'src/app/services/popup.service';
+import { ValidatorComponent } from '../validator/validator.component';
 
 @Component({
   selector: 'app-status-bar',
@@ -76,7 +77,7 @@ export class StatusBarComponent implements OnInit {
   ngOnDestroy() { }
 
   openValidatorDialog(addressHEX) {
-    this.popupService.openValidatorDialogAddrHEX(addressHEX, this.dialog);
+    this.popupService.openValidatorDialogAddrHEX(addressHEX, this.dialog, ValidatorComponent);
   }
 
 }

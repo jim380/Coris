@@ -324,7 +324,7 @@ export class TxsComponent implements OnInit {
   }
 
   openValidatorDialog(operatorAddress) {
-    this.popupService.openValidatorDialogAddr(operatorAddress, this.dialog);
+    this.popupService.openValidatorDialogAddr(operatorAddress, this.dialog, ValidatorComponent);
   }
 
   // TEST ACCOUNT QUERY

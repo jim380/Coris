@@ -8,6 +8,7 @@ import { PopupService } from 'src/app/services/popup.service';
 import { State, AppState } from 'src/app/state/app.interface';
 import { selectAppState } from 'src/app/state/app.reducers';
 import { AccountDetailComponent } from '../account-detail/account-detail.component';
+import { ValidatorComponent } from '../validator/validator.component';
 
 // @aakatev
 // 05/15/19
@@ -64,7 +65,7 @@ export class TxComponent implements OnInit {
   }
 
   openValidatorDetailDialog(operatorAddress) {
-    this.popupService.openValidatorDialogAddr(operatorAddress, this.dialog);
+    this.popupService.openValidatorDialogAddr(operatorAddress, this.dialog, ValidatorComponent);
   }
 
   

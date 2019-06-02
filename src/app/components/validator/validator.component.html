@@ -38,7 +38,10 @@
                     <mdb-tab heading="Delegator address">
                       <div class="row">
                         <div class="col-12">
-                          <p>{{ validator.account.value.address }}</p>
+                          <p (click)="openDelegatorDialog(validator.account.value.address)"
+                              style="cursor:pointer;">
+                            {{ validator.account.value.address }}
+                          </p>
                         </div>
                       </div>
                     </mdb-tab>
@@ -60,7 +63,10 @@
                         <table mat-table [dataSource]="delegationsDataSource" class="table large-header">
                           <ng-container matColumnDef="address">
                             <th mat-header-cell *matHeaderCellDef> Address </th>
-                            <td mat-cell *matCellDef="let delegation"> 
+                            <td (click)="openDelegatorDialog(delegation.delegator_address)"
+                                style="cursor:pointer;" 
+                                mat-cell 
+                                *matCellDef="let delegation">   
                               <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( delegation.delegator_address ) : false; else elseVetoVoter">
                                 {{ (appState | async).valsMap.get( delegation.delegator_address )}}
                               </span>

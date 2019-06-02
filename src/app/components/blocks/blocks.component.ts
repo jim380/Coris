@@ -16,6 +16,7 @@ import { selectAppState } from 'src/app/state/app.reducers';
 import { AppState } from 'src/app/state/app.interface';
 import { selectBlocksState, selectBlocks } from 'src/app/state/blocks/blocks.reducers';
 import { PopupService } from 'src/app/services/popup.service';
+import { ValidatorComponent } from '../validator/validator.component';
 // import {MatTableDataSource} from '@angular/material';
 
 @Component({
@@ -229,7 +230,7 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
   openValidatorDialog(addressHEX) {
-    this.popupService.openValidatorDialogAddrHEX(addressHEX, this.dialog);
+    this.popupService.openValidatorDialogAddrHEX(addressHEX, this.dialog, ValidatorComponent);
   }
 
 }

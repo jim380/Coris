@@ -46,6 +46,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { ToastrModule } from 'ngx-toastr';
 import { TxsListCardComponent } from './components/txs/txs-list-card/txs-list-card.component';
 import { AccountDetailComponent } from './components/account-detail/account-detail.component';
+import { PopupService } from './services/popup.service';
 
 declare var Hammer: any;
 
@@ -133,11 +134,14 @@ export class MyHammerConfig extends HammerGestureConfig {
     AgmCoreModule.forRoot({ apiKey: 'ULKdG4NuUxzJcpQFspxF' })
 
   ],
-  providers: [SearchService,
-              MDBSpinningPreloader,
-              { provide: HAMMER_GESTURE_CONFIG,
-                useClass: MyHammerConfig
-              }],
+  providers: [
+    SearchService,
+    MDBSpinningPreloader,
+    { 
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig
+    }
+  ],
   bootstrap: [AppComponent],
 })
 

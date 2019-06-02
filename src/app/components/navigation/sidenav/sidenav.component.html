@@ -207,13 +207,21 @@
     <!--Main Layout-->
     <main>
         <body>
-            <app-status-bar></app-status-bar>
-            <!-- <app-validator></app-validator> -->
-            <!-- <app-carousel></app-carousel> -->
-            <!-- <app-test></app-test> -->
-            <router-outlet></router-outlet>
-            <app-scroll-top></app-scroll-top>
-            <app-footer></app-footer>
+            <div class="row">
+              <form style="width: 90vw" class="form-inline waves-light" mdbWavesEffect>
+                <div  class="md-form my-0">
+                  <input style="width: 70vw" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="Enter tx hash / block height / address" aria-label="Search">
+                  <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn color="success" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
+                </div>
+              </form>
+            </div>
+          <app-status-bar></app-status-bar>
+          <!-- <app-validator></app-validator> -->
+          <!-- <app-carousel></app-carousel> -->
+          <!-- <app-test></app-test> -->
+          <router-outlet></router-outlet>
+          <app-scroll-top></app-scroll-top>
+          <app-footer></app-footer>
         </body>
     </main>
     <!--/Main layout-->
