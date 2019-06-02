@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import { ValidatorComponent } from '../../validator/validator.component';
 import { TxComponent } from '../../tx/tx.component';
 import { BlockComponent } from '../../block/block.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
@@ -17,7 +18,8 @@ export class SidenavComponent implements OnInit {
 
   constructor(
     private popupService: PopupService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -36,6 +38,7 @@ export class SidenavComponent implements OnInit {
       this.popupService.openValidatorDialogMoniker(query, this.dialog, ValidatorComponent);
     }
   }
+
 
   onMobileSearchBtnClick(query) {
     this.sidenav.hide();
