@@ -6,6 +6,8 @@ import { ValidatorComponent } from '../../validator/validator.component';
 import { TxComponent } from '../../tx/tx.component';
 import { BlockComponent } from '../../block/block.component';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { ThemeService } from '../../../services/theme.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -13,16 +15,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
+  isDarkTheme: Observable<boolean>;
+
   activeRoute: string = "Pages";
   @ViewChild('sidenavRef') sidenav;
 
   constructor(
     private popupService: PopupService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private themeService: ThemeService
   ) { }
 
   ngOnInit() {
+    this.isDarkTheme = this.themeService.isDarkTheme;
   }
 
   onSearchBtnClick(query) {

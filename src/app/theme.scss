@@ -2,27 +2,41 @@
 
 @include mat-core();
 
-$app-primary: mat-palette($mat-indigo, 500, 100, 700);
-$app-accent:  mat-palette($mat-pink, A400, A200, A700);
+// $app-primary: mat-palette($mat-indigo, 500, 100, 700);
+// $app-accent:  mat-palette($mat-pink, A400, A200, A700);
+// $app-theme: mat-light-theme($app-primary, $app-accent);
 
-$app-theme: mat-light-theme($app-primary, $app-accent);
+$light-primary: mat-palette($mat-indigo);
+$light-accent: mat-palette($mat-pink, A200, A100, A400);
+$light-warn: mat-palette($mat-red);
+$light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
 
-@mixin mix-app-theme($app-theme) {
-  $primary: map-get($app-theme, primary);
-  $accent: map-get($app-theme, accent);
+@mixin mix-app-theme($light-theme) {
+  $primary: map-get($light-theme, primary);
+  $accent: map-get($light-theme, accent);
 
   .mat-button-toggle {
-    background-color: mat-color($primary, 500);
-    color: mat-color($primary, default-contrast);
+    background-color: mat-color(light-$primary, 500);
+    color: mat-color($light-primary, default-contrast);
   }
 
   .mat-button-toggle-checked {
-    background-color: mat-color($accent);
-    color: mat-color($accent, default-contrast);
+    background-color: mat-color($light-accent);
+    color: mat-color($light-accent, default-contrast);
   }
   
 }
 
-
 // Include the mixin
-@include angular-material-theme($app-theme);
+@include angular-material-theme($light-theme);
+
+// dark theme
+.dark-theme {
+  color: $light-primary-text;
+  $dark-primary: mat-palette($mat-yellow);
+  $dark-accent: mat-palette($mat-amber, A400, A100, A700);
+  $dark-warn: mat-palette($mat-red);
+  $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+  @include angular-material-theme($dark-theme);
+}

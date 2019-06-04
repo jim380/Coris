@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WsService } from './services/ws.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -7,6 +7,7 @@ import { trigger, state, query, transition, animate, style, keyframes, animation
 import { fadeInAnimation, fade } from './animations/animation';
 import {ToastService} from 'ng-uikit-pro-standard';
 import { PricingService } from './services/pricing.service';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +39,8 @@ import { PricingService } from './services/pricing.service';
     fade
   ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  isDarkTheme: Observable<boolean>;
 
   networks = [
     {id: 1, name: 'mainnet'},
@@ -48,11 +50,13 @@ export class AppComponent {
   constructor(
     private ws:WsService, 
     private pricingService: PricingService,
-    private vs:ValidatorsService
+    private vs:ValidatorsService,
+    private themeService: ThemeService
   ) {  }
 
   ngOnInit() { 
     this.pricingService.initStakingPool();
+    this.isDarkTheme = this.themeService.isDarkTheme;
   }
 
   ngOnDestroy() {

@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { BlocksService } from 'src/app/services/blocks.service';
 import { ActivatedRoute } from '@angular/router'
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: 'app-test',
@@ -15,11 +16,13 @@ import { ActivatedRoute } from '@angular/router'
 })
 
 export class TestComponent implements OnInit {
+  isDarkTheme: Observable<boolean>;
 
   user: {address: string};
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private themeService: ThemeService
   ) { }
   
 
@@ -42,6 +45,7 @@ export class TestComponent implements OnInit {
       address: this.route.snapshot.params['address']
     };
 
+    this.isDarkTheme = this.themeService.isDarkTheme;
   }
 
   // ngOnDestroy() {
@@ -70,4 +74,8 @@ export class TestComponent implements OnInit {
   //   });
   //   return total/array.length
   // }
+
+  toggleDarkTheme(checked: boolean) {
+    this.themeService.setDarkTheme(checked);
+  }
 }

@@ -31,6 +31,7 @@ import { PopupService } from 'src/app/services/popup.service';
   ]
 })
 export class ValidatorsComponent implements OnInit, AfterViewInit {
+
   public statusChartOptions: any = {
     responsive: true
   };
@@ -237,5 +238,6 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
   //   ];  
   // }
   END OLD CODE */
+
 }
 

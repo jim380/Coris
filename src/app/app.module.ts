@@ -1,3 +1,4 @@
+import { ThemeService } from './services/theme.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -136,6 +137,7 @@ export class MyHammerConfig extends HammerGestureConfig {
   ],
   providers: [
     SearchService,
+    ThemeService,
     MDBSpinningPreloader,
     { 
       provide: HAMMER_GESTURE_CONFIG,

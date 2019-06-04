@@ -1,1 +1,6 @@
-<p>Address: {{ user.address }} loaded</p>
+  <!-- material theme test -->
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <mat-slide-toggle [checked]="isDarkTheme | async" (change)="toggleDarkTheme($event.checked)">Dark theme</mat-slide-toggle>
+    </mat-toolbar-row>
+  </mat-toolbar>
