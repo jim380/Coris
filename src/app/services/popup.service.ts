@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { nodeRpc1 } from '../../config.js'
 import { Block } from '../interfaces/block.interface';
 import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material';
 
 @Injectable({
   providedIn: 'root',
@@ -16,19 +17,23 @@ export class PopupService {
   appState: Observable<State>;
   constructor(
     private appStore: Store<State>,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private dialog: MatDialog
   ) {
     this.appState = this.appStore.select(state => state);
     console.log("new popup service created!");
   }
 
   openValidatorDialog(validator, dialog, component) {
-    console.log(validator);
-    dialog.open( component,  {
+    console.log(this.dialog);
+    this.dialog.open( component,  {
       data: { 
         validator
-      },
-      height: '75vh',
+      },      
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      height: '100%',
+      width: '100%',
     });
   }
 
@@ -42,8 +47,12 @@ export class PopupService {
       if( validatorQuery.length === 1) {
         dialog.open( component,  {
           data: { 
-            validator: validatorQuery[0]          },
-          height: '75vh',
+            validator: validatorQuery[0]          
+          },      
+          maxWidth: '100vw',
+          maxHeight: '100vh',
+          height: '100%',
+          width: '100%',
         });
       } else {
         console.log("Validator was not found! Operator address: ", validatorAddress)
@@ -61,8 +70,12 @@ export class PopupService {
       if( validatorQuery.length === 1) {
         dialog.open( component,  {
           data: { 
-            validator: validatorQuery[0]          },
-          height: '75vh',
+            validator: validatorQuery[0]          
+          },
+          maxWidth: '100vw',
+          maxHeight: '100vh',
+          height: '100%',
+          width: '100%'
         });
       } else {
         console.log("Validator was not found! HEX address: ", validatorAddressHEX)
@@ -80,8 +93,12 @@ export class PopupService {
       if( validatorQuery.length === 1) {
         dialog.open( component,  {
           data: { 
-            validator: validatorQuery[0]          },
-          height: '75vh',
+            validator: validatorQuery[0]          
+          },
+          maxWidth: '100vw',
+          maxHeight: '100vh',
+          height: '100%',
+          width: '100%'
         });
       } else {
         console.log("Validator was not found! Moniker: ", moniker)

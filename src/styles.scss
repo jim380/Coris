@@ -362,6 +362,10 @@ footer p {
   padding: 0 !important;
 }
 
+.fixed-top {
+  z-index: 30 !important;
+}
+
 .mat-progress-spinner circle, .mat-spinner circle {
   stroke: #00796B;
 }
