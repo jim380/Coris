@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, ViewChildren, QueryList } from '@angular/cor
 import { Observable, from } from 'rxjs';
 import { Store } from '@ngrx/store';
 // import { ActivatedRoute } from '@angular/router';
-import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator } from '@angular/material';
 
 import { ToastrService } from 'ngx-toastr';
 import { TxsService } from 'src/app/services/txs.service';
@@ -47,7 +47,6 @@ export class ValidatorComponent implements OnInit {
     private toastr: ToastrService,
     private route: ActivatedRoute,
     private popupService: PopupService,
-    private dialog: MatDialog
   ) { 
     // let address = this.route.snapshot.paramMap.get('address');
     // TODO remove debugging
@@ -111,11 +110,11 @@ export class ValidatorComponent implements OnInit {
 
   public openDelegatorDialog(address) {
     // console.log(address)
-    this.popupService.openAccountDialogAddr(address, this.dialog, AccountDetailComponent);
+    this.popupService.openAccountDialogAddr(address, AccountDetailComponent);
   }
 
   public openTxDialog(hash) {
-    this.popupService.openTxDialog(hash, this.dialog, TxComponent);
+    this.popupService.openTxDialogHash(hash, TxComponent);
   }
 
 }

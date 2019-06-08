@@ -1,18 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { WsService } from 'src/app/services/ws.service';
 import { Store } from '@ngrx/store';
-// import { ValidatorsService } from 'src/app/services/validators.service';
 import { trigger, state, query, transition, animate, style, keyframes, animation, useAnimation, animateChild, group, stagger } from '@angular/animations';
 import { fadeInAnimation, fade } from '../../animations/animation';
-// import { State } from 'src/app/interfaces/state.interface';
-// import { PricingService } from 'src/app/services/pricing.service';
-// import { BlocksService } from 'src/app/services/blocks.service';
-// import { map } from 'rxjs/operators';
 import { AppState, State, BlocksState } from 'src/app/state/app.interface';
 import { selectAppState } from 'src/app/state/app.reducers';
 import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
-import { MatDialog } from '@angular/material';
 import { PopupService } from 'src/app/services/popup.service';
 import { ValidatorComponent } from '../validator/validator.component';
 
@@ -56,9 +49,7 @@ export class StatusBarComponent implements OnInit {
   ];
 
   constructor(
-    private dialog: MatDialog,
     private popupService: PopupService,
-    // private ws:WsService, 
     private appStore: Store <State>
   ) { }
 
@@ -77,7 +68,7 @@ export class StatusBarComponent implements OnInit {
   ngOnDestroy() { }
 
   openValidatorDialog(addressHEX) {
-    this.popupService.openValidatorDialogAddrHEX(addressHEX, this.dialog, ValidatorComponent);
+    this.popupService.openValidatorDialogAddrHEX(addressHEX, ValidatorComponent);
   }
 
 }

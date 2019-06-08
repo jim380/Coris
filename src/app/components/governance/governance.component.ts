@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 // import { Proposal } from 'src/app/interfaces/proposal.interface';
-import { MatDialog, MatTableDataSource, MatTable } from '@angular/material';
+import { MatTableDataSource, MatTable } from '@angular/material';
 import { GovDetailComponent } from './gov-detail/gov-detail.component';
 import { trigger, style, animate, transition, state } from '@angular/animations';
 import { GovService } from 'src/app/services/gov.service';
+import { PopupService } from 'src/app/services/popup.service';
 
 @Component({
   selector: 'app-governance',
@@ -33,7 +34,10 @@ export class GovernanceComponent implements OnInit {
     `depositEnd`
   ];
 
-  constructor(private dialog: MatDialog, private gs: GovService) { }
+  constructor(
+    private popupService: PopupService,
+    private gs: GovService
+  ) { }
 
   ngOnInit() {
     this.initProposals();
@@ -133,9 +137,7 @@ export class GovernanceComponent implements OnInit {
       });
   }
   
-  openGovDetailDialog(data) {
-    this.dialog.open( GovDetailComponent,  {
-      data
-    });
+  openGovDetailDialog(proposal) {
+    this.popupService.openGovDetailDialog(proposal, GovDetailComponent);
   }
 }

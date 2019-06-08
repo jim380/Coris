@@ -34,7 +34,7 @@
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   Height
-                  <h3 class="glance-title"><mdb-badge color="pink">{{tx.height}}</mdb-badge></h3>
+                  <h3 class="glance-title"><mdb-badge style="cursor:pointer" (click)="openBlockDialog(tx.height)" color="pink">{{tx.height}}</mdb-badge></h3>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     Timestamp
@@ -77,33 +77,63 @@
                 <li *ngIf="tx.msg[i].value.from_address" class="list-group-item d-flex justify-content-between align-items-center">
                   From
                   <h3 class="glance-title"><mdb-badge style="cursor:pointer;" 
-                    (click)="openTxsListDialog(tx.msg[i].value.from_address)"color="pink">
+                    (click)="openAccountDialog(tx.msg[i].value.from_address)"color="pink">
                     <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.msg[i].value.from_address ) : false; else elseSender">
                       {{ (appState | async).valsMap.get( tx.msg[i].value.from_address )}}
                     </span>
-                    <ng-template #elseSender>{{ tx.msg[i].value.from_address }}</ng-template>
+                    <ng-template #elseSender>
+                      {{ tx.msg[i].value.from_address | slice:0:15 }}... 
+                      <i 
+                        class="ion-ios-copy copy-button" 
+                        style="cursor: pointer;" 
+                        ngxClipboard 
+                        [cbContent]="tx.msg[i].value.from_address" 
+                        (click)="onCopySucceess()"
+                        mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                      </i>
+                    </ng-template>
                   </mdb-badge></h3>
                 </li>
                 
                 <li *ngIf="tx.msg[i].value.to_address" class="list-group-item d-flex justify-content-between align-items-center">
                   To
                   <h3 class="glance-title"><mdb-badge color="pink" style="cursor:pointer;" 
-                    (click)="openTxsListDialog(tx.msg[i].value.to_address)">
+                    (click)="openAccountDialog(tx.msg[i].value.to_address)">
                     <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.msg[i].value.to_address ) : false; else elseRecipient">
                       {{ (appState | async).valsMap.get( tx.msg[i].value.to_address )}}
                     </span>
-                    <ng-template #elseRecipient>{{ tx.msg[i].value.to_address }}</ng-template>
+                    <ng-template #elseRecipient>
+                      {{ tx.msg[i].value.to_address | slice:0:15 }}... 
+                      <i 
+                        class="ion-ios-copy copy-button" 
+                        style="cursor: pointer;" 
+                        ngxClipboard 
+                        [cbContent]="tx.msg[i].value.to_address" 
+                        (click)="onCopySucceess()"
+                        mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                      </i>
+                    </ng-template>
                   </mdb-badge></h3>
                 </li>
                 
                 <li *ngIf="tx.msg[i].value.delegator_address" class="list-group-item d-flex justify-content-between align-items-center">
                   Delegator
                   <h3 class="glance-title"><mdb-badge color="pink" style="cursor:pointer;" 
-                    (click)="openTxsListDialog(tx.msg[i].value.delegator_address)">
+                    (click)="openAccountDialog(tx.msg[i].value.delegator_address)">
                     <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.msg[i].value.delegator_address ) : false; else elseDelegator">
                       {{ (appState | async).valsMap.get( tx.msg[i].value.delegator_address )}}
                     </span>
-                    <ng-template #elseDelegator>{{tx.msg[i].value.delegator_address}}</ng-template> 
+                    <ng-template #elseDelegator>
+                      {{ tx.msg[i].value.delegator_address | slice:0:15 }}... 
+                      <i 
+                        class="ion-ios-copy copy-button" 
+                        style="cursor: pointer;" 
+                        ngxClipboard 
+                        [cbContent]="tx.msg[i].value.delegator_address" 
+                        (click)="onCopySucceess()"
+                        mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                      </i>
+                    </ng-template> 
                   </mdb-badge></h3>
                 </li>
                 
@@ -114,7 +144,17 @@
                     <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.msg[i].value.validator_address ) : false; else elseValidator">
                       {{ (appState | async).valsMap.get( tx.msg[i].value.validator_address )}}
                     </span>
-                    <ng-template #elseValidator>{{tx.msg[i].value.validator_address}}</ng-template>
+                    <ng-template #elseValidator>
+                      {{ tx.msg[i].value.validator_address | slice:0:15 }}... 
+                      <i 
+                        class="ion-ios-copy copy-button" 
+                        style="cursor: pointer;" 
+                        ngxClipboard 
+                        [cbContent]="tx.msg[i].value.validator_address" 
+                        (click)="onCopySucceess()"
+                        mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                      </i>
+                    </ng-template>
                   </mdb-badge></h3>
                 </li><br *ngIf="action === 'withdraw delegator reward'">
 
@@ -126,7 +166,17 @@
                     <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.msg[i].value.validator_src_address ) : false; else elseSrcValidator">
                       {{ (appState | async).valsMap.get( tx.msg[i].value.validator_src_address )}}
                     </span>
-                    <ng-template #elseSrcValidator>{{tx.msg[i].value.validator_src_address}}</ng-template> 
+                    <ng-template #elseSrcValidator>
+                      {{ tx.msg[i].value.validator_src_address | slice:0:15 }}... 
+                      <i 
+                        class="ion-ios-copy copy-button" 
+                        style="cursor: pointer;" 
+                        ngxClipboard 
+                        [cbContent]="tx.msg[i].value.validator_src_address" 
+                        (click)="onCopySucceess()"
+                        mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                      </i>
+                    </ng-template> 
                   </mdb-badge></h3>
                 </li>
                 
@@ -138,7 +188,17 @@
                     <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.msg[i].value.validator_dst_address ) : false; else elseDstValidator">
                       {{ (appState | async).valsMap.get( tx.msg[i].value.validator_dst_address )}}
                     </span>
-                    <ng-template #elseDstValidator>{{tx.msg[i].value.validator_dst_address}}</ng-template> 
+                    <ng-template #elseDstValidator>
+                      {{ tx.msg[i].value.validator_dst_address | slice:0:15 }}... 
+                      <i 
+                        class="ion-ios-copy copy-button" 
+                        style="cursor: pointer;" 
+                        ngxClipboard 
+                        [cbContent]="tx.msg[i].value.validator_dst_address" 
+                        (click)="onCopySucceess()"
+                        mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                      </i>
+                    </ng-template> 
                   </mdb-badge></h3>
                 </li>
 
@@ -151,7 +211,17 @@
                       <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( tx.msg[i].value.address ) : false; else elseDstValidator">
                         {{ (appState | async).valsMap.get( tx.msg[i].value.address )}}
                       </span>
-                      <ng-template #elseDstValidator>{{tx.msg[i].value.address}}</ng-template> 
+                      <ng-template #elseDstValidator>
+                        {{ tx.msg[i].value.address | slice:0:15 }}... 
+                        <i 
+                          class="ion-ios-copy copy-button" 
+                          style="cursor: pointer;" 
+                          ngxClipboard 
+                          [cbContent]="tx.msg[i].value.address" 
+                          (click)="onCopySucceess()"
+                          mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                        </i>
+                      </ng-template> 
                     </mdb-badge></h3>
                   </li>
                   <li *ngFor="let key of objectKeys(tx.msg[i].value.Description)" 
@@ -172,27 +242,47 @@
                   <li *ngFor="let input of tx.msg[i].value.inputs" 
                       class="list-group-item d-flex justify-content-between align-items-center">
                     Sender
-                    <h3 class="glance-title"><mdb-badge color="pink" (click)="openTxsListDialog( input.address )"
+                    <h3 class="glance-title"><mdb-badge color="pink" (click)="openAccountDialog( input.address )"
                       style="cursor: pointer;">
                       <span *ngIf="(appState | async).valsMap.size 
                                     ? (appState | async).valsMap.has( input.address ) 
                                     : false; else elseInputMulti">
                         {{ (appState | async).valsMap.get( input.address )}}
                       </span>
-                      <ng-template #elseInputMulti>{{ input.address }}</ng-template>
+                      <ng-template #elseInputMulti>
+                        {{ input.address | slice:0:15 }}... 
+                        <i 
+                          class="ion-ios-copy copy-button" 
+                          style="cursor: pointer;" 
+                          ngxClipboard 
+                          [cbContent]="input.address" 
+                          (click)="onCopySucceess()"
+                          mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                        </i>
+                      </ng-template>
                     </mdb-badge></h3>
                   </li>
                   <li *ngFor="let output of tx.msg[i].value.outputs" 
                       class="list-group-item d-flex justify-content-between align-items-center">
                     Recipient
-                    <h3 class="glance-title"><mdb-badge color="pink" (click)="openTxsListDialog( output.address )"
+                    <h3 class="glance-title"><mdb-badge color="pink" (click)="openAccountDialog( output.address )"
                       style="cursor: pointer;">
                       <span *ngIf="(appState | async).valsMap.size 
                                     ? (appState | async).valsMap.has( output.address ) 
                                     : false; else elseOutputMulti">
                         {{ (appState | async).valsMap.get( output.address )}}
                       </span>
-                      <ng-template #elseOutputMulti>{{ output.address }}</ng-template>
+                      <ng-template #elseOutputMulti>
+                        {{ output.address | slice:0:15 }}... 
+                        <i 
+                          class="ion-ios-copy copy-button" 
+                          style="cursor: pointer;" 
+                          ngxClipboard 
+                          [cbContent]="output.address" 
+                          (click)="onCopySucceess()"
+                          mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                        </i>
+                      </ng-template>
                     </mdb-badge></h3>
                   </li>
                   <li *ngFor="let output of tx.msg[i].value.outputs; index as j" 

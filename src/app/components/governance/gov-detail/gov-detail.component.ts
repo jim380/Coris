@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator } from '@angular/material';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState, State } from 'src/app/state/app.interface';
@@ -35,13 +35,13 @@ export class GovDetailComponent implements OnInit, AfterViewInit {
   depositDisplayedColumns: string[] = ['depositor', 'amount'];
 
   @ViewChildren(MatPaginator) paginators = new QueryList<MatPaginator>();
-
+  proposal;
   constructor(
     private popupService: PopupService,
-    private dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public proposal: any, 
+    @Inject(MAT_DIALOG_DATA) public data: any, 
     private store: Store <State>
   ) { 
+    this.proposal = data.proposal;
     this.initTable('All');
     this.initDepositTable();
   }
@@ -96,6 +96,6 @@ export class GovDetailComponent implements OnInit, AfterViewInit {
   }
 
   openAccountDialog(address) {
-    this.popupService.openAccountDialogAddr(address, this.dialog, AccountDetailComponent);
+    this.popupService.openAccountDialogAddr(address, AccountDetailComponent);
   }
 }

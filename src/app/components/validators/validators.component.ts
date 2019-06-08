@@ -1,19 +1,14 @@
-import { TestComponent } from './../test/test.component';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
-import { Store, createFeatureSelector, createSelector, select } from '@ngrx/store';
-import { ActivatedRoute } from '@angular/router';
-// import { ValidatorsService } from '../../services/validators.service';
-// import { ValidatorsHelperService } from '../../services/validators-helper.service';
-import { Sort, MatDialog, MatSort } from '@angular/material';
+import { Store } from '@ngrx/store';
+import { MatSort } from '@angular/material';
 import { ValidatorComponent } from '../validator/validator.component';
 import {MatTable} from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
-// import { GovDetailComponent } from '../governance/gov-detail/gov-detail.component';
 import { map, skipWhile, take } from 'rxjs/operators';
 import { AppState, BlocksState, State } from 'src/app/state/app.interface';
-import { selectValidatorsState, selectValidators } from 'src/app/state/validators/validators.reducers';
+import { selectValidators } from 'src/app/state/validators/validators.reducers';
 import { selectAppState } from 'src/app/state/app.reducers';
 import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
 import { PopupService } from 'src/app/services/popup.service';
@@ -53,7 +48,6 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
 
   constructor(
     private appStore: Store<State>,
-    private dialog: MatDialog,
     private popupService: PopupService
   ) { 
     // console.log(this.appStore);
@@ -204,7 +198,7 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
 
   /* POPUPS */
   openValidatorDialog(validator) {
-    this.popupService.openValidatorDialog(validator, this.dialog, ValidatorComponent);
+    this.popupService.openValidatorDialog(validator, ValidatorComponent);
   }
 
   /* END POPUPS */

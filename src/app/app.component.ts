@@ -7,7 +7,6 @@ import { trigger, state, query, transition, animate, style, keyframes, animation
 import { fadeInAnimation, fade } from './animations/animation';
 import {ToastService} from 'ng-uikit-pro-standard';
 import { PricingService } from './services/pricing.service';
-import { PopupService } from './services/popup.service';
 
 @Component({
   selector: 'app-root',
@@ -50,7 +49,6 @@ export class AppComponent {
     private ws:WsService, 
     private pricingService: PricingService,
     private vs:ValidatorsService,
-    private popupService: PopupService
   ) {  }
 
   ngOnInit() { 
@@ -59,10 +57,6 @@ export class AppComponent {
 
   ngOnDestroy() {
     this.ws.unsubscribe();
-  }
-
-  getPopupService() {
-    return this.popupService;
   }
 }
 

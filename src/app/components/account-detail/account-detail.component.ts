@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { TxsService } from 'src/app/services/txs.service';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material';
 import { PricingService } from 'src/app/services/pricing.service';
 
 @Component({

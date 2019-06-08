@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PopupService } from 'src/app/services/popup.service';
 import { AccountDetailComponent } from '../../account-detail/account-detail.component';
-import { MatDialog } from '@angular/material';
 import { ValidatorComponent } from '../../validator/validator.component';
 import { TxComponent } from '../../tx/tx.component';
 import { BlockComponent } from '../../block/block.component';
@@ -18,7 +17,6 @@ export class SidenavComponent implements OnInit {
 
   constructor(
     private popupService: PopupService,
-    private dialog: MatDialog,
     private router: Router
   ) { }
 
@@ -27,15 +25,15 @@ export class SidenavComponent implements OnInit {
 
   onSearchBtnClick(query) {
     if(query.length === 45 && query.slice(0, 6) === "cosmos") {
-      this.popupService.openAccountDialogAddr(query, this.dialog, AccountDetailComponent);
+      this.popupService.openAccountDialogAddr(query, AccountDetailComponent);
     } else if(query.length === 52 && query.slice(0, 13) === "cosmosvaloper") {
-      this.popupService.openValidatorDialogAddr(query, this.dialog, ValidatorComponent);
+      this.popupService.openValidatorDialogAddr(query, ValidatorComponent);
     } else if(query.length === 64) {
-      this.popupService.openTxDialog(query, this.dialog, TxComponent);
+      this.popupService.openTxDialogHash(query, TxComponent);
     } else if(!isNaN(query)) {
-      this.popupService.openBlockDialog(query, this.dialog, BlockComponent);
+      this.popupService.openBlockDialogHeight(query, BlockComponent);
     } else {
-      this.popupService.openValidatorDialogMoniker(query, this.dialog, ValidatorComponent);
+      this.popupService.openValidatorDialogMoniker(query, ValidatorComponent);
     }
   }
 

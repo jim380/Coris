@@ -1,14 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { TxsListCardComponent } from '../txs/txs-list-card/txs-list-card.component';
 import { PopupService } from 'src/app/services/popup.service';
 import { State, AppState } from 'src/app/state/app.interface';
 import { selectAppState } from 'src/app/state/app.reducers';
 import { AccountDetailComponent } from '../account-detail/account-detail.component';
 import { ValidatorComponent } from '../validator/validator.component';
+import { BlockComponent } from '../block/block.component';
 
 // @aakatev
 // 05/15/19
@@ -32,7 +32,6 @@ export class TxComponent implements OnInit {
   objectKeys = Object.keys;
 
   constructor(
-    private dialog: MatDialog,
     private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private appStore: Store <AppState>,
@@ -55,59 +54,16 @@ export class TxComponent implements OnInit {
     this.toastr.success('Copied to clipboard');
   }
 
-  openTxsListDialog(address) {
-    this.dialog.open( AccountDetailComponent,  {
-      data: { 
-        address
-      },
-      height: '75vh'
-    });
+  openAccountDialog(dlelegatorAddress) {
+    this.popupService.openAccountDialogAddr(dlelegatorAddress, AccountDetailComponent);
   }
 
   openValidatorDetailDialog(operatorAddress) {
-    this.popupService.openValidatorDialogAddr(operatorAddress, this.dialog, ValidatorComponent);
+    this.popupService.openValidatorDialogAddr(operatorAddress, ValidatorComponent);
   }
 
-  
-  // queryTx () {
-  //   this.initTxHash();
-  //   this.http.get(`${nodeRpc2}/tx_search?query="tx.hash='${this.txHash}'"`).subscribe(async data => {
-
-  //     if (data['error'] === undefined)  {
-      
-  //       const dataTx = await data['result'].txs[0];
-  //       let dataTagsDecod : Tag[] = [];
-
-  //       dataTx.tx_result.tags.forEach(tag => {
-  //         dataTagsDecod.push(decodeTag(tag));
-  //       });
-
-  //       this.tx = {
-  //         hash: dataTx.hash, 
-  //         height: dataTx.height,
-  //         gasUsed: dataTx.tx_result.gasUsed,
-  //         gasWanted: dataTx.tx_result.gasWanted,
-  //         txBase64: dataTx.tx,
-  //         txDecod: atob(dataTx.tx),
-  //         tagsBase64: dataTx.tx_result.tags,
-  //         tagsDecod: dataTagsDecod
-  //       };
-  //       // TODO remove debugging
-  //       // console.log(this.tx);
-  //     }
-  //   });
-  // }
-
-
-  // async clickButton(value) {
-  //   // TODO remove debugging
-  //   // console.log(value);
-  //   // await this.router.navigate([`tx/${value}`]);
-  //   this.queryTx();
-  // }
-
-  // initTxHash() {
-  //   // this.txHash = this.route.snapshot.paramMap.get('hash');
-  // }
+  openBlockDialog(blockHeight) {
+    this.popupService.openBlockDialogHeight(blockHeight, BlockComponent);
+  }
 
 }

@@ -46,7 +46,6 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { ToastrModule } from 'ngx-toastr';
 import { TxsListCardComponent } from './components/txs/txs-list-card/txs-list-card.component';
 import { AccountDetailComponent } from './components/account-detail/account-detail.component';
-import { PopupService } from './services/popup.service';
 
 declare var Hammer: any;
 

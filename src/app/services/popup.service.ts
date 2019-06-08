@@ -9,9 +9,21 @@ import { Block } from '../interfaces/block.interface';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material';
 
+export class PopupConfig {
+  public config = {
+    data: null,      
+    maxWidth: '100vw',
+    maxHeight: '100vh',
+    height: '100%',
+    width: '100%',
+  }
+  constructor(data) {
+    this.config.data = data;
+  }
+}
+
 @Injectable({
   providedIn: 'root',
-  // providedIn: null
 })
 export class PopupService {
   appState: Observable<State>;
@@ -24,98 +36,57 @@ export class PopupService {
     console.log("new popup service created!");
   }
 
-  openValidatorDialog(validator, dialog, component) {
-    console.log(this.dialog);
-    this.dialog.open( component,  {
-      data: { 
-        validator
-      },      
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      height: '100%',
-      width: '100%',
-    });
+  openValidatorDialog(validator, component) {
+    this.dialog.open( component, new PopupConfig({ validator: validator }).config );
   }
 
-  openValidatorDialogAddr(validatorAddress, dialog, component) {
-    // console.log(validatorAddress);
+  openValidatorDialogAddr(validatorAddress, component) {
     this.appState.pipe(
       take(1)
     ).subscribe((state) => {
       let validatorQuery = state.validatorsState.validators
         .filter(val => val.operator_address === validatorAddress);
       if( validatorQuery.length === 1) {
-        dialog.open( component,  {
-          data: { 
-            validator: validatorQuery[0]          
-          },      
-          maxWidth: '100vw',
-          maxHeight: '100vh',
-          height: '100%',
-          width: '100%',
-        });
+        this.dialog.open( component, new PopupConfig({ validator: validatorQuery[0] }).config);
       } else {
         console.log("Validator was not found! Operator address: ", validatorAddress)
       }
     });
   }
 
-  openValidatorDialogAddrHEX(validatorAddressHEX, dialog, component) {
-    console.log(validatorAddressHEX);
+  openValidatorDialogAddrHEX(validatorAddressHEX, component) {
     this.appState.pipe(
       take(1)
     ).subscribe((state) => {
       let validatorQuery = state.validatorsState.validators
         .filter(val => val.description.moniker === state.appState.valsMap.get(validatorAddressHEX));
       if( validatorQuery.length === 1) {
-        dialog.open( component,  {
-          data: { 
-            validator: validatorQuery[0]          
-          },
-          maxWidth: '100vw',
-          maxHeight: '100vh',
-          height: '100%',
-          width: '100%'
-        });
+        this.dialog.open( component, new PopupConfig({ validator: validatorQuery[0] }).config);
       } else {
         console.log("Validator was not found! HEX address: ", validatorAddressHEX)
       }
     });
   }
 
-  openValidatorDialogMoniker(moniker, dialog, component) {
-    // console.log(moniker);
+  openValidatorDialogMoniker(moniker, component) {
     this.appState.pipe(
       take(1)
     ).subscribe((state) => {
       let validatorQuery = state.validatorsState.validators
         .filter( val => (val.description.moniker.replace(/\W/g, '').toLowerCase()).includes(moniker.replace(/\W/g, '').toLowerCase()) );
       if( validatorQuery.length === 1) {
-        dialog.open( component,  {
-          data: { 
-            validator: validatorQuery[0]          
-          },
-          maxWidth: '100vw',
-          maxHeight: '100vh',
-          height: '100%',
-          width: '100%'
-        });
+        this.dialog.open( component, new PopupConfig({ validator: validatorQuery[0] }).config);
       } else {
         console.log("Validator was not found! Moniker: ", moniker)
       }
     });
   }
 
-  openAccountDialogAddr(delegatorAddress, dialog, component) {
-    dialog.open( component,  {
-      data: { 
-        address: delegatorAddress
-      },
-      height: '75vh'
-    });
+  openAccountDialogAddr(delegatorAddress, component) {
+    this.dialog.open( component,  new PopupConfig({ address: delegatorAddress }).config);
   }
 
-  openTxDialog(txHash, dialog, component) {
+  openTxDialogHash(txHash, component) {
     let tx;
     this.httpClient.get(`${nodeRpc1}/txs/${txHash}`).subscribe((data:any) => {
       tx = {
@@ -175,16 +146,15 @@ export class PopupService {
     () => {
       // TODO remove debugging
       // console.log(tx);
-      dialog.open( component,  {
-        data: { 
-          tx
-        },
-        height: '75vh'
-      });
+      this.dialog.open( component,  new PopupConfig({ tx: tx }).config);
     });
   }
 
-  openBlockDialog(blockHeight, dialog, component) {
+  openTxDialog(tx, component) {
+    this.dialog.open(component, new PopupConfig({ tx: tx }).config);
+  }
+
+  openBlockDialogHeight(blockHeight, component) {
     let block: Block;
     this.httpClient.get(`${nodeRpc1}/blocks/${blockHeight}`).subscribe((data:any) => {
       // TODO remove debugging
@@ -202,12 +172,16 @@ export class PopupService {
     (error) => {
     },
     () => {
-      dialog.open( component,  {
-        data: { 
-          block
-        },
-        height: '75vh'
-      });
+      this.dialog.open( component,  new PopupConfig({ block: block }).config);
     });
+  }
+
+  openBlockDialog(block, component) {
+    this.dialog.open( component,  new PopupConfig({ block: block }).config);
+  }
+
+ 
+  openGovDetailDialog(proposal, component) {
+    this.dialog.open( component, new PopupConfig({ proposal: proposal }).config);
   }
 }

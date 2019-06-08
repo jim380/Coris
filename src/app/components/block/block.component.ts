@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, range } from 'rxjs';
-import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator } from '@angular/material';
 import { TxsService } from 'src/app/services/txs.service';
 import { TxComponent } from '../tx/tx.component';
 import { PopupService } from 'src/app/services/popup.service';
@@ -9,9 +9,6 @@ import { AppState } from 'src/app/state/app.interface';
 import { selectAppState } from 'src/app/state/app.reducers';
 import { ToastrService } from 'ngx-toastr';
 import { ValidatorComponent } from '../validator/validator.component';
-// import { HttpClient } from '@angular/common/http';
-// import { ActivatedRoute, Router } from '@angular/router';
-// import { nodeRpc2 } from '../../../config.js';
 
 @Component({
   selector: 'app-block',
@@ -30,17 +27,13 @@ export class BlockComponent implements OnInit, AfterViewInit {
 
   constructor(
     private appStore: Store <AppState>,
-    // private http: HttpClient, 
-    // private route: ActivatedRoute, 
-    // private router: Router
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ts: TxsService,
-    private dialog: MatDialog,
     private popupService: PopupService,
     private toastr: ToastrService,
   ) { 
     // TODO remove debugging
-    console.log(data.block);
+    // console.log(data.block);
     this.block = data.block;
   }
 
@@ -139,42 +132,24 @@ export class BlockComponent implements OnInit, AfterViewInit {
     if(filter !== 'All') {
       this.txsDataSource.filter = filter;
     }
-    // this.txsDataSource.paginator = this.paginators.toArray()[0];
   }
 
   public onTabChange(event) {
     // TODO remove debugging
     console.log(event.tab.textLabel);
-    // this.initTable(event.tab.textLabel);
   }
 
   openTxDialog(tx) {
-    this.dialog.open( TxComponent,  {
-      data: { 
-        tx
-      },
-      height: '75vh'
-    });
+    this.popupService.openTxDialog(tx, TxComponent)
   }
 
 
   openValidatorDialog(addressHEX) {
-    this.popupService.openValidatorDialogAddrHEX(addressHEX, this.dialog, ValidatorComponent);
+    this.popupService.openValidatorDialogAddrHEX(addressHEX, ValidatorComponent);
   }
 
   onCopySucceess() {
-    // const options = { toastClass: 'opacity' };
     this.toastr.success('Copied to clipboard');
   }
-
-
-  // fetchBlock() {
-  //   this.queryHeight = Number(this.route.snapshot.paramMap.get('height'));
-
-  //   this.http.get(`${nodeRpc2}//block?height=${this.queryHeight}`).subscribe(data => {
-  //     if (data['error'] === undefined) this.block = data['result'].block;
-  //     else this.block = {};
-  //   });
-  // }
 }
 

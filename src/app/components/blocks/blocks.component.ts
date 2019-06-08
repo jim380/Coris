@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { debounceTime, map, skipWhile } from "rxjs/operators";
 import { State, BlocksState } from '../../state/app.interface';
 import { rowsAnimation, expandableRow, staggerAnimation} from 'src/app/animations/animation';
-import { MatTable, MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
+import { MatTable, MatTableDataSource, MatPaginator } from '@angular/material';
 import { BlockComponent } from '../block/block.component';
 import { BlocksService } from 'src/app/services/blocks.service';
 import { selectAppState } from 'src/app/state/app.reducers';
@@ -87,7 +87,6 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
     private http: HttpClient,
     private router: Router,
     private appStore: Store <State>,
-    private dialog: MatDialog,
     private blocksService: BlocksService,
     private popupService: PopupService,
   ) { }
@@ -199,38 +198,12 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
     this.currentPage -=1 ;
   }
 
-  queryBlock(blockHeight) {
-    let block: Block;
-    this.blocksService.fetchBlockAtAlternative(blockHeight).subscribe((data:any) => {
-      // TODO remove debugging
-      // console.log(data);
-      const datePipe = new DatePipe('en-US');
-      const formattedTime = datePipe.transform(data.block_meta.header.time, 'h:mm:ss a, MMM d, y');
-      block = {
-        hash: data.block_meta.block_id.hash, 
-        height: data.block_meta.header.height, 
-        time: formattedTime,
-        txs: data.block_meta.header.num_txs,
-        proposer: data.block_meta.header.proposer_address
-      }   
-    },
-    (error) => {
-    },
-    () => {
-      this.openBlockDialog(block);
-    });
+  openBlockDialog(block) {
+    this.popupService.openBlockDialog(block, BlockComponent);
   }
 
-  openBlockDialog(block) {
-    this.dialog.open( BlockComponent,  {
-      data: { 
-        block
-      },
-      height: '75vh'
-    });
-  }
   openValidatorDialog(addressHEX) {
-    this.popupService.openValidatorDialogAddrHEX(addressHEX, this.dialog, ValidatorComponent);
+    this.popupService.openValidatorDialogAddrHEX(addressHEX, ValidatorComponent);
   }
 
 }
