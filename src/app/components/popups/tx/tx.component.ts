@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
@@ -9,17 +9,6 @@ import { AccountDetailComponent } from '../account-detail/account-detail.compone
 import { ValidatorComponent } from '../validator/validator.component';
 import { BlockComponent } from '../block/block.component';
 import { PopupService } from 'src/app/services/popup.service';
-
-// @aakatev
-// 05/15/19
-// commented out blocks
-// is logic for openning
-// component on separate route
-
-// import { nodeRpc2 } from '../../../config.js'
-// import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
-
-// import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-tx',
@@ -35,12 +24,11 @@ export class TxComponent implements OnInit {
   objectKeys = Object.keys;
 
   constructor(
+    public dialogRef: MatDialogRef<BlockComponent>,
     private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private appStore: Store <AppState>,
     private popupService: PopupService
-    // private route: ActivatedRoute, 
-    // private router: Router 
   ) {  
     // TODO remove debugging
     console.log(data.tx);

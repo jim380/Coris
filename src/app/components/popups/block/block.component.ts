@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, range } from 'rxjs';
-import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator } from '@angular/material';
+import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialogRef } from '@angular/material';
 import { TxComponent } from '../tx/tx.component';
 import { AppState } from 'src/app/state/app.interface';
 import { selectAppState } from 'src/app/state/app.reducers';
@@ -29,6 +29,7 @@ export class BlockComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginators = new QueryList<MatPaginator>();
 
   constructor(
+    public dialogRef: MatDialogRef<BlockComponent>,
     private appStore: Store <AppState>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ts: TxsService,

@@ -50,6 +50,7 @@ import { AgoPipe } from './pipes/ago.pipe';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { TimeAgoPipe } from 'time-ago-pipe';
+import { BtnCloseComponent } from './components/popups/btn-close/btn-close.component';
 // import { StatusCard1Component } from './components/test/status-card1/status-card1.component';
 // import { StatusCard2Component } from './components/test/status-card2/status-card2.component';
 // import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -103,6 +104,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     ChartCardsGovComponent,
     TxsListCardComponent,
     AccountDetailComponent,
+    BtnCloseComponent,
     // DashboardComponent,
     // NewTxComponent,
     // TestComponent,

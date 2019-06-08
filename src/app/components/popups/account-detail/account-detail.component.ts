@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { PricingService } from 'src/app/services/pricing.service';
 import { TxsService } from 'src/app/services/txs.service';
 
@@ -29,6 +29,7 @@ export class AccountDetailComponent implements OnInit {
   quoteUsd: 0;
 
   constructor(
+    public dialogRef: MatDialogRef<AccountDetailComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, 
     private ts: TxsService, 
     private ps: PricingService

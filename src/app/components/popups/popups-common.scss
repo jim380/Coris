@@ -3,3 +3,7 @@
   max-height: 100%;
   margin: 0;
 }
+
+.mat-tab-body-active {
+  z-index: 0 !important;
+}

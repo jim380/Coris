@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator } from '@angular/material';
+import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState, State } from 'src/app/state/app.interface';
@@ -40,6 +40,7 @@ export class GovDetailComponent implements OnInit, AfterViewInit {
   @ViewChildren(MatPaginator) paginators = new QueryList<MatPaginator>();
   proposal;
   constructor(
+    public dialogRef: MatDialogRef<GovDetailComponent>,
     private popupService: PopupService,
     @Inject(MAT_DIALOG_DATA) public data: any, 
     private store: Store <State>

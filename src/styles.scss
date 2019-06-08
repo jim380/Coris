@@ -482,3 +482,7 @@ background-color: #aa66cc; }
 .card-cascade {
   margin-bottom: 0;
 }
+
+.mat-tab-body-active {
+  z-index: 0 !important;
+}
