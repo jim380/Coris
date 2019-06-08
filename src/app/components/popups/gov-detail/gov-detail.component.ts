@@ -5,12 +5,15 @@ import { Store } from '@ngrx/store';
 import { AppState, State } from 'src/app/state/app.interface';
 import { selectAppState } from 'src/app/state/app.reducers';
 import { PopupService } from 'src/app/services/popup.service';
-import { AccountDetailComponent } from '../../account-detail/account-detail.component';
+import { AccountDetailComponent } from '../account-detail/account-detail.component';
 
 @Component({
   selector: 'app-gov-detail',
   templateUrl: './gov-detail.component.html',
-  styleUrls: ['./gov-detail.component.scss']
+  styleUrls: [
+    './gov-detail.component.scss',
+    '../popups-common.scss'
+  ]
 })
 export class GovDetailComponent implements OnInit, AfterViewInit {
   public chartType: string = 'pie';

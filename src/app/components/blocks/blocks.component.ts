@@ -10,13 +10,13 @@ import { debounceTime, map, skipWhile } from "rxjs/operators";
 import { State, BlocksState } from '../../state/app.interface';
 import { rowsAnimation, expandableRow, staggerAnimation} from 'src/app/animations/animation';
 import { MatTable, MatTableDataSource, MatPaginator } from '@angular/material';
-import { BlockComponent } from '../block/block.component';
 import { BlocksService } from 'src/app/services/blocks.service';
 import { selectAppState } from 'src/app/state/app.reducers';
 import { AppState } from 'src/app/state/app.interface';
 import { selectBlocksState, selectBlocks } from 'src/app/state/blocks/blocks.reducers';
 import { PopupService } from 'src/app/services/popup.service';
-import { ValidatorComponent } from '../validator/validator.component';
+import { BlockComponent } from '../popups/block/block.component';
+import { ValidatorComponent } from '../popups/validator/validator.component';
 // import {MatTableDataSource} from '@angular/material';
 
 @Component({

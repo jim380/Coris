@@ -1,12 +1,12 @@
 .card.card-cascade .view.gradient-card-header {
-    padding: 1rem 1rem;
-    text-align: center;
+  padding: 1rem 1rem;
+  text-align: center;
 }
 
 .card.card-cascade h3,
 .card.card-cascade h4
 {
-  margin-bottom: 0;
+  margin-bottom: 0px;
 }
 
 .blue-gradient {
@@ -20,12 +20,13 @@
 
 .card.card-cascade {
   .view {
-      box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.15), 0 3px 12px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.15), 0 3px 12px 0 rgba(0, 0, 0, 0.15);
   }
 }
 
-.row {
-  max-width: 90%;
+section {
+  // background-color: #121212;
+  margin: 0 auto;
 }
 
 .testimonial-card {
@@ -34,13 +35,20 @@
   margin-bottom: 0;
 }
 
-.card-title h1 {
-  color: #4a4a4a;
-}
-
 a {
   color: #4a4a4a;
   // font-size: 200%;
+}
+
+th, td {
+  overflow: hidden;
+  width:auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+mdb-card-title i {
+  font-size: 150%;
 }
 
 .card-title {
@@ -48,8 +56,8 @@ a {
   font-size: 130%;
 }
 
-.glance-title {
-  margin: 0 !important
+.card-title h1 {
+  color: black;
 }
 
 mdb-card-title {
@@ -57,5 +65,5 @@ mdb-card-title {
 }
 
 mdb-card-header {
-background-color: #3F51B5;
+  background-color: #3F51B5;
 }

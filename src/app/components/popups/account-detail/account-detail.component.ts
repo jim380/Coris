@@ -1,12 +1,15 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { TxsService } from 'src/app/services/txs.service';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { PricingService } from 'src/app/services/pricing.service';
+import { TxsService } from 'src/app/services/txs.service';
 
 @Component({
   selector: 'app-account-detail',
   templateUrl: './account-detail.component.html',
-  styleUrls: ['./account-detail.component.scss']
+  styleUrls: [
+    './account-detail.component.scss',
+    '../popups-common.scss'
+  ]
 })
 export class AccountDetailComponent implements OnInit {
   delegator = {

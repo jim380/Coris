@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MatSort } from '@angular/material';
-import { ValidatorComponent } from '../validator/validator.component';
+import { ValidatorComponent } from '../popups/validator/validator.component';
 import {MatTable} from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {MatPaginator, MatTableDataSource} from '@angular/material';

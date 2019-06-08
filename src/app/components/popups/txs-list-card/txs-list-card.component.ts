@@ -3,12 +3,15 @@ import { MAT_DIALOG_DATA, MatPaginator, MatTableDataSource } from '@angular/mate
 import { TxsService } from 'src/app/services/txs.service';
 import { ToastrService } from 'ngx-toastr';
 import { PopupService } from 'src/app/services/popup.service';
-import { TxComponent } from '../../tx/tx.component';
+import { TxComponent } from '../tx/tx.component';
 
 @Component({
   selector: 'app-txs-list-card',
   templateUrl: './txs-list-card.component.html',
-  styleUrls: ['./txs-list-card.component.scss']
+  styleUrls: [
+    './txs-list-card.component.scss',
+    '../popups-common.scss'
+  ]
 })
 export class TxsListCardComponent implements OnInit, AfterViewInit {
   delegator = {

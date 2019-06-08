@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 // import { Proposal } from 'src/app/interfaces/proposal.interface';
 import { MatTableDataSource, MatTable } from '@angular/material';
-import { GovDetailComponent } from './gov-detail/gov-detail.component';
 import { trigger, style, animate, transition, state } from '@angular/animations';
 import { GovService } from 'src/app/services/gov.service';
 import { PopupService } from 'src/app/services/popup.service';
+import { GovDetailComponent } from '../popups/gov-detail/gov-detail.component';
 
 @Component({
   selector: 'app-governance',

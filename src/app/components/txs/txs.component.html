@@ -99,7 +99,7 @@
                     <span *ngFor="let action of tx.action; index as i">
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgSend'">
-                        <a (click)="openTxsListDialog( tx.msg[i].value.from_address )"> 
+                        <a (click)="openAccountDialog( tx.msg[i].value.from_address )"> 
                           <span *ngIf="(appState | async).valsMap.size 
                                         ? (appState | async).valsMap.has( tx.msg[i].value.from_address ) 
                                         : false; else elseFromSend">
@@ -115,7 +115,7 @@
                         </span>
                         to 
                         <br>
-                        <a (click)="openTxsListDialog( tx.msg[i].value.to_address )"> 
+                        <a (click)="openAccountDialog( tx.msg[i].value.to_address )"> 
                           <span *ngIf="(appState | async).valsMap.size 
                                         ? (appState | async).valsMap.has( tx.msg[i].value.to_address ) 
                                         : false; else elseToSend">
@@ -127,7 +127,7 @@
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgDelegate' 
                             || tx.msg[i].type === 'cosmos-sdk/MsgUndelegate'">
-                        <a (click)="openTxsListDialog( tx.msg[i].value.delegator_address )"> 
+                        <a (click)="openAccountDialog( tx.msg[i].value.delegator_address )"> 
                           <span *ngIf="(appState | async).valsMap.size 
                                         ? (appState | async).valsMap.has( tx.msg[i].value.delegator_address ) 
                                         : false; else elseDelegatorDelegate">
@@ -163,7 +163,7 @@
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgMultiSend'">
                         <span *ngFor="let input of tx.msg[i].value.inputs">
-                          <a (click)="openTxsListDialog( input.address )"> 
+                          <a (click)="openAccountDialog( input.address )"> 
                             <span *ngIf="(appState | async).valsMap.size 
                                           ? (appState | async).valsMap.has( input.address ) 
                                           : false; else elseInputMulti">
@@ -178,7 +178,7 @@
                         to
                         <br>
                         <span *ngFor="let output of tx.msg[i].value.outputs">
-                          <a (click)="openTxsListDialog( output.address )"> 
+                          <a (click)="openAccountDialog( output.address )"> 
                             <span *ngIf="(appState | async).valsMap.size 
                                           ? (appState | async).valsMap.has( output.address ) 
                                           : false; else elseOutputMulti">
@@ -191,7 +191,7 @@
                       </span>
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgWithdrawDelegationReward'">
-                        <a (click)="openTxsListDialog( tx.msg[i].value.delegator_address )"> 
+                        <a (click)="openAccountDialog( tx.msg[i].value.delegator_address )"> 
                           <span *ngIf="(appState | async).valsMap.size 
                                         ? (appState | async).valsMap.has( tx.msg[i].value.delegator_address ) 
                                         : false; else elseDelegatorWithdraw">
@@ -213,7 +213,7 @@
                       </span><br>
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgBeginRedelegate'">
-                        <a (click)="openTxsListDialog( tx.msg[i].value.delegator_address )"> 
+                        <a (click)="openAccountDialog( tx.msg[i].value.delegator_address )"> 
                           <span *ngIf="(appState | async).valsMap.size 
                                         ? (appState | async).valsMap.has( tx.msg[i].value.delegator_address ) 
                                         : false; else elseDelegatorRedelegate">
@@ -269,7 +269,7 @@
                       </span>
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgCreateValidator'">
-                        <a (click)="openTxsListDialog( tx.msg[i].value.delegator_address )"> 
+                        <a (click)="openAccountDialog( tx.msg[i].value.delegator_address )"> 
                           <span *ngIf="(appState | async).valsMap.size 
                                         ? (appState | async).valsMap.has( tx.msg[i].value.delegator_address ) 
                                         : false; else elseDelegatorCreate">
@@ -284,7 +284,7 @@
 
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgEditValidator'">
-                        <a (click)="openTxsListDialog( tx.msg[i].value.delegator_address )"> 
+                        <a (click)="openAccountDialog( tx.msg[i].value.delegator_address )"> 
                           <span *ngIf="(appState | async).valsMap.size 
                                         ? (appState | async).valsMap.has( tx.msg[i].value.delegator_address ) 
                                         : false; else elseValidatorEdit">
@@ -297,7 +297,7 @@
                       </span>   
                       
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgVote'">
-                        <a (click)="openTxsListDialog( tx.msg[i].value.voter )"> 
+                        <a (click)="openAccountDialog( tx.msg[i].value.voter )"> 
                           <span *ngIf="(appState | async).valsMap.size 
                                         ? (appState | async).valsMap.has( tx.msg[i].value.voter ) 
                                         : false; else elseVote">

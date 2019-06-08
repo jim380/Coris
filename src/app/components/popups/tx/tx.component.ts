@@ -3,12 +3,12 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { PopupService } from 'src/app/services/popup.service';
 import { State, AppState } from 'src/app/state/app.interface';
 import { selectAppState } from 'src/app/state/app.reducers';
 import { AccountDetailComponent } from '../account-detail/account-detail.component';
 import { ValidatorComponent } from '../validator/validator.component';
 import { BlockComponent } from '../block/block.component';
+import { PopupService } from 'src/app/services/popup.service';
 
 // @aakatev
 // 05/15/19
@@ -24,7 +24,10 @@ import { BlockComponent } from '../block/block.component';
 @Component({
   selector: 'app-tx',
   templateUrl: './tx.component.html',
-  styleUrls: ['./tx.component.scss']
+  styleUrls: [
+    './tx.component.scss',
+    '../popups-common.scss'
+  ]
 })
 export class TxComponent implements OnInit {
   appState: Observable<State>;

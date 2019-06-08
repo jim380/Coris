@@ -7,7 +7,7 @@ import { AppState, State, BlocksState } from 'src/app/state/app.interface';
 import { selectAppState } from 'src/app/state/app.reducers';
 import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
 import { PopupService } from 'src/app/services/popup.service';
-import { ValidatorComponent } from '../validator/validator.component';
+import { ValidatorComponent } from '../popups/validator/validator.component';
 
 @Component({
   selector: 'app-status-bar',

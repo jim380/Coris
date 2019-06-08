@@ -2,18 +2,21 @@ import { Component, OnInit, Inject, ViewChildren, QueryList, AfterViewInit } fro
 import { Store } from '@ngrx/store';
 import { Observable, range } from 'rxjs';
 import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator } from '@angular/material';
-import { TxsService } from 'src/app/services/txs.service';
 import { TxComponent } from '../tx/tx.component';
-import { PopupService } from 'src/app/services/popup.service';
 import { AppState } from 'src/app/state/app.interface';
 import { selectAppState } from 'src/app/state/app.reducers';
 import { ToastrService } from 'ngx-toastr';
 import { ValidatorComponent } from '../validator/validator.component';
+import { TxsService } from 'src/app/services/txs.service';
+import { PopupService } from 'src/app/services/popup.service';
 
 @Component({
   selector: 'app-block',
   templateUrl: './block.component.html',
-  styleUrls: ['./block.component.scss']
+  styleUrls: [
+    './block.component.scss',
+    '../popups-common.scss'
+  ]
 })
 
 export class BlockComponent implements OnInit, AfterViewInit {

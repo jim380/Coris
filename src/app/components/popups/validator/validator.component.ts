@@ -5,18 +5,21 @@ import { Store } from '@ngrx/store';
 import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator } from '@angular/material';
 
 import { ToastrService } from 'ngx-toastr';
-import { TxsService } from 'src/app/services/txs.service';
 import { AppState, State } from 'src/app/state/app.interface';
 import { selectAppState } from 'src/app/state/app.reducers';
 import { ActivatedRoute } from '@angular/router'
-import { PopupService } from 'src/app/services/popup.service';
 import { AccountDetailComponent } from '../account-detail/account-detail.component';
 import { TxComponent } from '../tx/tx.component';
+import { TxsService } from 'src/app/services/txs.service';
+import { PopupService } from 'src/app/services/popup.service';
 
 @Component({
   selector: 'app-validator',
   templateUrl: './validator.component.html',
-  styleUrls: ['./validator.component.scss']
+  styleUrls: [
+    './validator.component.scss',
+    '../popups-common.scss'
+  ]
 })
 
 export class ValidatorComponent implements OnInit {

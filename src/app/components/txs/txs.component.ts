@@ -10,12 +10,12 @@ import { Tx } from '../../interfaces/tx.interface';
 import { MatTableDataSource, MatPaginator, MatTable, MatSort, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { TxComponent } from '../tx/tx.component';
-import { ValidatorComponent } from '../validator/validator.component';
 import { take } from 'rxjs/operators';
 import { PopupService } from 'src/app/services/popup.service.js';
-import { AccountDetailComponent } from '../account-detail/account-detail.component';
 import { selectAppState } from 'src/app/state/app.reducers';
+import { TxComponent } from '../popups/tx/tx.component';
+import { ValidatorComponent } from '../popups/validator/validator.component';
+import { AccountDetailComponent } from '../popups/account-detail/account-detail.component';
 
 
 @Component({
@@ -304,6 +304,10 @@ export class TxsComponent implements OnInit {
 
   openTxDialog(tx) {
     this.popupService.openTxDialog(tx,  TxComponent);
+  }
+
+  openAccountDialog(delegatorAddress) {
+    this.popupService.openAccountDialogAddr(delegatorAddress, AccountDetailComponent);
   }
 
   openValidatorDialog(operatorAddress) {

@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PopupService } from 'src/app/services/popup.service';
-import { AccountDetailComponent } from '../../account-detail/account-detail.component';
-import { ValidatorComponent } from '../../validator/validator.component';
-import { TxComponent } from '../../tx/tx.component';
-import { BlockComponent } from '../../block/block.component';
+import { AccountDetailComponent } from '../../popups/account-detail/account-detail.component';
+import { ValidatorComponent } from '../../popups/validator/validator.component';
+import { TxComponent } from '../../popups/tx/tx.component';
+import { BlockComponent } from '../../popups/block/block.component';
 import { Router } from '@angular/router';
 
 @Component({
