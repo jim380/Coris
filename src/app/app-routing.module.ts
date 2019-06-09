@@ -5,6 +5,7 @@ import { ValidatorsComponent } from './components/validators/validators.componen
 import { BlocksComponent } from './components/blocks/blocks.component';
 import { TxsComponent } from './components/txs/txs.component';
 import { GovernanceComponent } from './components/governance/governance.component';
+import { DialogEntryComponent } from './components/popups/dialog-entry.component';
 // import { DashboardComponent } from './components/dashboard/dashboard.component';
 // import { TestComponent } from './components/test/test.component';
 // import { BlockComponent } from './components/popups/block/block.component';
@@ -24,12 +25,13 @@ const routes: Routes = [
   { path: 'txs', component: TxsComponent },
   { path: 'gov', component: GovernanceComponent },
 
-  // { path: 'block/:height', component: BlockComponent },
-  // { path: 'tx/:hash', component: TxComponent },
-  // { path: 'validators/:address', component: ValidatorComponent },
-  // { path: 'validators/:address', component: TestComponent },
-  // { path: 'new/tx/:delegator', component: NewTxComponent },
-  // { path: 'test', component: TestComponent }
+  { path: 'block/:height', component: DialogEntryComponent },
+  { path: 'tx/:hash', component: DialogEntryComponent },
+  { path: 'validator/:address', component: DialogEntryComponent },
+  { path: 'account/:address', component: DialogEntryComponent },
+  { path: 'proposal/:id', component: DialogEntryComponent },
+
+  { path: '**', redirectTo:'/validators' }
 ];
 
 @NgModule({

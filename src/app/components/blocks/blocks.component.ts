@@ -199,11 +199,11 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openBlockDialog(block) {
-    this.popupService.openBlockDialog(block, BlockComponent);
+    this.popupService.openBlockDialog(block);
   }
 
   openValidatorDialog(addressHEX) {
-    this.popupService.openValidatorDialogAddrHEX(addressHEX, ValidatorComponent);
+    this.popupService.openValidatorDialogAddrHEX(addressHEX);
   }
 
 }

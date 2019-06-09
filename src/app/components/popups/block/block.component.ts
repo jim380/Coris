@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Inject, ViewChildren, QueryList, AfterViewInit, forwardRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, range } from 'rxjs';
 import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialogRef } from '@angular/material';
@@ -33,7 +33,7 @@ export class BlockComponent implements OnInit, AfterViewInit {
     private appStore: Store <AppState>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ts: TxsService,
-    private popupService: PopupService,
+    @Inject(forwardRef(() => PopupService)) public popupService: PopupService,
     private toastr: ToastrService,
   ) { 
     // TODO remove debugging
@@ -144,12 +144,14 @@ export class BlockComponent implements OnInit, AfterViewInit {
   }
 
   openTxDialog(tx) {
-    this.popupService.openTxDialog(tx, TxComponent)
+    this.dialogRef.close();
+    this.popupService.openTxDialog(tx);
   }
 
 
   openValidatorDialog(addressHEX) {
-    this.popupService.openValidatorDialogAddrHEX(addressHEX, ValidatorComponent);
+    this.dialogRef.close();
+    this.popupService.openValidatorDialogAddrHEX(addressHEX);
   }
 
   onCopySucceess() {

@@ -303,15 +303,15 @@ export class TxsComponent implements OnInit {
   }
 
   openTxDialog(tx) {
-    this.popupService.openTxDialog(tx,  TxComponent);
+    this.popupService.openTxDialog(tx);
   }
 
   openAccountDialog(delegatorAddress) {
-    this.popupService.openAccountDialogAddr(delegatorAddress, AccountDetailComponent);
+    this.popupService.openAccountDialogAddr(delegatorAddress);
   }
 
   openValidatorDialog(operatorAddress) {
-    this.popupService.openValidatorDialogAddr(operatorAddress, ValidatorComponent);
+    this.popupService.openValidatorDialogAddr(operatorAddress);
   }
 
 }

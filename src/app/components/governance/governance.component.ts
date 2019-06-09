@@ -64,7 +64,6 @@ export class GovernanceComponent implements OnInit {
             proposal_status: formattedStatus,
             submit_time: proposal.submit_time,
             deposit_end_time: proposal.deposit_end_time,
-            // final_tally_result: proposal.final_tally_result,
             proposal_content: proposal.proposal_content,
             total_deposit: proposal.total_deposit,
             voting_end_time: proposal.voting_end_time,
@@ -73,19 +72,6 @@ export class GovernanceComponent implements OnInit {
         });
 
         this.proposals.forEach( (proposal: any) => {
-          this.gs.getProposer(proposal.proposal_id).subscribe( (data:any) => {
-            // TODO remove debugging
-            // console.log(data.proposer);
-            proposal.proposer = data.proposer;
-          },
-          error => {
-            // @aakatev 
-            // By default, RPC client responds with 500 
-            // if proposer wasnt, found.
-            // We want to avoid terminal flood and thus 
-            // this dummy block 
-          });
-
           this.gs.getCurrentTally(proposal.proposal_id).subscribe( (data:any) => {
             // TODO remove debugging
             // console.log(data);
@@ -94,50 +80,12 @@ export class GovernanceComponent implements OnInit {
           error => {
             console.log("Tally error!");
           });
-
-          this.gs.getCurrentDeposits(proposal.proposal_id).subscribe( (data:any) => {
-            // TODO remove debugging
-            // console.log(data);
-            if(data) {
-              proposal.currentDeposit = data;
-            } else {
-              proposal.currentDeposit = [];
-            }
-          },
-          error => {
-            console.log("Deposit error!");
-          });
-
-          this.gs.getCurrentVotes(proposal.proposal_id).subscribe( (data:any) => {
-            // TODO remove debugging
-            // console.log(data);
-            if(data) {
-              proposal.currentVotes = data;
-              
-              // proposal.currentVotes.All = [];
-              // data.forEach( (voter: any) => {
-              //   // TODO remove debugging
-              //   proposal.currentVotes.All.push(voter.voter);
-              //   if( !proposal.currentVotes[voter.option] ) {
-              //     proposal.currentVotes[voter.option] = [];
-              //   }
-              //   proposal.currentVotes[voter.option].push(voter.voter);
-              //   // console.log(voter);    
-              // });
-            } else {
-              proposal.currentVotes = [];
-            }
-          },
-          error => {
-            console.log("Votes error!");
-          });
-
         });
         this.dataSource = new MatTableDataSource<any>([...this.proposals]);
       });
   }
   
   openGovDetailDialog(proposal) {
-    this.popupService.openGovDetailDialog(proposal, GovDetailComponent);
+    this.popupService.openGovDetailDialog(proposal);
   }
 }

@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
-import { take } from 'rxjs/operators';
+import { take, skipWhile, map, catchError } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { State, AppState } from '../state/app.interface';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { nodeRpc1 } from '../../config.js'
 import { Block } from '../interfaces/block.interface';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material';
+import { ValidatorComponent } from '../components/popups/validator/validator.component';
+import { AccountDetailComponent } from '../components/popups/account-detail/account-detail.component';
+import { TxComponent } from '../components/popups/tx/tx.component';
+import { BlockComponent } from '../components/popups/block/block.component';
+import { GovDetailComponent } from '../components/popups/gov-detail/gov-detail.component';
 
 export class PopupConfig {
   public config = {
@@ -19,6 +24,7 @@ export class PopupConfig {
   }
   constructor(data) {
     this.config.data = data;
+    console.log('New popup service inited!');
   }
 }
 
@@ -36,57 +42,59 @@ export class PopupService {
     console.log("new popup service created!");
   }
 
-  openValidatorDialog(validator, component) {
-    this.dialog.open( component, new PopupConfig({ validator: validator }).config );
+  openValidatorDialog(validator) {
+    this.dialog.open( ValidatorComponent, new PopupConfig({ validator: validator }).config );
   }
 
-  openValidatorDialogAddr(validatorAddress, component) {
+  openValidatorDialogAddr(validatorAddress) {
     this.appState.pipe(
+      map(state => state.validatorsState.validators),
+      skipWhile(validators => validators.length === 0),
       take(1)
-    ).subscribe((state) => {
-      let validatorQuery = state.validatorsState.validators
+    ).subscribe((validators) => {
+      let validatorQuery = validators
         .filter(val => val.operator_address === validatorAddress);
       if( validatorQuery.length === 1) {
-        this.dialog.open( component, new PopupConfig({ validator: validatorQuery[0] }).config);
+        this.dialog.open( ValidatorComponent, new PopupConfig({ validator: validatorQuery[0] }).config);
       } else {
         console.log("Validator was not found! Operator address: ", validatorAddress)
       }
     });
   }
 
-  openValidatorDialogAddrHEX(validatorAddressHEX, component) {
+  openValidatorDialogAddrHEX(validatorAddressHEX) {
     this.appState.pipe(
       take(1)
     ).subscribe((state) => {
       let validatorQuery = state.validatorsState.validators
         .filter(val => val.description.moniker === state.appState.valsMap.get(validatorAddressHEX));
       if( validatorQuery.length === 1) {
-        this.dialog.open( component, new PopupConfig({ validator: validatorQuery[0] }).config);
+        this.dialog.open( ValidatorComponent, new PopupConfig({ validator: validatorQuery[0] }).config);
       } else {
         console.log("Validator was not found! HEX address: ", validatorAddressHEX)
       }
     });
   }
 
-  openValidatorDialogMoniker(moniker, component) {
+  openValidatorDialogMoniker(moniker) {
     this.appState.pipe(
       take(1)
     ).subscribe((state) => {
       let validatorQuery = state.validatorsState.validators
         .filter( val => (val.description.moniker.replace(/\W/g, '').toLowerCase()).includes(moniker.replace(/\W/g, '').toLowerCase()) );
       if( validatorQuery.length === 1) {
-        this.dialog.open( component, new PopupConfig({ validator: validatorQuery[0] }).config);
+        this.dialog.open( ValidatorComponent, new PopupConfig({ validator: validatorQuery[0] }).config);
       } else {
         console.log("Validator was not found! Moniker: ", moniker)
       }
     });
   }
 
-  openAccountDialogAddr(delegatorAddress, component) {
-    this.dialog.open( component,  new PopupConfig({ address: delegatorAddress }).config);
+  openAccountDialogAddr(delegatorAddress) {
+    this.dialog.open( AccountDetailComponent,  new PopupConfig({ address: delegatorAddress }).config);
   }
 
-  openTxDialogHash(txHash, component) {
+  openTxDialogHash(txHash) {
     let tx;
     this.httpClient.get(`${nodeRpc1}/txs/${txHash}`).subscribe((data:any) => {
       tx = {
@@ -146,15 +154,15 @@ export class PopupService {
     () => {
       // TODO remove debugging
       // console.log(tx);
-      this.dialog.open( component,  new PopupConfig({ tx: tx }).config);
+      this.dialog.open( TxComponent,  new PopupConfig({ tx: tx }).config);
     });
   }
 
-  openTxDialog(tx, component) {
-    this.dialog.open(component, new PopupConfig({ tx: tx }).config);
+  openTxDialog(tx) {
+    this.dialog.open(TxComponent, new PopupConfig({ tx: tx }).config);
   }
 
-  openBlockDialogHeight(blockHeight, component) {
+  openBlockDialogHeight(blockHeight) {
     let block: Block;
     this.httpClient.get(`${nodeRpc1}/blocks/${blockHeight}`).subscribe((data:any) => {
       // TODO remove debugging
@@ -172,16 +180,47 @@ export class PopupService {
     (error) => {
     },
     () => {
-      this.dialog.open( component,  new PopupConfig({ block: block }).config);
+      this.dialog.open( BlockComponent,  new PopupConfig({ block: block }).config);
     });
   }
 
-  openBlockDialog(block, component) {
-    this.dialog.open( component,  new PopupConfig({ block: block }).config);
+  openBlockDialog(block) {
+    this.dialog.open( BlockComponent,  new PopupConfig({ block: block }).config);
   }
 
  
-  openGovDetailDialog(proposal, component) {
-    this.dialog.open( component, new PopupConfig({ proposal: proposal }).config);
+  openGovDetailDialog(proposal) {
+    forkJoin(
+      this.httpClient.get(`${nodeRpc1}/gov/proposals/${proposal.proposal_id}/proposer`).pipe(catchError(error => of(null))),
+      this.httpClient.get(`${nodeRpc1}/gov/proposals/${proposal.proposal_id}/deposits`).pipe(catchError(error => of([]))),
+      this.httpClient.get(`${nodeRpc1}/gov/proposals/${proposal.proposal_id}/votes`).pipe(catchError(error => of([])))
+    ).subscribe(([ proposer, deposits, votes ]) => {
+      proposal.proposer = proposer;
+      proposal.currentDeposit = deposits === null ? [] : deposits;
+      proposal.currentVotes = votes === null ? [] : votes;
+      this.dialog.open( GovDetailComponent, new PopupConfig({ proposal: proposal }).config);
+    })
+  }
+
+  openGovDetailDialogId(proposalId) {
+    forkJoin(
+      this.httpClient.get(`${nodeRpc1}/gov/proposals/${proposalId}`).pipe(catchError(error => of(null))),
+      this.httpClient.get(`${nodeRpc1}/gov/proposals/${proposalId}/tally`).pipe(catchError(error => of(null))),
+    ).subscribe( ([ proposal, tally ]) => {
+      // console.log(proposal, tally)
+      if (proposal) {
+        this.openGovDetailDialog({
+          proposal_id: proposal.proposal_id,
+          proposal_status: proposal.proposal_status === "VotingPeriod" ? "Voting Period" : proposal.proposal_status,
+          submit_time: proposal.submit_time,
+          deposit_end_time: proposal.deposit_end_time,
+          proposal_content: proposal.proposal_content,
+          total_deposit: proposal.total_deposit,
+          voting_end_time: proposal.voting_end_time,
+          voting_start_time: proposal.voting_start_time,
+          currentTally: tally,
+        });
+      }
+    })
   }
 }

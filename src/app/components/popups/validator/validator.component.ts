@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, Inject, ViewChildren, QueryList, forwardRef } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { Store } from '@ngrx/store';
 // import { ActivatedRoute } from '@angular/router';
@@ -48,15 +48,15 @@ export class ValidatorComponent implements OnInit {
     private appStore: Store <State>,
     private ts: TxsService, 
     private toastr: ToastrService,
-    private route: ActivatedRoute,
-    private popupService: PopupService,
+    // private route: ActivatedRoute,
+    @Inject(forwardRef(() => PopupService)) public popupService: PopupService,
     public dialogRef: MatDialogRef<ValidatorComponent>,
   ) { 
     // let address = this.route.snapshot.paramMap.get('address');
     // TODO remove debugging
     // console.log(address);
     this.validator = data.validator;
-    console.log(data);
+    // console.log(data);
   }
 
   ngOnInit() {
@@ -66,9 +66,9 @@ export class ValidatorComponent implements OnInit {
       return Number(b.shares)-Number(a.shares); 
     });
 
-    this.user = {
-      address: this.route.snapshot.params['address']
-    };
+    // this.user = {
+    //   address: this.route.snapshot.params['address']
+    // };
   } 
 
   ngAfterViewInit() {
@@ -113,12 +113,13 @@ export class ValidatorComponent implements OnInit {
   }
 
   public openDelegatorDialog(address) {
-    // console.log(address)
-    this.popupService.openAccountDialogAddr(address, AccountDetailComponent);
+    this.dialogRef.close();
+    this.popupService.openAccountDialogAddr(address);
   }
 
   public openTxDialog(hash) {
-    this.popupService.openTxDialogHash(hash, TxComponent);
+    this.dialogRef.close();
+    this.popupService.openTxDialogHash(hash);
   }
 
 }

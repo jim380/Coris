@@ -68,7 +68,7 @@ export class StatusBarComponent implements OnInit {
   ngOnDestroy() { }
 
   openValidatorDialog(addressHEX) {
-    this.popupService.openValidatorDialogAddrHEX(addressHEX, ValidatorComponent);
+    this.popupService.openValidatorDialogAddrHEX(addressHEX);
   }
 
 }

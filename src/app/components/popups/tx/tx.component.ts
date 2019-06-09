@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, forwardRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -28,7 +28,7 @@ export class TxComponent implements OnInit {
     private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private appStore: Store <AppState>,
-    private popupService: PopupService
+    @Inject(forwardRef(() => PopupService)) public popupService: PopupService,
   ) {  
     // TODO remove debugging
     console.log(data.tx);
@@ -46,15 +46,18 @@ export class TxComponent implements OnInit {
   }
 
   openAccountDialog(dlelegatorAddress) {
-    this.popupService.openAccountDialogAddr(dlelegatorAddress, AccountDetailComponent);
+    this.dialogRef.close();
+    this.popupService.openAccountDialogAddr(dlelegatorAddress);
   }
 
   openValidatorDetailDialog(operatorAddress) {
-    this.popupService.openValidatorDialogAddr(operatorAddress, ValidatorComponent);
+    this.dialogRef.close();
+    this.popupService.openValidatorDialogAddr(operatorAddress);
   }
 
   openBlockDialog(blockHeight) {
-    this.popupService.openBlockDialogHeight(blockHeight, BlockComponent);
+    this.dialogRef.close();
+    this.popupService.openBlockDialogHeight(blockHeight);
   }
 
 }

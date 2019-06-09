@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Inject, QueryList, ViewChildren, AfterViewInit, forwardRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -41,10 +41,11 @@ export class GovDetailComponent implements OnInit, AfterViewInit {
   proposal;
   constructor(
     public dialogRef: MatDialogRef<GovDetailComponent>,
-    private popupService: PopupService,
+    @Inject(forwardRef(() => PopupService)) public popupService: PopupService,
     @Inject(MAT_DIALOG_DATA) public data: any, 
     private store: Store <State>
   ) { 
+    console.log();
     this.proposal = data.proposal;
     this.initTable('All');
     this.initDepositTable();
@@ -100,6 +101,7 @@ export class GovDetailComponent implements OnInit, AfterViewInit {
   }
 
   openAccountDialog(address) {
-    this.popupService.openAccountDialogAddr(address, AccountDetailComponent);
+    this.dialogRef.close();
+    this.popupService.openAccountDialogAddr(address);
   }
 }

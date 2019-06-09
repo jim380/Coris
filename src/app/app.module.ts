@@ -35,6 +35,7 @@ import { BlockComponent } from './components/popups/block/block.component';
 import { TxComponent } from './components/popups/tx/tx.component';
 import { TxsListCardComponent } from './components/popups/txs-list-card/txs-list-card.component';
 import { AccountDetailComponent } from './components/popups/account-detail/account-detail.component';
+import { DialogEntryComponent } from './components/popups/dialog-entry.component'
 // End popup components
 
 // Chart components
@@ -105,6 +106,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     TxsListCardComponent,
     AccountDetailComponent,
     BtnCloseComponent,
+    DialogEntryComponent
     // DashboardComponent,
     // NewTxComponent,
     // TestComponent,
@@ -117,7 +119,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     TxsListCardComponent,
     TxComponent,
     BlockComponent,
-    AccountDetailComponent
+    AccountDetailComponent,
+    DialogEntryComponent
   ],
   imports: [
     BrowserModule,

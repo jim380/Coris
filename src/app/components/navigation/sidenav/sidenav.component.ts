@@ -25,15 +25,15 @@ export class SidenavComponent implements OnInit {
 
   onSearchBtnClick(query) {
     if(query.length === 45 && query.slice(0, 6) === "cosmos") {
-      this.popupService.openAccountDialogAddr(query, AccountDetailComponent);
+      this.popupService.openAccountDialogAddr(query);
     } else if(query.length === 52 && query.slice(0, 13) === "cosmosvaloper") {
-      this.popupService.openValidatorDialogAddr(query, ValidatorComponent);
+      this.popupService.openValidatorDialogAddr(query);
     } else if(query.length === 64) {
-      this.popupService.openTxDialogHash(query, TxComponent);
+      this.popupService.openTxDialogHash(query);
     } else if(!isNaN(query)) {
-      this.popupService.openBlockDialogHeight(query, BlockComponent);
+      this.popupService.openBlockDialogHeight(query);
     } else {
-      this.popupService.openValidatorDialogMoniker(query, ValidatorComponent);
+      this.popupService.openValidatorDialogMoniker(query);
     }
   }
 

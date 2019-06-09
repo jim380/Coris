@@ -198,7 +198,7 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
 
   /* POPUPS */
   openValidatorDialog(validator) {
-    this.popupService.openValidatorDialog(validator, ValidatorComponent);
+    this.popupService.openValidatorDialog(validator);
   }
 
   /* END POPUPS */

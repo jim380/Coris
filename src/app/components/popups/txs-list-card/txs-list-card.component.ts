@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild, AfterViewInit, Input } from '@angular/core';
-import { MAT_DIALOG_DATA, MatPaginator, MatTableDataSource } from '@angular/material';
+import { MAT_DIALOG_DATA, MatPaginator, MatTableDataSource, MatDialogRef } from '@angular/material';
 import { TxsService } from 'src/app/services/txs.service';
 import { ToastrService } from 'ngx-toastr';
 import { PopupService } from 'src/app/services/popup.service';
@@ -32,7 +32,8 @@ export class TxsListCardComponent implements OnInit, AfterViewInit {
     @Inject(MAT_DIALOG_DATA) public data: any, 
     private ts: TxsService, 
     private toastr: ToastrService,
-    private popupService: PopupService
+    private popupService: PopupService,
+    public dialogRef: MatDialogRef<TxsListCardComponent>,
   ) { 
     // this.delegator.address = data.address;
     // TODO remove debugging
@@ -82,7 +83,8 @@ export class TxsListCardComponent implements OnInit, AfterViewInit {
   }
 
   public openTxDialog(hash) {
-    this.popupService.openTxDialogHash(hash, TxComponent);
+    this.dialogRef.close();
+    this.popupService.openTxDialogHash(hash);
   }
 
 }

@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { WsService } from './services/ws.service';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
 import { ValidatorsService } from './services/validators.service';
 import { trigger, state, query, transition, animate, style, keyframes, animation, useAnimation, animateChild, group, stagger } from '@angular/animations';
 import { fadeInAnimation, fade } from './animations/animation';
-import {ToastService} from 'ng-uikit-pro-standard';
 import { PricingService } from './services/pricing.service';
 
 @Component({
