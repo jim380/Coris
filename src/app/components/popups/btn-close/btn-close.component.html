@@ -5,7 +5,26 @@
   </a>
 
   <div class="fixed_collapse" mdbCollapse="isCollapsed" #fixed="bs-collapse">
-    <a class="btn-floating green waves-light" routerLink="{{link}}" mdbWavesEffect><i class="fas fa-external-link-alt"></i></a>
+    <ng-template #popTemplate>
+      <!-- <a class=""> -->
+          <i 
+          class="ion-ios-copy copy-button text-monospace" 
+          style="cursor: pointer;" 
+          ngxClipboard 
+          [cbContent]="'coris.network/'+link" 
+          (click)="onCopySucceess()"
+          mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+          coris.network/{{link}}
+        </i>
+      <!-- </a> -->
+    </ng-template>
+    <a  class="btn-floating green waves-light" 
+        mdbWavesEffect
+        [mdbPopover]="popTemplate"
+        placement="left"
+        mdbPopoverHeader="External link">
+        <i class="fas fa-external-link-alt"></i>
+    </a>
     <a class="btn-floating red waves-light" (click)="onCloseClick()" mdbWavesEffect><i class="fas fa-times"></i></a>
   </div>
 

@@ -2,7 +2,7 @@
     <app-btn-close [link]="'validator/'+validator.operator_address" [dialogRef]="dialogRef"></app-btn-close>
     <div class="popup-row row">
         <!-- First column -->
-        <div class="px-0 col-lg-6 col-md-12">
+        <div class="px-0 p-lg-3 col-lg-6 col-md-12">
           <mdb-card class="rounded-0 testimonial-card">
                 <!--Bakcground color-->
                 <div style="height: 120px;" class="indigo"></div>
@@ -49,14 +49,14 @@
                 </mdb-card-body>
           </mdb-card>
         </div>
-        <div class="px-0 col-lg-6 col-md-12">
+        <div class="px-0 p-lg-3 col-lg-6 col-md-12">
           <!-- /.Panel -->
           <!-- <div class="mb-5"> -->
             <mdb-card alignment="left" class="rounded-0">
               <mdb-card-header class="rounded-0">
                 <mdb-card-title>Delegations</mdb-card-title>
               </mdb-card-header>
-              <mdb-card-body class="bg-transparent">
+              <mdb-card-body class="bg-transparent px-0 p-lg-3 col-12">
                 <div class="card-body">
                   <div class="row table-responsive text-nowrap">
                         <table mat-table [dataSource]="delegationsDataSource" class="table large-header">
@@ -96,7 +96,7 @@
         <!-- /.First column -->
         
         <!-- Second column -->
-        <div class="px-0 col-lg-6 col-md-12">
+        <div class="px-0 p-lg-3 col-lg-6 col-md-12">
           <!--Panel-->
           <!-- <div class="mb-5"> -->
             <mdb-card alignment="left" class="rounded-0">
@@ -191,14 +191,14 @@
           <!-- </div> -->
           <!--/.Panel-->
         </div>
-        <div class="px-0 col-lg-6 col-md-12">
+        <div class="px-0 p-lg-3 col-lg-6 col-md-12">
           <!-- Panel -->
           <!-- <div class="mb-5"> -->
             <mdb-card alignment="left" class="rounded-0">
               <mdb-card-header class="rounded-0">
                 <mdb-card-title>Transactions</mdb-card-title>
               </mdb-card-header>
-              <mdb-card-body>
+              <mdb-card-body class="px-0 p-lg-3 col-12">
                 <div class="card-body">
                           <mat-tab-group (selectedTabChange)="onTabChange($event);">
                             <mat-tab label="Staking">

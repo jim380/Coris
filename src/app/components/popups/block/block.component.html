@@ -1,7 +1,7 @@
 <section>
     <app-btn-close [link]="'block/'+block.height" [dialogRef]="dialogRef"></app-btn-close>
     <div class="popup-row row">
-      <div class="px-0 col-12">  
+      <div class="px-0 p-lg-3 col-12">  
         <mdb-card class="card-1 mat-elevation-z8">
             <mdb-card-header>
                 <mdb-card-title>Block {{ block.height }}</mdb-card-title>
@@ -48,13 +48,13 @@
             </mdb-card-body>
         </mdb-card>
     </div>
-    <div class="px-0 col-12">
+    <div class="px-0 p-lg-3 col-12">
       <div class="my-5">
         <mdb-card alignment="left" class="mat-elevation-z8">
           <mdb-card-header>
             <mdb-card-title>Transactions</mdb-card-title>
           </mdb-card-header>
-          <mdb-card-body>
+          <mdb-card-body class="p-0 px-lg-3">
             <mat-tab-group (selectedTabChange)="onTabChange($event);">
                   <mat-tab label="All">
                     <div class="row table-responsive text-nowrap scrollbar-primary">

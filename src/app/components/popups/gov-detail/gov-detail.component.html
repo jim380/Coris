@@ -1,7 +1,7 @@
 <section>
     <app-btn-close [link]="'proposal/'+proposal.proposal_id" [dialogRef]="dialogRef"></app-btn-close>
     <div class="popup-row row main-row">
-        <div class="px-0 col-md-4">
+        <div class="px-0  p-lg-3 col-md-4">
           <div class="mb-5">
             <mdb-card style="max-width: 100%;" class="text-left mat-elevation-z8 mb-3">
                 <mdb-card-header>
@@ -71,14 +71,13 @@
           </div>
         </div>
 
-        <div class="px-0 col-md-8">
+        <div class="px-0  p-lg-3 col-md-8">
             <div class="mb-5">
               <mdb-card alignment="left" class="mat-elevation-z8 mb-3">
                 <mdb-card-header>
                   <mdb-card-title>Votes</mdb-card-title>
                 </mdb-card-header>
-                <mdb-card-body>
-                  <div class="card-body">
+                <mdb-card-body class="px-0 p-lg-3 col-12">
                     <mat-tab-group (selectedTabChange)="onTabChange($event);">
                             <mat-tab label="All">
                               <div class="row table-responsive text-nowrap">
@@ -197,7 +196,6 @@
                             </mat-tab>
                     </mat-tab-group>
                     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-                  </div>
                 </mdb-card-body>
               </mdb-card>
             </div>
@@ -206,8 +204,7 @@
                 <mdb-card-header>
                   <mdb-card-title>Deposit</mdb-card-title>
                 </mdb-card-header>
-                <mdb-card-body>
-                  <div class="card-body">
+                <mdb-card-body class="px-0 p-lg-3 col-12">
                     <div class="row table-responsive text-nowrap">
                           <table mat-table [dataSource]="depositDataSource" class="table large-header">
                             <ng-container matColumnDef="depositor">
@@ -232,7 +229,6 @@
                           </table> 
                           <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
                     </div>
-                  </div>
                 </mdb-card-body>
               </mdb-card>
             </div>
