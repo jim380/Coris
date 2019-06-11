@@ -1,5 +1,12 @@
-<button class="btn btn-floating pink waves-light" 
-  (click)="onCloseClick()" 
-  style="right:35px; bottom:35px;">
-  <i class="fas fa-times"></i>
-</button>
+<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+
+  <a class="btn-floating btn-large pink waves-light" mdbWavesEffect (click)="fixed.toggle($event)">
+    <i class="fas fa-ellipsis-v"></i>
+  </a>
+
+  <div class="fixed_collapse" mdbCollapse="isCollapsed" #fixed="bs-collapse">
+    <a class="btn-floating green waves-light" routerLink="{{link}}" mdbWavesEffect><i class="fas fa-external-link-alt"></i></a>
+    <a class="btn-floating red waves-light" (click)="onCloseClick()" mdbWavesEffect><i class="fas fa-times"></i></a>
+  </div>
+
+</div>

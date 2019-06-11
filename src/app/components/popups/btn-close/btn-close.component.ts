@@ -8,9 +8,9 @@ import { MatDialogRef } from '@angular/material';
 })
 export class BtnCloseComponent {
   @Input() dialogRef: MatDialogRef<any>;
+  @Input() link: String;
 
   onCloseClick() {
     this.dialogRef.close();
   }
-
 }
