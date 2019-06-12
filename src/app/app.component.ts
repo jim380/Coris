@@ -4,6 +4,9 @@ import { ValidatorsService } from './services/validators.service';
 import { trigger, state, query, transition, animate, style, keyframes, animation, useAnimation, animateChild, group, stagger } from '@angular/animations';
 import { fadeInAnimation, fade } from './animations/animation';
 import { PricingService } from './services/pricing.service';
+import { Store } from '@ngrx/store';
+import { State } from './state/app.interface';
+import { selectConsensusState } from './state/consensus/consensus.reducers';
 
 @Component({
   selector: 'app-root',
@@ -46,10 +49,12 @@ export class AppComponent {
     private ws:WsService, 
     private pricingService: PricingService,
     private vs:ValidatorsService,
+    private appStore: Store <State>,
   ) {  }
 
   ngOnInit() { 
     this.pricingService.initStakingPool();
+    // this.appStore.select(selectConsensusState).subscribe(console.log);
   }
 
   ngOnDestroy() {

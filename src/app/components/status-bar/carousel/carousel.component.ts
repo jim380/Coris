@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { PricingService } from 'src/app/services/pricing.service';
 import { BlocksService } from 'src/app/services/blocks.service';
-// import { ValidatorsService } from 'src/app/services/validators.service';
-import { WsService } from 'src/app/services/ws.service';
 import { Observable } from 'rxjs';
 import { HostListener } from "@angular/core";
 import { cards } from './carousel.content';
 import { DatePipe } from '@angular/common';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { BreadcrumbModule } from 'ng-uikit-pro-standard';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { State } from 'src/app/state/app.interface';
 import { selectAppState } from 'src/app/state/app.reducers';
 import { Store } from '@ngrx/store';
 import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
 import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
+import { selectConsensusState, selectConsensusHeight } from 'src/app/state/consensus/consensus.reducers';
 
 export const BREAKPOINTS = {
   MD: 768,
@@ -37,9 +35,7 @@ export class CarouselComponent implements OnInit {
   blocksFetched = false;
 
   constructor(
-    private ws:WsService, 
     private appStore: Store <State>,
-    // private vs:ValidatorsService,
     private ps:PricingService,
     private bs:BlocksService
   ) { }
@@ -47,46 +43,36 @@ export class CarouselComponent implements OnInit {
   ngOnInit() {
     this.getScreenSize();
 
+    this.appStore.select(selectConsensusState)
+    .subscribe(state => {
+      this.setConsensusState(state);
+    });
+
+    this.appStore.select(selectConsensusHeight)
+    .subscribe(height => {
+      this.setLastBlock(height);
+    });
+
+    this.appStore.select(selectValidatorsState)
+    .subscribe(state => {
+      this.setValidatorsCount(state.validators);
+    });
+
     this.setInflation();
     this.setAtomPrice();
 
     this.appStore.select(selectAppState)
-      .pipe(
-        distinctUntilChanged()
-      )
-      .subscribe(appState => {
-        // if (data.roundStep && !this.blocksFetched) {
-        //   this.bs.fetchRecentBlocks( 
-        //     Number( (data.roundStep.height-1) ) 
-        //   );
-        //   this.blocksFetched = true;
-        // }
+    .pipe(
+      distinctUntilChanged()
+    )
+    .subscribe(state => {
+      this.setBondedTokens(state.stakePool);
+      this.setCommunityPool(state.stakePool);
+    });
 
-        this.setConsensusState(appState.roundStep);
-        this.setBondedTokens(appState.stakePool);
-        this.setCommunityPool(appState.stakePool);
-      });
-    
-      this.appStore.select(selectValidatorsState)
-      .subscribe(validatorsState => {
-        this.setValidatorsCount(validatorsState.validators);
-      });
-
-      this.appStore.select(selectBlocksState)
-      .subscribe(validatorsState => {
-        this.setLastBlock(validatorsState.blocks);
-      })
-
-      this.bs.fetch100Blocks();
-
-      this.setBlockTime();
+    this.bs.fetch100Blocks();
+    this.setBlockTime();
   }
-
-  ngOnDestroy() {
-    this.ws.unsubscribe();
-  }
-
-  
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
@@ -141,56 +127,48 @@ export class CarouselComponent implements OnInit {
   }
   
 
-  setLastBlock(data) {
+  setLastBlock(height) {
     // TODO @aakatev remove debugging
-    // console.log(data);
-    if(data.length > 0) {
-      let block = data[0];
-      let currentTime = this.getCurrentTime();
+    // console.log(height);
+    let currentTime = this.getCurrentTime();
 
-      if (this.screenLayot === 'XL') {
-        this.slides[0][0].data = block.header.height;
-        this.slides[0][0].timestamp = currentTime;
-      } else if (this.screenLayot === 'SM') {
-        this.slides[0][0].data = block.header.height;
-        this.slides[0][0].timestamp = currentTime;
-      } else {
-        this.slides[0][0].data = block.header.height;
-        this.slides[0][0].timestamp = currentTime; 
-      }
+    if (this.screenLayot === 'XL') {
+      this.slides[0][0].data = height;
+      this.slides[0][0].timestamp = currentTime;
+    } else if (this.screenLayot === 'SM') {
+      this.slides[0][0].data = height;
+      this.slides[0][0].timestamp = currentTime;
+    } else {
+      this.slides[0][0].data = height;
+      this.slides[0][0].timestamp = currentTime; 
     }
   }
 
-  setConsensusState(data) {
+  setConsensusState(consensus) {
     // TODO @aakatev remove debugging
-    // console.log(data);
-    // TOFIX this place has async bug that is hard to replicate
-    // look into it more
-    if(data.step) {
-      let consensus = data;
-      let currentTime = this.getCurrentTime();
-      let formattedStep;
-      if (consensus.step.includes("NewHeight")) {
-        formattedStep = `Block`;
-      } else {
-        formattedStep = consensus.step.substring(9);
-      }
+    // console.log(consensus);
+    let currentTime = this.getCurrentTime();
+    let formattedStep;
+    if (consensus.step.includes("NewHeight")) {
+      formattedStep = `Block`;
+    } else {
+      formattedStep = consensus.step.substring(9);
+    }
 
-      if (this.screenLayot === 'XL') {
-        this.slides[0][1].data = formattedStep;
-        this.slides[0][1].title = `round: ${consensus.round}`;
-        this.slides[0][1].timestamp = currentTime;
-      } else if (this.screenLayot === 'SM') {
-        this.slides[1][0].data = formattedStep;
-        this.slides[1][0].data = consensus.step.substring(9);
-        this.slides[1][0].title = `round: ${consensus.round}`;
-        this.slides[1][0].timestamp = currentTime;
-      } else {
-        this.slides[0][1].data = formattedStep;
-        this.slides[0][1].data = consensus.step.substring(9);
-        this.slides[0][1].title = `round: ${consensus.round}`;
-        this.slides[0][1].timestamp = currentTime;
-      }
+    if (this.screenLayot === 'XL') {
+      this.slides[0][1].data = formattedStep;
+      this.slides[0][1].title = `round: ${consensus.round}`;
+      this.slides[0][1].timestamp = currentTime;
+    } else if (this.screenLayot === 'SM') {
+      this.slides[1][0].data = formattedStep;
+      this.slides[1][0].data = consensus.step.substring(9);
+      this.slides[1][0].title = `round: ${consensus.round}`;
+      this.slides[1][0].timestamp = currentTime;
+    } else {
+      this.slides[0][1].data = formattedStep;
+      this.slides[0][1].data = consensus.step.substring(9);
+      this.slides[0][1].title = `round: ${consensus.round}`;
+      this.slides[0][1].timestamp = currentTime;
     }
   }
   

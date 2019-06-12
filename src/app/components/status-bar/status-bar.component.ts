@@ -3,11 +3,10 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { trigger, state, query, transition, animate, style, keyframes, animation, useAnimation, animateChild, group, stagger } from '@angular/animations';
 import { fadeInAnimation, fade } from '../../animations/animation';
-import { AppState, State, BlocksState } from 'src/app/state/app.interface';
+import { AppState, State, ConsensusState } from 'src/app/state/app.interface';
 import { selectAppState } from 'src/app/state/app.reducers';
-import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
 import { PopupService } from 'src/app/services/popup.service';
-import { ValidatorComponent } from '../popups/validator/validator.component';
+import { selectConsensusState } from 'src/app/state/consensus/consensus.reducers';
 
 @Component({
   selector: 'app-status-bar',
@@ -40,9 +39,10 @@ import { ValidatorComponent } from '../popups/validator/validator.component';
   ]
 })
 export class StatusBarComponent implements OnInit {
-  proposer;
   appState: Observable<AppState>;
-  blocksState: Observable<BlocksState>;
+  consensusState: Observable<ConsensusState>;
+  proposer: string;
+
   networks = [
     {id: 1, name: 'mainnet'},
     {id: 2, name: 'testnet'},
@@ -55,13 +55,8 @@ export class StatusBarComponent implements OnInit {
 
   ngOnInit() { 
     this.appState = this.appStore.select(selectAppState);
-    this.blocksState = this.appStore.select(selectBlocksState);
-
-    this.appState.subscribe((state) => {
-      if(state.round.proposer) {
-        this.proposer = state.round.proposer.address;
-      }
-    });
+    this.consensusState = this.appStore.select(selectConsensusState);
+    this.consensusState.subscribe(state => this.proposer = state.proposer);
   }
   ngAfterInit() { }
 

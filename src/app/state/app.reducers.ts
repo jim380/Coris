@@ -5,26 +5,6 @@ import { AppState } from './app.interface';
 
 export function appReducers(appState = initialAppState, action):AppState {
   switch(action.type) {
-    case AppActionTypes.UPDATE_TXS: {
-      return {
-        ...appState,
-        txs: action.payload,
-      }
-    }
-    case AppActionTypes.UPDATE_ROUND: {
-      return {
-        ...appState,
-        round: action.payload,
-      }
-    }
-
-    case AppActionTypes.UPDATE_ROUND_STEP: {
-      return {
-        ...appState,
-        roundStep: action.payload,
-      }
-    }
-
     case AppActionTypes.UPDATE_VALS_MAP: {
       return {
         ...appState, 
