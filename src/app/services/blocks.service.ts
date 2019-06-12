@@ -3,11 +3,12 @@ import { Store } from '@ngrx/store';
 import { State } from '../state/app.interface';
 import { Observable, of, Subject, range, BehaviorSubject, forkJoin } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { map, takeLast, take, mergeMap, concatMap } from 'rxjs/operators';
+import { map, takeLast, take, mergeMap, concatMap, skipWhile } from 'rxjs/operators';
 import { nodeRpc1, nodeRpc2 } from '../../config.js';
 import { BlocksState, AppState } from '../state/app.interface';
 import { selectBlocks, selectBlocksState } from '../state/blocks/blocks.reducers';
 import { selectAppState } from '../state/app.reducers';
+import { selectConsensusHeight } from '../state/consensus/consensus.reducers';
 
 @Injectable({
   providedIn: 'root'
@@ -29,14 +30,19 @@ export class BlocksService {
   ) { }
 
   fetch100Blocks(){ 
-    this.appStore.select(selectBlocks).subscribe( blocks => {
-      let startHeight = blocks[0].header.height;
+    this.appStore.select(selectConsensusHeight)
+    .pipe(
+      skipWhile(height => height === '0'), 
+      take(1), 
+      map(height => height-1)
+    )
+    .subscribe( height => {
       forkJoin(
-        this.fetch20Blocks(startHeight),
-        this.fetch20Blocks(startHeight-20),
-        this.fetch20Blocks(startHeight-40),
-        this.fetch20Blocks(startHeight-60),
-        this.fetch20Blocks(startHeight-80)
+        this.fetch20Blocks(height),
+        this.fetch20Blocks(height-20),
+        this.fetch20Blocks(height-40),
+        this.fetch20Blocks(height-60),
+        this.fetch20Blocks(height-80)
       )
       .subscribe(([res1, res2, res3, res4, res5]) => {
         this.getBlockTimesArray([

@@ -50,7 +50,7 @@ export class CarouselComponent implements OnInit {
 
     this.appStore.select(selectConsensusHeight)
     .subscribe(height => {
-      this.setLastBlock(height);
+      this.setLastBlock(height-1);
     });
 
     this.appStore.select(selectValidatorsState)
