@@ -2,13 +2,11 @@ import { Component, OnInit, Inject, ViewChildren, QueryList, AfterViewInit, forw
 import { Store } from '@ngrx/store';
 import { Observable, range } from 'rxjs';
 import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialogRef } from '@angular/material';
-import { TxComponent } from '../tx/tx.component';
-import { AppState } from 'src/app/state/app.interface';
-import { selectAppState } from 'src/app/state/app.reducers';
 import { ToastrService } from 'ngx-toastr';
-import { ValidatorComponent } from '../validator/validator.component';
 import { TxsService } from 'src/app/services/txs.service';
 import { PopupService } from 'src/app/services/popup.service';
+import { ValidatorsState } from 'src/app/state/validators/validator.interface';
+import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
 
 @Component({
   selector: 'app-block',
@@ -20,7 +18,7 @@ import { PopupService } from 'src/app/services/popup.service';
 })
 
 export class BlockComponent implements OnInit, AfterViewInit {
-  appState: Observable<AppState>;
+  validatorsState: Observable<ValidatorsState>;
   block;
   txs = [];
 
@@ -30,7 +28,7 @@ export class BlockComponent implements OnInit, AfterViewInit {
 
   constructor(
     public dialogRef: MatDialogRef<BlockComponent>,
-    private appStore: Store <AppState>,
+    private appStore: Store <ValidatorsState>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ts: TxsService,
     @Inject(forwardRef(() => PopupService)) public popupService: PopupService,
@@ -42,7 +40,7 @@ export class BlockComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.appState = this.appStore.select(selectAppState);
+    this.validatorsState = this.appStore.select(selectValidatorsState);
     this.initTxs();
   }
 

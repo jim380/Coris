@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State } from '../state/app.interface';
 import { Observable, of, Subject, range, BehaviorSubject, forkJoin } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, takeLast, take, mergeMap, concatMap, skipWhile } from 'rxjs/operators';
 import { nodeRpc1, nodeRpc2 } from '../../config.js';
-import { BlocksState, AppState } from '../state/app.interface';
 import { selectBlocks, selectBlocksState } from '../state/blocks/blocks.reducers';
-import { selectAppState } from '../state/app.reducers';
+import { selectAppState } from '../state/app/app.reducers';
 import { selectConsensusHeight } from '../state/consensus/consensus.reducers';
+import { State } from '../state/index.js';
 
 @Injectable({
   providedIn: 'root'

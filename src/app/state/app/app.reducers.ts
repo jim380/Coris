@@ -1,17 +1,10 @@
 import { AppActionTypes } from './app.actions';
-import { initialAppState } from './app.interface';
 import { AppState } from './app.interface';
 
 
-export function appReducers(appState = initialAppState, action):AppState {
+export function appReducers(appState = initialAppState, action): AppState {
   switch(action.type) {
-    case AppActionTypes.UPDATE_VALS_MAP: {
-      return {
-        ...appState, 
-        valsMap: action.payload,
-      }
-    }
-      
+
     case AppActionTypes.UPDATE_TOTAL_STAKE: {
       return {
         ...appState,
@@ -31,5 +24,10 @@ export function appReducers(appState = initialAppState, action):AppState {
     }
   }
 }
+
+export const initialAppState: AppState = {
+  totalStake: 0,
+  stakePool: {},
+};
 
 export const selectAppState = (state) => state.appState;

@@ -3,19 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
-import { State, AppState } from '../../state/app.interface';
 import { Store } from '@ngrx/store';
 import { nodeRpc1, nodeRpc2 } from '../../../config.js'
 import { Tx } from '../../interfaces/tx.interface';
 import { MatTableDataSource, MatPaginator, MatTable, MatSort, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { take } from 'rxjs/operators';
 import { PopupService } from 'src/app/services/popup.service.js';
-import { selectAppState } from 'src/app/state/app.reducers';
-import { TxComponent } from '../popups/tx/tx.component';
-import { ValidatorComponent } from '../popups/validator/validator.component';
-import { AccountDetailComponent } from '../popups/account-detail/account-detail.component';
+import { State } from 'src/app/state';
+import { ValidatorsState } from 'src/app/state/validators/validator.interface.js';
+import { selectValidatorsState } from 'src/app/state/validators/validators.reducers.js';
 
 
 @Component({
@@ -87,7 +84,7 @@ export class TxsComponent implements OnInit {
   totalTxsCount = 0;
   // currentPage = 1;
   // lastPage = 1;
-  appState: Observable<AppState>;
+  validatorsState: Observable<ValidatorsState>;
 
   constructor(
     private toastr: ToastrService,
@@ -97,7 +94,7 @@ export class TxsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.appState = this.appStore.select(selectAppState);
+    this.validatorsState = this.appStore.select(selectValidatorsState);
 
     this.http.get(`${nodeRpc1}/blocks/latest`).subscribe( async (data:any) => {
       // @aakatev remove debugging

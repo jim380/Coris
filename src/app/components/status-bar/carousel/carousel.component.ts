@@ -6,12 +6,12 @@ import { HostListener } from "@angular/core";
 import { cards } from './carousel.content';
 import { DatePipe } from '@angular/common';
 import { distinctUntilChanged } from 'rxjs/operators';
-import { State } from 'src/app/state/app.interface';
-import { selectAppState } from 'src/app/state/app.reducers';
+import { selectAppState } from 'src/app/state/app/app.reducers';
 import { Store } from '@ngrx/store';
 import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
 import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
 import { selectConsensusState, selectConsensusHeight } from 'src/app/state/consensus/consensus.reducers';
+import { State } from 'src/app/state';
 
 export const BREAKPOINTS = {
   MD: 768,

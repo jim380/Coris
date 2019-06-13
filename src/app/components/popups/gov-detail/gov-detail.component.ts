@@ -2,10 +2,10 @@ import { Component, OnInit, Inject, QueryList, ViewChildren, AfterViewInit, forw
 import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialogRef } from '@angular/material';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState, State } from 'src/app/state/app.interface';
-import { selectAppState } from 'src/app/state/app.reducers';
 import { PopupService } from 'src/app/services/popup.service';
-import { AccountDetailComponent } from '../account-detail/account-detail.component';
+import { State } from 'src/app/state';
+import { ValidatorsState } from 'src/app/state/validators/validator.interface';
+import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
 
 @Component({
   selector: 'app-gov-detail',
@@ -30,7 +30,7 @@ export class GovDetailComponent implements OnInit, AfterViewInit {
     responsive: true
   };
 
-  appState: Observable<AppState>;
+  validatorsState: Observable<ValidatorsState>;
   votesDataSource = new MatTableDataSource<any>([]);
   depositDataSource = new MatTableDataSource<any>([]);
 
@@ -52,7 +52,7 @@ export class GovDetailComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.appState = this.store.select(selectAppState);
+    this.validatorsState = this.store.select(selectValidatorsState);
     this.initChart();    
     // TODO remove debugging
     // console.log(this.proposal);

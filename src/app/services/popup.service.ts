@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { take, skipWhile, map, catchError } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { State, AppState } from '../state/app.interface';
 import { Observable, forkJoin, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { nodeRpc1 } from '../../config.js'
@@ -13,6 +12,9 @@ import { AccountDetailComponent } from '../components/popups/account-detail/acco
 import { TxComponent } from '../components/popups/tx/tx.component';
 import { BlockComponent } from '../components/popups/block/block.component';
 import { GovDetailComponent } from '../components/popups/gov-detail/gov-detail.component';
+import { State } from '../state/index.js';
+import { ValidatorsState } from '../state/validators/validator.interface.js';
+import { selectValidatorsState } from '../state/validators/validators.reducers.js';
 
 export class PopupConfig {
   public config = {
@@ -32,13 +34,14 @@ export class PopupConfig {
   providedIn: 'root',
 })
 export class PopupService {
-  appState: Observable<State>;
+  validatorsState$: Observable<ValidatorsState>;
+
   constructor(
     private appStore: Store<State>,
     private httpClient: HttpClient,
     private dialog: MatDialog
   ) {
-    this.appState = this.appStore.select(state => state);
+    this.validatorsState$ = this.appStore.select(selectValidatorsState);
     console.log("new popup service created!");
   }
 
@@ -47,13 +50,14 @@ export class PopupService {
   }
 
   openValidatorDialogAddr(validatorAddress) {
-    this.appState.pipe(
-      map(state => state.validatorsState.validators),
-      skipWhile(validators => validators.length === 0),
+    this.validatorsState$.pipe(
+      skipWhile(state => state.validators.length === 0),
       take(1)
-    ).subscribe((validators) => {
-      let validatorQuery = validators
-        .filter(val => val.operator_address === validatorAddress);
+    ).subscribe((state) => {
+      let validatorQuery = state.validators
+                            .filter(validator => 
+                              validator.operator_address === validatorAddress
+                            );
       if( validatorQuery.length === 1) {
         this.dialog.open( ValidatorComponent, new PopupConfig({ validator: validatorQuery[0] }).config);
       } else {
@@ -63,11 +67,14 @@ export class PopupService {
   }
 
   openValidatorDialogAddrHEX(validatorAddressHEX) {
-    this.appState.pipe(
+    this.validatorsState$.pipe(
+      skipWhile(state => state.validators.length === 0),
       take(1)
     ).subscribe((state) => {
-      let validatorQuery = state.validatorsState.validators
-        .filter(val => val.description.moniker === state.appState.valsMap.get(validatorAddressHEX));
+      let validatorQuery = state.validators
+                            .filter(validator => 
+                              validator.description.moniker === state.validatorsMap.get(validatorAddressHEX)
+                            );
       if( validatorQuery.length === 1) {
         this.dialog.open( ValidatorComponent, new PopupConfig({ validator: validatorQuery[0] }).config);
       } else {
@@ -77,11 +84,22 @@ export class PopupService {
   }
 
   openValidatorDialogMoniker(moniker) {
-    this.appState.pipe(
+    this.validatorsState$.pipe(
+      skipWhile(state => state.validators.length === 0),
       take(1)
     ).subscribe((state) => {
-      let validatorQuery = state.validatorsState.validators
-        .filter( val => (val.description.moniker.replace(/\W/g, '').toLowerCase()).includes(moniker.replace(/\W/g, '').toLowerCase()) );
+      let validatorQuery = state.validators
+                            .filter( validator => 
+                              (validator.description.moniker
+                                .replace(/\W/g, '')
+                                .toLowerCase()
+                              )
+                              .includes(
+                                moniker
+                                  .replace(/\W/g, '')
+                                  .toLowerCase()
+                              ) 
+                            );
       if( validatorQuery.length === 1) {
         this.dialog.open( ValidatorComponent, new PopupConfig({ validator: validatorQuery[0] }).config);
       } else {
@@ -124,36 +142,21 @@ export class PopupService {
       // END LOGIC FOR NOT-FAULTY  
 
       if(data.code === 12) {
-        // TODO remove debugging
-        // console.log(data);
-        // tx['action'] = "out of gas";
         tx.error = "out of gas";
       } else if (data.code === 104) {
         tx.error = "no delegation distribution info";
-        // TODO remove debugging
-        // console.log(data);
       } else if (data.code === 10) {
         tx.error = "insufficient account funds";
-        // TODO remove debugging
-        // console.log(data);
       } else if (data.code === 102) {
         tx.error = "no delegation for this (address, validator) pair";
-        // TODO remove debugging
-        // console.log(data);
       } else if (data.code) {
         // TODO @aakatev find more failed tx codes
         tx.error = "TEST"
         console.log(data);
       }
     },
-    err => {
-      // @aakatev some txs cause 500 errors
-      // otherwise would dump code in console
-      // console.log(err);
-    },
+    err => { },
     () => {
-      // TODO remove debugging
-      // console.log(tx);
       this.dialog.open( TxComponent,  new PopupConfig({ tx: tx }).config);
     });
   }
@@ -165,8 +168,6 @@ export class PopupService {
   openBlockDialogHeight(blockHeight) {
     let block: Block;
     this.httpClient.get(`${nodeRpc1}/blocks/${blockHeight}`).subscribe((data:any) => {
-      // TODO remove debugging
-      // console.log(data);
       const datePipe = new DatePipe('en-US');
       const formattedTime = datePipe.transform(data.block_meta.header.time, 'h:mm:ss a, MMM d, y');
       block = {
@@ -207,7 +208,6 @@ export class PopupService {
       this.httpClient.get(`${nodeRpc1}/gov/proposals/${proposalId}`).pipe(catchError(error => of(null))),
       this.httpClient.get(`${nodeRpc1}/gov/proposals/${proposalId}/tally`).pipe(catchError(error => of(null))),
     ).subscribe( ([ proposal, tally ]) => {
-      // console.log(proposal, tally)
       if (proposal) {
         this.openGovDetailDialog({
           proposal_id: proposal.proposal_id,

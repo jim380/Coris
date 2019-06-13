@@ -1,5 +1,5 @@
 import { ConsensusActionTypes } from './consensus.actions';
-import { initialConsensusState, ConsensusState } from '../app.interface';
+import { ConsensusState } from './consensus.interface';
 import { createSelector } from '@ngrx/store';
 
 
@@ -50,6 +50,13 @@ export function consensusRedusers(consensusState = initialConsensusState, action
     }
   }
 }
+
+export const initialConsensusState: ConsensusState = {
+  height: '0',
+  round: '0',
+  step: 'loading',
+  proposer: null,
+};
 
 export const selectConsensusState = (state) => state.consensusState;
 export const selectConsensusHeight = createSelector(selectConsensusState, (state) => state.height);

@@ -5,8 +5,8 @@ import { trigger, state, query, transition, animate, style, keyframes, animation
 import { fadeInAnimation, fade } from './animations/animation';
 import { PricingService } from './services/pricing.service';
 import { Store } from '@ngrx/store';
-import { State } from './state/app.interface';
 import { selectConsensusState } from './state/consensus/consensus.reducers';
+import { State } from './state';
 
 @Component({
   selector: 'app-root',

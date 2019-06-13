@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, range, of, from, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { UpdateValsMap } from '../state/app.actions';
 import { nodeRpc1 } from '../../config.js';
 import { decodeBech32, fromWords } from '../lib/bech32';
 import { hex } from '../lib/hex';
 import { sha256 } from 'js-sha256';
 import { map, mergeMap, catchError, concatAll, skipWhile } from 'rxjs/operators';
 import { ApiService } from './api.service';
-import { AppState, State } from '../state/app.interface';
-import { UpdateValidators } from '../state/validators/validators.actions';
+import { UpdateValidators, UpdateValidatorsMap } from '../state/validators/validators.actions';
 import { selectValidators, selectValidatorsState } from '../state/validators/validators.reducers';
+import { State } from '../state/index.js';
 
 @Injectable({
   providedIn: 'root'
@@ -74,7 +72,7 @@ export class ValidatorsService {
       },
       (error) => { },
       () => {
-        this.appStore.dispatch(new UpdateValsMap(this.validatorsMap));
+        this.appStore.dispatch(new UpdateValidatorsMap(this.validatorsMap));
       });
       
   }
@@ -86,7 +84,7 @@ export class ValidatorsService {
     if(validator.distribution.operator_address) {
       this.validatorsMap.set(validator.distribution.operator_address, validator.description.moniker);
     }
-    this.appStore.dispatch(new UpdateValsMap(this.validatorsMap));
+    this.appStore.dispatch(new UpdateValidatorsMap(this.validatorsMap));
   }
 
   getHexAddress(pubKey) {

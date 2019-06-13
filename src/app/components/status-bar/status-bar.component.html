@@ -8,12 +8,12 @@
   </div>
   <div class="row">
     <div class="proposer-row">
-      <h2 *ngIf="(appState | async).valsMap.size" 
+      <h2 *ngIf="(validatorsState | async).validatorsMap.size" 
           class="title proposer-title">
         <i class="ion-person"></i>&nbsp; Proposer - 
         <a href="javascript:undefined" (click)="openValidatorDialog( proposer)" style="cursor: pointer;">
-          <span *ngIf="(appState | async).valsMap.has( proposer ); else elseBlockProposer">
-            {{ (appState | async).valsMap.get( proposer )}}
+          <span *ngIf="(validatorsState | async).validatorsMap.has( proposer ); else elseBlockProposer">
+            {{ (validatorsState | async).validatorsMap.get( proposer )}}
           </span>
           <ng-template #elseBlockProposer>{{ proposer }}</ng-template> 
         </a>

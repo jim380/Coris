@@ -8,9 +8,10 @@ import {
 import { BlocksService } from 'src/app/services/blocks.service';
 import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
-import { State, ValidatorsState } from 'src/app/state/app.interface';
 import { selectValidators, selectValidatorsState } from 'src/app/state/validators/validators.reducers';
 import { Store } from '@ngrx/store';
+import { ValidatorsState } from 'src/app/state/validators/validator.interface';
+import { State } from 'src/app/state';
 
 @Component({
   selector: 'app-chart-cards',

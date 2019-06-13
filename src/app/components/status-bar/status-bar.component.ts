@@ -1,12 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { trigger, state, query, transition, animate, style, keyframes, animation, useAnimation, animateChild, group, stagger } from '@angular/animations';
+import { 
+  trigger, 
+  query, 
+  transition, 
+  animate, style, 
+  useAnimation, 
+  animateChild, 
+  group, 
+  stagger 
+} from '@angular/animations';
 import { fadeInAnimation, fade } from '../../animations/animation';
-import { AppState, State, ConsensusState } from 'src/app/state/app.interface';
-import { selectAppState } from 'src/app/state/app.reducers';
 import { PopupService } from 'src/app/services/popup.service';
 import { selectConsensusState } from 'src/app/state/consensus/consensus.reducers';
+import { ConsensusState } from 'src/app/state/consensus/consensus.interface';
+import { State } from 'src/app/state';
+import { ValidatorsState } from 'src/app/state/validators/validator.interface';
+import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
 
 @Component({
   selector: 'app-status-bar',
@@ -39,7 +50,7 @@ import { selectConsensusState } from 'src/app/state/consensus/consensus.reducers
   ]
 })
 export class StatusBarComponent implements OnInit {
-  appState: Observable<AppState>;
+  validatorsState: Observable<ValidatorsState>;
   consensusState: Observable<ConsensusState>;
   proposer: string;
 
@@ -54,13 +65,10 @@ export class StatusBarComponent implements OnInit {
   ) { }
 
   ngOnInit() { 
-    this.appState = this.appStore.select(selectAppState);
+    this.validatorsState = this.appStore.select(selectValidatorsState);
     this.consensusState = this.appStore.select(selectConsensusState);
     this.consensusState.subscribe(state => this.proposer = state.proposer);
   }
-  ngAfterInit() { }
-
-  ngOnDestroy() { }
 
   openValidatorDialog(addressHEX) {
     this.popupService.openValidatorDialogAddrHEX(addressHEX);

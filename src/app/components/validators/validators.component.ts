@@ -7,12 +7,15 @@ import {MatTable} from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import { map, skipWhile, take } from 'rxjs/operators';
-import { AppState, BlocksState, State, ConsensusState } from 'src/app/state/app.interface';
 import { selectValidators } from 'src/app/state/validators/validators.reducers';
-import { selectAppState } from 'src/app/state/app.reducers';
+import { selectAppState } from 'src/app/state/app/app.reducers';
 import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
 import { PopupService } from 'src/app/services/popup.service';
 import { selectConsensusState } from 'src/app/state/consensus/consensus.reducers';
+import { AppState } from 'src/app/state/app/app.interface';
+import { BlocksState } from 'src/app/state/blocks/blocks.interface';
+import { ConsensusState } from 'src/app/state/consensus/consensus.interface';
+import { State } from 'src/app/state';
 
 @Component({
   selector: 'app-validators',

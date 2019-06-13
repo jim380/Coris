@@ -5,15 +5,15 @@ import { nodeRpc1, nodeRpc2 } from '../../../config.js';
 import { DatePipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { debounceTime, map, skipWhile } from "rxjs/operators";
-import { State, BlocksState } from '../../state/app.interface';
+import { map, skipWhile } from "rxjs/operators";
 import { rowsAnimation, expandableRow, staggerAnimation} from 'src/app/animations/animation';
 import { MatTable, MatTableDataSource, MatPaginator } from '@angular/material';
-import { selectAppState } from 'src/app/state/app.reducers';
-import { AppState } from 'src/app/state/app.interface';
-import { selectBlocksState, selectBlocks } from 'src/app/state/blocks/blocks.reducers';
 import { PopupService } from 'src/app/services/popup.service';
 import { selectConsensusHeight } from 'src/app/state/consensus/consensus.reducers';
+import { BlocksState } from 'src/app/state/blocks/blocks.interface';
+import { State } from 'src/app/state';
+import { ValidatorsState } from 'src/app/state/validators/validator.interface';
+import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
 
 @Component({
   selector: 'app-blocks',
@@ -70,7 +70,7 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
   
   // dataSource: MatTableDataSource<Block>;
 
-  appState: Observable<AppState>;
+  validatorsState: Observable<ValidatorsState>;
   blocksState: Observable<BlocksState>;
   
   blocks: Block[];
@@ -86,7 +86,7 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.appState = this.appStore.select(selectAppState);
+    this.validatorsState = this.appStore.select(selectValidatorsState);
 
     this.height$ = this.appStore
       .select(selectConsensusHeight)

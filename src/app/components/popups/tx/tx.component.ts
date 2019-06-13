@@ -3,12 +3,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { State, AppState } from 'src/app/state/app.interface';
-import { selectAppState } from 'src/app/state/app.reducers';
-import { AccountDetailComponent } from '../account-detail/account-detail.component';
-import { ValidatorComponent } from '../validator/validator.component';
 import { BlockComponent } from '../block/block.component';
 import { PopupService } from 'src/app/services/popup.service';
+import { State } from 'src/app/state';
+import { ValidatorsState } from 'src/app/state/validators/validator.interface';
+import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
 
 @Component({
   selector: 'app-tx',
@@ -19,7 +18,7 @@ import { PopupService } from 'src/app/services/popup.service';
   ]
 })
 export class TxComponent implements OnInit {
-  appState: Observable<State>;
+  validatorsState: Observable<ValidatorsState>;
   tx;
   objectKeys = Object.keys;
 
@@ -27,7 +26,7 @@ export class TxComponent implements OnInit {
     public dialogRef: MatDialogRef<BlockComponent>,
     private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private appStore: Store <AppState>,
+    private appStore: Store <State>,
     @Inject(forwardRef(() => PopupService)) public popupService: PopupService,
   ) {  
     // TODO remove debugging
@@ -37,7 +36,7 @@ export class TxComponent implements OnInit {
 
   ngOnInit() {
     // console.log(this.tx);
-    this.appState = this.appStore.select(selectAppState);
+    this.validatorsState = this.appStore.select(selectValidatorsState);
   }
 
   onCopySucceess() {

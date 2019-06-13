@@ -1,17 +1,14 @@
 import { Component, OnInit, Inject, ViewChildren, QueryList, forwardRef } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { Store } from '@ngrx/store';
-// import { ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialogRef } from '@angular/material';
 
 import { ToastrService } from 'ngx-toastr';
-import { AppState, State } from 'src/app/state/app.interface';
-import { selectAppState } from 'src/app/state/app.reducers';
-import { ActivatedRoute } from '@angular/router'
-import { AccountDetailComponent } from '../account-detail/account-detail.component';
-import { TxComponent } from '../tx/tx.component';
 import { TxsService } from 'src/app/services/txs.service';
 import { PopupService } from 'src/app/services/popup.service';
+import { State } from 'src/app/state';
+import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
+import { ValidatorsState } from 'src/app/state/validators/validator.interface';
 
 @Component({
   selector: 'app-validator',
@@ -23,7 +20,7 @@ import { PopupService } from 'src/app/services/popup.service';
 })
 
 export class ValidatorComponent implements OnInit {
-  appState: Observable<AppState>;
+  validatorsState: Observable<ValidatorsState>;
 
   validator;
   delegations;
@@ -48,40 +45,27 @@ export class ValidatorComponent implements OnInit {
     private appStore: Store <State>,
     private ts: TxsService, 
     private toastr: ToastrService,
-    // private route: ActivatedRoute,
     @Inject(forwardRef(() => PopupService)) public popupService: PopupService,
     public dialogRef: MatDialogRef<ValidatorComponent>,
   ) { 
-    // let address = this.route.snapshot.paramMap.get('address');
-    // TODO remove debugging
-    // console.log(address);
     this.validator = data.validator;
-    // console.log(data);
   }
 
   ngOnInit() {
-    this.appState = this.appStore.select(selectAppState);
+    this.validatorsState = this.appStore.select(selectValidatorsState);
 
     this.delegations = this.validator.delegations.sort((a, b) => { 
       return Number(b.shares)-Number(a.shares); 
     });
-
-    // this.user = {
-    //   address: this.route.snapshot.params['address']
-    // };
   } 
 
   ngAfterViewInit() {
     if(this.validator.account.value.address) {
       this.ts.getTransferTxs(this.validator.account.value.address, 100, 1).subscribe((data: any) => {
-        // TODO remove debugging
-        // console.log(data);
         this.transactions.transfer = data;
       });
   
       this.ts.getStakingTxs(this.validator.account.value.address).subscribe((data: any) => {
-        // TODO remove debugging
-        // console.log(data);
         this.transactions.staking = data;
         this.initAccountTable(data);
       });
@@ -90,8 +74,6 @@ export class ValidatorComponent implements OnInit {
   }
 
   public initDelegationsTable() {
-    // TODO remove debugging
-    // console.log(this.proposal.currentDeposit);
     this.delegationsDataSource = new MatTableDataSource<any>([...this.delegations]);
     this.delegationsDataSource.paginator = this.paginators.toArray()[0];
   }
@@ -99,8 +81,6 @@ export class ValidatorComponent implements OnInit {
   public onTabChange(event) {
     let tabLabel = event.tab.textLabel.toLowerCase();
     this.initAccountTable( this.transactions[tabLabel] );
-    // TODO remove debugging 
-    // console.log( tabLabel );
   }
 
   public initAccountTable(array) {

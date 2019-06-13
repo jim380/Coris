@@ -1,5 +1,5 @@
 import { BlocksActionTypes } from './blocks.actions';
-import { initialBlocksState, BlocksState } from '../app.interface';
+import { BlocksState } from './blocks.interface';
 import { createSelector } from '@ngrx/store';
 
 
@@ -12,11 +12,34 @@ export function blocksReducers(blocksState = initialBlocksState, action): Blocks
         blocks: action.payload,
       }
     }
+    
+    case BlocksActionTypes.UPDATE_BLOCKS_TIME: {
+      return {
+        ...blocksState,
+        blocksTime: action.payload,
+      }
+    }
+
+    case BlocksActionTypes.UPDATE_BLOCKS_TIME_AVG: {
+      return {
+        ...blocksState,
+        blocksTimeAvg: action.payload,
+      }
+    }
 
     default: {
       return blocksState;
     }
   }
 }
+
+export const initialBlocksState: BlocksState = {
+  blocks: [],
+  blocksTime: [],
+  blocksTimeAvg: 0,
+};
+
 export const selectBlocksState = (state) => state.blocksState;
 export const selectBlocks = createSelector(selectBlocksState, (state) => state.blocks);
+export const selectBlocksTimeArray = createSelector(selectBlocksState, (state) => state.blocksTime);
+export const selectBlocksTimeAvg = createSelector(selectBlocksState, (state) => state.blocksTimeAvg);

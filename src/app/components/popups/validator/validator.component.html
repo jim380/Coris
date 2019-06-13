@@ -66,8 +66,8 @@
                                 style="cursor:pointer;" 
                                 mat-cell 
                                 *matCellDef="let delegation">   
-                              <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( delegation.delegator_address ) : false; else elseVetoVoter">
-                                {{ (appState | async).valsMap.get( delegation.delegator_address )}}
+                              <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( delegation.delegator_address ) : false; else elseVetoVoter">
+                                {{ (validatorsState | async).validatorsMap.get( delegation.delegator_address )}}
                               </span>
                               <ng-template #elseVetoVoter>
                                 {{ delegation.delegator_address }}

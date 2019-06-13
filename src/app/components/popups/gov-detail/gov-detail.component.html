@@ -20,8 +20,8 @@
                     <li *ngIf="proposal.proposer" class="list-group-item d-flex justify-content-between align-items-center">
                       Proposer
                       <h3 style="cursor: pointer;" (click)="openAccountDialog(proposal.proposer)" class="glance-title"><mdb-badge color="pink">
-                        <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( proposal.proposer ) : false; else elseVetoVoter">
-                          {{ (appState | async).valsMap.get( proposal.proposer )}}
+                        <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( proposal.proposer ) : false; else elseVetoVoter">
+                          {{ (validatorsState | async).validatorsMap.get( proposal.proposer )}}
                         </span>
                         <ng-template #elseVetoVoter>{{proposal.proposer}}</ng-template>
                       </mdb-badge></h3>
@@ -85,8 +85,8 @@
                                   <ng-container matColumnDef="voter">
                                     <th mat-header-cell *matHeaderCellDef> Voter </th>
                                     <td style="cursor:pointer;" (click)="openAccountDialog(vote.voter)" mat-cell *matCellDef="let vote">
-                                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( vote.voter ) : false; else elseVetoVoter">
-                                        {{ (appState | async).valsMap.get( vote.voter )}}
+                                      <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( vote.voter ) : false; else elseVetoVoter">
+                                        {{ (validatorsState | async).validatorsMap.get( vote.voter )}}
                                       </span>
                                       <ng-template #elseVetoVoter>{{ vote.voter }}</ng-template>
                                     </td>
@@ -108,8 +108,8 @@
                                   <ng-container matColumnDef="voter">
                                     <th mat-header-cell *matHeaderCellDef> Voter </th>
                                     <td style="cursor:pointer;" (click)="openAccountDialog(vote.voter)" mat-cell *matCellDef="let vote"> 
-                                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( vote.voter ) : false; else elseVetoVoter">
-                                        {{ (appState | async).valsMap.get( vote.voter )}}
+                                      <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( vote.voter ) : false; else elseVetoVoter">
+                                        {{ (validatorsState | async).validatorsMap.get( vote.voter )}}
                                       </span>
                                       <ng-template #elseVetoVoter>{{ vote.voter }}</ng-template>
                                     </td>
@@ -131,8 +131,8 @@
                                   <ng-container matColumnDef="voter">
                                     <th mat-header-cell *matHeaderCellDef> Voter </th>
                                     <td style="cursor:pointer;" (click)="openAccountDialog(vote.voter)" mat-cell *matCellDef="let vote">
-                                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( vote.voter ) : false; else elseVetoVoter">
-                                        {{ (appState | async).valsMap.get( vote.voter )}}
+                                      <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( vote.voter ) : false; else elseVetoVoter">
+                                        {{ (validatorsState | async).validatorsMap.get( vote.voter )}}
                                       </span>
                                       <ng-template #elseVetoVoter>{{ vote.voter }}</ng-template>
                                     </td>
@@ -154,8 +154,8 @@
                                   <ng-container matColumnDef="voter">
                                     <th mat-header-cell *matHeaderCellDef> Voter </th>
                                     <td style="cursor:pointer;" (click)="openAccountDialog(vote.voter)" mat-cell *matCellDef="let vote">
-                                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( vote.voter ) : false; else elseVetoVoter">
-                                        {{ (appState | async).valsMap.get( vote.voter )}}
+                                      <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( vote.voter ) : false; else elseVetoVoter">
+                                        {{ (validatorsState | async).validatorsMap.get( vote.voter )}}
                                       </span>
                                       <ng-template #elseVetoVoter>{{ vote.voter }}</ng-template>
                                     </td>
@@ -177,8 +177,8 @@
                                   <ng-container matColumnDef="voter">
                                     <th mat-header-cell *matHeaderCellDef> Voter </th>
                                     <td style="cursor:pointer;" (click)="openAccountDialog(vote.voter)" mat-cell *matCellDef="let vote">
-                                      <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( vote.voter ) : false; else elseVetoVoter">
-                                        {{ (appState | async).valsMap.get( vote.voter )}}
+                                      <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( vote.voter ) : false; else elseVetoVoter">
+                                        {{ (validatorsState | async).validatorsMap.get( vote.voter )}}
                                       </span>
                                       <ng-template #elseVetoVoter>{{ vote.voter }}</ng-template>
                                     </td>
@@ -210,8 +210,8 @@
                             <ng-container matColumnDef="depositor">
                               <th mat-header-cell *matHeaderCellDef> Depositor </th>
                               <td style="cursor:pointer;" (click)="openAccountDialog(deposit.depositor)" mat-cell *matCellDef="let deposit"> 
-                                <span *ngIf="(appState | async).valsMap.size ? (appState | async).valsMap.has( deposit.depositor ) : false; else elseVetoVoter">
-                                  {{ (appState | async).valsMap.get( deposit.depositor )}}
+                                <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( deposit.depositor ) : false; else elseVetoVoter">
+                                  {{ (validatorsState | async).validatorsMap.get( deposit.depositor )}}
                                 </span>
                                 <ng-template #elseVetoVoter>{{ deposit.depositor }}</ng-template> 
                               </td>

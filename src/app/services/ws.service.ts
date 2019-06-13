@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State } from '../state/app.interface';
 import { nodeWs } from '../../config.js';
 import { 
   unsubAllMsg, 
@@ -10,6 +9,7 @@ import {
   UpdateConsensusState, 
   UpdateRoundState 
 } from '../state/consensus/consensus.actions.js';
+import { State } from '../state/index.js';
 
 @Injectable({
   providedIn: 'root'

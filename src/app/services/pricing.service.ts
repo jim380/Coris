@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { nodeRpc1,appApi } from '../../config.js';
 import { Observable } from 'rxjs';
-import { UpdateStakePool } from '../state/app.actions';
 import { Store } from '@ngrx/store';
-import { State } from '../state/app.interface.js';
+import { State } from '../state/index.js';
+import { UpdateStakePool } from '../state/app/app.actions.js';
 
 @Injectable({
   providedIn: 'root'
