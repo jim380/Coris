@@ -1,17 +1,16 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Observable, range } from 'rxjs';
-import { distinctUntilChanged, filter, first } from 'rxjs/operators';
+import { distinctUntilChanged, filter, first, skipWhile } from 'rxjs/operators';
 import { 
   commissionChart,
   scatterChart,
   blockChart } from './chart-cards.config';
 import { BlocksService } from 'src/app/services/blocks.service';
-import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
-import { Label } from 'ng2-charts';
-import { selectValidators, selectValidatorsState } from 'src/app/state/validators/validators.reducers';
+import { selectValidators } from 'src/app/state/validators/validators.reducers';
 import { Store } from '@ngrx/store';
-import { ValidatorsState } from 'src/app/state/validators/validator.interface';
+import { Validator } from 'src/app/state/validators/validator.interface';
 import { State } from 'src/app/state';
+import { selectBlocksTime, selectBlocksTimeAvg } from 'src/app/state/blocks/blocks.reducers';
 
 @Component({
   selector: 'app-chart-cards',
@@ -38,32 +37,44 @@ export class ChartCardsComponent implements OnInit {
   public blockChartColors = blockChart.colors;
   public blockChartOptions = blockChart.options;
 
-  validatorsState: Observable<ValidatorsState>;
-  storeSubscription$;
+  validators$: Observable<Validator[]>;
+  validatorsSubscription$;
+
+  blocksTime$: Observable<any[]>;
+  blocksTimeSubscription$;
+
+  blocksTimeAvg$: Observable<number>;
+  blocksTimeAvgSubscription$;
 
   constructor(
     private appStore: Store <State>,
     private bs: BlocksService
   ) {
-    this.validatorsState = this.appStore.select(selectValidatorsState);
+    this.validators$ = this.appStore.select(selectValidators);
+    this.blocksTime$ = this.appStore.select(selectBlocksTime);
+    this.blocksTimeAvg$ = this.appStore.select(selectBlocksTimeAvg);
   }
 
   ngOnInit() {
-
-    this.storeSubscription$ = this.validatorsState
+    this.validatorsSubscription$ = this.validators$
     .pipe(
-      filter(state => state.validators.length > 0),
+      skipWhile(validators => validators.length === 0),
       first()
     )
-    .subscribe(data => {
+    .subscribe(validators => {
         // TODO remove debugging
         // console.log(data);
-        this.initCommissionChart(data.validators);
-        this.initScatterChart(data.validators);
+        this.initCommissionChart(validators);
+        this.initScatterChart(validators);
     });
 
-    this.bs.getBlocksTime$().subscribe((blocksTime: any[]) => {
-      let formattedBlocksTime = blocksTime.map(x => x/1000);
+    this.blocksTime$
+    .pipe(
+      skipWhile(time => time.length === 0),
+      first()
+    )
+    .subscribe((time: any[]) => {
+      let formattedBlocksTime = time.map(x => x/1000);
       if(formattedBlocksTime.length === 99) {
         // TODO remove debugging
         // console.log( formattedBlocksTime );
@@ -71,21 +82,31 @@ export class ChartCardsComponent implements OnInit {
       }
     });
 
-    this.bs.getAvgBlockTime$()
-    .subscribe(data => {
+    this.blocksTimeAvg$
+    .pipe(
+      skipWhile(avg => avg === 0),
+      first()
+    )
+    .subscribe(avg => {
       // TODO remove debugging
       // console.log(data);
       let avgBlockTime = [];
       for (let i = 0; i < 100; i++) {
-        avgBlockTime[i] = data/1000;
+        avgBlockTime[i] = avg/1000;
       }
       this.blockChartDatasets = [ this.blockChartDatasets[0], { data: avgBlockTime, label: 'Avg. Block Time'} ];
     })
   }
 
   ngOnDestroy() {
-    if(this.storeSubscription$) {
-      this.storeSubscription$.unsubscribe();
+    if(this.validatorsSubscription$) {
+      this.validatorsSubscription$.unsubscribe();
+    }
+    if(this.blocksTimeSubscription$) {
+      this.blocksTimeSubscription$.unsubscribe();
+    }
+    if(this.blocksTimeAvgSubscription$) {
+      this.validatorsSubscription$.unsubscribe();
     }
   }
 

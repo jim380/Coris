@@ -1,21 +1,20 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Observable, Subscriber } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MatSort } from '@angular/material';
-import { ValidatorComponent } from '../popups/validator/validator.component';
 import {MatTable} from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
-import { map, skipWhile, take } from 'rxjs/operators';
+import { skipWhile, take } from 'rxjs/operators';
 import { selectValidators } from 'src/app/state/validators/validators.reducers';
-import { selectAppState } from 'src/app/state/app/app.reducers';
 import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
 import { PopupService } from 'src/app/services/popup.service';
 import { selectConsensusState } from 'src/app/state/consensus/consensus.reducers';
-import { AppState } from 'src/app/state/app/app.interface';
 import { BlocksState } from 'src/app/state/blocks/blocks.interface';
 import { ConsensusState } from 'src/app/state/consensus/consensus.interface';
 import { State } from 'src/app/state';
+import { selectStakeState } from 'src/app/state/stake/stake.reducers';
+import { StakeState } from 'src/app/state/stake/stake.interface';
 
 @Component({
   selector: 'app-validators',
@@ -43,7 +42,7 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
     this.sort = ms;
     this.setDataSourceAttributes();
   }
-  appState: Observable<AppState>;
+  stakeState: Observable<StakeState>;
   blocksState: Observable<BlocksState>;
   consensusState: Observable<ConsensusState>
 
@@ -60,7 +59,7 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-    this.appState = this.appStore.select(selectAppState);
+    this.stakeState = this.appStore.select(selectStakeState);
     this.blocksState = this.appStore.select(selectBlocksState);
     this.consensusState = this.appStore.select(selectConsensusState);
 

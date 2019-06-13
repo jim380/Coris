@@ -46,16 +46,11 @@ export class AppComponent {
   ];
 
   constructor(
-    private ws:WsService, 
-    private pricingService: PricingService,
+    private ws:WsService,
     private vs:ValidatorsService,
-    private appStore: Store <State>,
   ) {  }
 
-  ngOnInit() { 
-    this.pricingService.initStakingPool();
-    // this.appStore.select(selectConsensusState).subscribe(console.log);
-  }
+  ngOnInit() { }
 
   ngOnDestroy() {
     this.ws.unsubscribe();

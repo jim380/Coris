@@ -5,13 +5,14 @@ import { Observable } from 'rxjs';
 import { HostListener } from "@angular/core";
 import { cards } from './carousel.content';
 import { DatePipe } from '@angular/common';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, skipWhile } from 'rxjs/operators';
 import { selectAppState } from 'src/app/state/app/app.reducers';
 import { Store } from '@ngrx/store';
 import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
-import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
 import { selectConsensusState, selectConsensusHeight } from 'src/app/state/consensus/consensus.reducers';
 import { State } from 'src/app/state';
+import { selectBlocksTimeAvg } from 'src/app/state/blocks/blocks.reducers';
+import { selectStakePool } from 'src/app/state/stake/stake.reducers';
 
 export const BREAKPOINTS = {
   MD: 768,
@@ -42,6 +43,10 @@ export class CarouselComponent implements OnInit {
 
   ngOnInit() {
     this.getScreenSize();
+    this.bs.fetch100Blocks();
+    this.ps.setAtomPrice();
+    this.ps.setStakingPool();
+    this.ps.setInflation();
 
     this.appStore.select(selectConsensusState)
     .subscribe(state => {
@@ -58,20 +63,17 @@ export class CarouselComponent implements OnInit {
       this.setValidatorsCount(state.validators);
     });
 
-    this.setInflation();
-    this.setAtomPrice();
+    // this.setInflation();
+    // this.setAtomPrice();
 
-    this.appStore.select(selectAppState)
-    .pipe(
-      distinctUntilChanged()
-    )
-    .subscribe(state => {
-      this.setBondedTokens(state.stakePool);
-      this.setCommunityPool(state.stakePool);
+    this.appStore.select(selectStakePool)
+    .subscribe(stakePool => {
+      this.setBondedTokens(stakePool);
+      this.setCommunityPool(stakePool);
     });
 
-    this.bs.fetch100Blocks();
-    this.setBlockTime();
+    this.appStore.select(selectBlocksTimeAvg)
+      .subscribe(avg => this.setBlockTime(avg));
   }
 
   @HostListener('window:resize', ['$event'])
@@ -190,63 +192,55 @@ export class CarouselComponent implements OnInit {
     }
     
   }
-  setBondedTokens(data) {
+  setBondedTokens(pool) {
     // TODO @aakatev remove debugging
-    // console.log(data);
-    if(data.bonded_tokens && data.not_bonded_tokens) {
-      let currentTime = this.getCurrentTime();
-      let bondedPercentage = ((data.bonded_tokens/1e6)/(data.bonded_tokens/1e6 + data.not_bonded_tokens/1e6)*100).toFixed(2)
+    // console.log(pool);
+    let currentTime = this.getCurrentTime();
+    let bondedPercentage = ((pool.bonded/1e6)/(pool.bonded/1e6 + pool.notBonded/1e6)*100).toFixed(2)
 
-      if (this.screenLayot === 'XL') {
-        this.slides[0][3].data = `${bondedPercentage}%`;
-        this.slides[0][3].timestamp = currentTime;
-      } else if (this.screenLayot === 'SM') {
-        this.slides[3][0].data = `${bondedPercentage}%`;
-        this.slides[3][0].timestamp = currentTime;
-      } else {
-        this.slides[1][1].data = `${bondedPercentage}%`;
-        this.slides[1][1].timestamp = currentTime;
-      }
+    if (this.screenLayot === 'XL') {
+      this.slides[0][3].data = `${bondedPercentage}%`;
+      this.slides[0][3].timestamp = currentTime;
+    } else if (this.screenLayot === 'SM') {
+      this.slides[3][0].data = `${bondedPercentage}%`;
+      this.slides[3][0].timestamp = currentTime;
+    } else {
+      this.slides[1][1].data = `${bondedPercentage}%`;
+      this.slides[1][1].timestamp = currentTime;
     }
   }
 
-  setBlockTime() {
-    this.bs.getAvgBlockTime$()
-      .subscribe(data => {
-        // TODO remove debugging
-        // console.log(data);
-        let blockTime = data/1000;
-        let currentTime = this.getCurrentTime();
-        if (this.screenLayot === 'XL') {
-          this.slides[1][0].data = blockTime.toFixed(2);
-          this.slides[1][0].timestamp = currentTime;
-        } else if (this.screenLayot === 'SM') {
-          this.slides[4][0].data = blockTime.toFixed(2);
-          this.slides[4][0].timestamp = currentTime;
-        } else {
-          this.slides[2][0].data = blockTime.toFixed(2);
-          this.slides[2][0].timestamp = currentTime;
-        }
-      })
+  setBlockTime(time) {
+    // TODO @aakatev remove debugging
+    // console.log(time);
+    let blockTime = time/1000;
+    let currentTime = this.getCurrentTime();
+    if (this.screenLayot === 'XL') {
+      this.slides[1][0].data = blockTime.toFixed(2);
+      this.slides[1][0].timestamp = currentTime;
+    } else if (this.screenLayot === 'SM') {
+      this.slides[4][0].data = blockTime.toFixed(2);
+      this.slides[4][0].timestamp = currentTime;
+    } else {
+      this.slides[2][0].data = blockTime.toFixed(2);
+      this.slides[2][0].timestamp = currentTime;
+    }
   }
 
-  setCommunityPool(data) {
+  setCommunityPool(pool) {
     // TODO @aakatev remove debugging
     // console.log(data);
-    if(data.community_pool) {
-      let communityPool = data.community_pool;
-      let currentTime = this.getCurrentTime();
+    let currentTime = this.getCurrentTime();
 
-      if (this.screenLayot === 'XL') {
-        this.slides[1][1].data = (communityPool.amount/1e6).toFixed(0);
-        this.slides[1][1].timestamp = currentTime;
-      } else if (this.screenLayot === 'SM') {
-        this.slides[5][0].data = (communityPool.amount/1e6).toFixed(0);
-        this.slides[5][0].timestamp = currentTime;
-      } else {
-        this.slides[2][1].data = (communityPool.amount/1e6).toFixed(0);
-        this.slides[2][1].timestamp = currentTime;
-      }
+    if (this.screenLayot === 'XL') {
+      this.slides[1][1].data = (pool.communityPool/1e6).toFixed(0);
+      this.slides[1][1].timestamp = currentTime;
+    } else if (this.screenLayot === 'SM') {
+      this.slides[5][0].data = (pool.communityPool/1e6).toFixed(0);
+      this.slides[5][0].timestamp = currentTime;
+    } else {
+      this.slides[2][1].data = (pool.communityPool/1e6).toFixed(0);
+      this.slides[2][1].timestamp = currentTime;
     }
   }
 

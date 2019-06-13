@@ -59,7 +59,7 @@ export class ValidatorsService {
         // console.log(validators[i].account)
       }
       // console.log(validators);
-      this.appStore.dispatch( new UpdateValidators(validators) );
+      this.appStore.dispatch(new UpdateValidators(validators));
     });
 
     this.appStore

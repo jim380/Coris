@@ -41,5 +41,5 @@ export const initialBlocksState: BlocksState = {
 
 export const selectBlocksState = (state) => state.blocksState;
 export const selectBlocks = createSelector(selectBlocksState, (state) => state.blocks);
-export const selectBlocksTimeArray = createSelector(selectBlocksState, (state) => state.blocksTime);
+export const selectBlocksTime = createSelector(selectBlocksState, (state) => state.blocksTime);
 export const selectBlocksTimeAvg = createSelector(selectBlocksState, (state) => state.blocksTimeAvg);

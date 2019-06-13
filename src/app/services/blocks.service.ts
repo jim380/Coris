@@ -8,21 +8,12 @@ import { selectBlocks, selectBlocksState } from '../state/blocks/blocks.reducers
 import { selectAppState } from '../state/app/app.reducers';
 import { selectConsensusHeight } from '../state/consensus/consensus.reducers';
 import { State } from '../state/index.js';
+import { UpdateBlocksTime, UpdateBlocksTimeAvg } from '../state/blocks/blocks.actions.js';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlocksService {
-
-  avgBlockTime = 0;
-  avgBlockTime$ = new BehaviorSubject(this.avgBlockTime);
-
-  recentBlocks = [];
-  recentBlocks$ = new BehaviorSubject(this.recentBlocks);
-
-  blocksTime = [];
-  blocksTime$ = new BehaviorSubject(this.blocksTime);
-
   constructor(
     private appStore: Store<State>,
     private http: HttpClient
@@ -44,13 +35,16 @@ export class BlocksService {
         this.fetch20Blocks(height-80)
       )
       .subscribe(([res1, res2, res3, res4, res5]) => {
-        this.getBlockTimesArray([
-          ...res1,
-          ...res2,
-          ...res3,
-          ...res4,
-          ...res5
-        ], this.blocksTime);
+        this.getBlockTimesArray(
+          [
+            ...res1,
+            ...res2,
+            ...res3,
+            ...res4,
+            ...res5
+          ], 
+          []
+        );
       });
     });
   }
@@ -91,42 +85,6 @@ export class BlocksService {
     return this.http.get(`${nodeRpc1}/blocks/latest`);
   }
 
-  getAvgBlockTime$() {
-    return this.avgBlockTime$;
-  }
-
-  getBlocksTime$() {
-    return this.blocksTime$;
-  }
-
-  getRecentBlocks$() {
-    return this.recentBlocks$;
-  }
-
-  // fetchRecentBlocks(lastBlock: number) {
-  //   let blocksCounter$ = range(0, 100);
-  //   let fetchedCounter = 0;
-
-  //   blocksCounter$.subscribe(
-  //     (count: number) => {
-  //       this.fetchBlockAtAlternative(lastBlock - count)
-  //         .subscribe( 
-  //           (block: any) => {
-  //             this.recentBlocks[count] = block;
-  //             fetchedCounter += 1;
-  //           }, 
-  //           (error) => {
-  //             console.log(error);
-  //           },
-  //           () => {
-  //             if(fetchedCounter === 100) {
-  //               this.getBlockTimesArray(this.recentBlocks, this.blocksTime);
-  //             }
-  //           });
-  //     });
-  // }
-
-
   private getBlockTimesArray(blocks, array) {
     let blocksCounter$ = range( 0, (blocks.length-1) );
     let arrayFilled = 0;
@@ -144,10 +102,9 @@ export class BlocksService {
       },
       () => {
         if (arrayFilled === 99) {
-          this.recentBlocks$.next(blocks);
-          this.blocksTime$.next(array);
-          this.avgBlockTime = this.getArrayAverage(this.blocksTime);
-          this.avgBlockTime$.next(this.avgBlockTime);
+          let avgBlockTime = this.getArrayAverage(array);
+          this.appStore.dispatch(new UpdateBlocksTime(array));
+          this.appStore.dispatch(new UpdateBlocksTimeAvg(avgBlockTime));
         }
       }
     );

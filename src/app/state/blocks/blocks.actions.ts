@@ -18,5 +18,5 @@ export class UpdateBlocksTime implements Action {
 
 export class UpdateBlocksTimeAvg implements Action {
   readonly type = BlocksActionTypes.UPDATE_BLOCKS_TIME_AVG;
-  constructor(public payload: any[]) {};
+  constructor(public payload: any) {};
 }
