@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { PricingService } from 'src/app/services/pricing.service';
 import { BlocksService } from 'src/app/services/blocks.service';
-// import { ValidatorsService } from 'src/app/services/validators.service';
-import { WsService } from 'src/app/services/ws.service';
 import { Observable } from 'rxjs';
 import { HostListener } from "@angular/core";
 import { cards } from './carousel.content';
 import { DatePipe } from '@angular/common';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { BreadcrumbModule } from 'ng-uikit-pro-standard';
-import { State } from 'src/app/state/app.interface';
-import { selectAppState } from 'src/app/state/app.reducers';
+import { distinctUntilChanged, skipWhile } from 'rxjs/operators';
+import { selectAppState } from 'src/app/state/app/app.reducers';
 import { Store } from '@ngrx/store';
 import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
-import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
+import { selectConsensusState, selectConsensusHeight } from 'src/app/state/consensus/consensus.reducers';
+import { State } from 'src/app/state';
+import { selectBlocksTimeAvg } from 'src/app/state/blocks/blocks.reducers';
+import { selectStakePool, selectAtomPrice, selectInflation } from 'src/app/state/stake/stake.reducers';
 
 export const BREAKPOINTS = {
   MD: 768,
@@ -37,56 +36,54 @@ export class CarouselComponent implements OnInit {
   blocksFetched = false;
 
   constructor(
-    private ws:WsService, 
     private appStore: Store <State>,
-    // private vs:ValidatorsService,
     private ps:PricingService,
     private bs:BlocksService
   ) { }
 
   ngOnInit() {
     this.getScreenSize();
+    this.bs.fetch100Blocks();
+    this.ps.setAtomPrice();
+    this.ps.setStakingPool();
+    this.ps.setInflation();
 
-    this.setInflation();
-    this.setAtomPrice();
+    this.appStore.select(selectConsensusState)
+    .subscribe(state => {
+      this.setConsensusState(state);
+    });
 
-    this.appStore.select(selectAppState)
-      .pipe(
-        distinctUntilChanged()
-      )
-      .subscribe(appState => {
-        // if (data.roundStep && !this.blocksFetched) {
-        //   this.bs.fetchRecentBlocks( 
-        //     Number( (data.roundStep.height-1) ) 
-        //   );
-        //   this.blocksFetched = true;
-        // }
+    this.appStore.select(selectConsensusHeight)
+    .subscribe(height => {
+      this.setLastBlock(height-1);
+    });
 
-        this.setConsensusState(appState.roundStep);
-        this.setBondedTokens(appState.stakePool);
-        this.setCommunityPool(appState.stakePool);
-      });
-    
-      this.appStore.select(selectValidatorsState)
-      .subscribe(validatorsState => {
-        this.setValidatorsCount(validatorsState.validators);
-      });
+    this.appStore.select(selectValidatorsState)
+    .subscribe(state => {
+      this.setValidatorsCount(state.validators);
+    });
 
-      this.appStore.select(selectBlocksState)
-      .subscribe(validatorsState => {
-        this.setLastBlock(validatorsState.blocks);
-      })
+    // this.setInflation();
+    // this.setAtomPrice();
+    this.appStore.select(selectAtomPrice)
+    .subscribe(price => {
+      this.setAtomPrice(price);
+    });
 
-      this.bs.fetch100Blocks();
+    this.appStore.select(selectInflation)
+    .subscribe(inflation => {
+      this.setInflation(inflation);
+    });
 
-      this.setBlockTime();
+    this.appStore.select(selectStakePool)
+    .subscribe(stakePool => {
+      this.setBondedTokens(stakePool);
+      this.setCommunityPool(stakePool);
+    });
+
+    this.appStore.select(selectBlocksTimeAvg)
+      .subscribe(avg => this.setBlockTime(avg));
   }
-
-  ngOnDestroy() {
-    this.ws.unsubscribe();
-  }
-
-  
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
@@ -141,56 +138,48 @@ export class CarouselComponent implements OnInit {
   }
   
 
-  setLastBlock(data) {
+  setLastBlock(height) {
     // TODO @aakatev remove debugging
-    // console.log(data);
-    if(data.length > 0) {
-      let block = data[0];
-      let currentTime = this.getCurrentTime();
+    // console.log(height);
+    let currentTime = this.getCurrentTime();
 
-      if (this.screenLayot === 'XL') {
-        this.slides[0][0].data = block.header.height;
-        this.slides[0][0].timestamp = currentTime;
-      } else if (this.screenLayot === 'SM') {
-        this.slides[0][0].data = block.header.height;
-        this.slides[0][0].timestamp = currentTime;
-      } else {
-        this.slides[0][0].data = block.header.height;
-        this.slides[0][0].timestamp = currentTime; 
-      }
+    if (this.screenLayot === 'XL') {
+      this.slides[0][0].data = height;
+      this.slides[0][0].timestamp = currentTime;
+    } else if (this.screenLayot === 'SM') {
+      this.slides[0][0].data = height;
+      this.slides[0][0].timestamp = currentTime;
+    } else {
+      this.slides[0][0].data = height;
+      this.slides[0][0].timestamp = currentTime; 
     }
   }
 
-  setConsensusState(data) {
+  setConsensusState(consensus) {
     // TODO @aakatev remove debugging
-    // console.log(data);
-    // TOFIX this place has async bug that is hard to replicate
-    // look into it more
-    if(data.step) {
-      let consensus = data;
-      let currentTime = this.getCurrentTime();
-      let formattedStep;
-      if (consensus.step.includes("NewHeight")) {
-        formattedStep = `Block`;
-      } else {
-        formattedStep = consensus.step.substring(9);
-      }
+    // console.log(consensus);
+    let currentTime = this.getCurrentTime();
+    let formattedStep;
+    if (consensus.step.includes("NewHeight")) {
+      formattedStep = `Block`;
+    } else {
+      formattedStep = consensus.step.substring(9);
+    }
 
-      if (this.screenLayot === 'XL') {
-        this.slides[0][1].data = formattedStep;
-        this.slides[0][1].title = `round: ${consensus.round}`;
-        this.slides[0][1].timestamp = currentTime;
-      } else if (this.screenLayot === 'SM') {
-        this.slides[1][0].data = formattedStep;
-        this.slides[1][0].data = consensus.step.substring(9);
-        this.slides[1][0].title = `round: ${consensus.round}`;
-        this.slides[1][0].timestamp = currentTime;
-      } else {
-        this.slides[0][1].data = formattedStep;
-        this.slides[0][1].data = consensus.step.substring(9);
-        this.slides[0][1].title = `round: ${consensus.round}`;
-        this.slides[0][1].timestamp = currentTime;
-      }
+    if (this.screenLayot === 'XL') {
+      this.slides[0][1].data = formattedStep;
+      this.slides[0][1].title = `round: ${consensus.round}`;
+      this.slides[0][1].timestamp = currentTime;
+    } else if (this.screenLayot === 'SM') {
+      this.slides[1][0].data = formattedStep;
+      this.slides[1][0].data = consensus.step.substring(9);
+      this.slides[1][0].title = `round: ${consensus.round}`;
+      this.slides[1][0].timestamp = currentTime;
+    } else {
+      this.slides[0][1].data = formattedStep;
+      this.slides[0][1].data = consensus.step.substring(9);
+      this.slides[0][1].title = `round: ${consensus.round}`;
+      this.slides[0][1].timestamp = currentTime;
     }
   }
   
@@ -212,105 +201,85 @@ export class CarouselComponent implements OnInit {
     }
     
   }
-  setBondedTokens(data) {
+  setBondedTokens(pool) {
     // TODO @aakatev remove debugging
-    // console.log(data);
-    if(data.bonded_tokens && data.not_bonded_tokens) {
-      let currentTime = this.getCurrentTime();
-      let bondedPercentage = ((data.bonded_tokens/1e6)/(data.bonded_tokens/1e6 + data.not_bonded_tokens/1e6)*100).toFixed(2)
+    // console.log(pool);
+    let currentTime = this.getCurrentTime();
+    let bondedPercentage = ((pool.bonded/1e6)/(pool.bonded/1e6 + pool.notBonded/1e6)*100).toFixed(2)
 
-      if (this.screenLayot === 'XL') {
-        this.slides[0][3].data = `${bondedPercentage}%`;
-        this.slides[0][3].timestamp = currentTime;
-      } else if (this.screenLayot === 'SM') {
-        this.slides[3][0].data = `${bondedPercentage}%`;
-        this.slides[3][0].timestamp = currentTime;
-      } else {
-        this.slides[1][1].data = `${bondedPercentage}%`;
-        this.slides[1][1].timestamp = currentTime;
-      }
+    if (this.screenLayot === 'XL') {
+      this.slides[0][3].data = `${bondedPercentage}%`;
+      this.slides[0][3].timestamp = currentTime;
+    } else if (this.screenLayot === 'SM') {
+      this.slides[3][0].data = `${bondedPercentage}%`;
+      this.slides[3][0].timestamp = currentTime;
+    } else {
+      this.slides[1][1].data = `${bondedPercentage}%`;
+      this.slides[1][1].timestamp = currentTime;
     }
   }
 
-  setBlockTime() {
-    this.bs.getAvgBlockTime$()
-      .subscribe(data => {
-        // TODO remove debugging
-        // console.log(data);
-        let blockTime = data/1000;
-        let currentTime = this.getCurrentTime();
-        if (this.screenLayot === 'XL') {
-          this.slides[1][0].data = blockTime.toFixed(2);
-          this.slides[1][0].timestamp = currentTime;
-        } else if (this.screenLayot === 'SM') {
-          this.slides[4][0].data = blockTime.toFixed(2);
-          this.slides[4][0].timestamp = currentTime;
-        } else {
-          this.slides[2][0].data = blockTime.toFixed(2);
-          this.slides[2][0].timestamp = currentTime;
-        }
-      })
-  }
-
-  setCommunityPool(data) {
+  setBlockTime(time) {
     // TODO @aakatev remove debugging
-    // console.log(data);
-    if(data.community_pool) {
-      let communityPool = data.community_pool;
-      let currentTime = this.getCurrentTime();
-
-      if (this.screenLayot === 'XL') {
-        this.slides[1][1].data = (communityPool.amount/1e6).toFixed(0);
-        this.slides[1][1].timestamp = currentTime;
-      } else if (this.screenLayot === 'SM') {
-        this.slides[5][0].data = (communityPool.amount/1e6).toFixed(0);
-        this.slides[5][0].timestamp = currentTime;
-      } else {
-        this.slides[2][1].data = (communityPool.amount/1e6).toFixed(0);
-        this.slides[2][1].timestamp = currentTime;
-      }
+    // console.log(time);
+    let blockTime = time/1000;
+    let currentTime = this.getCurrentTime();
+    if (this.screenLayot === 'XL') {
+      this.slides[1][0].data = blockTime.toFixed(2);
+      this.slides[1][0].timestamp = currentTime;
+    } else if (this.screenLayot === 'SM') {
+      this.slides[4][0].data = blockTime.toFixed(2);
+      this.slides[4][0].timestamp = currentTime;
+    } else {
+      this.slides[2][0].data = blockTime.toFixed(2);
+      this.slides[2][0].timestamp = currentTime;
     }
   }
 
-  setInflation() {
-    this.ps.getInflation()
-      .subscribe(data => {
-        // TODO remove debugging
-        // console.log(data);
-        let inflation = Number(data);
-        let currentTime = this.getCurrentTime();
-        if (this.screenLayot === 'XL') {
-          this.slides[1][2].data = `${(inflation*100).toFixed(2)}%`;
-          this.slides[1][2].timestamp = currentTime;
-        } else if (this.screenLayot === 'SM') {
-          this.slides[6][0].data = `${(inflation*100).toFixed(2)}%`;
-          this.slides[6][0].timestamp = currentTime;
-        } else {
-          this.slides[3][0].data = `${(inflation*100).toFixed(2)}%`;
-          this.slides[3][0].timestamp = currentTime;
-        }
-      });
+  setCommunityPool(pool) {
+    // TODO @aakatev remove debugging
+    // console.log(data);
+    let currentTime = this.getCurrentTime();
+
+    if (this.screenLayot === 'XL') {
+      this.slides[1][1].data = (pool.communityPool/1e6).toFixed(0);
+      this.slides[1][1].timestamp = currentTime;
+    } else if (this.screenLayot === 'SM') {
+      this.slides[5][0].data = (pool.communityPool/1e6).toFixed(0);
+      this.slides[5][0].timestamp = currentTime;
+    } else {
+      this.slides[2][1].data = (pool.communityPool/1e6).toFixed(0);
+      this.slides[2][1].timestamp = currentTime;
+    }
   }
 
-  setAtomPrice() {
-    this.ps.getAtomPrice()
-      .subscribe(data => {
-        // TODO remove debugging
-        // console.log(data.data['3794']);
-        let price = data.data['3794'].quote.USD.price;
-        let currentTime = this.getCurrentTime();
-  
-        if (this.screenLayot === 'XL') {
-          this.slides[1][3].data = price.toFixed(2);
-          this.slides[1][3].timestamp = currentTime;
-        } else if (this.screenLayot === 'SM') {
-          this.slides[7][0].data = price.toFixed(2);
-          this.slides[7][0].timestamp = currentTime;
-        } else {
-          this.slides[3][1].data = price.toFixed(2);
-          this.slides[3][1].timestamp = currentTime;
-        }
-      });
+  setInflation(inflation) {
+    let currentTime = this.getCurrentTime();
+    if (this.screenLayot === 'XL') {
+      this.slides[1][2].data = `${(inflation*100).toFixed(2)}%`;
+      this.slides[1][2].timestamp = currentTime;
+    } else if (this.screenLayot === 'SM') {
+      this.slides[6][0].data = `${(inflation*100).toFixed(2)}%`;
+      this.slides[6][0].timestamp = currentTime;
+    } else {
+      this.slides[3][0].data = `${(inflation*100).toFixed(2)}%`;
+      this.slides[3][0].timestamp = currentTime;
+    }
+  }
+
+  setAtomPrice(price) {
+    let currentTime = this.getCurrentTime();
+
+    if (this.screenLayot === 'XL') {
+      this.slides[1][3].data = price.toFixed(2);
+      this.slides[1][3].timestamp = currentTime;
+    } else if (this.screenLayot === 'SM') {
+      this.slides[7][0].data = price.toFixed(2);
+      this.slides[7][0].timestamp = currentTime;
+    } else {
+      this.slides[3][1].data = price.toFixed(2);
+      this.slides[3][1].timestamp = currentTime;
+    }
   }
 
   getCurrentTime() {

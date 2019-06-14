@@ -1,104 +1,118 @@
 import { Injectable } from '@angular/core';
-import { take } from 'rxjs/operators';
+import { take, skipWhile, map, catchError } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { State, AppState } from '../state/app.interface';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { nodeRpc1 } from '../../config.js'
 import { Block } from '../interfaces/block.interface';
 import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material';
+import { ValidatorComponent } from '../components/popups/validator/validator.component';
+import { AccountDetailComponent } from '../components/popups/account-detail/account-detail.component';
+import { TxComponent } from '../components/popups/tx/tx.component';
+import { BlockComponent } from '../components/popups/block/block.component';
+import { GovDetailComponent } from '../components/popups/gov-detail/gov-detail.component';
+import { State } from '../state/index.js';
+import { ValidatorsState } from '../state/validators/validator.interface.js';
+import { selectValidatorsState } from '../state/validators/validators.reducers.js';
+
+export class PopupConfig {
+  public config = {
+    data: null,      
+    maxWidth: '100vw',
+    maxHeight: '100vh',
+    height: '100%',
+    width: '100%',
+  }
+  constructor(data) {
+    this.config.data = data;
+    console.log('New popup service inited!');
+  }
+}
 
 @Injectable({
   providedIn: 'root',
-  // providedIn: null
 })
 export class PopupService {
-  appState: Observable<State>;
+  validatorsState$: Observable<ValidatorsState>;
+
   constructor(
     private appStore: Store<State>,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private dialog: MatDialog
   ) {
-    this.appState = this.appStore.select(state => state);
+    this.validatorsState$ = this.appStore.select(selectValidatorsState);
     console.log("new popup service created!");
   }
 
-  openValidatorDialog(validator, dialog, component) {
-    console.log(validator);
-    dialog.open( component,  {
-      data: { 
-        validator
-      },
-      height: '75vh',
-    });
+  openValidatorDialog(validator) {
+    this.dialog.open( ValidatorComponent, new PopupConfig({ validator: validator }).config );
   }
 
-  openValidatorDialogAddr(validatorAddress, dialog, component) {
-    // console.log(validatorAddress);
-    this.appState.pipe(
+  openValidatorDialogAddr(validatorAddress) {
+    this.validatorsState$.pipe(
+      skipWhile(state => state.validators.length === 0),
       take(1)
     ).subscribe((state) => {
-      let validatorQuery = state.validatorsState.validators
-        .filter(val => val.operator_address === validatorAddress);
+      let validatorQuery = state.validators
+                            .filter(validator => 
+                              validator.operator_address === validatorAddress
+                            );
       if( validatorQuery.length === 1) {
-        dialog.open( component,  {
-          data: { 
-            validator: validatorQuery[0]          },
-          height: '75vh',
-        });
+        this.dialog.open( ValidatorComponent, new PopupConfig({ validator: validatorQuery[0] }).config);
       } else {
         console.log("Validator was not found! Operator address: ", validatorAddress)
       }
     });
   }
 
-  openValidatorDialogAddrHEX(validatorAddressHEX, dialog, component) {
-    console.log(validatorAddressHEX);
-    this.appState.pipe(
+  openValidatorDialogAddrHEX(validatorAddressHEX) {
+    this.validatorsState$.pipe(
+      skipWhile(state => state.validators.length === 0),
       take(1)
     ).subscribe((state) => {
-      let validatorQuery = state.validatorsState.validators
-        .filter(val => val.description.moniker === state.appState.valsMap.get(validatorAddressHEX));
+      let validatorQuery = state.validators
+                            .filter(validator => 
+                              validator.description.moniker === state.validatorsMap.get(validatorAddressHEX)
+                            );
       if( validatorQuery.length === 1) {
-        dialog.open( component,  {
-          data: { 
-            validator: validatorQuery[0]          },
-          height: '75vh',
-        });
+        this.dialog.open( ValidatorComponent, new PopupConfig({ validator: validatorQuery[0] }).config);
       } else {
         console.log("Validator was not found! HEX address: ", validatorAddressHEX)
       }
     });
   }
 
-  openValidatorDialogMoniker(moniker, dialog, component) {
-    // console.log(moniker);
-    this.appState.pipe(
+  openValidatorDialogMoniker(moniker) {
+    this.validatorsState$.pipe(
+      skipWhile(state => state.validators.length === 0),
       take(1)
     ).subscribe((state) => {
-      let validatorQuery = state.validatorsState.validators
-        .filter( val => (val.description.moniker.replace(/\W/g, '').toLowerCase()).includes(moniker.replace(/\W/g, '').toLowerCase()) );
+      let validatorQuery = state.validators
+                            .filter( validator => 
+                              (validator.description.moniker
+                                .replace(/\W/g, '')
+                                .toLowerCase()
+                              )
+                              .includes(
+                                moniker
+                                  .replace(/\W/g, '')
+                                  .toLowerCase()
+                              ) 
+                            );
       if( validatorQuery.length === 1) {
-        dialog.open( component,  {
-          data: { 
-            validator: validatorQuery[0]          },
-          height: '75vh',
-        });
+        this.dialog.open( ValidatorComponent, new PopupConfig({ validator: validatorQuery[0] }).config);
       } else {
         console.log("Validator was not found! Moniker: ", moniker)
       }
     });
   }
 
-  openAccountDialogAddr(delegatorAddress, dialog, component) {
-    dialog.open( component,  {
-      data: { 
-        address: delegatorAddress
-      },
-      height: '75vh'
-    });
+  openAccountDialogAddr(delegatorAddress) {
+    this.dialog.open( AccountDetailComponent,  new PopupConfig({ address: delegatorAddress }).config);
   }
 
-  openTxDialog(txHash, dialog, component) {
+  openTxDialogHash(txHash) {
     let tx;
     this.httpClient.get(`${nodeRpc1}/txs/${txHash}`).subscribe((data:any) => {
       tx = {
@@ -128,50 +142,32 @@ export class PopupService {
       // END LOGIC FOR NOT-FAULTY  
 
       if(data.code === 12) {
-        // TODO remove debugging
-        // console.log(data);
-        // tx['action'] = "out of gas";
         tx.error = "out of gas";
       } else if (data.code === 104) {
         tx.error = "no delegation distribution info";
-        // TODO remove debugging
-        // console.log(data);
       } else if (data.code === 10) {
         tx.error = "insufficient account funds";
-        // TODO remove debugging
-        // console.log(data);
       } else if (data.code === 102) {
         tx.error = "no delegation for this (address, validator) pair";
-        // TODO remove debugging
-        // console.log(data);
       } else if (data.code) {
         // TODO @aakatev find more failed tx codes
         tx.error = "TEST"
         console.log(data);
       }
     },
-    err => {
-      // @aakatev some txs cause 500 errors
-      // otherwise would dump code in console
-      // console.log(err);
-    },
+    err => { },
     () => {
-      // TODO remove debugging
-      // console.log(tx);
-      dialog.open( component,  {
-        data: { 
-          tx
-        },
-        height: '75vh'
-      });
+      this.dialog.open( TxComponent,  new PopupConfig({ tx: tx }).config);
     });
   }
 
-  openBlockDialog(blockHeight, dialog, component) {
+  openTxDialog(tx) {
+    this.dialog.open(TxComponent, new PopupConfig({ tx: tx }).config);
+  }
+
+  openBlockDialogHeight(blockHeight) {
     let block: Block;
     this.httpClient.get(`${nodeRpc1}/blocks/${blockHeight}`).subscribe((data:any) => {
-      // TODO remove debugging
-      // console.log(data);
       const datePipe = new DatePipe('en-US');
       const formattedTime = datePipe.transform(data.block_meta.header.time, 'h:mm:ss a, MMM d, y');
       block = {
@@ -185,12 +181,46 @@ export class PopupService {
     (error) => {
     },
     () => {
-      dialog.open( component,  {
-        data: { 
-          block
-        },
-        height: '75vh'
-      });
+      this.dialog.open( BlockComponent,  new PopupConfig({ block: block }).config);
     });
+  }
+
+  openBlockDialog(block) {
+    this.dialog.open( BlockComponent,  new PopupConfig({ block: block }).config);
+  }
+
+ 
+  openGovDetailDialog(proposal) {
+    forkJoin(
+      this.httpClient.get(`${nodeRpc1}/gov/proposals/${proposal.proposal_id}/proposer`).pipe(catchError(error => of(null))),
+      this.httpClient.get(`${nodeRpc1}/gov/proposals/${proposal.proposal_id}/deposits`).pipe(catchError(error => of([]))),
+      this.httpClient.get(`${nodeRpc1}/gov/proposals/${proposal.proposal_id}/votes`).pipe(catchError(error => of([])))
+    ).subscribe(([ proposer, deposits, votes ]) => {
+      proposal.proposer = proposer;
+      proposal.currentDeposit = deposits === null ? [] : deposits;
+      proposal.currentVotes = votes === null ? [] : votes;
+      this.dialog.open( GovDetailComponent, new PopupConfig({ proposal: proposal }).config);
+    })
+  }
+
+  openGovDetailDialogId(proposalId) {
+    forkJoin(
+      this.httpClient.get(`${nodeRpc1}/gov/proposals/${proposalId}`).pipe(catchError(error => of(null))),
+      this.httpClient.get(`${nodeRpc1}/gov/proposals/${proposalId}/tally`).pipe(catchError(error => of(null))),
+    ).subscribe( ([ proposal, tally ]) => {
+      if (proposal) {
+        this.openGovDetailDialog({
+          proposal_id: proposal.proposal_id,
+          proposal_status: proposal.proposal_status === "VotingPeriod" ? "Voting Period" : proposal.proposal_status,
+          submit_time: proposal.submit_time,
+          deposit_end_time: proposal.deposit_end_time,
+          proposal_content: proposal.proposal_content,
+          total_deposit: proposal.total_deposit,
+          voting_end_time: proposal.voting_end_time,
+          voting_start_time: proposal.voting_start_time,
+          currentTally: tally,
+        });
+      }
+    })
   }
 }

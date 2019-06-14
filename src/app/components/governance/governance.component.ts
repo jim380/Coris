@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 // import { Proposal } from 'src/app/interfaces/proposal.interface';
-import { MatDialog, MatTableDataSource, MatTable } from '@angular/material';
-import { GovDetailComponent } from './gov-detail/gov-detail.component';
+import { MatTableDataSource, MatTable } from '@angular/material';
 import { trigger, style, animate, transition, state } from '@angular/animations';
 import { GovService } from 'src/app/services/gov.service';
+import { PopupService } from 'src/app/services/popup.service';
+import { GovDetailComponent } from '../popups/gov-detail/gov-detail.component';
 
 @Component({
   selector: 'app-governance',
@@ -33,7 +34,10 @@ export class GovernanceComponent implements OnInit {
     `depositEnd`
   ];
 
-  constructor(private dialog: MatDialog, private gs: GovService) { }
+  constructor(
+    private popupService: PopupService,
+    private gs: GovService
+  ) { }
 
   ngOnInit() {
     this.initProposals();
@@ -60,7 +64,6 @@ export class GovernanceComponent implements OnInit {
             proposal_status: formattedStatus,
             submit_time: proposal.submit_time,
             deposit_end_time: proposal.deposit_end_time,
-            // final_tally_result: proposal.final_tally_result,
             proposal_content: proposal.proposal_content,
             total_deposit: proposal.total_deposit,
             voting_end_time: proposal.voting_end_time,
@@ -69,19 +72,6 @@ export class GovernanceComponent implements OnInit {
         });
 
         this.proposals.forEach( (proposal: any) => {
-          this.gs.getProposer(proposal.proposal_id).subscribe( (data:any) => {
-            // TODO remove debugging
-            // console.log(data.proposer);
-            proposal.proposer = data.proposer;
-          },
-          error => {
-            // @aakatev 
-            // By default, RPC client responds with 500 
-            // if proposer wasnt, found.
-            // We want to avoid terminal flood and thus 
-            // this dummy block 
-          });
-
           this.gs.getCurrentTally(proposal.proposal_id).subscribe( (data:any) => {
             // TODO remove debugging
             // console.log(data);
@@ -90,52 +80,12 @@ export class GovernanceComponent implements OnInit {
           error => {
             console.log("Tally error!");
           });
-
-          this.gs.getCurrentDeposits(proposal.proposal_id).subscribe( (data:any) => {
-            // TODO remove debugging
-            // console.log(data);
-            if(data) {
-              proposal.currentDeposit = data;
-            } else {
-              proposal.currentDeposit = [];
-            }
-          },
-          error => {
-            console.log("Deposit error!");
-          });
-
-          this.gs.getCurrentVotes(proposal.proposal_id).subscribe( (data:any) => {
-            // TODO remove debugging
-            // console.log(data);
-            if(data) {
-              proposal.currentVotes = data;
-              
-              // proposal.currentVotes.All = [];
-              // data.forEach( (voter: any) => {
-              //   // TODO remove debugging
-              //   proposal.currentVotes.All.push(voter.voter);
-              //   if( !proposal.currentVotes[voter.option] ) {
-              //     proposal.currentVotes[voter.option] = [];
-              //   }
-              //   proposal.currentVotes[voter.option].push(voter.voter);
-              //   // console.log(voter);    
-              // });
-            } else {
-              proposal.currentVotes = [];
-            }
-          },
-          error => {
-            console.log("Votes error!");
-          });
-
         });
         this.dataSource = new MatTableDataSource<any>([...this.proposals]);
       });
   }
   
-  openGovDetailDialog(data) {
-    this.dialog.open( GovDetailComponent,  {
-      data
-    });
+  openGovDetailDialog(proposal) {
+    this.popupService.openGovDetailDialog(proposal);
   }
 }

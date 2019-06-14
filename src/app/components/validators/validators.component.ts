@@ -1,22 +1,20 @@
-import { TestComponent } from './../test/test.component';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Observable, Subscriber } from 'rxjs';
-import { Store, createFeatureSelector, createSelector, select } from '@ngrx/store';
-import { ActivatedRoute } from '@angular/router';
-// import { ValidatorsService } from '../../services/validators.service';
-// import { ValidatorsHelperService } from '../../services/validators-helper.service';
-import { Sort, MatDialog, MatSort } from '@angular/material';
-import { ValidatorComponent } from '../validator/validator.component';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { MatSort } from '@angular/material';
 import {MatTable} from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
-// import { GovDetailComponent } from '../governance/gov-detail/gov-detail.component';
-import { map, skipWhile, take } from 'rxjs/operators';
-import { AppState, BlocksState, State } from 'src/app/state/app.interface';
-import { selectValidatorsState, selectValidators } from 'src/app/state/validators/validators.reducers';
-import { selectAppState } from 'src/app/state/app.reducers';
+import { skipWhile, take } from 'rxjs/operators';
+import { selectValidators } from 'src/app/state/validators/validators.reducers';
 import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
 import { PopupService } from 'src/app/services/popup.service';
+import { selectConsensusState } from 'src/app/state/consensus/consensus.reducers';
+import { BlocksState } from 'src/app/state/blocks/blocks.interface';
+import { ConsensusState } from 'src/app/state/consensus/consensus.interface';
+import { State } from 'src/app/state';
+import { selectStakeState } from 'src/app/state/stake/stake.reducers';
+import { StakeState } from 'src/app/state/stake/stake.interface';
 
 @Component({
   selector: 'app-validators',
@@ -44,8 +42,9 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
     this.sort = ms;
     this.setDataSourceAttributes();
   }
-  appState: Observable<AppState>;
+  stakeState: Observable<StakeState>;
   blocksState: Observable<BlocksState>;
+  consensusState: Observable<ConsensusState>
 
   valsUptime: Map<string,string> = new Map;
   totalTokens = 0;
@@ -53,7 +52,6 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
 
   constructor(
     private appStore: Store<State>,
-    private dialog: MatDialog,
     private popupService: PopupService
   ) { 
     // console.log(this.appStore);
@@ -61,8 +59,9 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-    this.appState = this.appStore.select(selectAppState);
+    this.stakeState = this.appStore.select(selectStakeState);
     this.blocksState = this.appStore.select(selectBlocksState);
+    this.consensusState = this.appStore.select(selectConsensusState);
 
     this.appStore.select(selectValidators)
     .pipe(
@@ -204,7 +203,7 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
 
   /* POPUPS */
   openValidatorDialog(validator) {
-    this.popupService.openValidatorDialog(validator, this.dialog, ValidatorComponent);
+    this.popupService.openValidatorDialog(validator);
   }
 
   /* END POPUPS */

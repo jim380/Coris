@@ -1,23 +1,19 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Block } from '../../interfaces/block.interface';
-import { nodeRpc2 } from '../../../config.js';
-import { Router } from '@angular/router';
+import { nodeRpc1, nodeRpc2 } from '../../../config.js';
 import { DatePipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { debounceTime, map, skipWhile } from "rxjs/operators";
-import { State, BlocksState } from '../../state/app.interface';
+import { map, skipWhile } from "rxjs/operators";
 import { rowsAnimation, expandableRow, staggerAnimation} from 'src/app/animations/animation';
-import { MatTable, MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
-import { BlockComponent } from '../block/block.component';
-import { BlocksService } from 'src/app/services/blocks.service';
-import { selectAppState } from 'src/app/state/app.reducers';
-import { AppState } from 'src/app/state/app.interface';
-import { selectBlocksState, selectBlocks } from 'src/app/state/blocks/blocks.reducers';
+import { MatTable, MatTableDataSource, MatPaginator } from '@angular/material';
 import { PopupService } from 'src/app/services/popup.service';
-import { ValidatorComponent } from '../validator/validator.component';
-// import {MatTableDataSource} from '@angular/material';
+import { selectConsensusHeight } from 'src/app/state/consensus/consensus.reducers';
+import { BlocksState } from 'src/app/state/blocks/blocks.interface';
+import { State } from 'src/app/state';
+import { ValidatorsState } from 'src/app/state/validators/validator.interface';
+import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
 
 @Component({
   selector: 'app-blocks',
@@ -74,41 +70,38 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
   
   // dataSource: MatTableDataSource<Block>;
 
-  appState: Observable<AppState>;
+  validatorsState: Observable<ValidatorsState>;
   blocksState: Observable<BlocksState>;
   
   blocks: Block[];
   currentBlock = 0;
   startBlock = 0;
   blocksToDisplay = 20;
-  blocks$ = null;
+  height$ = null;
 
   constructor(
     private http: HttpClient,
-    private router: Router,
     private appStore: Store <State>,
-    private dialog: MatDialog,
-    private blocksService: BlocksService,
     private popupService: PopupService,
   ) { }
 
   ngOnInit() {
-    this.appState = this.appStore.select(selectAppState);
-    this.blocksState = this.appStore.select(selectBlocksState);
+    this.validatorsState = this.appStore.select(selectValidatorsState);
 
-    this.blocks$ = this.appStore
-      .select(selectBlocksState)
+    this.height$ = this.appStore
+      .select(selectConsensusHeight)
       .pipe( 
-        map( (blocksState: BlocksState) => blocksState.blocks ),
-        skipWhile( blocks => blocks.length === 0 )
+        skipWhile( height => height === '0' ),
+        map( height => height-1 )
       )
-      .subscribe( blocks => { 
-        if( this.currentBlock !== blocks[0].header.height) {
+      .subscribe( height => { 
+        // console.log(height);
+        if( this.currentBlock !== height) {
           if(!this.blocks) {
-            this.startBlock = blocks[0].header.height;
+            this.startBlock = height;
             this.initBlocks();  
-          } else if (this.blocks[0].height !== blocks[0].header.height) {
-            this.addBlock( blocks[0].header.height );
+          } else if (this.blocks[0].height !== height) {
+            this.addBlock( height );
           }
           // TODO remove debugging
           // console.log(data[0]);
@@ -121,7 +114,7 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   
   ngOnDestroy() {
-    this.blocks$.unsubscribe();
+    this.height$.unsubscribe();
   }
 
   initBlocks() {
@@ -130,11 +123,14 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   addBlock(height) {
+    // this.http.get(`${nodeRpc1}/blocks/latest`)
+    //   .subscribe(console.log);
+
     this.http.get(`${nodeRpc2}/blockchain?minHeight=${height}&maxHeight=${height}`)
-      .subscribe(data => {
+      .subscribe((data: any) => {
         // TODO remove debugging
         // console.log(data);
-        data['result'].block_metas.forEach(block => {
+        data.result.block_metas.forEach(block => {
           const datePipe = new DatePipe('en-US');
           const formattedTime = datePipe.transform(block.header.time, 'h:mm:ss a, MMM d, y');
 
@@ -179,8 +175,8 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   displayOlderBlocks() {
-    if(this.blocks$) {
-      this.blocks$.unsubscribe();
+    if(this.height$) {
+      this.height$.unsubscribe();
     }
     if(this.currentBlock - this.blocksToDisplay > 20) {
       this.currentBlock -= this.blocksToDisplay;
@@ -199,38 +195,12 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
     this.currentPage -=1 ;
   }
 
-  queryBlock(blockHeight) {
-    let block: Block;
-    this.blocksService.fetchBlockAtAlternative(blockHeight).subscribe((data:any) => {
-      // TODO remove debugging
-      // console.log(data);
-      const datePipe = new DatePipe('en-US');
-      const formattedTime = datePipe.transform(data.block_meta.header.time, 'h:mm:ss a, MMM d, y');
-      block = {
-        hash: data.block_meta.block_id.hash, 
-        height: data.block_meta.header.height, 
-        time: formattedTime,
-        txs: data.block_meta.header.num_txs,
-        proposer: data.block_meta.header.proposer_address
-      }   
-    },
-    (error) => {
-    },
-    () => {
-      this.openBlockDialog(block);
-    });
+  openBlockDialog(block) {
+    this.popupService.openBlockDialog(block);
   }
 
-  openBlockDialog(block) {
-    this.dialog.open( BlockComponent,  {
-      data: { 
-        block
-      },
-      height: '75vh'
-    });
-  }
   openValidatorDialog(addressHEX) {
-    this.popupService.openValidatorDialogAddrHEX(addressHEX, this.dialog, ValidatorComponent);
+    this.popupService.openValidatorDialogAddrHEX(addressHEX);
   }
 
 }

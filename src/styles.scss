@@ -56,8 +56,7 @@ nav {
 }
 
 section {
-  padding: 20px 0;
-  margin-bottom: 50px;
+  padding: 0px;
 }
 
 .row {
@@ -362,6 +361,10 @@ footer p {
   padding: 0 !important;
 }
 
+.fixed-top {
+  z-index: 150 !important;
+}
+
 .mat-progress-spinner circle, .mat-spinner circle {
   stroke: #00796B;
 }
@@ -478,4 +481,8 @@ background-color: #aa66cc; }
 
 .card-cascade {
   margin-bottom: 0;
+}
+
+.btn-floating {
+  z-index: 130;
 }

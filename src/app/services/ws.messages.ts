@@ -1,4 +1,4 @@
-export const unsubBlockMsg = {
+export const unsubAllMsg = {
   "jsonrpc": "2.0",
   "method": "unsubscribe_all",
   "id": "0",

@@ -11,7 +11,7 @@
   
     <ng-container matColumnDef="title" sticky>
       <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-code"></i>&nbsp;Title</th>
-      <td mat-cell *matCellDef="let proposal" mdbTooltip="{{proposal.proposal_content.value.title}}" placement="top">
+      <td mat-cell *matCellDef="let proposal" mdbTooltip="{{proposal.proposal_content.value.title}}" placement="right">
         <!-- <span style="cursor: pointer;" (click)="openGovDetailDialog(proposal)">{{proposal.proposal_content.value.title | slice:0:20}}...</span> -->
         <mdb-badge color="pink" style="cursor: pointer;" (click)="openGovDetailDialog(proposal)">{{proposal.proposal_content.value.title | slice:0:20}} ...</mdb-badge>
       </td>

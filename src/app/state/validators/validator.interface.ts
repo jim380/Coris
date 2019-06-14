@@ -1,3 +1,8 @@
+export interface ValidatorsState {
+  validators: Validator[] | null;
+  validatorsMap: any;
+};
+
 export interface Validator {
   operator_address: string;
   consensus_pubkey: string;
@@ -19,5 +24,5 @@ export interface Validator {
   account: any;
   delegations: any;
   self_bond: Number;
-}
+};
   

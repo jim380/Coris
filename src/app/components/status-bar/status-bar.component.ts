@@ -1,20 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { WsService } from 'src/app/services/ws.service';
 import { Store } from '@ngrx/store';
-// import { ValidatorsService } from 'src/app/services/validators.service';
-import { trigger, state, query, transition, animate, style, keyframes, animation, useAnimation, animateChild, group, stagger } from '@angular/animations';
+import { 
+  trigger, 
+  query, 
+  transition, 
+  animate, style, 
+  useAnimation, 
+  animateChild, 
+  group, 
+  stagger 
+} from '@angular/animations';
 import { fadeInAnimation, fade } from '../../animations/animation';
-// import { State } from 'src/app/interfaces/state.interface';
-// import { PricingService } from 'src/app/services/pricing.service';
-// import { BlocksService } from 'src/app/services/blocks.service';
-// import { map } from 'rxjs/operators';
-import { AppState, State, BlocksState } from 'src/app/state/app.interface';
-import { selectAppState } from 'src/app/state/app.reducers';
-import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
-import { MatDialog } from '@angular/material';
 import { PopupService } from 'src/app/services/popup.service';
-import { ValidatorComponent } from '../validator/validator.component';
+import { selectConsensusState } from 'src/app/state/consensus/consensus.reducers';
+import { ConsensusState } from 'src/app/state/consensus/consensus.interface';
+import { State } from 'src/app/state';
+import { ValidatorsState } from 'src/app/state/validators/validator.interface';
+import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
+import { AppState } from 'src/app/state/app/app.interface';
+import { selectAppState } from 'src/app/state/app/app.reducers';
 
 @Component({
   selector: 'app-status-bar',
@@ -47,37 +52,30 @@ import { ValidatorComponent } from '../validator/validator.component';
   ]
 })
 export class StatusBarComponent implements OnInit {
-  proposer;
-  appState: Observable<AppState>;
-  blocksState: Observable<BlocksState>;
+  appState$: Observable<AppState>;
+  validatorsState$: Observable<ValidatorsState>;
+  consensusState$: Observable<ConsensusState>;
+  proposer: string;
+
   networks = [
     {id: 1, name: 'mainnet'},
     {id: 2, name: 'testnet'},
   ];
 
   constructor(
-    private dialog: MatDialog,
     private popupService: PopupService,
-    // private ws:WsService, 
     private appStore: Store <State>
   ) { }
 
   ngOnInit() { 
-    this.appState = this.appStore.select(selectAppState);
-    this.blocksState = this.appStore.select(selectBlocksState);
-
-    this.appState.subscribe((state) => {
-      if(state.round.proposer) {
-        this.proposer = state.round.proposer.address;
-      }
-    });
+    this.validatorsState$ = this.appStore.select(selectValidatorsState);
+    this.consensusState$ = this.appStore.select(selectConsensusState);
+    this.appState$ = this.appStore.select(selectAppState);
+    this.consensusState$.subscribe(state => this.proposer = state.proposer);
   }
-  ngAfterInit() { }
-
-  ngOnDestroy() { }
 
   openValidatorDialog(addressHEX) {
-    this.popupService.openValidatorDialogAddrHEX(addressHEX, this.dialog, ValidatorComponent);
+    this.popupService.openValidatorDialogAddrHEX(addressHEX);
   }
 
 }

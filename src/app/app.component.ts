@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { WsService } from './services/ws.service';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
 import { ValidatorsService } from './services/validators.service';
 import { trigger, state, query, transition, animate, style, keyframes, animation, useAnimation, animateChild, group, stagger } from '@angular/animations';
 import { fadeInAnimation, fade } from './animations/animation';
-import {ToastService} from 'ng-uikit-pro-standard';
 import { PricingService } from './services/pricing.service';
+import { Store } from '@ngrx/store';
+import { selectConsensusState } from './state/consensus/consensus.reducers';
+import { State } from './state';
 
 @Component({
   selector: 'app-root',
@@ -46,14 +46,11 @@ export class AppComponent {
   ];
 
   constructor(
-    private ws:WsService, 
-    private pricingService: PricingService,
-    private vs:ValidatorsService
+    private ws:WsService,
+    private vs:ValidatorsService,
   ) {  }
 
-  ngOnInit() { 
-    this.pricingService.initStakingPool();
-  }
+  ngOnInit() { }
 
   ngOnDestroy() {
     this.ws.unsubscribe();

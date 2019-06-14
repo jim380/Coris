@@ -3,20 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
-import { State, AppState } from '../../state/app.interface';
 import { Store } from '@ngrx/store';
 import { nodeRpc1, nodeRpc2 } from '../../../config.js'
-import { Tx, Tag, decodeTag } from '../../interfaces/tx.interface';
-import { MatTableDataSource, MatPaginator, MatTable, MatSort, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import { Tx } from '../../interfaces/tx.interface';
+import { MatTableDataSource, MatPaginator, MatTable, MatSort, MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { TxsListCardComponent } from './txs-list-card/txs-list-card.component';
-import { TxComponent } from '../tx/tx.component';
-import { ValidatorComponent } from '../validator/validator.component';
-import { take } from 'rxjs/operators';
 import { PopupService } from 'src/app/services/popup.service.js';
-import { AccountDetailComponent } from '../account-detail/account-detail.component';
-import { selectAppState } from 'src/app/state/app.reducers';
+import { State } from 'src/app/state';
+import { ValidatorsState } from 'src/app/state/validators/validator.interface.js';
+import { selectValidatorsState } from 'src/app/state/validators/validators.reducers.js';
 
 
 @Component({
@@ -88,19 +84,17 @@ export class TxsComponent implements OnInit {
   totalTxsCount = 0;
   // currentPage = 1;
   // lastPage = 1;
-  appState: Observable<AppState>;
+  validatorsState: Observable<ValidatorsState>;
 
   constructor(
     private toastr: ToastrService,
     private appStore: Store <State>,
     private http: HttpClient,
-    private router: Router,
-    private dialog: MatDialog,
     private popupService: PopupService
   ) { }
 
   ngOnInit() {
-    this.appState = this.appStore.select(selectAppState);
+    this.validatorsState = this.appStore.select(selectValidatorsState);
 
     this.http.get(`${nodeRpc1}/blocks/latest`).subscribe( async (data:any) => {
       // @aakatev remove debugging
@@ -305,39 +299,17 @@ export class TxsComponent implements OnInit {
     this.toastr.success('Copied to clipboard');
   }
 
-  openTxsListDialog(address) {
-    this.dialog.open( AccountDetailComponent,  {
-      data: { 
-        address
-      },
-      height: '75vh'
-    });
+  openTxDialog(tx) {
+    this.popupService.openTxDialog(tx);
   }
 
-  openTxDialog(tx) {
-    this.dialog.open( TxComponent,  {
-      data: { 
-        tx
-      },
-      height: '75vh'
-    });
+  openAccountDialog(delegatorAddress) {
+    this.popupService.openAccountDialogAddr(delegatorAddress);
   }
 
   openValidatorDialog(operatorAddress) {
-    this.popupService.openValidatorDialogAddr(operatorAddress, this.dialog, ValidatorComponent);
+    this.popupService.openValidatorDialogAddr(operatorAddress);
   }
-
-  // TEST ACCOUNT QUERY
-  // queryAccount(address) {
-  //   this.openTxsListDialog(address);
-  // }
-
-  // END TEST ACCOUNT QUERY
-  // TODO figuire out how to open on separate route
-  // routeToTxPage() {
-  //   // let data = MAT_DIALOG_DATA();
-  //   // this.router.navigate(['/edit-transaction-portal'], { queryParams: { bill: 'U001' } });
-  // }
 
 }
 
