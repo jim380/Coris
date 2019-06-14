@@ -1,5 +1,4 @@
 export interface StakeState {
-  totalStake: number | null;
   stakePool: Pool;
   atomPrice: number | string | null;
   inflation: number | string | null;

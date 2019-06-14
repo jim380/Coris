@@ -4,13 +4,7 @@ import { createSelector } from '@ngrx/store';
 
 
 export function stakeReducers(stakeState = initialStakeState, action): StakeState {
-  switch(action.type) {
-    case StakeActionTypes.UPDATE_TOTAL_STAKE: {
-      return {
-        ...stakeState,
-        totalStake: action.payload,
-      }
-    }      
+  switch(action.type) {  
 
     case StakeActionTypes.UPDATE_STAKE_POOL: {
       return {
@@ -40,7 +34,6 @@ export function stakeReducers(stakeState = initialStakeState, action): StakeStat
 }
 
 export const initialStakeState: StakeState = {
-  totalStake: 0,
   stakePool: {
     denom: 'stake',
     bonded: '0',
@@ -52,7 +45,6 @@ export const initialStakeState: StakeState = {
 };
 
 export const selectStakeState = (state) => state.stakeState;
-export const selectTotalStake = createSelector(selectStakeState, (state) => state.totalStake);
 export const selectStakePool = createSelector(selectStakeState, (state) => state.stakePool);
 export const selectAtomPrice = createSelector(selectStakeState, (state) => state.atomPrice);
 export const selectInflation = createSelector(selectStakeState, (state) => state.inflation);

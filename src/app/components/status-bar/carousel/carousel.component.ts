@@ -12,7 +12,7 @@ import { selectValidatorsState } from 'src/app/state/validators/validators.reduc
 import { selectConsensusState, selectConsensusHeight } from 'src/app/state/consensus/consensus.reducers';
 import { State } from 'src/app/state';
 import { selectBlocksTimeAvg } from 'src/app/state/blocks/blocks.reducers';
-import { selectStakePool } from 'src/app/state/stake/stake.reducers';
+import { selectStakePool, selectAtomPrice, selectInflation } from 'src/app/state/stake/stake.reducers';
 
 export const BREAKPOINTS = {
   MD: 768,
@@ -65,6 +65,15 @@ export class CarouselComponent implements OnInit {
 
     // this.setInflation();
     // this.setAtomPrice();
+    this.appStore.select(selectAtomPrice)
+    .subscribe(price => {
+      this.setAtomPrice(price);
+    });
+
+    this.appStore.select(selectInflation)
+    .subscribe(inflation => {
+      this.setInflation(inflation);
+    });
 
     this.appStore.select(selectStakePool)
     .subscribe(stakePool => {
@@ -244,45 +253,33 @@ export class CarouselComponent implements OnInit {
     }
   }
 
-  setInflation() {
-    this.ps.getInflation()
-      .subscribe(data => {
-        // TODO remove debugging
-        // console.log(data);
-        let inflation = Number(data);
-        let currentTime = this.getCurrentTime();
-        if (this.screenLayot === 'XL') {
-          this.slides[1][2].data = `${(inflation*100).toFixed(2)}%`;
-          this.slides[1][2].timestamp = currentTime;
-        } else if (this.screenLayot === 'SM') {
-          this.slides[6][0].data = `${(inflation*100).toFixed(2)}%`;
-          this.slides[6][0].timestamp = currentTime;
-        } else {
-          this.slides[3][0].data = `${(inflation*100).toFixed(2)}%`;
-          this.slides[3][0].timestamp = currentTime;
-        }
-      });
+  setInflation(inflation) {
+    let currentTime = this.getCurrentTime();
+    if (this.screenLayot === 'XL') {
+      this.slides[1][2].data = `${(inflation*100).toFixed(2)}%`;
+      this.slides[1][2].timestamp = currentTime;
+    } else if (this.screenLayot === 'SM') {
+      this.slides[6][0].data = `${(inflation*100).toFixed(2)}%`;
+      this.slides[6][0].timestamp = currentTime;
+    } else {
+      this.slides[3][0].data = `${(inflation*100).toFixed(2)}%`;
+      this.slides[3][0].timestamp = currentTime;
+    }
   }
 
-  setAtomPrice() {
-    this.ps.getAtomPrice()
-      .subscribe(data => {
-        // TODO remove debugging
-        // console.log(data.data['3794']);
-        let price = data.data['3794'].quote.USD.price;
-        let currentTime = this.getCurrentTime();
-  
-        if (this.screenLayot === 'XL') {
-          this.slides[1][3].data = price.toFixed(2);
-          this.slides[1][3].timestamp = currentTime;
-        } else if (this.screenLayot === 'SM') {
-          this.slides[7][0].data = price.toFixed(2);
-          this.slides[7][0].timestamp = currentTime;
-        } else {
-          this.slides[3][1].data = price.toFixed(2);
-          this.slides[3][1].timestamp = currentTime;
-        }
-      });
+  setAtomPrice(price) {
+    let currentTime = this.getCurrentTime();
+
+    if (this.screenLayot === 'XL') {
+      this.slides[1][3].data = price.toFixed(2);
+      this.slides[1][3].timestamp = currentTime;
+    } else if (this.screenLayot === 'SM') {
+      this.slides[7][0].data = price.toFixed(2);
+      this.slides[7][0].timestamp = currentTime;
+    } else {
+      this.slides[3][1].data = price.toFixed(2);
+      this.slides[3][1].timestamp = currentTime;
+    }
   }
 
   getCurrentTime() {

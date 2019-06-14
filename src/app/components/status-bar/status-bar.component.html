@@ -1,19 +1,17 @@
 <section class="status-bar">
   <div class="row header-row">
     <h2 class="subtitle header-subtitle">
-      cosmoshub-2 
-      <!-- TODO FIX THIS! -->
-      <!-- {{(consensusState | async).blocks[0]?.header.chain_id}} -->
+      {{(appState$ | async).network}}
     </h2>
   </div>
   <div class="row">
     <div class="proposer-row">
-      <h2 *ngIf="(validatorsState | async).validatorsMap.size" 
+      <h2 *ngIf="(validatorsState$ | async).validatorsMap.size" 
           class="title proposer-title">
         <i class="ion-person"></i>&nbsp; Proposer - 
         <a href="javascript:undefined" (click)="openValidatorDialog( proposer)" style="cursor: pointer;">
-          <span *ngIf="(validatorsState | async).validatorsMap.has( proposer ); else elseBlockProposer">
-            {{ (validatorsState | async).validatorsMap.get( proposer )}}
+          <span *ngIf="(validatorsState$ | async).validatorsMap.has( proposer ); else elseBlockProposer">
+            {{ (validatorsState$ | async).validatorsMap.get( proposer )}}
           </span>
           <ng-template #elseBlockProposer>{{ proposer }}</ng-template> 
         </a>
@@ -21,7 +19,7 @@
     </div>
   </div>
   <div @fadeInAnimation class="container">
-    <span *ngIf="(consensusState | async).height !== '0'; else elseBlock">
+    <span *ngIf="(consensusState$ | async).height !== '0'; else elseBlock">
       <app-carousel></app-carousel>
     </span>
   </div>

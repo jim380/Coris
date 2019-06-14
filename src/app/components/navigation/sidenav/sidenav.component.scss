@@ -33,3 +33,7 @@ a:hover,
 a:active {
     text-decoration: none; 
 }
+
+.form-control::placeholder{
+  color: white;
+}

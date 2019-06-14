@@ -18,6 +18,8 @@ import { ConsensusState } from 'src/app/state/consensus/consensus.interface';
 import { State } from 'src/app/state';
 import { ValidatorsState } from 'src/app/state/validators/validator.interface';
 import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
+import { AppState } from 'src/app/state/app/app.interface';
+import { selectAppState } from 'src/app/state/app/app.reducers';
 
 @Component({
   selector: 'app-status-bar',
@@ -50,8 +52,9 @@ import { selectValidatorsState } from 'src/app/state/validators/validators.reduc
   ]
 })
 export class StatusBarComponent implements OnInit {
-  validatorsState: Observable<ValidatorsState>;
-  consensusState: Observable<ConsensusState>;
+  appState$: Observable<AppState>;
+  validatorsState$: Observable<ValidatorsState>;
+  consensusState$: Observable<ConsensusState>;
   proposer: string;
 
   networks = [
@@ -65,9 +68,10 @@ export class StatusBarComponent implements OnInit {
   ) { }
 
   ngOnInit() { 
-    this.validatorsState = this.appStore.select(selectValidatorsState);
-    this.consensusState = this.appStore.select(selectConsensusState);
-    this.consensusState.subscribe(state => this.proposer = state.proposer);
+    this.validatorsState$ = this.appStore.select(selectValidatorsState);
+    this.consensusState$ = this.appStore.select(selectConsensusState);
+    this.appState$ = this.appStore.select(selectAppState);
+    this.consensusState$.subscribe(state => this.proposer = state.proposer);
   }
 
   openValidatorDialog(addressHEX) {
