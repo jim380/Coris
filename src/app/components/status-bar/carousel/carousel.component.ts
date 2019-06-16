@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PricingService } from 'src/app/services/pricing.service';
-import { BlocksService } from 'src/app/services/blocks.service';
 import { Observable } from 'rxjs';
 import { HostListener } from "@angular/core";
 import { cards } from './carousel.content';
 import { DatePipe } from '@angular/common';
-import { distinctUntilChanged, skipWhile } from 'rxjs/operators';
-import { selectAppState } from 'src/app/state/app/app.reducers';
 import { Store } from '@ngrx/store';
 import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
 import { selectConsensusState, selectConsensusHeight } from 'src/app/state/consensus/consensus.reducers';
@@ -37,16 +33,10 @@ export class CarouselComponent implements OnInit {
 
   constructor(
     private appStore: Store <State>,
-    private ps:PricingService,
-    private bs:BlocksService
   ) { }
 
   ngOnInit() {
     this.getScreenSize();
-    this.bs.fetch100Blocks();
-    this.ps.setAtomPrice();
-    this.ps.setStakingPool();
-    this.ps.setInflation();
 
     this.appStore.select(selectConsensusState)
     .subscribe(state => {
@@ -63,8 +53,6 @@ export class CarouselComponent implements OnInit {
       this.setValidatorsCount(state.validators);
     });
 
-    // this.setInflation();
-    // this.setAtomPrice();
     this.appStore.select(selectAtomPrice)
     .subscribe(price => {
       this.setAtomPrice(price);
@@ -82,7 +70,9 @@ export class CarouselComponent implements OnInit {
     });
 
     this.appStore.select(selectBlocksTimeAvg)
-      .subscribe(avg => this.setBlockTime(avg));
+      .subscribe(avg => {
+        this.setBlockTime(avg);
+      });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -117,7 +107,7 @@ export class CarouselComponent implements OnInit {
     }
   }
   
-  getScreenLayout(width) {
+  private getScreenLayout(width) {
     if(width > BREAKPOINTS.XL) {
       return 'XL';
     } else if(width > BREAKPOINTS.MD){
@@ -127,7 +117,7 @@ export class CarouselComponent implements OnInit {
     }
   }
 
-  chunk(arr, chunkSize) {
+  private chunk(arr, chunkSize) {
     let R = [];
     for (let i = 0, len = arr.length; i < len; i += chunkSize) {
       R.push(arr.slice(i, i + chunkSize));
@@ -138,7 +128,7 @@ export class CarouselComponent implements OnInit {
   }
   
 
-  setLastBlock(height) {
+  public setLastBlock(height) {
     // TODO @aakatev remove debugging
     // console.log(height);
     let currentTime = this.getCurrentTime();
@@ -155,7 +145,7 @@ export class CarouselComponent implements OnInit {
     }
   }
 
-  setConsensusState(consensus) {
+  public setConsensusState(consensus) {
     // TODO @aakatev remove debugging
     // console.log(consensus);
     let currentTime = this.getCurrentTime();
@@ -183,7 +173,7 @@ export class CarouselComponent implements OnInit {
     }
   }
   
-  setValidatorsCount(data) {
+  public setValidatorsCount(data) {
     // TODO @aakatev remove debugging
     // console.log(data);
     let validators = data;
@@ -201,7 +191,7 @@ export class CarouselComponent implements OnInit {
     }
     
   }
-  setBondedTokens(pool) {
+  public setBondedTokens(pool) {
     // TODO @aakatev remove debugging
     // console.log(pool);
     let currentTime = this.getCurrentTime();
@@ -219,7 +209,7 @@ export class CarouselComponent implements OnInit {
     }
   }
 
-  setBlockTime(time) {
+  public setBlockTime(time) {
     // TODO @aakatev remove debugging
     // console.log(time);
     let blockTime = time/1000;
@@ -236,7 +226,7 @@ export class CarouselComponent implements OnInit {
     }
   }
 
-  setCommunityPool(pool) {
+  public setCommunityPool(pool) {
     // TODO @aakatev remove debugging
     // console.log(data);
     let currentTime = this.getCurrentTime();
@@ -253,7 +243,7 @@ export class CarouselComponent implements OnInit {
     }
   }
 
-  setInflation(inflation) {
+  public setInflation(inflation) {
     let currentTime = this.getCurrentTime();
     if (this.screenLayot === 'XL') {
       this.slides[1][2].data = `${(inflation*100).toFixed(2)}%`;
@@ -267,7 +257,7 @@ export class CarouselComponent implements OnInit {
     }
   }
 
-  setAtomPrice(price) {
+  public setAtomPrice(price) {
     let currentTime = this.getCurrentTime();
 
     if (this.screenLayot === 'XL') {
@@ -282,7 +272,7 @@ export class CarouselComponent implements OnInit {
     }
   }
 
-  getCurrentTime() {
+  private getCurrentTime() {
     return this.datePipe.transform( Date.now(), 'h:mm a');
   }
 

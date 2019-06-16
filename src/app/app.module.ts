@@ -39,8 +39,8 @@ import { DialogEntryComponent } from './components/popups/dialog-entry.component
 // End popup components
 
 // Chart components
-import { ChartCardsComponent } from './components/charts/chart-cards/chart-cards.component';
-import { ChartCardsGovComponent } from './components/charts/chart-cards-gov/chart-cards-gov.component';
+import { ChartCardsComponent } from './components/validators/chart-cards/chart-cards.component';
+import { ChartCardsGovComponent } from './components/governance/chart-cards-gov/chart-cards-gov.component';
 // End chart components
 
 import { reducers } from './state/index';

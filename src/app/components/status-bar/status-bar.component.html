@@ -1,25 +1,25 @@
 <section class="status-bar">
   <div class="row header-row">
     <h2 class="subtitle header-subtitle">
-      {{(appState$ | async).network}}
+      {{(network$|async)}}
     </h2>
   </div>
   <div class="row">
     <div class="proposer-row">
-      <h2 *ngIf="(validatorsState$ | async).validatorsMap.size" 
+      <h2 *ngIf="(validatorsMap$|async).size" 
           class="title proposer-title">
-        <i class="ion-person"></i>&nbsp; Proposer - 
-        <a href="javascript:undefined" (click)="openValidatorDialog( proposer)" style="cursor: pointer;">
-          <span *ngIf="(validatorsState$ | async).validatorsMap.has( proposer ); else elseBlockProposer">
-            {{ (validatorsState$ | async).validatorsMap.get( proposer )}}
+        <i class="ion-person"></i>&nbsp; proposer - 
+        <a href="javascript:undefined" (click)="openValidatorDialog( proposer$ )" style="cursor: pointer;">
+          <span *ngIf="(validatorsMap$|async).has( proposer$| async ); else elseBlockproposer">
+            {{ (validatorsMap$|async).get( proposer$| async )}}
           </span>
-          <ng-template #elseBlockProposer>{{ proposer }}</ng-template> 
+          <ng-template #elseBlockproposer>{{ proposer$ | async }}</ng-template> 
         </a>
       </h2>
     </div>
   </div>
   <div @fadeInAnimation class="container">
-    <span *ngIf="(consensusState$ | async).height !== '0'; else elseBlock">
+    <span *ngIf="(height$|async) !== '0'; else elseBlock">
       <app-carousel></app-carousel>
     </span>
   </div>

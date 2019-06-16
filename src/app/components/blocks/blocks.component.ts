@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Block } from '../../interfaces/block.interface';
-import { nodeRpc1, nodeRpc2 } from '../../../config.js';
+import { nodeRpc2 } from '../../../config.js';
 import { DatePipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -65,12 +65,9 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
     'transactions', 
     'proposer',
     'timestamp'
-    // 'details'
   ];
   
-  // dataSource: MatTableDataSource<Block>;
-
-  validatorsState: Observable<ValidatorsState>;
+  validatorsState$: Observable<ValidatorsState>;
   blocksState: Observable<BlocksState>;
   
   blocks: Block[];
@@ -86,7 +83,7 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.validatorsState = this.appStore.select(selectValidatorsState);
+    this.validatorsState$ = this.appStore.select(selectValidatorsState);
 
     this.height$ = this.appStore
       .select(selectConsensusHeight)
@@ -123,9 +120,6 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   addBlock(height) {
-    // this.http.get(`${nodeRpc1}/blocks/latest`)
-    //   .subscribe(console.log);
-
     this.http.get(`${nodeRpc2}/blockchain?minHeight=${height}&maxHeight=${height}`)
       .subscribe((data: any) => {
         // TODO remove debugging

@@ -23,8 +23,7 @@ export class ValidatorsService {
     private http: HttpClient,
     private apiService: ApiService
   ) {
-    console.log("Validators Seervice injected!");
-    this.initValidators();
+    console.log("Validators Service injected!");
   }
 
   // NEW LOGIC

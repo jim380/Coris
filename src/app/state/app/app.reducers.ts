@@ -24,4 +24,4 @@ export const initialAppState: AppState = {
 };
 
 export const selectAppState = (state) => state.appState;
-export const selectNetwork = (state) => createSelector(selectAppState, state => state.network);
+export const selectNetwork = createSelector(selectAppState, (state) => state.network);

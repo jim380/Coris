@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
-import { WsService } from './services/ws.service';
-import { ValidatorsService } from './services/validators.service';
-import { trigger, state, query, transition, animate, style, keyframes, animation, useAnimation, animateChild, group, stagger } from '@angular/animations';
+import { Component, OnInit } from '@angular/core';
+import { StartupService } from './services/startup.service';
+import {  trigger, 
+          query, 
+          transition, 
+          animate, 
+          style, 
+          useAnimation, 
+          animateChild, 
+          group, 
+          stagger } from '@angular/animations';
 import { fadeInAnimation, fade } from './animations/animation';
-import { PricingService } from './services/pricing.service';
-import { Store } from '@ngrx/store';
-import { selectConsensusState } from './state/consensus/consensus.reducers';
-import { State } from './state';
 
 @Component({
   selector: 'app-root',
@@ -38,7 +41,7 @@ import { State } from './state';
     fade
   ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   networks = [
     {id: 1, name: 'mainnet'},
@@ -46,14 +49,12 @@ export class AppComponent {
   ];
 
   constructor(
-    private ws:WsService,
-    private vs:ValidatorsService,
+    private startupService: StartupService
   ) {  }
 
-  ngOnInit() { }
-
-  ngOnDestroy() {
-    this.ws.unsubscribe();
+  ngOnInit() { 
+    this.startupService.initApp();
   }
+
 }
 

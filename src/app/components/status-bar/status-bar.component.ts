@@ -13,13 +13,11 @@ import {
 } from '@angular/animations';
 import { fadeInAnimation, fade } from '../../animations/animation';
 import { PopupService } from 'src/app/services/popup.service';
-import { selectConsensusState } from 'src/app/state/consensus/consensus.reducers';
-import { ConsensusState } from 'src/app/state/consensus/consensus.interface';
+import { selectConsensusProposer, selectConsensusHeight } from 'src/app/state/consensus/consensus.reducers';
 import { State } from 'src/app/state';
-import { ValidatorsState } from 'src/app/state/validators/validator.interface';
-import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
-import { AppState } from 'src/app/state/app/app.interface';
-import { selectAppState } from 'src/app/state/app/app.reducers';
+import { selectValidatorsMap } from 'src/app/state/validators/validators.reducers';
+import { first } from 'rxjs/operators';
+import { selectNetwork } from 'src/app/state/app/app.reducers';
 
 @Component({
   selector: 'app-status-bar',
@@ -52,10 +50,10 @@ import { selectAppState } from 'src/app/state/app/app.reducers';
   ]
 })
 export class StatusBarComponent implements OnInit {
-  appState$: Observable<AppState>;
-  validatorsState$: Observable<ValidatorsState>;
-  consensusState$: Observable<ConsensusState>;
-  proposer: string;
+  network$: Observable<string> = this.appStore.select(selectNetwork);
+  height$: Observable<string> = this.appStore.select(selectConsensusHeight);
+  proposer$: Observable<string> = this.appStore.select(selectConsensusProposer);
+  validatorsMap$: Observable<any> = this.appStore.select(selectValidatorsMap);
 
   networks = [
     {id: 1, name: 'mainnet'},
@@ -67,15 +65,10 @@ export class StatusBarComponent implements OnInit {
     private appStore: Store <State>
   ) { }
 
-  ngOnInit() { 
-    this.validatorsState$ = this.appStore.select(selectValidatorsState);
-    this.consensusState$ = this.appStore.select(selectConsensusState);
-    this.appState$ = this.appStore.select(selectAppState);
-    this.consensusState$.subscribe(state => this.proposer = state.proposer);
-  }
+  ngOnInit() { }
 
-  openValidatorDialog(addressHEX) {
-    this.popupService.openValidatorDialogAddrHEX(addressHEX);
+  openValidatorDialog(addressHEX$) {
+    addressHEX$.pipe(first()).subscribe(addressHEX => this.popupService.openValidatorDialogAddrHEX(addressHEX));
   }
 
 }

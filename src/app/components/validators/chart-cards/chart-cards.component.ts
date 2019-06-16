@@ -1,11 +1,10 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable, range } from 'rxjs';
-import { distinctUntilChanged, filter, first, skipWhile } from 'rxjs/operators';
+import { first, skipWhile } from 'rxjs/operators';
 import { 
   commissionChart,
   scatterChart,
   blockChart } from './chart-cards.config';
-import { BlocksService } from 'src/app/services/blocks.service';
 import { selectValidators } from 'src/app/state/validators/validators.reducers';
 import { Store } from '@ngrx/store';
 import { Validator } from 'src/app/state/validators/validator.interface';
@@ -47,8 +46,7 @@ export class ChartCardsComponent implements OnInit {
   blocksTimeAvgSubscription$;
 
   constructor(
-    private appStore: Store <State>,
-    private bs: BlocksService
+    private appStore: Store <State>
   ) {
     this.validators$ = this.appStore.select(selectValidators);
     this.blocksTime$ = this.appStore.select(selectBlocksTime);
@@ -114,11 +112,9 @@ export class ChartCardsComponent implements OnInit {
     // TODO remove debugging
     // console.log(validatorsArray);
     const validatorsCounter$ = range(0, 100);
-  //output: 1,2,3,4,5,6,7,8,9,10
-  const example = validatorsCounter$
+  validatorsCounter$
     .subscribe( (count) => { 
       // console.log(validatorsArray[count]);
-
       this.scatterChartData[0].data.push({ x: count+1, y: validatorsArray[count].tokens, r: 3});
       this.scatterChartData[1].data.push({ x: count+1, y: validatorsArray[count].self_bond, r: 3 });
       this.scatterChartData[2].data.push({ x: count+1, y: Number(validatorsArray[count].account.value.coins[0].amount), r: 3});
@@ -147,11 +143,6 @@ export class ChartCardsComponent implements OnInit {
       comissions.max_rate.push( Number(validator.commission.max_rate) );
       comissions.rate.push( Number(validator.commission.rate) );
     });
-    // TODO remove debugging
-    // console.log( this.comissions.rate.sort((a,b)=>a-b) );
-    // console.log( this.comissions.max_change_rate.sort((a,b)=>a-b) );
-    // console.log( this.comissions.max_rate.sort((a,b)=>a-b) );
-
     let rateMap = this.getArrayDistribution(comissions.rate);
     let changeRateMap = this.getArrayDistribution(comissions.max_change_rate);
     let maxRateMap = this.getArrayDistribution(comissions.max_rate);
@@ -170,7 +161,7 @@ export class ChartCardsComponent implements OnInit {
     this.renderCommissionGraph(commissionChartLabels, rateArray, maxRateArray, changeRateArray);
   }
 
-  getArrayDistribution(array: any) {
+  private getArrayDistribution(array: any) {
     array.sort((a,b) => a-b);
     let distributionMap = new Map();
 
@@ -187,7 +178,7 @@ export class ChartCardsComponent implements OnInit {
     return distributionMap;
   }
 
-  getLabelsArray(array: any) {
+  private getLabelsArray(array: any) {
     let labelArray = [];
 
     array.forEach( (map: any) => {
@@ -200,7 +191,7 @@ export class ChartCardsComponent implements OnInit {
     return labelArray.sort((a,b)=>a-b);
   }
 
-  fillMaps(mapArray: any, array: any) {
+  private fillMaps(mapArray: any, array: any) {
     mapArray.forEach( (map: any) => {
       array.forEach(element => {
         if( (!map.has(element)) ) {
@@ -210,7 +201,7 @@ export class ChartCardsComponent implements OnInit {
     });
   }
 
-  convertMapToArray(map: any, array: any) {
+  private convertMapToArray(map: any, array: any) {
     let convertedArray = [];
     array.forEach((element, index) => {
       convertedArray[index] = map.get(element);
@@ -219,7 +210,7 @@ export class ChartCardsComponent implements OnInit {
     return convertedArray;
   }
 
-  renderCommissionGraph(labels, rate, maxRate, rateChange) {
+  private renderCommissionGraph(labels, rate, maxRate, rateChange) {
     this.commissionChartLabels = labels.map((x) => {
       return x.toFixed(3);
     });
