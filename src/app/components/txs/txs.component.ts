@@ -10,7 +10,11 @@ import {  MatTableDataSource,
           MatSort, 
           MAT_DIALOG_DATA } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
-import { PopupService } from 'src/app/services/popup.service.js';
+import { PopupService } from 'src/app/services/popup.service';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/state/index';
+import { selectConsensusHeight } from 'src/app/state/consensus/consensus.reducers.js';
+import { skipWhile, take, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-txs',
@@ -78,24 +82,32 @@ export class TxsComponent implements OnInit {
   lastBlock = 0;
   // @aakatev TODO lookup how to query more than 30 txs at json
   blocksToScan = 30;
-  totalTxsCount = 0;
+  // totalTxsCount = 0;
   // currentPage = 1;
   // lastPage = 1;
 
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
-    private popupService: PopupService
+    private popupService: PopupService,
+    private appStore: Store<State>
   ) { }
 
   ngOnInit() {
-    this.http.get(`${nodeRpc1}/blocks/latest`).subscribe( async (data:any) => {
+    this.appStore.select(selectConsensusHeight)
+    .pipe(
+      skipWhile(height => height === '0'), 
+      take(1), 
+      map(height => height-1)
+    )
+    .subscribe( async (height) => {
+      // this.http.get(`${nodeRpc1}/blocks/latest`).subscribe( async (data:any) => {
       // @aakatev remove debugging
-      this.totalTxsCount = data.block.header.total_txs;
+      // this.totalTxsCount = data.block.header.total_txs;
       // @aakatev TODO FIX this formula only works if we
       // display  blocksToScan blocks per page  
       // this.lastPage = Math.ceil(this.totalTxsCount/this.blocksToScan);
-      this.lastBlock = data.block.header.height;
+      this.lastBlock = height;
       this.minHeight = this.lastBlock - this.blocksToScan;
 
       this.clearTxs();
