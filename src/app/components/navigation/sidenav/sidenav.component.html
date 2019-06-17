@@ -242,45 +242,42 @@
     <!--Main Layout-->
     <main>
         <body>
-            <div class="fixed-action-btn d-xl-none" style="top: 100px; right: 24px;">
-                <a  class="btn-floating pink waves-light" 
-                mdbWavesEffect
-                data-target="#basicExample"
-                (click)="frame.toggle()"
-                placement="left"
-                mdbPopoverHeader="External link">
-                <i class="fas fa-search"></i>
+          <div class="fixed-action-btn d-xl-none" style="top: 100px; right: 24px;">
+            <a  class="btn-floating pink waves-light" 
+              mdbWavesEffect
+              data-target="#basicExample"
+              (click)="frame.toggle()"
+              placement="left"
+              mdbPopoverHeader="External link">
+              <i class="fas fa-search"></i>
             </a>
-                <div mdbModal #frame="mdbModal" class="modal fade bottom modal-scrolling" id="frameModalTop" tabindex="-1"
-                role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
-                <div style="padding: 0;" class="modal-dialog modal-frame modal-bottom modal-notify modal-info" role="document">
-                  <!--Content-->
-                  <div style="margin: 0;" class="modal-content">
-                    <!--Body-->
-                    <div style="background-color: #9095aa;" class="modal-body">
-                      <div class="row d-flex justify-content-center align-items-center">
-                            <form class="form-inline waves-light waves-light ml-auto clearfix" mdbWavesEffect>
-                              <div  class="md-form my-0">
-                                <input style="color: white; width: 80vw;" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="Enter moniker / address / height / hash" aria-label="Search">
-                                <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn color="white" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
-                              </div>
-                            </form>
-                      
-                      </div>
+            
+          </div>
+          <div mdbModal #frame="mdbModal" class="modal fade bottom modal-scrolling" id="frameModalTop" tabindex="-1"
+              role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: false}">
+              <div style="padding: 0;" class="modal-dialog modal-frame modal-bottom modal-notify modal-info" role="document">
+                <div style="margin: 0;" class="modal-content">
+                  <div style="background-color: #9095aa;" class="modal-body">
+                    <div class="row d-flex justify-content-center align-items-center">
+                      <form class="form-inline waves-light waves-light ml-auto clearfix" mdbWavesEffect>
+                        <div  class="md-form my-0">
+                          <input style="color: white; width: 80vw;" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="Enter moniker / address / height / hash" aria-label="Search">
+                          <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn color="white" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
+                        </div>
+                      </form>
                     </div>
                   </div>
-                  <!--/.Content-->
                 </div>
               </div>
             </div>
-            <!-- <div class="row search-box">
-              <form style="width: 90vw;" class="form-inline waves-light" mdbWavesEffect>
-                <div  class="md-form my-0">
-                  <input style="width: 70vw" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="Enter tx hash / block height / address" aria-label="Search">
-                  <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn color="pink" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
-                </div>
-              </form>
-            </div> -->
+          <!-- <div class="row search-box">
+            <form style="width: 90vw;" class="form-inline waves-light" mdbWavesEffect>
+              <div  class="md-form my-0">
+                <input style="width: 70vw" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="Enter tx hash / block height / address" aria-label="Search">
+                <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn color="pink" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
+              </div>
+            </form>
+          </div> -->
           <app-status-bar></app-status-bar>
           <!-- <app-validator></app-validator> -->
           <!-- <app-carousel></app-carousel> -->

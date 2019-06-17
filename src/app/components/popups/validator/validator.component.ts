@@ -1,11 +1,10 @@
-import { Component, OnInit, Inject, ViewChildren, QueryList, forwardRef } from '@angular/core';
-import { Observable, from } from 'rxjs';
+import { Component, OnInit, Inject, ViewChildren, QueryList } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialogRef } from '@angular/material';
 
 import { ToastrService } from 'ngx-toastr';
 import { TxsService } from 'src/app/services/txs.service';
-import { PopupService } from 'src/app/services/popup.service';
 import { State } from 'src/app/state';
 import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
 import { ValidatorsState } from 'src/app/state/validators/validator.interface';
@@ -45,7 +44,6 @@ export class ValidatorComponent implements OnInit {
     private appStore: Store <State>,
     private ts: TxsService, 
     private toastr: ToastrService,
-    @Inject(forwardRef(() => PopupService)) public popupService: PopupService,
     public dialogRef: MatDialogRef<ValidatorComponent>,
   ) { 
     this.validator = data.validator;
@@ -94,12 +92,12 @@ export class ValidatorComponent implements OnInit {
 
   public openDelegatorDialog(address) {
     this.dialogRef.close();
-    this.popupService.openAccountDialogAddr(address);
+    this.data.service.openAccountDialogAddr(address);
   }
 
   public openTxDialog(hash) {
     this.dialogRef.close();
-    this.popupService.openTxDialogHash(hash);
+    this.data.service.openTxDialogHash(hash);
   }
 
 }

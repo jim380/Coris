@@ -46,7 +46,12 @@ export class PopupService {
   }
 
   openValidatorDialog(validator) {
-    this.dialog.open( ValidatorComponent, new PopupConfig({ validator: validator }).config );
+    this.dialog.open( ValidatorComponent, 
+                      new PopupConfig({ 
+                        validator: validator, 
+                        service: this 
+                      }).config );
+
   }
 
   openValidatorDialogAddr(validatorAddress) {
@@ -59,7 +64,11 @@ export class PopupService {
                               validator.operator_address === validatorAddress
                             );
       if( validatorQuery.length === 1) {
-        this.dialog.open( ValidatorComponent, new PopupConfig({ validator: validatorQuery[0] }).config);
+        this.dialog.open( ValidatorComponent, 
+                          new PopupConfig({ 
+                            validator: validatorQuery[0],
+                            service: this,
+                          }).config);
       } else {
         console.log("Validator was not found! Operator address: ", validatorAddress)
       }
@@ -76,7 +85,11 @@ export class PopupService {
                               validator.description.moniker === state.validatorsMap.get(validatorAddressHEX)
                             );
       if( validatorQuery.length === 1) {
-        this.dialog.open( ValidatorComponent, new PopupConfig({ validator: validatorQuery[0] }).config);
+        this.dialog.open( ValidatorComponent, 
+          new PopupConfig({ 
+            validator: validatorQuery[0],
+            service: this,
+          }).config);
       } else {
         console.log("Validator was not found! HEX address: ", validatorAddressHEX)
       }
@@ -101,7 +114,11 @@ export class PopupService {
                               ) 
                             );
       if( validatorQuery.length === 1) {
-        this.dialog.open( ValidatorComponent, new PopupConfig({ validator: validatorQuery[0] }).config);
+        this.dialog.open( ValidatorComponent, 
+          new PopupConfig({ 
+            validator: validatorQuery[0],
+            service: this,
+          }).config);
       } else {
         console.log("Validator was not found! Moniker: ", moniker)
       }
@@ -109,7 +126,11 @@ export class PopupService {
   }
 
   openAccountDialogAddr(delegatorAddress) {
-    this.dialog.open( AccountDetailComponent,  new PopupConfig({ address: delegatorAddress }).config);
+    this.dialog.open( AccountDetailComponent,  
+                      new PopupConfig({ 
+                        address: delegatorAddress, 
+                        service: this
+                      }).config);
   }
 
   openTxDialogHash(txHash) {
@@ -157,12 +178,20 @@ export class PopupService {
     },
     err => { },
     () => {
-      this.dialog.open( TxComponent,  new PopupConfig({ tx: tx }).config);
+      this.dialog.open( TxComponent,  
+                        new PopupConfig({ 
+                          tx: tx, 
+                          service: this 
+                        }).config);
     });
   }
 
   openTxDialog(tx) {
-    this.dialog.open(TxComponent, new PopupConfig({ tx: tx }).config);
+    this.dialog.open( TxComponent, 
+                      new PopupConfig({ 
+                        tx: tx, 
+                        service: this 
+                      }).config);
   }
 
   openBlockDialogHeight(blockHeight) {
@@ -181,15 +210,22 @@ export class PopupService {
     (error) => {
     },
     () => {
-      this.dialog.open( BlockComponent,  new PopupConfig({ block: block }).config);
+      this.dialog.open( BlockComponent,  
+                        new PopupConfig({ 
+                          block: block, 
+                          service: this 
+                        }).config);
     });
   }
 
   openBlockDialog(block) {
-    this.dialog.open( BlockComponent,  new PopupConfig({ block: block }).config);
+    this.dialog.open( BlockComponent, 
+                      new PopupConfig({ 
+                        block: block, 
+                        service: this 
+                      }).config);
   }
 
- 
   openGovDetailDialog(proposal) {
     forkJoin(
       this.httpClient.get(`${nodeRpc1}/gov/proposals/${proposal.proposal_id}/proposer`).pipe(catchError(error => of(null))),
@@ -199,7 +235,11 @@ export class PopupService {
       proposal.proposer = proposer;
       proposal.currentDeposit = deposits === null ? [] : deposits;
       proposal.currentVotes = votes === null ? [] : votes;
-      this.dialog.open( GovDetailComponent, new PopupConfig({ proposal: proposal }).config);
+      this.dialog.open( GovDetailComponent, 
+                        new PopupConfig({ 
+                          proposal: proposal, 
+                          service: this 
+                        }).config);
     })
   }
 

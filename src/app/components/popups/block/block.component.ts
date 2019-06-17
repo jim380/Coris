@@ -1,10 +1,9 @@
-import { Component, OnInit, Inject, ViewChildren, QueryList, AfterViewInit, forwardRef } from '@angular/core';
+import { Component, OnInit, Inject, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, range } from 'rxjs';
 import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialogRef } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { TxsService } from 'src/app/services/txs.service';
-import { PopupService } from 'src/app/services/popup.service';
 import { ValidatorsState } from 'src/app/state/validators/validator.interface';
 import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
 
@@ -31,7 +30,6 @@ export class BlockComponent implements OnInit, AfterViewInit {
     private appStore: Store <ValidatorsState>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private ts: TxsService,
-    @Inject(forwardRef(() => PopupService)) public popupService: PopupService,
     private toastr: ToastrService,
   ) { 
     // TODO remove debugging
@@ -143,13 +141,13 @@ export class BlockComponent implements OnInit, AfterViewInit {
 
   openTxDialog(tx) {
     this.dialogRef.close();
-    this.popupService.openTxDialog(tx);
+    this.data.service.openTxDialog(tx);
   }
 
 
   openValidatorDialog(addressHEX) {
     this.dialogRef.close();
-    this.popupService.openValidatorDialogAddrHEX(addressHEX);
+    this.data.service.openValidatorDialogAddrHEX(addressHEX);
   }
 
   onCopySucceess() {

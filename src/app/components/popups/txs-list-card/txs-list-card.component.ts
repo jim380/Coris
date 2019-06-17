@@ -3,7 +3,6 @@ import { MAT_DIALOG_DATA, MatPaginator, MatTableDataSource, MatDialogRef } from 
 import { TxsService } from 'src/app/services/txs.service';
 import { ToastrService } from 'ngx-toastr';
 import { PopupService } from 'src/app/services/popup.service';
-import { TxComponent } from '../tx/tx.component';
 
 @Component({
   selector: 'app-txs-list-card',

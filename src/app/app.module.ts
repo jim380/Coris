@@ -52,12 +52,6 @@ import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { BtnCloseComponent } from './components/popups/btn-close/btn-close.component';
-// import { StatusCard1Component } from './components/test/status-card1/status-card1.component';
-// import { StatusCard2Component } from './components/test/status-card2/status-card2.component';
-// import { DashboardComponent } from './components/dashboard/dashboard.component';
-// import { NewTxComponent } from './components/new-tx/new-tx.component';
-// import { SearchService } from './services/search.service';
-// import { TestComponent } from './components/test/test.component';
 
 declare var Hammer: any;
 
@@ -107,11 +101,6 @@ export class MyHammerConfig extends HammerGestureConfig {
     AccountDetailComponent,
     BtnCloseComponent,
     DialogEntryComponent
-    // DashboardComponent,
-    // NewTxComponent,
-    // TestComponent,
-    // StatusCard1Component,
-    // StatusCard2Component,
   ],
   entryComponents: [
     GovDetailComponent,
@@ -149,7 +138,6 @@ export class MyHammerConfig extends HammerGestureConfig {
 
   ],
   providers: [
-    // SearchService,
     MDBSpinningPreloader,
     { 
       provide: HAMMER_GESTURE_CONFIG,

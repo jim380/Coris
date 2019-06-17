@@ -1,10 +1,9 @@
-import { Component, OnInit, Inject, forwardRef } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { BlockComponent } from '../block/block.component';
-import { PopupService } from 'src/app/services/popup.service';
 import { State } from 'src/app/state';
 import { ValidatorsState } from 'src/app/state/validators/validator.interface';
 import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
@@ -27,7 +26,6 @@ export class TxComponent implements OnInit {
     private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private appStore: Store <State>,
-    @Inject(forwardRef(() => PopupService)) public popupService: PopupService,
   ) {  
     // TODO remove debugging
     console.log(data.tx);
@@ -46,17 +44,17 @@ export class TxComponent implements OnInit {
 
   openAccountDialog(dlelegatorAddress) {
     this.dialogRef.close();
-    this.popupService.openAccountDialogAddr(dlelegatorAddress);
+    this.data.service.openAccountDialogAddr(dlelegatorAddress);
   }
 
   openValidatorDetailDialog(operatorAddress) {
     this.dialogRef.close();
-    this.popupService.openValidatorDialogAddr(operatorAddress);
+    this.data.service.openValidatorDialogAddr(operatorAddress);
   }
 
   openBlockDialog(blockHeight) {
     this.dialogRef.close();
-    this.popupService.openBlockDialogHeight(blockHeight);
+    this.data.service.openBlockDialogHeight(blockHeight);
   }
 
 }

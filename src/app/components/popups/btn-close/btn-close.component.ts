@@ -13,9 +13,7 @@ export class BtnCloseComponent {
 
   constructor(
     private toastr: ToastrService,
-  ){
-
-  }
+  ){ }
 
   onCloseClick() {
     this.dialogRef.close();
