@@ -1,0 +1,4 @@
+<span *ngIf="(validatorsMap$ | async).size ? (validatorsMap$ | async).has(validator) : false; else elseBlockProposer">
+  {{ (validatorsMap$ | async).get(validator) }}
+</span>
+<ng-template #elseBlockProposer>{{ validator }}</ng-template>

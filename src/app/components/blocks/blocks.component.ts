@@ -12,8 +12,6 @@ import { PopupService } from 'src/app/services/popup.service';
 import { selectConsensusHeight } from 'src/app/state/consensus/consensus.reducers';
 import { BlocksState } from 'src/app/state/blocks/blocks.interface';
 import { State } from 'src/app/state';
-import { ValidatorsState } from 'src/app/state/validators/validator.interface';
-import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
 
 @Component({
   selector: 'app-blocks',
@@ -66,8 +64,6 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
     'proposer',
     'timestamp'
   ];
-  
-  validatorsState$: Observable<ValidatorsState>;
   blocksState: Observable<BlocksState>;
   
   blocks: Block[];
@@ -83,8 +79,6 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.validatorsState$ = this.appStore.select(selectValidatorsState);
-
     this.height$ = this.appStore
       .select(selectConsensusHeight)
       .pipe( 

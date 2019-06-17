@@ -1,19 +1,16 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
-import { Store } from '@ngrx/store';
 import { nodeRpc1, nodeRpc2 } from '../../../config.js'
 import { Tx } from '../../interfaces/tx.interface';
-import { MatTableDataSource, MatPaginator, MatTable, MatSort, MAT_DIALOG_DATA } from '@angular/material';
-import { Observable } from 'rxjs';
+import {  MatTableDataSource, 
+          MatPaginator, 
+          MatTable, 
+          MatSort, 
+          MAT_DIALOG_DATA } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { PopupService } from 'src/app/services/popup.service.js';
-import { State } from 'src/app/state';
-import { ValidatorsState } from 'src/app/state/validators/validator.interface.js';
-import { selectValidatorsState } from 'src/app/state/validators/validators.reducers.js';
-
 
 @Component({
   selector: 'app-txs',
@@ -84,18 +81,14 @@ export class TxsComponent implements OnInit {
   totalTxsCount = 0;
   // currentPage = 1;
   // lastPage = 1;
-  validatorsState: Observable<ValidatorsState>;
 
   constructor(
     private toastr: ToastrService,
-    private appStore: Store <State>,
     private http: HttpClient,
     private popupService: PopupService
   ) { }
 
   ngOnInit() {
-    this.validatorsState = this.appStore.select(selectValidatorsState);
-
     this.http.get(`${nodeRpc1}/blocks/latest`).subscribe( async (data:any) => {
       // @aakatev remove debugging
       this.totalTxsCount = data.block.header.total_txs;

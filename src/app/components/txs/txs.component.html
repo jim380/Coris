@@ -78,12 +78,7 @@
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgSend'">
                         <a (click)="openAccountDialog( tx.msg[i].value.from_address )"> 
-                          <span *ngIf="(validatorsState | async).validatorsMap.size 
-                                        ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.from_address ) 
-                                        : false; else elseFromSend">
-                            {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.from_address )}}
-                          </span>
-                          <ng-template #elseFromSend>{{ tx.msg[i].value.from_address }}</ng-template>
+                          <app-validator-span [validator]="tx.msg[i].value.from_address"></app-validator-span>
                         </a>
                         <br>
                         <mdb-badge default="true">sent</mdb-badge>&nbsp;
@@ -93,24 +88,15 @@
                         to 
                         <br>
                         <a (click)="openAccountDialog( tx.msg[i].value.to_address )"> 
-                          <span *ngIf="(validatorsState | async).validatorsMap.size 
-                                        ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.to_address ) 
-                                        : false; else elseToSend">
-                            {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.to_address )}}
-                          </span>
-                          <ng-template #elseToSend>{{ tx.msg[i].value.to_address }}</ng-template>
+                          <app-validator-span [validator]="tx.msg[i].value.to_address"></app-validator-span>
                         </a>                          
                       </span>
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgDelegate' 
                             || tx.msg[i].type === 'cosmos-sdk/MsgUndelegate'">
                         <a (click)="openAccountDialog( tx.msg[i].value.delegator_address )"> 
-                          <span *ngIf="(validatorsState | async).validatorsMap.size 
-                                        ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.delegator_address ) 
-                                        : false; else elseDelegatorDelegate">
-                          <mdb-badge color="cyan">{{ i+1 }}</mdb-badge> {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.delegator_address )}}
-                          </span>
-                          <ng-template #elseDelegatorDelegate><mdb-badge color="cyan">{{ i+1 }}</mdb-badge> {{ tx.msg[i].value.delegator_address }}</ng-template>
+                          <mdb-badge color="cyan">{{ i+1 }}</mdb-badge> 
+                          <app-validator-span [validator]="tx.msg[i].value.delegator_address"></app-validator-span>
                         </a>                          
                         <br>
                         <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgDelegate'; else elseDelegateBlock">
@@ -129,24 +115,14 @@
                         </ng-template>
                         <br>
                         <a (click)="openValidatorDialog( tx.msg[i].value.validator_address )"> 
-                          <span *ngIf="(validatorsState | async).validatorsMap.size 
-                                        ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.validator_address ) 
-                                        : false; else elseValidatorDelegate">
-                            {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.validator_address )}}
-                          </span>
-                          <ng-template #elseValidatorDelegate>{{ tx.msg[i].value.validator_address }}</ng-template>
+                          <app-validator-span [validator]="tx.msg[i].value.validator_address"></app-validator-span>
                         </a>                                              
                       </span><br>
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgMultiSend'">
                         <span *ngFor="let input of tx.msg[i].value.inputs">
                           <a (click)="openAccountDialog( input.address )"> 
-                            <span *ngIf="(validatorsState | async).validatorsMap.size 
-                                          ? (validatorsState | async).validatorsMap.has( input.address ) 
-                                          : false; else elseInputMulti">
-                              {{ (validatorsState | async).validatorsMap.get( input.address )}}
-                            </span>
-                            <ng-template #elseInputMulti>{{ input.address }}</ng-template>
+                            <app-validator-span [validator]="input.address"></app-validator-span>
                           </a>                          
                           <br>
                           <mdb-badge default="true">sent</mdb-badge>&nbsp;
@@ -156,46 +132,29 @@
                         <br>
                         <span *ngFor="let output of tx.msg[i].value.outputs">
                           <a (click)="openAccountDialog( output.address )"> 
-                            <span *ngIf="(validatorsState | async).validatorsMap.size 
-                                          ? (validatorsState | async).validatorsMap.has( output.address ) 
-                                          : false; else elseOutputMulti">
-                              {{ (validatorsState | async).validatorsMap.get( output.address )}}
-                            </span>
-                            <ng-template #elseOutputMulti>{{ output.address }}</ng-template>
+                            <app-validator-span [validator]="output.address"></app-validator-span>
                           </a>
                         </span>                      
                       </span>
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgWithdrawDelegationReward'">
                         <a (click)="openAccountDialog( tx.msg[i].value.delegator_address )"> 
-                          <span *ngIf="(validatorsState | async).validatorsMap.size 
-                                        ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.delegator_address ) 
-                                        : false; else elseDelegatorWithdraw">
-                          <mdb-badge color="cyan">{{ i+1 }}</mdb-badge> {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.delegator_address ) }}
-                          </span>
-                          <ng-template #elseDelegatorWithdraw><mdb-badge color="cyan">{{ i+1 }}</mdb-badge> {{ tx.msg[i].value.delegator_address }}</ng-template>
-                        </a><br>
+                          <mdb-badge color="cyan">{{ i+1 }}</mdb-badge>
+                          <app-validator-span [validator]="tx.msg[i].value.delegator_address"></app-validator-span> 
+                        </a>
+                        <br>
                         <mdb-badge default="true">withdrew rewards</mdb-badge>&nbsp;
                         from 
                         <br>
                         <a (click)="openValidatorDialog( tx.msg[i].value.validator_address )"> 
-                          <span *ngIf="(validatorsState | async).validatorsMap.size 
-                                        ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.validator_address ) 
-                                        : false; else elseValidatorWithdraw">
-                            {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.validator_address )}}
-                          </span>
-                          <ng-template #elseValidatorWithdraw>{{ tx.msg[i].value.validator_address }}</ng-template>
-                        </a><br>                          
+                          <app-validator-span [validator]="tx.msg[i].value.validator_address"></app-validator-span>
+                        </a>
+                        <br>                          
                       </span><br>
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgBeginRedelegate'">
                         <a (click)="openAccountDialog( tx.msg[i].value.delegator_address )"> 
-                          <span *ngIf="(validatorsState | async).validatorsMap.size 
-                                        ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.delegator_address ) 
-                                        : false; else elseDelegatorRedelegate">
-                            {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.delegator_address )}}
-                          </span>
-                          <ng-template #elseDelegatorRedelegate>{{ tx.msg[i].value.delegator_address }}</ng-template>
+                          <app-validator-span [validator]="tx.msg[i].value.delegator_address"></app-validator-span>
                         </a>
                         &nbsp;<mdb-badge default="true">redelegated</mdb-badge>&nbsp;
                         <span *ngIf="tx.msg[i].value.amount">
@@ -204,39 +163,19 @@
                         from 
                         <br>
                         <a (click)="openValidatorDialog( tx.msg[i].value.validator_src_address )"> 
-                          <span *ngIf="(validatorsState | async).validatorsMap.size 
-                                        ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.validator_src_address ) 
-                                        : false; else elseSrcValidatorRedelegate">
-                            {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.validator_src_address )}}
-                          </span>
-                          <ng-template #elseSrcValidatorRedelegate>
-                            {{ tx.msg[i].value.validator_src_address }}
-                            <br>
-                          </ng-template>
+                          <app-validator-span [validator]="tx.msg[i].value.validator_src_address"></app-validator-span>
+                          <br>
                         </a>
                         to 
                         <a (click)="openValidatorDialog( tx.msg[i].value.validator_dst_address )"> 
-                          <span *ngIf="(validatorsState | async).validatorsMap.size 
-                                        ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.validator_dst_address ) 
-                                        : false; else elseDstValidatorRedelegate">
-                            {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.validator_dst_address )}}
-                          </span>
-                          <ng-template #elseDstValidatorRedelegate>
-                            <br>
-                            {{ tx.msg[i].value.validator_dst_address }}
-                          </ng-template>
+                          <app-validator-span [validator]="tx.msg[i].value.validator_dst_address"></app-validator-span>
                         </a>    
                         <br>                         
                       </span>
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgWithdrawValidatorCommission'">
                         <a (click)="openValidatorDialog( tx.msg[i].value.validator_address )"> 
-                          <span *ngIf="(validatorsState | async).validatorsMap.size 
-                                        ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.validator_address ) 
-                                        : false; else elseValidatorWithdrawCommission">
-                            {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.validator_address )}}
-                          </span>
-                          <ng-template #elseValidatorWithdrawCommission>{{ tx.msg[i].value.validator_address }}</ng-template>
+                          <app-validator-span [validator]="tx.msg[i].value.validator_address"></app-validator-span>
                         </a>
                         <br>
                         <mdb-badge default="true">withdrew</mdb-badge>&nbsp;
@@ -246,12 +185,7 @@
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgCreateValidator'">
                         <a (click)="openAccountDialog( tx.msg[i].value.delegator_address )"> 
-                          <span *ngIf="(validatorsState | async).validatorsMap.size 
-                                        ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.delegator_address ) 
-                                        : false; else elseDelegatorCreate">
-                            {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.delegator_address )}}
-                          </span>
-                          <ng-template #elseDelegatorCreate>{{ tx.msg[i].value.delegator_address }}</ng-template>
+                          <app-validator-span [validator]="tx.msg[i].value.delegator_address"></app-validator-span>
                         </a>
                         <br> 
                         <mdb-badge default="true">created validator</mdb-badge>&nbsp;
@@ -261,12 +195,7 @@
 
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgEditValidator'">
                         <a (click)="openAccountDialog( tx.msg[i].value.delegator_address )"> 
-                          <span *ngIf="(validatorsState | async).validatorsMap.size 
-                                        ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.delegator_address ) 
-                                        : false; else elseValidatorEdit">
-                            {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.address )}}
-                          </span>
-                          <ng-template #elseValidatorEdit>{{ tx.msg[i].value.address }}</ng-template>
+                          <app-validator-span [validator]="tx.msg[i].value.delegator_address"></app-validator-span>
                         </a>
                         <br> 
                         <mdb-badge default="true">validator updated</mdb-badge>&nbsp;                        
@@ -274,12 +203,7 @@
                       
                       <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgVote'">
                         <a (click)="openAccountDialog( tx.msg[i].value.voter )"> 
-                          <span *ngIf="(validatorsState | async).validatorsMap.size 
-                                        ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.voter ) 
-                                        : false; else elseVote">
-                            {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.voter )}}
-                          </span>
-                          <ng-template #elseVote>{{ tx.msg[i].value.voter }}</ng-template>
+                          <app-validator-span [validator]="tx.msg[i].value.voter"></app-validator-span>
                         </a>
                         <br> 
                         <mdb-badge default="true">voted</mdb-badge>&nbsp;
