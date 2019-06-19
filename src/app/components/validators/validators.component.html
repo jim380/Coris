@@ -37,12 +37,14 @@
         <th mat-sort-header="moniker" mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-at"></i>&nbsp;Name</th>
         <td mat-cell *matCellDef="let validator"> 
           <span>
-            <div (click)="openValidatorDialog(validator)" class="chip validator-avatar is-128x128">
-                <img  *ngIf="!validator.picture; else elseBlock" 
-                      src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
-                      alt="avatar"> 
-                {{validator.description.moniker | slice:0:12 }}
-              </div>
+            <mat-chip-list>
+              <mat-chip (click)="openValidatorDialog(validator)" class="chip validator-avatar is-128x128" color = "primary" selected>
+                  <img  *ngIf="!validator.picture; else elseBlock" 
+                        src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
+                        alt="avatar"> 
+                  {{validator.description.moniker | slice:0:12 }}
+              </mat-chip>
+            </mat-chip-list>
           </span>
         </td>
       </ng-container>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { StartupService } from './services/startup.service';
 import {  trigger, 
           query, 
@@ -10,6 +10,9 @@ import {  trigger,
           group, 
           stagger } from '@angular/animations';
 import { fadeInAnimation, fade } from './animations/animation';
+import { selectActiveTheme } from './state/app/app.reducers';
+import { Store } from '@ngrx/store';
+import { State } from './state';
 
 @Component({
   selector: 'app-root',
@@ -42,6 +45,8 @@ import { fadeInAnimation, fade } from './animations/animation';
   ]
 })
 export class AppComponent implements OnInit {
+  @HostBinding('class') componentCssClass;
+  theme$ = this.appStore.select(selectActiveTheme);
 
   networks = [
     {id: 1, name: 'mainnet'},
@@ -49,11 +54,18 @@ export class AppComponent implements OnInit {
   ];
 
   constructor(
-    private startupService: StartupService
+    private startupService: StartupService,
+    private appStore: Store<State>
   ) {  }
 
   ngOnInit() { 
     this.startupService.initApp();
+
+    this.theme$.subscribe((theme: string) => {
+      console.log(theme);
+      // this.overlayContainer.getContainerElement().className = `cdk-overlay-container ${theme}`;
+      this.componentCssClass = theme;
+    });
   }
 
 }

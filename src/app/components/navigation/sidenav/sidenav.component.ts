@@ -5,6 +5,10 @@ import { ValidatorComponent } from '../../popups/validator/validator.component';
 import { TxComponent } from '../../popups/tx/tx.component';
 import { BlockComponent } from '../../popups/block/block.component';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/state';
+import { ToggleTheme } from 'src/app/state/app/app.actions';
+import { selectActiveTheme } from 'src/app/state/app/app.reducers';
 
 @Component({
   selector: 'app-sidenav',
@@ -14,10 +18,12 @@ import { Router } from '@angular/router';
 export class SidenavComponent implements OnInit {
   activeRoute: string = "Pages";
   @ViewChild('sidenavRef') sidenav;
-
+  theme$ = this.appStore.select(selectActiveTheme);
+  
   constructor(
     private popupService: PopupService,
-    private router: Router
+    private router: Router,
+    private appStore: Store<State>
   ) { }
 
   ngOnInit() {
@@ -35,6 +41,10 @@ export class SidenavComponent implements OnInit {
     } else {
       this.popupService.openValidatorDialogMoniker(query);
     }
+  }
+
+  onToggleTheme() {
+    this.appStore.dispatch(new ToggleTheme());
   }
 
 

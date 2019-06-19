@@ -1,4 +1,5 @@
 <body class="indigo-skin">
+<!-- <body class="grey-skin"> -->
     <!--Double navigation-->
   <header>
       <!-- Sidebar navigation -->
@@ -120,6 +121,10 @@
                     <i class="fa fa-university"></i> Governance
                   </mdb-accordion-item-head>
                   <mdb-accordion-item-body></mdb-accordion-item-body>
+              </mdb-accordion-item>
+
+              <mdb-accordion-item class="no-collase">
+                <mat-slide-toggle (change)="onToggleTheme()" class="app-toggle">Night Mode</mat-slide-toggle>
               </mdb-accordion-item>
   
               </mdb-accordion>
