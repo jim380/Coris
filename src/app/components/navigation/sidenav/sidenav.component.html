@@ -1,4 +1,4 @@
-<body class="indigo-skin">
+<body [className]="(theme$|async) === 'dark-theme' ? 'grey-skin' : 'indigo-skin'">
 <!-- <body class="grey-skin"> -->
     <!--Double navigation-->
   <header>
