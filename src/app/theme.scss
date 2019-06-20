@@ -44,6 +44,15 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
     color: #3F51B5;
   }
   
+  mdb-card-title {
+    color: white;
+  }
+  
+  mdb-card-header,
+  .validator-mb-card {
+    background-color: #3F51B5;
+  }
+  
   .title {
     font-weight: 500;
     color: black;
@@ -66,9 +75,28 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
     text-decoration: underline; 
   }
 
+  .btn-outline-custom {
+    border: 2px solid #ec407a !important;
+    background-color: transparent !important;
+    color: #ec407a !important;
+  }
+
   .fail {
     color: #F44336;
   }
+
+  .list-group-item {
+    color: black;
+  }
+
+  .form-control::placeholder{
+    color: white;
+  }
+  
+  .form-control-mobile::placeholder{
+    color: #FF4081;
+    font-size: 65%;
+  }  
     
 }
 
@@ -90,12 +118,29 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
     background-color: #353b50;
   }  
 
-  .mat-row:nth-child(even){
-    background-color: #757575;
+  // .mat-row:nth-child(even){
+  //   background-color: #757575;
+  // }
+
+  // .mat-row:nth-child(odd){
+  //   background-color: #424242;
+  // }
+
+  .mat-card {
+    background-color: inherit;
+  }  
+
+  mdb-card-title {
+    color: #ff4081;
   }
 
-  .mat-row:nth-child(odd){
-    background-color: #424242;
+  .mat-table {
+    background: #ffffff;
+  }
+  
+  mdb-card-header,
+  .validator-mb-card {
+    background-color: #353b50;
   }
 
   .mat-cell {
@@ -115,8 +160,23 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
     background-color: #353b50;
   }
 
+  .form-control-mobile::placeholder{
+    color: #40c6c6;
+    font-size: 65%;
+  }  
+  
+  .btn-outline-custom {
+    border: 2px solid #40c6c6 !important;
+    background-color: transparent !important;
+    color: #40c6c6 !important;
+  }
+
   .cascading-admin-card .admin-up mdb-icon {
     background-color: #40c6c6;
+  }
+
+  .list-group-item {
+    background-color: inherit;
   }
   
   a:link,
@@ -135,6 +195,14 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   .fail {
     color: #FF5722;/*#00796b;*/
   }    
+  .ticker {
+    font-size: 80%;
+    color: #40c6c6;
+  }
+  
+  .mat-paginator {
+    background-color: inherit;
+  }
 }
 
 .row {

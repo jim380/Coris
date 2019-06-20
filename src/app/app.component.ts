@@ -13,6 +13,7 @@ import { fadeInAnimation, fade } from './animations/animation';
 import { selectActiveTheme } from './state/app/app.reducers';
 import { Store } from '@ngrx/store';
 import { State } from './state';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-root',
@@ -55,7 +56,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private startupService: StartupService,
-    private appStore: Store<State>
+    private appStore: Store<State>,
+    public overlayContainer: OverlayContainer,
   ) {  }
 
   ngOnInit() { 
@@ -63,7 +65,7 @@ export class AppComponent implements OnInit {
 
     this.theme$.subscribe((theme: string) => {
       console.log(theme);
-      // this.overlayContainer.getContainerElement().className = `cdk-overlay-container ${theme}`;
+      this.overlayContainer.getContainerElement().className = `cdk-overlay-container ${theme}`;
       this.componentCssClass = theme;
     });
   }

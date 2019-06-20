@@ -82,25 +82,25 @@ h1 {
   font-size: 120%; 
 }
 
-@media (max-width: 575px) {
+@media (min-width: 575px) {
   .cascading-admin-card .admin-up .data h4 {
-    font-size: 80%; 
+    font-size: 100%; 
   }
 }
 
-@media (max-width: 768px) { 
+@media (min-width: 768px) { 
   .cascading-admin-card .admin-up .data h4 {
     font-size: 90%; 
   }
 }
 
-@media (max-width: 992px) { 
+@media (min-width: 992px) { 
   .cascading-admin-card .admin-up .data h4 {
     font-size: 110%; 
   }
 }
 
-@media (max-width: 1400px) { 
+@media (min-width: 1400px) { 
   .cascading-admin-card .admin-up .data h4 {
     font-size: 120%; 
   }
