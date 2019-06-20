@@ -20,11 +20,6 @@ section {
   padding: 0px;
 }
 
-.row {
-  max-width: 95%;
-  margin: 0 auto;
-}
-
 .box {
   padding: 1%;
 }
@@ -87,21 +82,7 @@ p {
   line-height: 145%;
 }
 
-/*-------------------------------------------------*/
-/* Links */
-/*-------------------------------------------------*/
-a:link,
-a:visited {
-    color: black;
-    text-decoration: none;
-    transition: color 0.2s;
-}
 
-a:hover,
-a:active {
-    color: #FF4081;
-    text-decoration: underline; 
-}
 
 /*-------------------------------------------------*/
 /* Header */
@@ -135,16 +116,10 @@ article {
   background: #111923;
 }
 
-.title {
-  font-weight: 500;
-  color: black;
-}
-
 .subtitle {
   font-weight: 400;
   color:#FF4081;
 }
-
 
 .header-title,
 .header-subtitle {
@@ -170,7 +145,6 @@ article {
 }
 
 .events-card .card-table {
-  /*max-height: 500px;*/
   overflow-y: scroll;
 }
 
@@ -190,7 +164,6 @@ footer {
 .footer-nav {
   list-style: none;
   float: left;
-  /* margin-top: 20px; */
 }
 
 

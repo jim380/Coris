@@ -1,8 +1,8 @@
 <div class="row">
-  <div class="row mat-elevation-z8 table-responsive text-nowrap scrollbar-primary text-nowrap">
-    <table mat-table 
-               [dataSource]="blocks" 
-               class="mat-elevation-z8 w-auto">
+  <div class="mat-elevation-z8 scrollbar-primary table-responsive text-nowrap">
+    <table  mat-table 
+            [dataSource]="blocks" 
+            class="mat-elevation-z8 w-auto">
           
           <ng-container matColumnDef="height" sticky>
             <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-soup-can"></i>&nbsp;Height</th>
@@ -42,11 +42,14 @@
           [appBgHighlight]="'#d1d1d1'" defaultColor="#ffffff"
           ></tr>
     </table>
+
   </div>
+  
   <div class="row paginator">
     <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[100]"></mat-paginator>
   </div>
 </div>
+
 <ng-template #elseBlock>
   <div style="display: flex; justify-content: center;">
     <mdb-spinner spinnerColor="blue"></mdb-spinner>

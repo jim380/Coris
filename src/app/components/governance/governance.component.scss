@@ -1,28 +1,6 @@
-/*-------------------------------------------------*/
-/* Reusable Components */
-/*-------------------------------------------------*/
-.row {
-  max-width: 90%;
-  margin: 20px auto;
-}
 
 p {
   padding: 1px;
-}
-/*-------------------------------------------------*/
-/* Table */
-/*-------------------------------------------------*/
-table {
-  table-layout: fixed;
-  min-width: 100%;
-  border-collapse: collapse;
-}
-
-td {
-  overflow: hidden; /* to hide anything that doesn't fit in the containing element. */
-  white-space: nowrap; /* to make sure the line doesn't break when it is longer than the containing div. */
-  text-overflow: ellipsis;
-  text-align: left;
 }
 
 button {
@@ -50,39 +28,6 @@ tbody {
   color: white;
 }
 
-/* mat-table */
-.mat-row:nth-child(even){
-  background-color:white;
-}
-
-.mat-row:nth-child(odd){
-  background-color:white;
-}
-
-.mat-header-cell, .mat-cell {
-  font-size: 20px;
-  font-family: 'Lato', 'Arial', sans-serif;
-  font-weight: 300;
-  text-rendering: optimizeLegibility;
-  vertical-align: middle;
-}
-
-.mat-header-cell {
-  color: #ffffff;
-}
-
-.mat-cell {
-  color: black;
-}
-
-.mat-header-row {
-  background-color: #3F51B5;
-}
-
-.ticker {
-  font-size: 80%;
-  color: #3F51B5;
-}
 
 th:nth-child(1) {
   width: 5%;
