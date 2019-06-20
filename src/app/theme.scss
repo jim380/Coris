@@ -49,6 +49,10 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
     color: black;
   }
     
+  .cascading-admin-card .admin-up mdb-icon {
+    background-color: #3f51b5;
+  }
+  
   a:link,
   a:visited {
     color: black;
@@ -61,10 +65,15 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
     color: #FF4081;
     text-decoration: underline; 
   }
+
+  .fail {
+    color: #F44336;
+  }
+    
 }
 
 
-$dark-primary: mat-palette($mat-cyan, 400);
+$dark-primary: mat-palette($mat-cyan, A200);
 $dark-accent: mat-palette($mat-pink, A200, A100, A400);
 $dark-warn: mat-palette($mat-red);
 $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
@@ -101,7 +110,15 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
     font-weight: 500;
     color:#ffffff;
   }
- 
+
+  .card {
+    background-color: #353b50;
+  }
+
+  .cascading-admin-card .admin-up mdb-icon {
+    background-color: #40c6c6;
+  }
+  
   a:link,
   a:visited {
     color: #ffffff;
@@ -114,6 +131,10 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
     color: #FF4081;
     text-decoration: underline; 
   }
+
+  .fail {
+    color: #FF5722;/*#00796b;*/
+  }    
 }
 
 .row {
