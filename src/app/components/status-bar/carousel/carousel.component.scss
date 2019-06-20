@@ -47,7 +47,7 @@ h1 {
 
 .cascading-admin-card {
   margin-top: 20px; 
-  // height: 200px;
+  height: 200px;
   // width: 350px;
 }
 
@@ -79,14 +79,32 @@ h1 {
 }
 
 .cascading-admin-card .admin-up .data h4 {
-  font-size: 100%; 
+  font-size: 120%; 
 }
 
-@media (max-width: 767px) { 
+@media (max-width: 575px) {
   .cascading-admin-card .admin-up .data h4 {
-    font-size: 100%; 
+    font-size: 80%; 
   }
- }
+}
+
+@media (max-width: 768px) { 
+  .cascading-admin-card .admin-up .data h4 {
+    font-size: 90%; 
+  }
+}
+
+@media (max-width: 992px) { 
+  .cascading-admin-card .admin-up .data h4 {
+    font-size: 110%; 
+  }
+}
+
+@media (max-width: 1400px) { 
+  .cascading-admin-card .admin-up .data h4 {
+    font-size: 120%; 
+  }
+}
 
 .classic-admin-card .card-body {
   color: #fff;
