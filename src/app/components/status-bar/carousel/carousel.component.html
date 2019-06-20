@@ -8,7 +8,7 @@
     <!-- ----------- staus card ------------- -->
     <div class="row">
        <!--Grid column-->
-       <div class="col-xl-3 col-md-6 my-4" 
+       <div class="flex-fill col-xl-3 col-md-6 my-4" 
             [ngClass]="{'d-none d-md-block': cardIndex !== 0}" 
             *ngFor="let card of item; let cardIndex = index">
         <!--Card-->
@@ -18,7 +18,7 @@
             <mdb-icon fas icon="{{card.icon}}" class="indigo" size="lg"></mdb-icon>
             <div class="data">
               <p>{{card.title}}</p>
-              <h4><strong>{{card.data}}</strong></h4>
+              <h4 class="h4-responsive">{{card.data}}</h4>
             </div>
           </div>
           <!--/.Card Data-->

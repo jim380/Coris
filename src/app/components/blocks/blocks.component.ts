@@ -12,12 +12,26 @@ import { PopupService } from 'src/app/services/popup.service';
 import { selectConsensusHeight } from 'src/app/state/consensus/consensus.reducers';
 import { BlocksState } from 'src/app/state/blocks/blocks.interface';
 import { State } from 'src/app/state';
+import { MatPaginatorIntl } from '@angular/material';
+
+export function CustomPaginator() {
+  const customPaginatorIntl = new MatPaginatorIntl();
+  
+  customPaginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number) => {
+    return "Hello world"
+  };
+
+  return customPaginatorIntl;
+}
 
 @Component({
   selector: 'app-blocks',
   templateUrl: './blocks.component.html',
   styleUrls: ['./blocks.component.scss'],
-  animations: [rowsAnimation, expandableRow, staggerAnimation]
+  animations: [rowsAnimation, expandableRow, staggerAnimation],
+  providers: [
+    { provide: MatPaginatorIntl, useValue: CustomPaginator() }
+  ]
 })
 export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
   private dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
@@ -48,7 +62,7 @@ export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dataSource.paginator.hasPreviousPage = () => { return true; }
     this.dataSource.paginator._intl.getRangeLabel = 
       (page: number, pageSize: number, length: number) => { 
-        return `${this.currentPage} of ${lastPage}`;  
+        return `Page: ${this.currentPage}`;  
       }
 
     if (this.currentPage === 1) {

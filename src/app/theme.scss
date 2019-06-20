@@ -64,7 +64,7 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
 }
 
 
-$dark-primary: mat-palette($mat-yellow);
+$dark-primary: mat-palette($mat-cyan, 400);
 $dark-accent: mat-palette($mat-pink, A200, A100, A400);
 $dark-warn: mat-palette($mat-red);
 $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
@@ -76,6 +76,10 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
     background: #424242;
     color: #ffffff;
   }
+
+  .mat-header-row {
+    background-color: #353b50;
+  }  
 
   .mat-row:nth-child(even){
     background-color: #757575;
