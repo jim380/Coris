@@ -1,4 +1,4 @@
-<div class="row">
+<div class="responsive-row">
   <div class="mat-elevation-z8 scrollbar-near-moon table-responsive text-nowrap">
     <table  mat-table 
             [dataSource]="blocks" 
@@ -42,11 +42,9 @@
           [appBgHighlight]="'#d1d1d1'" defaultColor="#ffffff"
           ></tr>
     </table>
-
-  </div>
-  
-  <div class="row paginator">
-    <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[100]"></mat-paginator>
+    <div class="row paginator">
+      <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[100]"></mat-paginator>
+    </div>
   </div>
 </div>
 

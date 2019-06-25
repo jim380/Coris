@@ -67,6 +67,17 @@ tbody {
   font-size: 70%;
 }
 
+
+::ng-deep .align-center > .mat-sort-header-container {
+  display:flex;
+  justify-content:center;
+}
+
+mat-chip-list {
+  display: flex;
+  justify-content: center;
+}
+
 .bond-status {
   display: flex;
   padding: 10px;

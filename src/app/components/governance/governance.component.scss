@@ -53,6 +53,17 @@ th:nth-child(6) {
 }
 
 
+.align-center {
+  display:flex;
+  justify-content:center;
+}
+
+mat-chip-list {
+  display: flex;
+  justify-content: center;
+}
+
+
 .success {
   color: #4CAF50;
 }
