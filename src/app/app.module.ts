@@ -1,20 +1,16 @@
 // App modules
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
-import { ChartsModule } from 'ng2-charts';
-import { AppRoutingModule } from './app-routing.module';
-import { MaterialModule } from './material.module';
-import { ClipboardModule } from 'ngx-clipboard';
+import { AppCommonModule } from './modules/app-common/app-common.module';
+import { AppRoutingModule } from 'src/app/app-routing.module';
 import { ToastrModule } from 'ngx-toastr';
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 // End app modules
 
 // Main components
 import { AppComponent } from './app.component';
-import { ValidatorsComponent } from './components/validators/validators.component';
 import { BlocksComponent } from './components/blocks/blocks.component';
 import { TxsComponent } from './components/txs/txs.component';
 import { GovernanceComponent } from './components/governance/governance.component';
@@ -35,19 +31,15 @@ import { DialogEntryComponent } from './components/popups/dialog-entry.component
 // End popup components
 
 // Chart components
-import { ChartCardsComponent } from './components/validators/chart-cards/chart-cards.component';
 import { ChartCardsGovComponent } from './components/governance/chart-cards-gov/chart-cards-gov.component';
 // End chart components
 
 import { reducers } from './state/index';
-import { DropdownDirective } from './Directives/dropdown.directive';
-import { BgHighlightDirective } from './Directives/bg-highlight.directive';
-import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
-import { AgoPipe } from './pipes/ago.pipe';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { BtnCloseComponent } from './components/popups/btn-close/btn-close.component';
 import { ValidatorSpanComponent } from './components/validator-span/validator-span.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 declare var Hammer: any;
 
@@ -74,7 +66,6 @@ export class MyHammerConfig extends HammerGestureConfig {
 @NgModule({
   declarations: [
     AppComponent,
-    ValidatorsComponent,
     BlocksComponent,
     TxsComponent,
     GovernanceComponent,
@@ -83,14 +74,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     ValidatorComponent,
     StatusBarComponent,
     FooterComponent,
-    DropdownDirective,
-    BgHighlightDirective,
-    ScrollTopComponent,
-    AgoPipe,
     SidenavComponent,
     CarouselComponent,
     GovDetailComponent,
-    ChartCardsComponent,
     ChartCardsGovComponent,
     TxsListCardComponent,
     AccountDetailComponent,
@@ -109,12 +95,10 @@ export class MyHammerConfig extends HammerGestureConfig {
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    MaterialModule,
-    HttpClientModule,
     BrowserAnimationsModule,
-    ChartsModule,
-    ClipboardModule,
+    AppCommonModule,
+    HttpClientModule,
+    AppRoutingModule,
     [
       StoreModule.forRoot(reducers)
     ],

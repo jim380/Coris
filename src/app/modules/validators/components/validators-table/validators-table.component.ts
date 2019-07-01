@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MatSort } from '@angular/material';
-import {MatTable} from '@angular/material';
+import { MatTable } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { skipWhile, take } from 'rxjs/operators';
 import { selectValidators } from 'src/app/state/validators/validators.reducers';
 import { selectBlocksState } from 'src/app/state/blocks/blocks.reducers';
@@ -16,10 +16,11 @@ import { State } from 'src/app/state';
 import { selectStakeState } from 'src/app/state/stake/stake.reducers';
 import { StakeState } from 'src/app/state/stake/stake.interface';
 
+
 @Component({
-  selector: 'app-validators',
-  templateUrl: './validators.component.html',
-  styleUrls: ['./validators.component.scss'],
+  selector: 'app-validators-table',
+  templateUrl: './validators-table.component.html',
+  styleUrls: ['./validators-table.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
@@ -28,7 +29,7 @@ import { StakeState } from 'src/app/state/stake/stake.interface';
     ]),
   ]
 })
-export class ValidatorsComponent implements OnInit, AfterViewInit {
+export class ValidatorsTableComponent  implements OnInit, AfterViewInit {
   public statusChartOptions: any = {
     responsive: true
   };
@@ -205,36 +206,4 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
   openValidatorDialog(validator) {
     this.popupService.openValidatorDialog(validator);
   }
-
-  /* END POPUPS */
-
-  /* OLD CODE
-  // displayUnbondColumn() {
-  //   this.displayedColumns = [
-  //     'rank',
-  //     'moniker', 
-  //     'status', 
-  //     'weight', 
-  //     'assets', 
-  //     'delegators',
-  //     'bond', 
-  //     'unbond', 
-  //     'commission'
-  //   ];  
-  // }
-
-  // hideUnbondColumn() {
-  //   this.displayedColumns = [
-  //     'rank',
-  //     'moniker', 
-  //     'status', 
-  //     'weight', 
-  //     'assets', 
-  //     'delegators',
-  //     'bond', 
-  //     'commission'
-  //   ];  
-  // }
-  END OLD CODE */
 }
-
