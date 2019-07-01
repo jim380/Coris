@@ -5,14 +5,11 @@ import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
 import { ClipboardModule } from 'ngx-clipboard';
 import { ToastrModule } from 'ngx-toastr';
-import { LayoutModule } from '@angular/cdk/layout';
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
-import { AgmCoreModule } from '@agm/core';
 // End app modules
 
 // Main components
@@ -49,7 +46,6 @@ import { ScrollTopComponent } from './components/scroll-top/scroll-top.component
 import { AgoPipe } from './pipes/ago.pipe';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { TimeAgoPipe } from 'time-ago-pipe';
 import { BtnCloseComponent } from './components/popups/btn-close/btn-close.component';
 import { ValidatorSpanComponent } from './components/validator-span/validator-span.component';
 
@@ -93,7 +89,6 @@ export class MyHammerConfig extends HammerGestureConfig {
     AgoPipe,
     SidenavComponent,
     CarouselComponent,
-    TimeAgoPipe,
     GovDetailComponent,
     ChartCardsComponent,
     ChartCardsGovComponent,
@@ -123,9 +118,6 @@ export class MyHammerConfig extends HammerGestureConfig {
     [
       StoreModule.forRoot(reducers)
     ],
-    LayoutModule,
-    FormsModule,
-    ReactiveFormsModule,
     MDBBootstrapModulesPro.forRoot(),
     ToastrModule.forRoot({
       timeOut: 3000,
@@ -133,8 +125,7 @@ export class MyHammerConfig extends HammerGestureConfig {
       preventDuplicates: true,
       progressBar: true,
       closeButton: true,
-    }),
-    AgmCoreModule.forRoot({ apiKey: 'ULKdG4NuUxzJcpQFspxF' })
+    })
 
   ],
   providers: [
