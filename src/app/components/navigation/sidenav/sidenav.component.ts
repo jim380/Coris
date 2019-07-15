@@ -17,7 +17,7 @@ import { selectActiveTheme } from 'src/app/state/app/app.reducers';
 })
 export class SidenavComponent implements OnInit {
   activeRoute: string = "Pages";
-  @ViewChild('sidenavRef') sidenav;
+  @ViewChild('sidenavRef', { static: true }) sidenav;
   theme$ = this.appStore.select(selectActiveTheme);
   
   constructor(

@@ -33,12 +33,12 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
     responsive: true
   };
 
-  @ViewChild(MatTable) table: MatTable<any>;
-  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+  @ViewChild(MatTable, { static: false }) table: MatTable<any>;
+  @ViewChild(MatPaginator, { static: false }) set matPaginator(mp: MatPaginator) {
     this.paginator = mp;
     this.setDataSourceAttributes();
   }
-  @ViewChild(MatSort) set matSort(ms: MatSort) {
+  @ViewChild(MatSort, { static: false }) set matSort(ms: MatSort) {
     this.sort = ms;
     this.setDataSourceAttributes();
   }

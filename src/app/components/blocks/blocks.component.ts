@@ -36,8 +36,8 @@ export function CustomPaginator() {
 export class BlocksComponent implements OnInit, AfterViewInit, OnDestroy {
   private dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
   private paginator: MatPaginator;
-  @ViewChild(MatTable) table: MatTable<any>;
-  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+  @ViewChild(MatTable, { static: true }) table: MatTable<any>;
+  @ViewChild(MatPaginator, { static: true }) set matPaginator(mp: MatPaginator) {
     this.paginator = mp;
     this.setDataSourceAttributes();
   }
