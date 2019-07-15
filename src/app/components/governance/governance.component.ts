@@ -19,7 +19,7 @@ import { GovDetailComponent } from '../popups/gov-detail/gov-detail.component';
   ],
 })
 export class GovernanceComponent implements OnInit {
-  @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   public expandedElement: any | null;
   public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
   public proposals: any[];

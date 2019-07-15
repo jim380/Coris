@@ -24,7 +24,7 @@ export class TxsListCardComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['hash', 'height'];
   dataSource = new MatTableDataSource<any>([]);
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @Input() address: string;
 
   constructor(

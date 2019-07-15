@@ -14,7 +14,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 })
 export class SidenavComponent implements OnInit {
   activeRoute: string = "Pages";
-  @ViewChild('sidenavRef') sidenav;
+  @ViewChild('sidenavRef', { static: false }) sidenav;
   theme$ = this.appStore.select(selectActiveTheme);
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;

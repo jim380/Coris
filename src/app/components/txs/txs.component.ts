@@ -33,7 +33,7 @@ export class TxsComponent implements OnInit {
 
   private dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
   // private paginator: MatPaginator;
-  @ViewChild(MatTable) table: MatTable<any>;
+  @ViewChild(MatTable, { static: false }) table: MatTable<any>;
   // @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
   //   this.paginator = mp;
   //   this.setDataSourceAttributes();
