@@ -3,15 +3,15 @@
   <div class="popup-row row">
     <!-- First column -->
     <div class="px-0  p-lg-3 col-12">
-      <mdb-card class="card-1 mat-elevation-z8 mb-3">
-        <mdb-card-header>
-            <mdb-card-title>Transaction Detail</mdb-card-title>
-        </mdb-card-header>
-        <mdb-card-body>
+      <mat-card  cdkDrag class="card-1 mat-elevation-z8 mb-3">
+        <mat-card-header>
+            <mat-card-title>Transaction Detail</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
             <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   Hash
-                  <h3 class="glance-title"><mdb-badge color="pink">
+                  <h3 class="glance-title"><span class="badge">
                     {{tx.hash | slice:0:15 }}... 
                     <i 
                       class="ion-ios-copy copy-button" 
@@ -19,9 +19,9 @@
                       ngxClipboard 
                       [cbContent]="tx.hash" 
                       (click)="onCopySucceess()"
-                      mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                      matTooltip="copy to clipboard" matTooltipPosition="above">
                     </i>
-                  </mdb-badge></h3>
+                  </span></h3>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   Status
@@ -31,53 +31,52 @@
                   <ng-template #elseStatus>
                     <i class="ion-close-circled fail"></i>
                   </ng-template>
-                  <!-- <span class="badge badge-primary badge-pill"></span> -->
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   Height
-                  <h3 class="glance-title"><mdb-badge style="cursor:pointer" (click)="openBlockDialog(tx.height)" color="pink">{{tx.height}}</mdb-badge></h3>
+                  <h3 class="glance-title"><span class="badge" style="cursor:pointer" (click)="openBlockDialog(tx.height)" color="pink">{{tx.height}}</span></h3>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     Timestamp
-                    <h3 class="glance-title"><mdb-badge color="pink">{{tx.details?.timestamp | ago | async}}</mdb-badge></h3>
+                    <h3 class="glance-title"><span class="badge">{{tx.details?.timestamp | ago | async}}</span></h3>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   Fee
-                  <h3 class="glance-title"><mdb-badge color="pink">
+                  <h3 class="glance-title"><span class="badge">
                     {{ 
                       tx.details?.tx.value.fee.amount ?
                       tx.details.tx.value.fee.amount[0].amount : '0' 
                     }} uatom
-                  </mdb-badge></h3>
+                  </span></h3>
                 </li>
                 <li *ngIf="tx.gasUsed && tx.gasUsed" class="list-group-item d-flex justify-content-between align-items-center">
                   Gas (used/wanted)
-                  <h3 class="glance-title"><mdb-badge color="pink">{{ tx.gasUsed }}/{{ tx.gasWanted }}</mdb-badge></h3>
+                  <h3 class="glance-title"><span class="badge">{{ tx.gasUsed }}/{{ tx.gasWanted }}</span></h3>
                 </li>
                 <li *ngIf="tx.memo.length > 0" class="list-group-item d-flex justify-content-between align-items-center">
                   Memo
-                  <h3 class="glance-title"><mdb-badge color="pink">{{ tx.memo }}</mdb-badge></h3>
+                  <h3 class="glance-title"><span class="badge">{{ tx.memo }}</span></h3>
                 </li>
             </ul>
-        </mdb-card-body>
-      </mdb-card>
+        </mat-card-content>
+      </mat-card>
     </div>
     <div class="px-0  p-lg-3 col-12">
-      <mdb-card class="card-2 mat-elevation-z8 mb-3">
-        <mdb-card-header>
-            <mdb-card-title>Activity</mdb-card-title>
-        </mdb-card-header>
-        <mdb-card-body>
+      <mat-card  cdkDrag class="card-2 mat-elevation-z8 mb-3">
+        <mat-card-header>
+            <mat-card-title>Activity</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
             <ul class="list-group">
               <span *ngFor="let action of tx.action; index as i">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   Type
-                  <h3 class="glance-title"><mdb-badge color="pink">{{ action | titlecase}}</mdb-badge></h3>
+                  <h3 class="glance-title"><span class="badge">{{ action | titlecase}}</span></h3>
                 </li>
                 
                 <li *ngIf="tx.msg[i].value.from_address" class="list-group-item d-flex justify-content-between align-items-center">
                   From
-                  <h3 class="glance-title"><mdb-badge style="cursor:pointer;" 
+                  <h3 class="glance-title"><span class="badge" style="cursor:pointer;" 
                     (click)="openAccountDialog(tx.msg[i].value.from_address)"color="pink">
                     <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.from_address ) : false; else elseSender">
                       {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.from_address )}}
@@ -90,15 +89,15 @@
                         ngxClipboard 
                         [cbContent]="tx.msg[i].value.from_address" 
                         (click)="onCopySucceess()"
-                        mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                        matTooltip="copy to clipboard" matTooltipPosition="above">
                       </i>
                     </ng-template>
-                  </mdb-badge></h3>
+                  </span></h3>
                 </li>
                 
                 <li *ngIf="tx.msg[i].value.to_address" class="list-group-item d-flex justify-content-between align-items-center">
                   To
-                  <h3 class="glance-title"><mdb-badge color="pink" style="cursor:pointer;" 
+                  <h3 class="glance-title"><span class="badge" style="cursor:pointer;" 
                     (click)="openAccountDialog(tx.msg[i].value.to_address)">
                     <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.to_address ) : false; else elseRecipient">
                       {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.to_address )}}
@@ -111,15 +110,15 @@
                         ngxClipboard 
                         [cbContent]="tx.msg[i].value.to_address" 
                         (click)="onCopySucceess()"
-                        mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                        matTooltip="copy to clipboard" matTooltipPosition="above">
                       </i>
                     </ng-template>
-                  </mdb-badge></h3>
+                  </span></h3>
                 </li>
                 
                 <li *ngIf="tx.msg[i].value.delegator_address" class="list-group-item d-flex justify-content-between align-items-center">
                   Delegator
-                  <h3 class="glance-title"><mdb-badge color="pink" style="cursor:pointer;" 
+                  <h3 class="glance-title"><span class="badge" style="cursor:pointer;" 
                     (click)="openAccountDialog(tx.msg[i].value.delegator_address)">
                     <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.delegator_address ) : false; else elseDelegator">
                       {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.delegator_address )}}
@@ -132,15 +131,15 @@
                         ngxClipboard 
                         [cbContent]="tx.msg[i].value.delegator_address" 
                         (click)="onCopySucceess()"
-                        mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                        matTooltip="copy to clipboard" matTooltipPosition="above">
                       </i>
                     </ng-template> 
-                  </mdb-badge></h3>
+                  </span></h3>
                 </li>
                 
                 <li *ngIf="tx.msg[i].value.validator_address" class="list-group-item d-flex justify-content-between align-items-center">
                   Validator
-                  <h3 class="glance-title"><mdb-badge color="pink" (click)="openValidatorDetailDialog( tx.msg[i].value.validator_address )"
+                  <h3 class="glance-title"><span class="badge" (click)="openValidatorDetailDialog( tx.msg[i].value.validator_address )"
                     style="cursor: pointer">
                     <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.validator_address ) : false; else elseValidator">
                       {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.validator_address )}}
@@ -153,16 +152,16 @@
                         ngxClipboard 
                         [cbContent]="tx.msg[i].value.validator_address" 
                         (click)="onCopySucceess()"
-                        mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                        matTooltip="copy to clipboard" matTooltipPosition="above">
                       </i>
                     </ng-template>
-                  </mdb-badge></h3>
+                  </span></h3>
                 </li><br *ngIf="action === 'withdraw delegator reward'">
 
                 <li *ngIf="tx.msg[i].value.validator_src_address" 
                     class="list-group-item d-flex justify-content-between align-items-center">
                   From
-                  <h3 class="glance-title"><mdb-badge color="pink" (click)="openValidatorDetailDialog( tx.msg[i].value.validator_src_address )"
+                  <h3 class="glance-title"><span class="badge" (click)="openValidatorDetailDialog( tx.msg[i].value.validator_src_address )"
                     style="cursor: pointer">
                     <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.validator_src_address ) : false; else elseSrcValidator">
                       {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.validator_src_address )}}
@@ -175,16 +174,16 @@
                         ngxClipboard 
                         [cbContent]="tx.msg[i].value.validator_src_address" 
                         (click)="onCopySucceess()"
-                        mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                        matTooltip="copy to clipboard" matTooltipPosition="above">
                       </i>
                     </ng-template> 
-                  </mdb-badge></h3>
+                  </span></h3>
                 </li>
                 
                 <li *ngIf="tx.msg[i].value.validator_dst_address" 
                     class="list-group-item d-flex justify-content-between align-items-center">
                   To
-                  <h3 class="glance-title"><mdb-badge color="pink" (click)="openValidatorDetailDialog( tx.msg[i].value.validator_dst_address )"
+                  <h3 class="glance-title"><span class="badge" (click)="openValidatorDetailDialog( tx.msg[i].value.validator_dst_address )"
                     style="cursor: pointer">
                     <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.validator_dst_address ) : false; else elseDstValidator">
                       {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.validator_dst_address )}}
@@ -197,17 +196,17 @@
                         ngxClipboard 
                         [cbContent]="tx.msg[i].value.validator_dst_address" 
                         (click)="onCopySucceess()"
-                        mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                        matTooltip="copy to clipboard" matTooltipPosition="above">
                       </i>
                     </ng-template> 
-                  </mdb-badge></h3>
+                  </span></h3>
                 </li>
 
                 <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgEditValidator'">
                   <li *ngIf="tx.msg[i].value.address" 
                       class="list-group-item d-flex justify-content-between align-items-center">
                     Validator
-                    <h3 class="glance-title"><mdb-badge color="pink" (click)="openValidatorDetailDialog( tx.msg[i].value.address )"
+                    <h3 class="glance-title"><span class="badge" (click)="openValidatorDetailDialog( tx.msg[i].value.address )"
                       style="cursor: pointer">
                       <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( tx.msg[i].value.address ) : false; else elseDstValidator">
                         {{ (validatorsState | async).validatorsMap.get( tx.msg[i].value.address )}}
@@ -220,21 +219,21 @@
                           ngxClipboard 
                           [cbContent]="tx.msg[i].value.address" 
                           (click)="onCopySucceess()"
-                          mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                          matTooltip="copy to clipboard" matTooltipPosition="above">
                         </i>
                       </ng-template> 
-                    </mdb-badge></h3>
+                    </span></h3>
                   </li>
                   <li *ngFor="let key of objectKeys(tx.msg[i].value.Description)" 
                       class="list-group-item d-flex justify-content-between align-items-center">
                     {{ key | titlecase }}
                     <h3 class="glance-title">
-                      <mdb-badge color="pink">
-                          <span *ngIf="tx.msg[i].value.Description[key] !== '[do-not-modify]'; else elseUpdateValue">
-                            {{ tx.msg[i].value.Description[key] }}
-                          </span>
-                          <ng-template #elseUpdateValue>{{ 'Unchanged' }}</ng-template>
-                      </mdb-badge>
+                      <span class="badge">
+                        <span *ngIf="tx.msg[i].value.Description[key] !== '[do-not-modify]'; else elseUpdateValue">
+                          {{ tx.msg[i].value.Description[key] }}
+                        </span>
+                        <ng-template #elseUpdateValue>{{ 'Unchanged' }}</ng-template>
+                      </span>
                     </h3>
                   </li>
                 </span>
@@ -243,7 +242,7 @@
                   <li *ngFor="let input of tx.msg[i].value.inputs" 
                       class="list-group-item d-flex justify-content-between align-items-center">
                     Sender
-                    <h3 class="glance-title"><mdb-badge color="pink" (click)="openAccountDialog( input.address )"
+                    <h3 class="glance-title"><span class="badge" (click)="openAccountDialog( input.address )"
                       style="cursor: pointer;">
                       <span *ngIf="(validatorsState | async).validatorsMap.size 
                                     ? (validatorsState | async).validatorsMap.has( input.address ) 
@@ -258,15 +257,15 @@
                           ngxClipboard 
                           [cbContent]="input.address" 
                           (click)="onCopySucceess()"
-                          mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                          matTooltip="copy to clipboard" matTooltipPosition="above">
                         </i>
                       </ng-template>
-                    </mdb-badge></h3>
+                    </span></h3>
                   </li>
                   <li *ngFor="let output of tx.msg[i].value.outputs" 
                       class="list-group-item d-flex justify-content-between align-items-center">
                     Recipient
-                    <h3 class="glance-title"><mdb-badge color="pink" (click)="openAccountDialog( output.address )"
+                    <h3 class="glance-title"><span class="badge" (click)="openAccountDialog( output.address )"
                       style="cursor: pointer;">
                       <span *ngIf="(validatorsState | async).validatorsMap.size 
                                     ? (validatorsState | async).validatorsMap.has( output.address ) 
@@ -281,31 +280,31 @@
                           ngxClipboard 
                           [cbContent]="output.address" 
                           (click)="onCopySucceess()"
-                          mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                          matTooltip="copy to clipboard" matTooltipPosition="above">
                         </i>
                       </ng-template>
-                    </mdb-badge></h3>
+                    </span></h3>
                   </li>
                   <li *ngFor="let output of tx.msg[i].value.outputs; index as j" 
                       class="list-group-item d-flex justify-content-between align-items-center">
                     Amount {{j+1}}:
-                    <h3 class="glance-title"><mdb-badge color="pink">
+                    <h3 class="glance-title"><span class="badge">
                         {{ output.coins[0].amount/1e6 | number:".2-2" }}&nbsp;ATOM
-                    </mdb-badge></h3>
+                    </span></h3>
                   </li>
                 </span>
 
                 <li *ngIf="tx.msg[i].value.amount" 
                     class="list-group-item d-flex justify-content-between align-items-center">
                   Amount
-                  <h3 class="glance-title"><mdb-badge color="pink">
+                  <h3 class="glance-title"><span class="badge">
                       {{ ( tx.msg[i].value.amount.length ? tx.msg[i].value.amount[0].amount : tx.msg[i].value.amount.amount )/1e6 | number:".2-2" }}&nbsp;ATOM 
-                  </mdb-badge></h3>
+                  </span></h3>
                 </li>
               </span>
             </ul>
-        </mdb-card-body>
-      </mdb-card>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </section>

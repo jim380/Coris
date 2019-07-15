@@ -1,9 +1,9 @@
 <div class="row">
   <!-- Block Time Chart -->
   <div class="col-xl-4 col-12 mb-5">   
-    <div class="card card-cascade narrower">  
-      <div class="view view-cascade gradient-card-header indigo">
-        <canvas mdbChart
+    <mat-card class="card card-cascade narrower">  
+      <mat-card-content class="view view-cascade gradient-card-header">
+        <canvas baseChart
           height="197"
           width="394"
           [chartType]="blockChartType"
@@ -13,20 +13,20 @@
           [legend]="true"
           [colors]="blockChartColors">
         </canvas>
-      </div>
-      <mdb-card-body class="text-center">
-        <span mdbTooltip="Last 100 blocks" placement="top">
-          <i class="ion-ios-clock"></i>&nbsp;Block Time  
-        </span>        
-      </mdb-card-body>
-    </div>
+        <mat-card-footer class="my-3 text-center">
+          <span matTooltip="Last 100 blocks" placement="top">
+            <i class="ion-ios-clock"></i>&nbsp;Block Time  
+          </span>  
+        </mat-card-footer>      
+      </mat-card-content>
+    </mat-card>
   </div>
 
   <!-- Commission Chart -->
   <div class="col-xl-4 col-12 mb-5">   
-    <div class="card card-cascade narrower">  
-      <div class="view view-cascade gradient-card-header blue-gradient">
-        <canvas mdbChart
+    <mat-card class="card card-cascade narrower">  
+      <mat-card-content class="view view-cascade gradient-card-header">
+        <canvas baseChart
           height="197"
           width="394"
           [chartType]="commissionChartType"
@@ -35,18 +35,18 @@
           [options]="commissionChartOptions"
           [legend]="true"
           [colors]="commissionChartColors">
-      </canvas>
-      </div>
-      <mdb-card-body class="text-center">
-        <i class="ion-stats-bars"></i>&nbsp;Commission Distribution 
-      </mdb-card-body>
-    </div>
+        </canvas>
+        <mat-card-footer class="my-3 text-center">
+          <i class="ion-stats-bars"></i>&nbsp;Commission Distribution 
+        </mat-card-footer>
+      </mat-card-content>
+    </mat-card>
   </div>
 
   <!-- Voting Power Chart -->
   <div class="col-xl-4 col-12 mb-5">   
-    <div class="card card-cascade narrower">  
-      <div class="view view-cascade gradient-card-header mdb-color lighten-4">
+    <mat-card class="card card-cascade narrower">  
+      <mat-card-content class="view view-cascade gradient-card-header">
         <canvas baseChart
           [datasets]="scatterChartData"
           [options]="scatterChartOptions"
@@ -54,10 +54,10 @@
           [labels]="scatterChartLabels"
           [colors]="scatterChartColors">
         </canvas>
-      </div>
-      <mdb-card-body class="text-center">
-        <i class="ion-flash"></i>&nbsp;Voting Power
-      </mdb-card-body>  
-    </div>  
+        <mat-card-footer class="my-3 text-center">
+          <i class="ion-flash"></i>&nbsp;Voting Power
+        </mat-card-footer>
+      </mat-card-content>
+    </mat-card>  
   </div>
 </div>

@@ -9,7 +9,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
 import { ClipboardModule } from 'ngx-clipboard';
 import { ToastrModule } from 'ngx-toastr';
-import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
+import { SwiperModule } from 'ngx-swiper-wrapper';
+import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 // End app modules
 
 // Main components
@@ -44,7 +46,6 @@ import { DropdownDirective } from './Directives/dropdown.directive';
 import { BgHighlightDirective } from './Directives/bg-highlight.directive';
 import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
 import { AgoPipe } from './pipes/ago.pipe';
-import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { BtnCloseComponent } from './components/popups/btn-close/btn-close.component';
 import { ValidatorSpanComponent } from './components/validator-span/validator-span.component';
@@ -70,6 +71,12 @@ export class MyHammerConfig extends HammerGestureConfig {
     return mc;
   }
 }
+
+export const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+  direction: 'horizontal',
+  slidesPerView: 'auto'
+};
+
 
 @NgModule({
   declarations: [
@@ -118,21 +125,23 @@ export class MyHammerConfig extends HammerGestureConfig {
     [
       StoreModule.forRoot(reducers)
     ],
-    MDBBootstrapModulesPro.forRoot(),
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
       progressBar: true,
       closeButton: true,
-    })
-
+    }),
+    SwiperModule
   ],
   providers: [
-    MDBSpinningPreloader,
     { 
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig
+    },
+    {
+      provide: SWIPER_CONFIG,
+      useValue: DEFAULT_SWIPER_CONFIG
     }
   ],
   bootstrap: [AppComponent],

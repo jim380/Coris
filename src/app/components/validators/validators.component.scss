@@ -63,19 +63,18 @@ tbody {
 }
 
 
-.ticker-small {
-  font-size: 70%;
-}
+// .ticker-small {
+//   font-size: 70%;
+// }
 
 
 ::ng-deep .align-center > .mat-sort-header-container {
   display:flex;
-  justify-content:center;
 }
 
 mat-chip-list {
   display: flex;
-  justify-content: center;
+  margin-left: 10px;
 }
 
 .bond-status {
@@ -97,42 +96,37 @@ mat-chip-list {
 }
 
 
-.badge {
-  margin-left: 10px;
- }
+// .badge {
+//   margin-left: 10px;
+//  }
 
- .badge i {
-   margin: 0;
- }
+//  .badge i {
+//    margin: 0;
+//  }
 
- .badge-ticker {
-   font-size: 80%;
- }
+//  .badge-ticker {
+//    font-size: 80%;
+//  }
 
- .list-group a:hover,
- .list-group a:active {
-     color: white;
- }
+//  .list-group a:hover,
+//  .list-group a:active {
+//      color: white;
+//  }
 
-.example-container {
-  height: 500px;
-  overflow: auto;
-}
+// .example-container {
+//   height: 500px;
+//   overflow: auto;
+// }
 
 mat-table {
   display: flex;
 }
 
-.mdb-progress {
-  height: 20px !important;
+.mat-menu-content:not(:empty) {
+  overflow: hidden;
+  padding: 0 !important;
 }
 
-
-.dropdown-toggle {
-  color: white;
-  margin-left: 0;
-}
-
-.dropdown-menu {
-  background-color: white;
+.mat-menu-item {
+  margin: 0;
 }

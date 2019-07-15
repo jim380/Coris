@@ -76,7 +76,7 @@ export class ChartCardsComponent implements OnInit {
       if(formattedBlocksTime.length === 99) {
         // TODO remove debugging
         // console.log( formattedBlocksTime );
-        this.blockChartDatasets = [ { data: formattedBlocksTime, label: 'Block Time'}, this.blockChartDatasets[1] ];
+        this.blockChartDatasets[0].data.push(...formattedBlocksTime);
       }
     });
 
@@ -92,7 +92,7 @@ export class ChartCardsComponent implements OnInit {
       for (let i = 0; i < 100; i++) {
         avgBlockTime[i] = avg/1000;
       }
-      this.blockChartDatasets = [ this.blockChartDatasets[0], { data: avgBlockTime, label: 'Avg. Block Time'} ];
+      this.blockChartDatasets[1].data.push(...avgBlockTime);
     })
   }
 
@@ -116,7 +116,7 @@ export class ChartCardsComponent implements OnInit {
     .subscribe( (count) => { 
       // console.log(validatorsArray[count]);
       this.scatterChartData[0].data.push({ x: count+1, y: validatorsArray[count].tokens, r: 3});
-      this.scatterChartData[1].data.push({ x: count+1, y: validatorsArray[count].self_bond, r: 3 });
+      this.scatterChartData[1].data.push({ x: count+1, y: validatorsArray[count].self_bond_total, r: 3 });
       this.scatterChartData[2].data.push({ x: count+1, y: Number(validatorsArray[count].account.value.coins[0].amount), r: 3});
       
       if( validatorsArray[count].outstanding_rewards ) {

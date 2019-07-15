@@ -1,9 +1,9 @@
 
-<div class="responsive-row d-flex">
+<div class="responsive-row row justify-content-center d-flex">
   <div *ngFor="let proposal of proposals; let i = index" class="col-lg-4 col-md-12 mb-5">   
-    <div class="card card-cascade narrower">    
-      <div class="view view-cascade gradient-card-header mdb-color lighten-4">
-        <canvas mdbChart
+    <mat-card>    
+      <div class="view view-cascade gradient-card-header lighten-4">
+        <canvas baseChart
           height="197"
           width="394"
           [chartType]="govCharts.type"
@@ -18,15 +18,15 @@
         Proposal {{ proposals[i].proposal_id }}
         <br>
         <span *ngIf="proposals[i].proposal_status==='Passed'">
-          <mdb-badge color="green">{{ proposals[i].proposal_status }}</mdb-badge>
+          <span class="badge bg-success">{{ proposals[i].proposal_status }}</span>
         </span>
         <span *ngIf="proposals[i].proposal_status==='Rejected'">
-            <mdb-badge color="red">{{ proposals[i].proposal_status }}</mdb-badge>
+          <span class="badge bg-warning">{{ proposals[i].proposal_status }}</span>
         </span>
         <span *ngIf="proposals[i].proposal_status==='Voting Period'">
-          <mdb-badge color="indigo">{{ proposals[i].proposal_status }}</mdb-badge>
+          <span class="badge bg-info">{{ proposals[i].proposal_status }}</span>
         </span>
       </div>
-    </div>
+    </mat-card>
   </div>
 </div>

@@ -12,6 +12,7 @@ export class ApiService {
   ) { }
 
   fetchValidators$() {
-    return this.httpClient.get(`${appApi}/validators`);
+    return this.httpClient.get("http://149.28.228.142:3000/api/validators");
+    // return this.httpClient.get(`${appApi}/validators`);
   }
 }

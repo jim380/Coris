@@ -27,7 +27,7 @@ export class ChartCardsGovComponent implements OnInit, OnChanges {
       responsive: true,
       legend: {
         labels: {
-          fontColor: 'white',
+          // fontColor: 'white',
         }
       }
     }

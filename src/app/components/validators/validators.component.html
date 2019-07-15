@@ -1,29 +1,23 @@
 <app-chart-cards></app-chart-cards>
 <div class="responsive-row" *ngIf="true; else elseBlock">
-  <!-- @aakatev	
-    https://github.com/cosmos/cosmos-sdk/blob/9a16e2675f392b083dd1074ff92ff1f9fbda750d/types/staking.go
-    Unbonded  BondStatus = 0x00
-    Unbonding BondStatus = 0x01
-    Bonded BondStatus = 0x02 
-  -->
-  <div class="dropdown" mdbDropdown>
-    <button mdbDropdownToggle 
-            type="button" 
-            mdbBtn color="primary" 
-            class="dropdown-toggle waves-light" 
-            size="sm" 
-            mdbWavesEffect>
-      {{tableFilterButtonLabel}}
+  <button mat-raised-button color="accent" [matMenuTriggerFor]="menu">{{tableFilterButtonLabel}}</button>
+  <mat-menu #menu="matMenu">
+    <button (click)="validatorsBondFilter(2)" mat-menu-item>
+      <span>Bonded</span>
     </button>
-  
-    <div class="dropdown-menu" value="bonded">
-      <a class="dropdown-item" (click)="validatorsBondFilter(2)" value="bonded">Bonded</a>
-      <a class="dropdown-item" (click)="validatorsJailedFilter(true)" value="jailed">Jailed</a>
-      <a class="dropdown-item" (click)="validatorsBondJailedFilter(0, false)" value="unbonded">Unbonded</a>
-      <a class="dropdown-item" (click)="validatorsBondFilter(1)" value="unbonding">Unbonding</a>
-      <a class="dropdown-item" (click)="validatorsNoFilter()" value="all">All</a>
-    </div>
-  </div>
+    <button (click)="validatorsJailedFilter(true)" mat-menu-item>
+      <span>Jailed</span>
+    </button>
+    <button (click)="validatorsBondJailedFilter(0, false)" mat-menu-item>
+      <span>Unbonded</span>
+    </button>
+    <button (click)="validatorsBondFilter(1)" mat-menu-item>
+      <span>Unbonding</span>
+    </button>
+    <button (click)="validatorsNoFilter()" mat-menu-item>
+      <span>All</span>
+    </button>
+  </mat-menu>
 
   <div class="mat-elevation-z8 scrollbar-near-moon table-responsive text-nowrap">
     <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8 w-auto">
@@ -38,10 +32,11 @@
         <td mat-cell *matCellDef="let validator"> 
           <span>
             <mat-chip-list>
-              <mat-chip (click)="openValidatorDialog(validator)" class="chip validator-avatar is-128x128" color = "primary" selected>
+              <mat-chip (click)="openValidatorDialog(validator)" class="chip validator-avatar is-128x128" color="accent" selected>
                   <img  *ngIf="!validator.picture; else elseBlock" 
                         src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
-                        alt="avatar"> 
+                        alt="avatar"
+                        class="rounded-circle"> 
                   {{validator.description.moniker | slice:0:12 }}
               </mat-chip>
             </mat-chip-list>
@@ -116,13 +111,13 @@
       </ng-container>
       
       <ng-container matColumnDef="bond">
-        <th mat-sort-header="self_bond" mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-log-in"></i>&nbsp;Self-Bond</th>
+        <th mat-sort-header="self_bond_total" mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-log-in"></i>&nbsp;Self-Bond</th>
         <td mat-cell *matCellDef="let validator">
-          {{validator.self_bond/1e6 | number:'.0-0'}} <span class="ticker">ATOM</span>
+          {{validator.self_bond_total/1e6 | number:'.0-0'}} <span class="ticker">ATOM</span>
           <br>
           <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above">
             <i class="ion-calculator"></i>&nbsp;
-            {{ validator.self_bond / validator.tokens | percent:'.2-2' }}
+            {{ validator.self_bond_total / validator.tokens | percent:'.2-2' }}
           </span>
         </td>
       </ng-container>
@@ -150,6 +145,6 @@
 </div>
 <ng-template #elseBlock>
   <div style="display: flex; justify-content: center;">
-    <mdb-spinner spinnerColor="blue"></mdb-spinner>
+    <mat-progress-bar color="accent" mode="indeterminate"></mat-progress-bar>
   </div> 
 </ng-template>

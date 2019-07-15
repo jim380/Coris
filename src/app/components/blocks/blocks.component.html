@@ -7,8 +7,11 @@
           <ng-container matColumnDef="height" sticky>
             <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-soup-can"></i>&nbsp;Height</th>
             <td mat-cell *matCellDef="let block" >
-              <mdb-badge (click)="openBlockDialog(block)" 
-              style="cursor: pointer" color="pink">{{block.height}}</mdb-badge>
+              <span class="badge"
+                    (click)="openBlockDialog(block)" 
+                    style="cursor: pointer">
+                {{block.height}}
+              </span>
             </td>
           </ng-container>
         
@@ -49,8 +52,8 @@
 </div>
 
 <ng-template #elseBlock>
-  <div style="display: flex; justify-content: center;">
-    <mdb-spinner spinnerColor="blue"></mdb-spinner>
+  <div class="mx-5" style="display: flex; justify-content: center;">
+    <mat-progress-bar color="accent" mode="indeterminate"></mat-progress-bar>
   </div> 
 </ng-template>
  

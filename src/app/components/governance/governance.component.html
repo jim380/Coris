@@ -16,11 +16,11 @@
             <i class="ion-code"></i>&nbsp;Title
           </div>
         </th>
-        <td mat-cell *matCellDef="let proposal" mdbTooltip="{{proposal.proposal_content.value.title}}" placement="right">
+        <td mat-cell *matCellDef="let proposal">
           <div class="align-center">
-            <mdb-badge color="pink" style="cursor: pointer;" (click)="openGovDetailDialog(proposal)">
+            <span class="badge badge-primary" style="cursor: pointer;" (click)="openGovDetailDialog(proposal)">
               {{proposal.proposal_content.value.title | slice:0:20}} ...
-            </mdb-badge>
+            </span>
           </div>
         </td>
       </ng-container>
@@ -37,10 +37,6 @@
           <span *ngIf="proposal.proposal_status === 'Voting Period'">
               <i class="ion-minus-circled voting"></i>
           </span>
-          <!-- <ng-template #elseStatus>
-            <i class="ion-close-circled fail"></i>
-          </ng-template> -->
-          <!-- {{proposal.proposal_status}} -->
         </td>
       </ng-container>
 
@@ -51,13 +47,6 @@
         </td>
       </ng-container>
     
-      <!-- <ng-container matColumnDef="voting">
-        <th mat-header-cell *matHeaderCellDef> Voting Started </th>
-        <td mat-cell *matCellDef="let proposal">  
-          {{proposal.voting_start_time | date:"h:mm:ss a, MMM d, y"}}
-        </td>
-      </ng-container> -->
-
       <ng-container matColumnDef="deposit">
         <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-archive"></i>&nbsp;Deposit</th>
         <td mat-cell *matCellDef="let proposal">  
@@ -72,27 +61,11 @@
           </td>
       </ng-container>
 
-      <!-- <ng-container matColumnDef="expandedDetail">
-        <td mat-cell *matCellDef="let proposal" [attr.colspan]="displayedColumns.length">
-          <div
-              class="proposal-detail"
-              [@detailExpand]="proposal == expandedElement ? 'expanded' : 'collapsed'">
-            <div class="row">
-              <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <span style="cursor: pointer;" (click)="openGovDetailDialog(proposal)" class="badge badge-primary badge-pill">Details</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </td>
-      </ng-container> -->
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let proposal; columns: displayedColumns;"
           [appBgHighlight]="'#d1d1d1'" defaultColor="#ffffff">
       </tr>
-      <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="proposal-detail-row"></tr> -->
     </table>
   </div>
 </div>

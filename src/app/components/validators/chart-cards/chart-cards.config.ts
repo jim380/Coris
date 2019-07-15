@@ -18,7 +18,7 @@ const commissionChart = {
   labels: [],
   colors: [
     {
-      backgroundColor: 'rgba(255,255,255,0.2)',
+      backgroundColor: 'rgba(0,188,212,0.59)',
       hoverBorderColor: 'rgba(255,255,255,1)',
       hoverBorderWidth: 1,
       pointBackgroundColor: 'rgba(255,255,255,1)',
@@ -27,7 +27,7 @@ const commissionChart = {
       pointHoverBorderColor: 'rgba(255,255,255,1)'
     },
     {
-      backgroundColor: 'rgba(255,255,255,0.2)',
+      backgroundColor: 'rgba(76,175,80,0.44)',
       hoverBorderColor: 'rgba(255,255,255,1)',
       hoverBorderWidth: 1,
       pointBackgroundColor: 'rgba(255,255,255,1)',
@@ -36,7 +36,7 @@ const commissionChart = {
       pointHoverBorderColor: 'rgba(255,255,255,1)'
     },
     {
-      backgroundColor: 'rgba(255,255,255,0.2)',
+      backgroundColor: 'rgba(248,187,208,0.72)',
       hoverBorderColor: 'rgba(255,255,255,1)',
       hoverBorderWidth: 1,
       pointBackgroundColor: 'rgba(255,255,255,1)',
@@ -50,7 +50,7 @@ const commissionChart = {
     responsive: true,
     legend: {
       labels: {
-        fontColor: 'white',
+        fontColor: 'black'
       }
     },
     scales: {
@@ -58,20 +58,20 @@ const commissionChart = {
         scaleLabel: {   // To format the scale Lebel
           display: true,
           labelString: 'Validator Count',
-          fontColor: 'white'
+          fontColor: 'black'
         },
         ticks: {
-          fontColor: 'white',
+          fontColor: 'black'
         }
       }],
       xAxes: [{
         scaleLabel: {   // To format the scale Lebel
           display: true,
           labelString: 'Commission Rate (%)',
-          fontColor: 'white',
+          fontColor: 'black'
         },
         ticks: {
-          fontColor: 'white',
+          fontColor: 'black',
           callback: function (value) {
             return (value*100).toFixed(1); // convert it to percentage
           }
@@ -102,7 +102,7 @@ const blockChart = {
   labels: [0, 20, 40, 60, 80, 100],
   colors: [
     {
-      // backgroundColor: 'rgba(220,220,220,0.32)',
+      backgroundColor: 'rgba(220,220,220,0.32)',
       borderColor: 'rgba(220,220,220,1)',
       borderWidth: 1,
       pointBackgroundColor: 'rgba(220,220,220,1)',
@@ -111,7 +111,7 @@ const blockChart = {
       pointHoverBorderColor: 'rgba(220,220,220,1)'
     },
     {
-      // backgroundColor: 'rgba(6233,30,99,0.32)',
+      backgroundColor: 'rgba(6233,30,99,0.32)',
       borderColor: 'rgba(248,187,208,1)',
       borderWidth: 1,
       pointBackgroundColor: 'rgba(248,187,208,1)',
@@ -126,7 +126,7 @@ const blockChart = {
     responsive: true,
     legend: {
       labels: {
-        fontColor: 'white',
+        fontColor: 'black'
       }
     },
     scales: {
@@ -135,10 +135,10 @@ const blockChart = {
         scaleLabel: {   // To format the scale Lebel
           display: true,
           labelString: 'Time (sec)',
-          fontColor: 'white'
+          fontColor: 'black'
         },
         ticks: {
-          fontColor: 'white',
+          fontColor: 'black'
         }
       }],
       xAxes: [{
@@ -146,10 +146,10 @@ const blockChart = {
         scaleLabel: {   // To format the scale Lebel
           display: true,
           labelString: 'Last X Blocks',
-          fontColor: 'white',
+          fontColor: 'black'
         },
         ticks: {
-          fontColor: 'white',
+          fontColor: 'black'
         }
       }]
     }
@@ -204,7 +204,7 @@ const scatterChart = {
     responsive: true,
     legend: {
       labels: {
-        // fontColor: 'white',
+        fontColor: 'black'
       }
     },
     scales: {
@@ -214,10 +214,10 @@ const scatterChart = {
         scaleLabel: {   // To format the scale Lebel
           display: true,
           labelString: 'ATOM',
-          // fontColor: 'white',
+          fontColor: 'black'
         },
         ticks: {
-          // fontColor: 'white',
+          fontColor: 'black',
           // stepSize: 1000000,
           beginAtZero: true,
           callback: function (value) {
@@ -230,10 +230,10 @@ const scatterChart = {
         scaleLabel: {   // To format the scale Lebel
           display: true,
           labelString: 'Validator Index',
-          // fontColor: 'white',
+          fontColor: 'black'
         },
         ticks: {
-          // fontColor: 'white',
+          fontColor: 'black'
         }
       }]
     }

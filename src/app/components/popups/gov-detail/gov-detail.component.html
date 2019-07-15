@@ -3,59 +3,59 @@
     <div class="popup-row row main-row">
         <div class="px-0  p-lg-3 col-md-4">
           <div class="mb-5">
-            <mdb-card style="max-width: 100%;" class="text-left mat-elevation-z8 mb-3">
-                <mdb-card-header>
-                  <mdb-card-title>Detail</mdb-card-title>
-                </mdb-card-header>
-                <mdb-card-body>
-                  <mdb-card-title>
+            <mat-card  cdkDrag style="max-width: 100%;" class="text-left mat-elevation-z8 mb-3">
+                <mat-card-header>
+                  <mat-card-title>Detail</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <mat-card-title>
                     <h5 class="proposal-title mb-3">
                       {{proposal.proposal_content.value.title}}
                     </h5>
-                  </mdb-card-title>
-                  <mdb-card-text class="mb-0 text-left">
+                  </mat-card-title>
+                  <mat-card-content class="mb-0 text-left">
                     {{proposal.proposal_content.value.description}}
-                  </mdb-card-text>
+                  </mat-card-content>
                   <ul class="list-group">
                     <li *ngIf="proposal.proposer" class="list-group-item d-flex justify-content-between align-items-center">
                       Proposer
-                      <h3 style="cursor: pointer;" (click)="openAccountDialog(proposal.proposer)" class="glance-title"><mdb-badge color="pink">
+                      <h3 style="cursor: pointer;" (click)="openAccountDialog(proposal.proposer)" class="glance-title"><span class="badge">
                         <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( proposal.proposer ) : false; else elseVetoVoter">
                           {{ (validatorsState | async).validatorsMap.get( proposal.proposer )}}
                         </span>
                         <ng-template #elseVetoVoter>{{proposal.proposer}}</ng-template>
-                      </mdb-badge></h3>
+                      </span></h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Deposit
-                      <h3 class="glance-title"><mdb-badge color="pink">{{proposal.total_deposit[0].amount/1e6 | number:".2-2"}} ATOM</mdb-badge></h3>
+                      <h3 class="glance-title"><span class="badge">{{proposal.total_deposit[0].amount/1e6 | number:".2-2"}} ATOM</span></h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Status
-                      <h3 class="glance-title"><mdb-badge color="pink">
+                      <h3 class="glance-title"><span class="badge">
                         {{proposal.proposal_status}}
-                      </mdb-badge></h3>
+                      </span></h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Voting Start
-                      <h3 class="glance-title"><mdb-badge color="pink">{{ proposal.voting_start_time | date :'short' }}</mdb-badge></h3>
+                      <h3 class="glance-title"><span class="badge">{{ proposal.voting_start_time | date :'short' }}</span></h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Voting End
-                      <h3 class="glance-title"><mdb-badge color="pink">{{ proposal.voting_end_time | date :'short' }}</mdb-badge></h3>
+                      <h3 class="glance-title"><span class="badge">{{ proposal.voting_end_time | date :'short' }}</span></h3>
                     </li>
                   </ul>
-                </mdb-card-body>
-            </mdb-card>
+                </mat-card-content>
+            </mat-card>
           </div>
           <div class="mb-5">
-              <mdb-card class="mat-elevation-z8 mb-3">
-                <mdb-card-header>
-                  <mdb-card-title>At a Glance</mdb-card-title>
-                </mdb-card-header>
-                <mdb-card-body>
+              <mat-card  cdkDrag class="mat-elevation-z8 mb-3">
+                <mat-card-header>
+                  <mat-card-title>At a Glance</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
                   <div style="display: block" class="row">
-                    <canvas mdbChart
+                    <canvas baseChart
                       [chartType]="chartType"
                       [datasets]="chartDatasets"
                       [labels]="chartLabels"
@@ -66,18 +66,18 @@
                       (chartClick)="chartClicked($event)">
                     </canvas>
                   </div>
-                </mdb-card-body>
-              </mdb-card>
+                </mat-card-content>
+              </mat-card>
           </div>
         </div>
 
         <div class="px-0  p-lg-3 col-md-8">
             <div class="mb-5">
-              <mdb-card alignment="left" class="mat-elevation-z8 mb-3">
-                <mdb-card-header>
-                  <mdb-card-title>Votes</mdb-card-title>
-                </mdb-card-header>
-                <mdb-card-body class="px-0 p-lg-3 col-12">
+              <mat-card  cdkDrag alignment="left" class="mat-elevation-z8 mb-3">
+                <mat-card-header>
+                  <mat-card-title>Votes</mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="px-0 p-lg-3 col-12">
                     <mat-tab-group (selectedTabChange)="onTabChange($event);">
                             <mat-tab label="All">
                               <div class="row table-responsive text-nowrap">
@@ -196,15 +196,15 @@
                             </mat-tab>
                     </mat-tab-group>
                     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-                </mdb-card-body>
-              </mdb-card>
+                </mat-card-content>
+              </mat-card>
             </div>
             <div class="mb-5">
-              <mdb-card alignment="left" class="mat-elevation-z8 mb-3">
-                <mdb-card-header>
-                  <mdb-card-title>Deposit</mdb-card-title>
-                </mdb-card-header>
-                <mdb-card-body class="px-0 p-lg-3 col-12">
+              <mat-card  cdkDrag alignment="left" class="mat-elevation-z8 mb-3">
+                <mat-card-header>
+                  <mat-card-title>Deposit</mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="px-0 p-lg-3 col-12">
                     <div class="row table-responsive text-nowrap">
                           <table mat-table [dataSource]="depositDataSource" class="table large-header">
                             <ng-container matColumnDef="depositor">
@@ -229,8 +229,8 @@
                           </table> 
                           <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
                     </div>
-                </mdb-card-body>
-              </mdb-card>
+                </mat-card-content>
+              </mat-card>
             </div>
         </div>
     </div>

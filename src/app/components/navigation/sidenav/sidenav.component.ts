@@ -1,14 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { PopupService } from 'src/app/services/popup.service';
-import { AccountDetailComponent } from '../../popups/account-detail/account-detail.component';
-import { ValidatorComponent } from '../../popups/validator/validator.component';
-import { TxComponent } from '../../popups/tx/tx.component';
-import { BlockComponent } from '../../popups/block/block.component';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/state';
 import { ToggleTheme } from 'src/app/state/app/app.actions';
 import { selectActiveTheme } from 'src/app/state/app/app.reducers';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-sidenav',
@@ -19,15 +16,27 @@ export class SidenavComponent implements OnInit {
   activeRoute: string = "Pages";
   @ViewChild('sidenavRef') sidenav;
   theme$ = this.appStore.select(selectActiveTheme);
-  
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
+
   constructor(
+    private changeDetectorRef: ChangeDetectorRef, 
+    private media: MediaMatcher,
     private popupService: PopupService,
     private router: Router,
     private appStore: Store<State>
-  ) { }
-
-  ngOnInit() {
+  ) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
   }
+
+  ngOnDestroy() {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+
+
+  ngOnInit() { }
 
   onSearchBtnClick(query) {
     if(query.length === 45 && query.slice(0, 6) === "cosmos") {

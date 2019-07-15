@@ -1,39 +1,27 @@
 <div class="main-row">
-  <mdb-carousel [isControls]="true" 
-                class="carousel-multi-item multi-animation" 
-                [type]="'carousel-multi-item'" 
-                [interval]="'0'" 
-                [animation]="'slide'">
-  <mdb-carousel-item *ngFor="let item of slides; let i = index">
-    <!-- ----------- staus card ------------- -->
-    <div class="row">
-       <!--Grid column-->
-       <div class="d-inline-block flex-fill col-xl-3 col-md-6 my-4" 
-            [ngClass]="{'d-none d-md-block': cardIndex !== 0}" 
-            *ngFor="let card of item; let cardIndex = index">
-        <!--Card-->
-        <div class="card card-cascade cascading-admin-card">
-          <!--Card Data-->
-          <div class="admin-up">
-            <mdb-icon fas icon="{{card.icon}}" size="lg"></mdb-icon>
-            <div class="data">
-              <p>{{card.title}}</p>
-              <h4 class="h4-responsive">{{card.data}}</h4>
-            </div>
-          </div>
-          <!--/.Card Data-->
 
-          <!--Card content-->
-          <div class="card-body card-body-cascade">
-            <p class="card-text">last updated: {{card.timestamp}}</p>
+    <div  class="swiper-container" [swiper]="config" [(index)]="index">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide" *ngFor="let card of slides; let i = index">
+            <mat-card class="nav justify-content-center text-center">
+              <mat-card-header class="d-block">
+                <i class="fas {{card.icon}}"></i>
+                <mat-card-title>
+                  {{card.title}}
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <p>
+                  {{card.data}}
+                </p>
+                <p class="card-text">last updated: {{card.timestamp}}</p>
+              </mat-card-content>
+            </mat-card>
           </div>
-          <!--/.Card content-->
+
         </div>
-        <!--/.Card-->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
       </div>
-      <!--Grid column-->
-    </div>
-    <!-- ----------- staus card end ------------- -->
-  </mdb-carousel-item>
-</mdb-carousel>
 </div>

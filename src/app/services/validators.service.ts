@@ -36,9 +36,9 @@ export class ValidatorsService {
       for (const i in validators) {
         validators[i].rank = (Number(i) + 1);
 
-        // TODO @aakatev 5/28/19
+        // TOFIX @aakatev 7/14/19
         // Do this mapping on backend
-        if(validators[i].account.tokens === 0) {
+        if(validators[i].account.error) {
           validators[i].account = { 
             type: null, 
             value: { 
@@ -55,7 +55,6 @@ export class ValidatorsService {
           validators[i].account.value.coins = [{ amount: 0, denom: 'uatom' }];
         }
 
-        // console.log(validators[i].account)
       }
       // console.log(validators);
       this.appStore.dispatch(new UpdateValidators(validators));

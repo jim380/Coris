@@ -54,11 +54,6 @@ tr.tx-detail-row {
   color: #4CAF50;
 }
 
-
-.badge {
-  margin-left: 100px;
-}
-
 .copy-button {
   color:#3F51B5;
 }
@@ -69,7 +64,7 @@ tr.tx-detail-row {
   /* border-bottom: 1px solid transparent; */
 }
 
-mdb-card {
+mat-card {
   max-width: 100%;
 }
 
@@ -92,6 +87,7 @@ button {
 
 a:not([href]):hover,
 a:not([href]):active {
+  cursor: pointer;
     color: #FF4081;
     /* border-bottom: 1px solid transparent; */
     text-decoration: underline; 

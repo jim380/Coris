@@ -2,15 +2,16 @@
     <app-btn-close [link]="'block/'+block.height" [dialogRef]="dialogRef"></app-btn-close>
     <div class="popup-row row">
       <div class="px-0 p-lg-3 col-12">  
-        <mdb-card class="card-1 mat-elevation-z8">
-            <mdb-card-header>
-                <mdb-card-title>Block {{ block.height }}</mdb-card-title>
-            </mdb-card-header>
-            <mdb-card-body>
+        <mat-card  cdkDrag class="card-1 mat-elevation-z8">
+            <mat-card-header>
+                <mat-card-title>Block {{ block.height }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        Hash
-                        <h3 class="glance-title"><mdb-badge color="pink">
+                      Hash
+                      <h3 class="glance-title">
+                        <span class="badge">
                           {{ block.hash | slice:0:15 }} ...
                           <i 
                             class="ion-ios-copy copy-button" 
@@ -18,13 +19,14 @@
                             ngxClipboard 
                             [cbContent]="block.hash" 
                             (click)="onCopySucceess()"
-                            mdbTooltip="copy to clipboard" mdbTooltipPosition="above">
+                            matTooltip="copy to clipboard" matTooltipPosition="above">
                           </i>
-                        </mdb-badge></h3>
+                        </span>
+                      </h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Proposer
-                        <h3 class="glance-title"><mdb-badge color="pink">
+                        <h3 class="glance-title"><span class="badge">
                           <span *ngIf="(validatorsState | async).validatorsMap.size 
                             ? (validatorsState | async).validatorsMap.has(block.proposer) 
                             : false; else elseBlockProposer"
@@ -33,28 +35,28 @@
                           {{ (validatorsState | async).validatorsMap.get(block.proposer) }}
                           </span>
                           <ng-template #elseBlockProposer>{{block.proposer}}</ng-template>
-                        </mdb-badge>
+                        </span>
                       </h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Transactions
-                        <h3 class="glance-title"><mdb-badge color="pink">{{ block.txs }}</mdb-badge></h3>
+                        <h3 class="glance-title"><span class="badge">{{ block.txs }}</span></h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Timestamp
-                        <h3 class="glance-title"><mdb-badge color="pink">{{ block.time | ago | async }}</mdb-badge></h3>
+                        <h3 class="glance-title"><span class="badge">{{ block.time | ago | async }}</span></h3>
                     </li>
                 </ul>
-            </mdb-card-body>
-        </mdb-card>
+            </mat-card-content>
+        </mat-card>
     </div>
     <div class="px-0 p-lg-3 col-12">
       <div class="my-5">
-        <mdb-card alignment="left" class="mat-elevation-z8">
-          <mdb-card-header>
-            <mdb-card-title>Transactions</mdb-card-title>
-          </mdb-card-header>
-          <mdb-card-body class="p-0 px-lg-3">
+        <mat-card  cdkDrag alignment="left" class="mat-elevation-z8">
+          <mat-card-header>
+            <mat-card-title>Transactions</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="p-0 px-lg-3">
             <mat-tab-group (selectedTabChange)="onTabChange($event);">
                   <mat-tab label="All">
                     <div class="row table-responsive text-nowrap scrollbar-near-moon">
@@ -105,8 +107,8 @@
                   </mat-tab>
             </mat-tab-group>
             <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
-          </mdb-card-body>
-        </mdb-card>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
   </div>

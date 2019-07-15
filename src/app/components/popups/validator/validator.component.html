@@ -1,62 +1,53 @@
 <section>
     <app-btn-close [link]="'validator/'+validator.operator_address" [dialogRef]="dialogRef"></app-btn-close>
     <div class="popup-row row">
-        <!-- First column -->
         <div class="px-0 p-lg-3 col-lg-6 col-md-12">
-          <mdb-card class="rounded-0 testimonial-card">
-                <!--Bakcground color-->
-                <div style="height: 120px;" class="validator-mb-card"></div>
-          
-                <!--Avatar-->
-                <div class="avatar mx-auto">
-                  <img 
-                    src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
-                    class="rounded-circle">
-                </div>
-          
-                <mdb-card-body>
-                  <!--Name-->
-                  <mdb-card-title>
-                    <h1>{{ validator.description.moniker }}</h1>
-                    <a *ngIf="validator.description.website" href="{{ validator.description.website }}" target=" "><i class="ion-social-chrome"></i></a>
-                  </mdb-card-title>
-                  <hr>
-                  <!--Quotation-->
-                  <p>
-                    <i class="fas fa-quote-left"></i>&nbsp;{{ validator.description.details }}
-                  </p>
-          
-                  <mdb-tabset #staticTabs [buttonClass]="'md-tabs tabs-2 pills-pink white mb-2'" [contentClass]="'card'">
-                    <mdb-tab heading="Operator address">
-                      <div class="row">
-                        <div class="col-12">
-                          <p>{{ validator.operator_address }}</p>
-                        </div>
-                      </div>
-                    </mdb-tab>
-          
-                    <mdb-tab heading="Delegator address">
-                      <div class="row">
-                        <div class="col-12">
-                          <p (click)="openDelegatorDialog(validator.account.value.address)"
-                              style="cursor:pointer;">
-                            {{ validator.account.value.address }}
-                          </p>
-                        </div>
-                      </div>
-                    </mdb-tab>
-                  </mdb-tabset>
-                </mdb-card-body>
-          </mdb-card>
+          <mat-card cdkDrag>
+            <div class="avatar mx-auto">
+              <img 
+                src="https://ui-avatars.com/api/?size=50&name={{validator.description.moniker}}" 
+                class="rounded-circle">
+            </div>
+      
+            <mat-card-content>
+              <mat-card-title>
+                <h1>{{ validator.description.moniker }}</h1>
+                <a *ngIf="validator.description.website" href="{{ validator.description.website }}" target=" "><i class="ion-social-chrome"></i></a>
+              </mat-card-title>
+              <hr>
+              <p>
+                <i class="fas fa-quote-left"></i>&nbsp;{{ validator.description.details }}
+              </p>
+      
+              <mat-tab-group>
+                <mat-tab heading="Operator address">
+                  <div class="row">
+                    <div class="col-12">
+                      <p>{{ validator.operator_address }}</p>
+                    </div>
+                  </div>
+                </mat-tab>
+      
+                <mat-tab heading="Delegator address">
+                  <div class="row">
+                    <div class="col-12">
+                      <p (click)="openDelegatorDialog(validator.account.value.address)"
+                          style="cursor:pointer;">
+                        {{ validator.account.value.address }}
+                      </p>
+                    </div>
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+            </mat-card-content>
+          </mat-card>
         </div>
         <div class="px-0 p-lg-3 col-lg-6 col-md-12">
-          <!-- /.Panel -->
-          <!-- <div class="mb-5"> -->
-            <mdb-card alignment="left" class="rounded-0">
-              <mdb-card-header class="rounded-0">
-                <mdb-card-title>Delegations</mdb-card-title>
-              </mdb-card-header>
-              <mdb-card-body class="bg-transparent px-0 p-lg-3 col-12">
+            <mat-card cdkDrag alignment="left" class="rounded-0">
+              <mat-card-header class="rounded-0">
+                <mat-card-title>Delegations</mat-card-title>
+              </mat-card-header>
+              <mat-card-content class="bg-transparent px-0 p-lg-3 col-12">
                 <div class="card-body">
                   <div class="row table-responsive text-nowrap">
                         <table mat-table [dataSource]="delegationsDataSource" class="table large-header">
@@ -88,40 +79,33 @@
                         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
                   </div>
                 </div>
-              </mdb-card-body>            
-            </mdb-card>
-          <!-- </div> -->
-          <!-- /.Panel -->
+              </mat-card-content>            
+            </mat-card>
         </div>
-        <!-- /.First column -->
-        
-        <!-- Second column -->
         <div class="px-0 p-lg-3 col-lg-6 col-md-12">
-          <!--Panel-->
-          <!-- <div class="mb-5"> -->
-            <mdb-card alignment="left" class="rounded-0">
-            <mdb-card-header class="rounded-0">
-              <mdb-card-title>At a Glance</mdb-card-title>
-            </mdb-card-header>
-            <mdb-card-body>
+            <mat-card cdkDrag alignment="left" class="rounded-0">
+            <mat-card-header class="rounded-0">
+              <mat-card-title>At a Glance</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
               <div class="card-body">
                 <div class="row">
                   <div class="col-sm-4 col-12">
-                    <mdb-badge color="red">
+                    <span class="badge" color="red">
                       Rank
-                    </mdb-badge>
+                    </span>
                     <h4>{{ validator.rank }}</h4>
                   </div>
                   <div class="col-sm-4 col-12">
-                      <mdb-badge color="cyan">
+                      <span class="badge" color="cyan">
                         Voting Power
-                      </mdb-badge>
+                      </span>
                     <h4>{{ validator.tokens/1e6 | number:'.0-0' }}</h4>
                   </div>
                   <div class="col-sm-4 col-12">
-                      <mdb-badge color="amber darken-2">
+                      <span class="badge" color="amber darken-2">
                           Delegators
-                      </mdb-badge>
+                      </span>
                     <h4>
                       <span *ngIf="validator.delegations; else elseBlock">
                         {{ validator.delegations.length | number:'.0-0' }}
@@ -134,9 +118,9 @@
                 </div>
                 <div class="row">
                   <div class="col-sm-4 col-12">
-                    <mdb-badge color="lime">
+                    <span class="badge" color="lime">
                         Balance
-                    </mdb-badge>
+                    </span>
                     <h4>
                       <span *ngIf="validator.account.type; else balanceElseBlock" 
                               matTooltipPosition="above">
@@ -148,17 +132,17 @@
                     </h4>
                   </div>
                   <div class="col-sm-4 col-12">
-                    <mdb-badge color="purple darken-2">
+                    <span class="badge" color="purple darken-2">
                         Rewards
-                    </mdb-badge>
+                    </span>
                     <h4 *ngIf="validator.rewards">
                       {{validator.rewards[0].amount/1e6 | number:'.2-2'}}
                     </h4>
                   </div>
                   <div class="col-sm-4 col-12">
-                    <mdb-badge color="indigo">
+                    <span class="badge" color="indigo">
                       Outstanding Rewards
-                    </mdb-badge>
+                    </span>
                     <h4 *ngIf="validator.outstanding_rewards">
                       {{validator.outstanding_rewards[0].amount/1e6 | number:'.2-2'}} 
                     </h4>
@@ -166,39 +150,34 @@
                 </div>
                 <div class="row">
                   <div class="col-sm-4 col-12">
-                    <mdb-badge color="teal">
+                    <span class="badge" color="teal">
                       Commission
-                    </mdb-badge>
+                    </span>
                     <h4> {{ validator.commission?.rate | percent }} </h4>
                   </div>
                   <div class="col-sm-4 col-12">
-                    <mdb-badge color="yellow darken-2">
+                    <span class="badge" color="yellow darken-2">
                       Commision Max
-                    </mdb-badge>
+                    </span>
                     <h4>{{ validator.commission?.max_rate | percent }}</h4>
                   </div>
                   <div class="col-sm-4 col-12">
-                    <mdb-badge color="brown">
+                    <span class="badge" color="brown">
                       Commision Max Rate
-                    </mdb-badge>
+                    </span>
                     <h4>{{ validator.commission?.max_change_rate | percent }}</h4>
                   </div>
                 </div>
-                <!-- <a class="btn grey btn-rounded waves-effect waves-light text-white" mdbWavesEffect>Details</a> -->
               </div>
-            </mdb-card-body>
-            </mdb-card>
-          <!-- </div> -->
-          <!--/.Panel-->
+            </mat-card-content>
+            </mat-card>
         </div>
         <div class="px-0 p-lg-3 col-lg-6 col-md-12">
-          <!-- Panel -->
-          <!-- <div class="mb-5"> -->
-            <mdb-card alignment="left" class="rounded-0">
-              <mdb-card-header class="rounded-0">
-                <mdb-card-title>Transactions</mdb-card-title>
-              </mdb-card-header>
-              <mdb-card-body class="px-0 p-lg-3 col-12">
+            <mat-card cdkDrag alignment="left" class="rounded-0">
+              <mat-card-header class="rounded-0">
+                <mat-card-title>Transactions</mat-card-title>
+              </mat-card-header>
+              <mat-card-content class="px-0 p-lg-3 col-12">
                 <div class="card-body">
                           <mat-tab-group (selectedTabChange)="onTabChange($event);">
                             <mat-tab label="Staking">
@@ -258,9 +237,9 @@
                           </mat-tab-group>
                         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
                 </div>
-              </mdb-card-body>
-            </mdb-card>
-          <!-- </div> -->
+              </mat-card-content>
+            </mat-card>
         </div>   
   </div>
 </section>
+

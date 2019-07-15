@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ViewChildren, QueryList } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatTableDataSource, MatPaginator, MatDialogRef, MatCard } from '@angular/material';
 
 import { ToastrService } from 'ngx-toastr';
 import { TxsService } from 'src/app/services/txs.service';
@@ -38,6 +38,7 @@ export class ValidatorComponent implements OnInit {
 
 
   @ViewChildren(MatPaginator) paginators = new QueryList<MatPaginator>();
+  @ViewChildren(MatCard) matCards = new QueryList<MatCard>();
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -45,6 +46,7 @@ export class ValidatorComponent implements OnInit {
     private ts: TxsService, 
     private toastr: ToastrService,
     public dialogRef: MatDialogRef<ValidatorComponent>,
+    
   ) { 
     this.validator = data.validator;
   }
@@ -69,6 +71,7 @@ export class ValidatorComponent implements OnInit {
       });
     }   
     this.initDelegationsTable();
+    console.log(this.matCards);
   }
 
   public initDelegationsTable() {

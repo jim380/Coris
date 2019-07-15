@@ -22,9 +22,14 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
     background-color: #3F51B5;
   }  
 
+  .ticker {
+    font-size: 80%;
+    color: #FF4081;
+  }
+  
+
   .table-subtitle {
     color: #3F51B5;
-    font-size: 80%;
   }
 
   .mat-row:nth-child(even){
@@ -39,29 +44,44 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
     color: #ffffff;
   }
 
-  .ticker {
-    font-size: 80%;
-    color: #3F51B5;
+  mat-card-title {
+    color: mat-color($light-accent);
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow:ellipsis;
   }
+
   
-  mdb-card-title {
-    color: white;
+  .badge {
+    background-color: mat-color($light-accent);
+    color: #ffffff;
+    font-size: 0.9rem;
   }
-  
-  mdb-card-header,
-  .validator-mb-card {
-    background-color: #3F51B5;
-  }
-  
+
   .title {
     font-weight: 500;
     color: black;
   }
-    
-  .cascading-admin-card .admin-up mdb-icon {
-    background-color: #3f51b5;
+
+  .mat-dialog-container {
+    background: transparent;
   }
   
+  
+  .toolbar-nav-logo:link,
+  .toolbar-nav-logo:visited {
+    color: white;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .toolbar-nav-logo:hover,
+  .toolbar-nav-logo:active {
+    color: #FF4081;
+    text-decoration: underline; 
+  }
+
+
   a:link,
   a:visited {
     color: black;
@@ -96,13 +116,22 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
   .form-control-mobile::placeholder{
     color: #FF4081;
     font-size: 65%;
-  }  
+  } 
+  
+  .btn-primary {
+    background-color: mat-color($light-primary);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    color: black;
+  }
     
 }
 
 
-$dark-primary: mat-palette($mat-cyan, A200);
-$dark-accent: mat-palette($mat-pink, A200, A100, A400);
+$dark-primary: mat-palette($mat-blue-gray, 300);
+$dark-accent: mat-palette($mat-green, A200);
 $dark-warn: mat-palette($mat-red);
 $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
@@ -115,32 +144,30 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   }
 
   .mat-header-row {
-    background-color: #353b50;
+    background-color: mat-color($dark-primary);
   }  
 
-  // .mat-row:nth-child(even){
-  //   background-color: #757575;
-  // }
-
-  // .mat-row:nth-child(odd){
-  //   background-color: #424242;
-  // }
-
-  .mat-card {
-    background-color: inherit;
-  }  
-
-  mdb-card-title {
-    color: #ff4081;
+  mat-card-title {
+    color: mat-color($dark-accent);
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow:ellipsis;
   }
 
   .mat-table {
-    background: #ffffff;
+    background: #212121;
   }
-  
-  mdb-card-header,
-  .validator-mb-card {
-    background-color: #353b50;
+
+  .badge {
+    background-color: mat-color($dark-accent);
+    font-size: 0.9rem;
+    color: #616161;
+  }
+
+
+  .btn-primary {
+    background-color: mat-color($dark-accent);
+    color: white;
   }
 
   .mat-cell {
@@ -152,13 +179,17 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
     color: #ffffff;
   }
 
+  .mat-dialog-container {
+    background: transparent;
+  }
+
   .title {
     font-weight: 500;
     color:#ffffff;
   }
 
-  .card {
-    background-color: #353b50;
+  .mat-card {
+    background-color: mat-color($dark-primary);
   }
 
   .form-control-mobile::placeholder{
@@ -170,10 +201,6 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
     border: 2px solid #40c6c6 !important;
     background-color: transparent !important;
     color: #40c6c6 !important;
-  }
-
-  .cascading-admin-card .admin-up mdb-icon {
-    background-color: #40c6c6;
   }
 
   .list-group-item {
@@ -192,6 +219,21 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
     color: #FF4081;
     text-decoration: underline; 
   }
+
+
+  .toolbar-nav-logo:link,
+  .toolbar-nav-logo:visited {
+    color: black;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .toolbar-nav-logo:hover,
+  .toolbar-nav-logo:active {
+    color: #FF4081;
+    text-decoration: underline; 
+  }
+
 
   .fail {
     color: #FF5722;/*#00796b;*/
@@ -239,8 +281,8 @@ td {
 }
 
 .mat-header-cell, .mat-cell {
-  font-size: 20px;
-  font-family: 'Lato', 'Arial', sans-serif;
+  font-size: 1.0rem;
+  font-family: 'Roboto', 'Arial', sans-serif;
   font-weight: 300;
   text-rendering: optimizeLegibility;
   vertical-align: middle;
@@ -259,5 +301,3 @@ td {
   float: right !important;
   margin-right: 60px !important;
 }
-
-

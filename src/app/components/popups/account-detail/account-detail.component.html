@@ -2,60 +2,56 @@
   <app-btn-close [link]="'account/'+delegator.address" [dialogRef]="dialogRef"></app-btn-close>
   <div class="popup-row row">
     <div class="px-0 col-12">
-      <mdb-card class="testimonial-card mat-elevation-z8 mb-3">
-        <mdb-card-header>
-          <mdb-card-title>{{ delegator.address }}</mdb-card-title>
-        </mdb-card-header>
-        <mdb-card-body >
-          <div class="card">
-            <div class="card-body">
-              
-              <div class="row">
-                <div class="col-sm-4 col-12">
-                  <h4 class="glance-title"><mdb-badge color="red">Available</mdb-badge></h4>
-                  <h4>{{ delegator.balance.available/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
-                </div>
-                <div class="col-sm-4 col-12">
-                  <h4 class="glance-title"><mdb-badge color="cyan">Delegated</mdb-badge></h4>
-                  <h4>{{ delegator.balance.delegated/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
-                </div>
-                <div class="col-sm-4 col-12">
-                  <h4 class="glance-title"><mdb-badge color="amber darken-2">Rewards</mdb-badge></h4>
-                  <h4>{{ delegator.balance.rewards/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
-                </div>
+      <mat-card  cdkDrag class="mat-elevation-z8 mb-3">
+        <mat-card-header>
+          <mat-card-title>{{ delegator.address }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="card-body">
+            
+            <div class="row">
+              <div class="col-sm-4 col-12">
+                <h4 class="glance-title"><span class="badge" color="red">Available</span></h4>
+                <h4>{{ delegator.balance.available/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
               </div>
-
-              <div class="row">
-                <div class="col-sm-4 col-12">
-                  <h4 class="glance-title"><mdb-badge color="lime">Unbonding</mdb-badge></h4>
-                  <h4>{{ delegator.balance.unbonding/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
-                </div>
-                <div class="col-sm-4 col-12">
-                  <h4 class="glance-title"><mdb-badge color="purple darken-2">Total</mdb-badge></h4>
-                  <h4>{{ delegator.balance.total/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
-                </div>
-                <div class="col-sm-4 col-12">
-                  <h4 class="glance-title"><mdb-badge color="indigo">Total $</mdb-badge></h4>
-                  <h4> 
-                  {{ ((delegator.balance.total/1e6) * quoteUsd) | number:".2-2" }}&nbsp;USD
-                  </h4>
-                </div>
+              <div class="col-sm-4 col-12">
+                <h4 class="glance-title"><span class="badge" color="cyan">Delegated</span></h4>
+                <h4>{{ delegator.balance.delegated/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
               </div>
-              <a class="btn pink btn-rounded waves-effect waves-light text-white" mdbWavesEffect>At a Glance</a>
+              <div class="col-sm-4 col-12">
+                <h4 class="glance-title"><span class="badge" color="amber darken-2">Rewards</span></h4>
+                <h4>{{ delegator.balance.rewards/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
+              </div>
             </div>
+
+            <div class="row">
+              <div class="col-sm-4 col-12">
+                <h4 class="glance-title"><span class="badge" color="lime">Unbonding</span></h4>
+                <h4>{{ delegator.balance.unbonding/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
+              </div>
+              <div class="col-sm-4 col-12">
+                <h4 class="glance-title"><span class="badge" color="purple darken-2">Total</span></h4>
+                <h4>{{ delegator.balance.total/1e6 | number:".2-2" }}&nbsp;ATOM</h4>
+              </div>
+              <div class="col-sm-4 col-12">
+                <h4 class="glance-title"><span class="badge" color="indigo">Total $</span></h4>
+                <h4> 
+                {{ ((delegator.balance.total/1e6) * quoteUsd) | number:".2-2" }}&nbsp;USD
+                </h4>
+              </div>
+            </div>
+            <a class="btn pink btn-rounded waves-effect waves-light text-white">At a Glance</a>
           </div>
-        </mdb-card-body>
-      </mdb-card>
-      <div class="px-0 col-12">
-        <div class="card mat-elevation-z8 mb-3">
-          <mdb-card-header>
-            <mdb-card-title>Transactions (Last 100 blocks)</mdb-card-title>
-          </mdb-card-header>
-          <mdb-card-body class="px-0">
-            <app-txs-list-card [address]="delegator.address"></app-txs-list-card>
-          </mdb-card-body>
-        </div>
-      </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card cdkDrag class="mat-elevation-z8 mb-3">
+        <mat-card-header>
+          <mat-card-title>Transactions (Last 100 blocks)</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="px-0">
+          <app-txs-list-card [address]="delegator.address"></app-txs-list-card>
+        </mat-card-content>
+      </mat-card>
     </div>   
   </div>
 </section>
