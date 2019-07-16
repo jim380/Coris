@@ -40,40 +40,10 @@
               </li>
             </ul>
           </li>
-          <!--/Social-->
-          <!--Search Form-->
-          <!-- <li>
-            <form class="search-form" role="search">
-              <div class="form-group md-form mt-0 pt-1 waves-light" mdbWavesEffect>
-                <input #mobileSearchQueryRef type="text" class="form-control" placeholder="enter here">
-                <button (click)="onMobileSearchBtnClick(mobileSearchQueryRef.value)" mdbBtn color="white" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
-              </div>
-            </form>
-          </li> -->
-          <!--/.Search Form-->
-          <!-- Side navigation links -->
           <li>
             <ul class="collapsible collapsible-accordion">
               <mdb-accordion [multiple]="false" aria-multiselectable="false">
-    
-                <!-- Collapsible link -->
-                <!-- <mdb-accordion-item>
-                  <mdb-accordion-item-head mdbWavesEffect>
-                    <i class="fas fa-chevron-right"></i> Menu 1
-                  </mdb-accordion-item-head>
-                  <mdb-accordion-item-body>
-                    <ul>
-                      <li>
-                        <a href="#" mdbWavesEffect>Link 1</a>
-                      </li>
-                      <li>
-                        <a href="#" mdbWavesEffect>Link 2</a>
-                      </li>
-                    </ul>
-                  </mdb-accordion-item-body>
-                </mdb-accordion-item> -->
-    
-                <!-- Simple link -->
+ 
                 <mdb-accordion-item class="no-collase">
                   <mdb-accordion-item-head routerLinkActive="active" mdbWavesEffect routerLink="/validators">
                     <i class="fas fa-users"></i> Validators
@@ -81,24 +51,6 @@
                   <mdb-accordion-item-body></mdb-accordion-item-body>
                 </mdb-accordion-item>
     
-                <!-- Collapsible link -->
-                <!-- <mdb-accordion-item>
-                  <mdb-accordion-item-head mdbWavesEffect>
-                    <i class="far fa-eye"></i> Collapsible menu 2
-                  </mdb-accordion-item-head>
-                  <mdb-accordion-item-body>
-                    <ul>
-                      <li>
-                        <a href="#" mdbWavesEffect>Link 1</a>
-                      </li>
-                      <li>
-                        <a href="#" mdbWavesEffect>Link 2</a>
-                      </li>
-                    </ul>
-                  </mdb-accordion-item-body>
-                </mdb-accordion-item> -->
-    
-                <!-- Simple link -->
                 <mdb-accordion-item class="no-collase">
                   <mdb-accordion-item-head routerLinkActive="active" mdbWavesEffect routerLink="/blocks">
                     <i class="fa fa-cubes"></i> Blocks
@@ -129,11 +81,9 @@
               </mdb-accordion>
             </ul>
           </li>
-          <!--/. Side navigation links -->
         </links>
         <div class="sidenav-bg mask-strong"></div>
       </mdb-side-nav>
-      <!--/. Sidebar navigation -->
     
       <!-- Navbar -->
       <mdb-navbar SideClass="navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav"
@@ -201,49 +151,11 @@
               </a>
             </li>
 
-            <!-- <li class="nav-item dropdown btn-group" dropdown>
-              <a dropdownToggle type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-                <i class="fa fa-bookmark"></i>
-                <h3 class="clearfix d-none d-sm-inline-block">{{ activeRoute }}</h3>
-              </a>
-              <div class="dropdown-menu dropdown-primary dropdown-menu-right" role="menu">
-                <a class="dropdown-item" mdbWavesEffect routerLink="/validators">
-                  <i class="fa fa-users"></i>
-                  Validator
-                </a>
-                <a class="dropdown-item" mdbWavesEffect routerLink="/blocks">
-                  <i class="fa fa-cubes"></i>
-                  Blocks
-                </a>
-                <a class="dropdown-item" mdbWavesEffect routerLink="/txs">
-                  <i class="fa fa-tasks"></i>
-                  Transactions
-                </a>
-                <a class="dropdown-item" mdbWavesEffect routerLink="/gov">
-                  <i class="fa fa-university"></i>
-                  Governance
-                </a>
-              </div>
-            </li> -->
 
-            <!-- <li class="nav-item dropdown btn-group" dropdown>
-              <a dropdownToggle type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-                <i class="fa fa-globe"></i>
-                <h3 class="clearfix d-none d-sm-inline-block">Network</h3>
-              </a>
-              <div class="dropdown-menu dropdown-primary dropdown-menu-right" role="menu">
-                <a class="dropdown-item">MainNet</a>
-                <a class="dropdown-item">Testnet</a>
-                <a class="dropdown-item">Stay tuned</a>
-              </div>
-            </li> -->
           </ul>
         </navlinks>
       </mdb-navbar>
-      <!--/. Navbar -->
     </header>
-    <!--/.Double navigation-->
-    <!--Main Layout-->
     <main>
         <body>
           <div class="fixed-action-btn d-xl-none" style="top: 100px; right: 24px;">
@@ -270,12 +182,8 @@
           </ng-template>
           
           <app-status-bar></app-status-bar>
-          <!-- <app-validator></app-validator> -->
-          <!-- <app-carousel></app-carousel> -->
-          <!-- <app-test></app-test> -->
           <router-outlet (activate)="onRouterEvent($event)"></router-outlet>
           <app-scroll-top></app-scroll-top>
           <app-footer></app-footer>
         </body>
     </main>
-    <!--/Main layout-->

@@ -3,7 +3,7 @@ import { take, skipWhile, map, catchError } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Observable, forkJoin, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { nodeRpc1 } from '../../config.js'
+import { nodeRpc1 } from '../../config'
 import { Block } from '../interfaces/block.interface';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material';

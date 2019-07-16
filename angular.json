@@ -27,7 +27,6 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/ionicons/dist/scss/ionicons.scss",
               "src/app/vendors/css/normalize.scss",
               "src/app/vendors/css/grid.scss",
               "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
@@ -42,7 +41,6 @@
             ],
             "scripts": [
               "node_modules/chart.js/dist/Chart.js",
-              "node_modules/easy-pie-chart/dist/easypiechart.js",
               "node_modules/screenfull/dist/screenfull.js",
               "node_modules/hammerjs/hammer.min.js"
             ]
@@ -99,14 +97,10 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.scss",
               "src/app/vendors/css/normalize.scss",
               "src/app/vendors/css/grid.scss",
-              "node_modules/ionicons/dist/scss/ionicons.scss",
+              "src/styles.scss",
               "src/app/theme.scss"
-            ],
-            "scripts": [
-              "src/app/vendors/js/app.js"
             ],
             "assets": [
               "src/favicon.ico",

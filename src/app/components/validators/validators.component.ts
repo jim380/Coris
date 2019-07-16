@@ -93,7 +93,7 @@ export class ValidatorsComponent implements OnInit, AfterViewInit {
       case 'tokens': return Number(item.tokens);
       case 'balance': return ( item.account.value && item.account.value.coins ) ? Number( item.account.value.coins[0].amount ) : 0;
       case 'delegations': return item.delegations ? item.delegations.length : 0;
-      case 'self_bond': return item.self_bond ? item.self_bond : 0;
+      case 'self_bond_total': return item.self_bond_total ? item.self_bond_total : 0;
       case 'commission': return item.commission.rate;
       default: return item[property];
       }

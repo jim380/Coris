@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { nodeWs } from '../../config.js';
+import { nodeWs } from '../../config';
 import { 
   unsubAllMsg, 
   subRoundMsg, 

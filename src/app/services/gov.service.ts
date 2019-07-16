@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { nodeRpc1 } from './../../config.js';
+import { nodeRpc1 } from './../../config';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
-import { ChartsModule } from 'ng2-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material.module';
 import { ClipboardModule } from 'ngx-clipboard';
@@ -113,7 +112,6 @@ export class MyHammerConfig extends HammerGestureConfig {
     MaterialModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ChartsModule,
     ClipboardModule,
     [
       StoreModule.forRoot(reducers)

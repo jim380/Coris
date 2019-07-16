@@ -116,7 +116,7 @@ export class ChartCardsComponent implements OnInit {
     .subscribe( (count) => { 
       // console.log(validatorsArray[count]);
       this.scatterChartData[0].data.push({ x: count+1, y: validatorsArray[count].tokens, r: 3});
-      this.scatterChartData[1].data.push({ x: count+1, y: validatorsArray[count].self_bond, r: 3 });
+      this.scatterChartData[1].data.push({ x: count+1, y: validatorsArray[count].self_bond_total, r: 3 });
       this.scatterChartData[2].data.push({ x: count+1, y: Number(validatorsArray[count].account.value.coins[0].amount), r: 3});
       
       if( validatorsArray[count].outstanding_rewards ) {

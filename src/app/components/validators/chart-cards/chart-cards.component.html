@@ -16,7 +16,7 @@
       </div>
       <mdb-card-body class="text-center">
         <span mdbTooltip="Last 100 blocks" placement="top">
-          <i class="ion-ios-clock"></i>&nbsp;Block Time  
+          <mdb-icon far icon="clock"></mdb-icon>&nbsp;Block Time  
         </span>        
       </mdb-card-body>
     </div>
@@ -38,7 +38,7 @@
       </canvas>
       </div>
       <mdb-card-body class="text-center">
-        <i class="ion-stats-bars"></i>&nbsp;Commission Distribution 
+        <mdb-icon far icon="chart-bar"></mdb-icon>&nbsp;Commission Distribution 
       </mdb-card-body>
     </div>
   </div>
@@ -47,16 +47,17 @@
   <div class="col-xl-4 col-12 mb-5">   
     <div class="card card-cascade narrower">  
       <div class="view view-cascade gradient-card-header mdb-color lighten-4">
-        <canvas baseChart
+        <canvas mdbChart
           [datasets]="scatterChartData"
           [options]="scatterChartOptions"
           [chartType]="scatterChartType"
           [labels]="scatterChartLabels"
-          [colors]="scatterChartColors">
+          [colors]="scatterChartColors"
+          [legend]="true">
         </canvas>
       </div>
       <mdb-card-body class="text-center">
-        <i class="ion-flash"></i>&nbsp;Voting Power
+        <mdb-icon fas icon="users"></mdb-icon>&nbsp;Voting Power
       </mdb-card-body>  
     </div>  
   </div>

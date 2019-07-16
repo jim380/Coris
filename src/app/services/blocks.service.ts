@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable, of, Subject, range, BehaviorSubject, forkJoin } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, takeLast, take, mergeMap, concatMap, skipWhile } from 'rxjs/operators';
-import { nodeRpc1, nodeRpc2 } from '../../config.js';
+import { nodeRpc1, nodeRpc2 } from '../../config';
 import { selectBlocks, selectBlocksState } from '../state/blocks/blocks.reducers';
 import { selectAppState } from '../state/app/app.reducers';
 import { selectConsensusHeight } from '../state/consensus/consensus.reducers';

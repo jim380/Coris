@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import { Observable, of } from 'rxjs';
-import { nodeRpc1, nodeRpc2 } from '../../config.js'
+import { nodeRpc1, nodeRpc2 } from '../../config'
 
 
 @Injectable({

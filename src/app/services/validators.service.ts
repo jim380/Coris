@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { HttpClient } from '@angular/common/http';
-import { nodeRpc1 } from '../../config.js';
+import { nodeRpc1 } from '../../config';
 import { decodeBech32, fromWords } from '../lib/bech32';
 import { hex } from '../lib/hex';
 import { sha256 } from 'js-sha256';

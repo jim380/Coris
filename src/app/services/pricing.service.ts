@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
-import { nodeRpc1,appApi } from '../../config.js';
+import { nodeRpc1,appApi } from '../../config';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State } from '../state/index.js';

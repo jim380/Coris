@@ -116,13 +116,13 @@
       </ng-container>
       
       <ng-container matColumnDef="bond">
-        <th mat-sort-header="self_bond" mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-log-in"></i>&nbsp;Self-Bond</th>
+        <th mat-sort-header="self_bond_total" mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-log-in"></i>&nbsp;Self-Bond</th>
         <td mat-cell *matCellDef="let validator">
-          {{validator.self_bond/1e6 | number:'.0-0'}} <span class="ticker">ATOM</span>
+          {{validator.self_bond_total/1e6 | number:'.0-0'}} <span class="ticker">ATOM</span>
           <br>
           <span class="table-subtitle" matTooltip="Percentage" matTooltipPosition="above">
             <i class="ion-calculator"></i>&nbsp;
-            {{ validator.self_bond / validator.tokens | percent:'.2-2' }}
+            {{ validator.self_bond_total / validator.tokens | percent:'.2-2' }}
           </span>
         </td>
       </ng-container>

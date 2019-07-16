@@ -23,6 +23,6 @@ export interface Validator {
   distribution: any;
   account: any;
   delegations: any;
-  self_bond: Number;
+  self_bond_total: Number;
 };
   
