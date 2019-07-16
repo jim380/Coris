@@ -10,10 +10,12 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
 .light-theme {
   @include angular-material-theme($light-theme);
   
-  html, body {
+  html, body, section {
     background: white;
     color: black;
   }
+
+
   .mat-cell {
     color: black;
   }
@@ -52,7 +54,10 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
   .validator-mb-card {
     background-color: #3F51B5;
   }
-  
+
+  .mat-table {
+    background:  #3F51B5;
+  }
   .title {
     font-weight: 500;
     color: black;
@@ -109,7 +114,7 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 .dark-theme {
   @include angular-material-theme($dark-theme);
 
-  html, body {
+  html, body, section {
     background: #424242;
     color: #ffffff;
   }
@@ -127,7 +132,7 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   }
 
   .mat-table {
-    background: #ffffff;
+    background: #353b50;
   }
   
   mdb-card-header,
@@ -197,7 +202,6 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
     background-color: inherit;
   }
 }
-
 
 .row {
   max-width: 90%;

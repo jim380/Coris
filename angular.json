@@ -27,8 +27,6 @@
               "src/assets"
             ],
             "styles": [
-              "src/app/vendors/css/normalize.scss",
-              "src/app/vendors/css/grid.scss",
               "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss",
               "node_modules/@fortawesome/fontawesome-free/scss/solid.scss",
               "node_modules/@fortawesome/fontawesome-free/scss/regular.scss",
@@ -97,8 +95,6 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/app/vendors/css/normalize.scss",
-              "src/app/vendors/css/grid.scss",
               "src/styles.scss",
               "src/app/theme.scss"
             ],

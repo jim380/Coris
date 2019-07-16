@@ -1,8 +1,3 @@
-.status-bar {
-    // margin-top: 80px;
-    margin-bottom: 10px;
-}
-
 .header-subtitle {
     font-size: 150%;
     margin-bottom: 0;
@@ -16,11 +11,6 @@
     padding: 20px 15px 0 0;
 }
 
-// @media screen and (max-width: 768px) {
-//     .row {
-//         max-width: 95%; /*1140px or in %*/
-//     }
-// }
 
 .mdbTooltip {
     height: 35px !important;
@@ -53,9 +43,6 @@
     margin-bottom: 0;
 }
 
-// .ng-tns-c4-5 {
-//     padding: 0;
-// }
 
 .col-12, .col-lg-3, .col-md-6, .w-25, .query-card-wrapper {
     padding-right: 0;
@@ -74,4 +61,8 @@ a:active {
 
 .right {
     float: right;
+}
+
+.mt-5 {
+  margin-top: 5rem !important;
 }

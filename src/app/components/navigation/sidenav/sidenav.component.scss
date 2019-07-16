@@ -21,9 +21,6 @@ h5 .mb-0 {
   padding-left: 0;
 }
 
-.active {
-  color: #F8BBD0 !important
-}
 
 .alpha-chip {
   margin-left: 10px; 
@@ -31,7 +28,7 @@ h5 .mb-0 {
 
 a:hover,
 a:active {
-    text-decoration: none; 
+  text-decoration: none; 
 }
 
 .theme-toggle {
@@ -40,4 +37,14 @@ a:active {
   right: 0;
   margin-right: 30px;
   margin-bottom: 30px;
+}
+
+
+.active {
+  color: #F8BBD0 !important
+}
+
+
+.nav-link:hover {
+  color: #e83e8c !important;
 }

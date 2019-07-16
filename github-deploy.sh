@@ -6,7 +6,7 @@ account=aakatev
 cd distr && git init
 git remote add origin git@github.com:$account/$repo.git
 git add .
-git commit -m 'Deployed to GitHub pages using bash'
+git commit -m"Deployed to GitHub pages using bash"
 git push origin master -f
 
 # cd -

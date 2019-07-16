@@ -1,9 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PopupService } from 'src/app/services/popup.service';
-import { AccountDetailComponent } from '../../popups/account-detail/account-detail.component';
-import { ValidatorComponent } from '../../popups/validator/validator.component';
-import { TxComponent } from '../../popups/tx/tx.component';
-import { BlockComponent } from '../../popups/block/block.component';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/state';
@@ -55,7 +51,6 @@ export class SidenavComponent implements OnInit {
 
 
   onRouterEvent(e) {
-    // console.log(this.router.url);
     switch (this.router.url) {
       case "/validators":
           this.activeRoute = "Validator";
@@ -74,7 +69,7 @@ export class SidenavComponent implements OnInit {
         break;
       
       default:
-        this.activeRoute = "Pages";
+        this.activeRoute = "";
         break;
     }
   }
