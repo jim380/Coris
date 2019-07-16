@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { HttpClient } from '@angular/common/http';
 import { nodeRpc1 } from '../../config.js';
 import { decodeBech32, fromWords } from '../lib/bech32';
 import { hex } from '../lib/hex';
 import { sha256 } from 'js-sha256';
-import { map, mergeMap, catchError, concatAll, skipWhile } from 'rxjs/operators';
+import { skipWhile } from 'rxjs/operators';
 import { ApiService } from './api.service';
 import { UpdateValidators, UpdateValidatorsMap } from '../state/validators/validators.actions';
 import { selectValidators, selectValidatorsState } from '../state/validators/validators.reducers';
@@ -36,9 +36,9 @@ export class ValidatorsService {
       for (const i in validators) {
         validators[i].rank = (Number(i) + 1);
 
-        // TODO @aakatev 5/28/19
+        // TOFIX @aakatev 7/14/19
         // Do this mapping on backend
-        if(validators[i].account.tokens === 0) {
+        if(validators[i].account.error) {
           validators[i].account = { 
             type: null, 
             value: { 
@@ -55,7 +55,6 @@ export class ValidatorsService {
           validators[i].account.value.coins = [{ amount: 0, denom: 'uatom' }];
         }
 
-        // console.log(validators[i].account)
       }
       // console.log(validators);
       this.appStore.dispatch(new UpdateValidators(validators));
@@ -114,49 +113,10 @@ export class ValidatorsService {
   getAccountBalance(address) {
     return this.http.get(`${nodeRpc1}/bank/balances/${address}`);
   }
-  
-  // @aakatev
-  // TODO
-  // Move on back end
+    
   getValidatorAvatars(validator) {
     return new Promise(async resolve => {
-      // TODO @aakatev
-      // Comment out later after setting up keybase auth
-      //
-      // let regex = await validator.description.moniker.replace(/\s/g, '').match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]*/i)[0];
-      // this.http.get(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${regex}&fields=pictures`)
-      //   .subscribe(async data => {
-      //     // Debugging
-      //     // console.log(`https://keybase.io/_/api/1.0/user/lookup.json?usernames=${validator.data.description.moniker.replace(/\s/g, '')}&fields=pictures`);
-      //     // console.log(data['them']);
-      //     // Debugging regex to parse moniker
-      //     // console.log(validator.data.description.moniker.replace(/\s/g, '').match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]*/i)[0]);
-      //     if (data['status'].code === 0) {
-      //       validator.keybase = data['them'];
-      //       if(data['them'][0] !== null && data['them'][0].pictures !== undefined) {
-      //         validator.picture = data['them'][0].pictures.primary.url;
-      //       }
-      //     } else {
-      //       validator.keybase = [null];
-      //     }
-      //     resolve();
-      //   });
-      // End comment out later
       validator.keybase = [null];
     });
   }
-
-  // TOFIX @aakatev 
-  // remove or move to back end
-  // calculateTotalVotingPower() {
-  //   return new Promise (async resolve => {
-  //     for (const validator of this.validatorsStore) {
-  //       this.totalStake += await Number(validator['tokens']);
-  //       this.appStore.dispatch(new UpdateTotalStake(this.totalStake));
-  //       // TODO remove debugging
-  //       // console.log(this.totalStake);
-  //     }
-  //     resolve();
-  //   });
-  // }
 }

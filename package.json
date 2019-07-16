@@ -36,7 +36,7 @@
     "material-design-icons": "^3.0.1",
     "ng-uikit-pro-standard": "git+https://oauth2:ULKdG4NuUxzJcpQFspxF@git.mdbootstrap.com/mdb/angular/ng-uikit-pro-standard.git",
     "ng2-charts": "^2.2.2",
-    "ngx-clipboard": "^12.0.0",
+    "ngx-clipboard": "^12.1.1",
     "ngx-toastr": "^10.0.4",
     "rxjs": "~6.5.2",
     "screenfull": "^3.3.0",

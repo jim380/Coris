@@ -12,6 +12,7 @@ export class ApiService {
   ) { }
 
   fetchValidators$() {
-    return this.httpClient.get(`${appApi}/validators`);
+    // return this.httpClient.get(`${appApi}/validators`);
+    return this.httpClient.get(`https://libration.xyz/api/validators`);
   }
 }
