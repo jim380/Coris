@@ -87,7 +87,8 @@ export class PricingService {
   }
 
   getAtomPrice():Observable<any> {
-    return this.httpClient.get(`${appApi}/marketcap/atom`);
+    // return this.httpClient.get(`${appApi}/marketcap/atom`);
+    return new Observable(null);
   }
 
   getInflation():Observable<any> {

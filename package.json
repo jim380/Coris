@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "bundle": "ng build --prod --build-optimizer --output-path distr"
+    "bundle": "ng build --prod --build-optimizer --output-path distr",
+    "deploy": "npm run bundle && mv distr deploy && cd deploy && docker-compose up && cd -"
   },
   "private": true,
   "dependencies": {
