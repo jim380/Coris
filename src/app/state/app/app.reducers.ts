@@ -29,8 +29,8 @@ export function appReducers(appState = initialAppState, action): AppState {
 export const initialAppState: AppState = {
   network: 'regen-test-1001',
   themes: [
-    'light-theme',
     'dark-theme',
+    'light-theme',
   ]
 };
 

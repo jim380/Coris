@@ -110,9 +110,9 @@ export class ChartCardsComponent implements OnInit {
 
   initScatterChart(validatorsArray: any[]) {
     // TODO remove debugging
-    console.log(validatorsArray);
+    // console.log(validatorsArray);
   validatorsArray.map( (element, count) => { 
-      console.log(element);
+      // console.log(element);
       if(element) {
         this.scatterChartData[0].data.push({ x: count+1, y: element.tokens, r: 3});
         this.scatterChartData[1].data.push({ x: count+1, y: element.self_bond_total, r: 3 });

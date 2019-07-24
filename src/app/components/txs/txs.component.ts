@@ -29,7 +29,7 @@ import { skipWhile, take, map } from 'rxjs/operators';
   ],
 })
 export class TxsComponent implements OnInit {
-  public INITIAL_TXS_COUNT = 1;
+  public INITIAL_TXS_COUNT = 0;
 
   private dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
   // private paginator: MatPaginator;
