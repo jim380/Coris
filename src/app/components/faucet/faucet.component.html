@@ -1,25 +1,20 @@
 <div class="container my-3">
   <div class="jumbotron text-center card">
     <h2 class="card-title h2">
-      <span class="text-secondary">Faucet:</span> {{((faucet$|async).address)}}
+      Serving from <mat-chip class="chip" color = "primary" selected>{{((faucet$|async).address)}}</mat-chip><br>
+      Balance <mat-chip class="chip" color = "primary" selected>{{((faucet$|async).coins[0].amount | number:'.0-0')}} {{((faucet$|async).coins[0].denom)}}</mat-chip>
     </h2>
-    <p class="text-left blue-text my-4 font-weight-bold">
-      <span class="text-secondary">Funds Available:</span> {{((faucet$|async).coins[0].amount)}} {{((faucet$|async).coins[0].denom | titlecase)}}
-    </p>
-  
     <hr class="my-4">
     <!-- Grid row -->
     <div class="row d-flex justify-content-center">
       <!-- Grid column -->
       <div class="col-12 pb-2">
         <p class="card-text">
-          <span class="text-secondary">Welcome!</span>
-          Please enter your account address below, and we will be glad to send you some Trees!
+          Per request sends out 1,000,000 tree.
         </p>
-        <hr class="my-4">
         <div class="col-auto">
           <!-- Material input -->
-          <div class="md-form input-group mb-3">
+          <div class="xl-form input-group mb-3">
             <div class="input-group-prepend">
               <span class="input-group-text md-addon">xrn:</span>
             </div>
@@ -33,6 +28,7 @@
     <div class="pt-2">
       <button type="button" (click)="onFaucetRequest(addrInputRef.value)" mdbBtn color="primary" outline="true" mdbWavesEffect>Claim</button>
     </div>
+    
     <div class="alert {{statusClass}}" role="alert">
       Status: {{statusText}}
       <button type="button" (click)="onStatusHide()" class="close" data-dismiss="alert" aria-label="Close">

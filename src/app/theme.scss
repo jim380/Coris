@@ -100,13 +100,17 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
   .form-control-mobile::placeholder{
     color: #FF4081;
     font-size: 65%;
-  }  
+  }
+
+  .balance {
+    color: #FF4081;
+  }
     
 }
 
 
 $dark-primary: mat-palette($mat-cyan, A200);
-$dark-accent: mat-palette($mat-pink, A200, A100, A400);
+$dark-accent: mat-palette($mat-amber, A200, A100, A400);
 $dark-warn: mat-palette($mat-red);
 $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
@@ -210,6 +214,10 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 .row {
   max-width: 90%;
   margin: 0 auto;
+}
+
+.balance {
+  color: #40c6c6;
 }
 
 .responsive-row {
