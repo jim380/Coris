@@ -42,30 +42,42 @@
           <li>
             <ul class="collapsible collapsible-accordion">
               <mdb-accordion [multiple]="false" aria-multiselectable="false">
+                
                 <mdb-accordion-item class="no-collase">
                   <mdb-accordion-item-head routerLinkActive="active" mdbWavesEffect routerLink="/validators">
                     <i class="fas fa-users"></i> Validators
                   </mdb-accordion-item-head>
                   <mdb-accordion-item-body></mdb-accordion-item-body>
                 </mdb-accordion-item>
+
                 <mdb-accordion-item class="no-collase">
                   <mdb-accordion-item-head routerLinkActive="active" mdbWavesEffect routerLink="/blocks">
                     <i class="fa fa-cubes"></i> Blocks
                   </mdb-accordion-item-head>
                   <mdb-accordion-item-body></mdb-accordion-item-body>
                 </mdb-accordion-item>            
+
                 <mdb-accordion-item class="no-collase">
                     <mdb-accordion-item-head mdbWavesEffect routerLinkActive="active" routerLink="/txs">
                       <i class="fa fa-tasks"></i> Transactions
                     </mdb-accordion-item-head>
                     <mdb-accordion-item-body></mdb-accordion-item-body>
                 </mdb-accordion-item>
+
                 <mdb-accordion-item class="no-collase">
                   <mdb-accordion-item-head mdbWavesEffect routerLinkActive="active" routerLink="/gov">
                     <i class="fa fa-university"></i> Governance
                   </mdb-accordion-item-head>
                   <mdb-accordion-item-body></mdb-accordion-item-body>
               </mdb-accordion-item>
+              
+              <mdb-accordion-item class="no-collase">
+                  <mdb-accordion-item-head mdbWavesEffect routerLinkActive="active" routerLink="/faucet">
+                    <i class="fa fa-shower"></i> Faucet
+                  </mdb-accordion-item-head>
+                  <mdb-accordion-item-body></mdb-accordion-item-body>
+              </mdb-accordion-item>
+
               <mdb-accordion-item class="no-collase">
                 <h4 class="theme-toggle justify-content-between align-items-center">
                   <mat-slide-toggle (change)="onToggleTheme()" class="app-toggle">Dark Theme</mat-slide-toggle>
@@ -133,6 +145,12 @@
             <a class="nav-link waves-light" mdbWavesEffect routerLink="/gov" routerLinkActive="active">
               <i class="mr-1 fa fa-university"></i>
               <h3 class="clearfix d-none d-md-inline-block">Governance</h3>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-light" mdbWavesEffect routerLink="/faucet" routerLinkActive="active">
+              <i class="mr-1 fa fa-shower"></i>
+              <h3 class="clearfix d-none d-md-inline-block">Faucet</h3>
             </a>
           </li>
         </ul>

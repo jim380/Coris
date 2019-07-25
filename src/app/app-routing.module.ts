@@ -6,6 +6,7 @@ import { BlocksComponent } from './components/blocks/blocks.component';
 import { TxsComponent } from './components/txs/txs.component';
 import { GovernanceComponent } from './components/governance/governance.component';
 import { DialogEntryComponent } from './components/popups/dialog-entry.component';
+import { FaucetComponent } from './components/faucet/faucet.component';
 // import { DashboardComponent } from './components/dashboard/dashboard.component';
 // import { TestComponent } from './components/test/test.component';
 // import { BlockComponent } from './components/popups/block/block.component';
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'blocks', component: BlocksComponent },
   { path: 'txs', component: TxsComponent },
   { path: 'gov', component: GovernanceComponent },
+  { path: 'faucet', component: FaucetComponent },
 
   { path: 'block/:height', component: DialogEntryComponent },
   { path: 'tx/:hash', component: DialogEntryComponent },
