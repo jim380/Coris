@@ -1,5 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:100,300,300i,400);
 @import "app/theme";
+$ionicons-font-path: "~ionicons/dist/fonts";
+@import "~ionicons/dist/scss/ionicons.scss";
 
 html, body {
   font-size: 20px;
