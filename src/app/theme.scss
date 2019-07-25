@@ -105,6 +105,10 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
   .balance {
     color: #FF4081;
   }
+
+  .header-subtitle {
+    color: #FFC107;
+  }
     
 }
 
@@ -167,7 +171,7 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   }  
   
   .header-subtitle {
-    color: #40c6c6;
+    color: #2196F3;
   }
 
   .btn-outline-custom {
@@ -208,6 +212,10 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   
   .mat-paginator {
     background-color: inherit;
+  }
+
+  .brand-nav {
+    color: black;
   }
 }
 
