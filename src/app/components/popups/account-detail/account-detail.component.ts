@@ -92,7 +92,7 @@ export class AccountDetailComponent implements OnInit {
     this.ts.getDelegatorRewards(this.delegator.address).subscribe((data: any) => {
       // TODO remove debugging
       console.log("Rewards:", data);
-      if(data) {
+      if(data && data.length) {
         this.delegator.rewards = data;
         data.forEach((reward: any) => {
           this.delegator.balance.rewards += Number(reward.amount);

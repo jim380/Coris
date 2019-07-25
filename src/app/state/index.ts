@@ -11,6 +11,8 @@ import { TxsState } from './txs/txs.interface';
 import { StakeState } from './stake/stake.interface';
 import { txsReducers } from './txs/txs.reducers';
 import { stakeReducers } from './stake/stake.reducers';
+import { faucetReducers } from './faucet/faucet.reducers';
+import { FaucetState } from './faucet/faucet.interface';
 
 export const reducers: ActionReducerMap<State> = {
   validatorsState: validatorsReducers,
@@ -18,7 +20,8 @@ export const reducers: ActionReducerMap<State> = {
   txsState: txsReducers,
   stakeState: stakeReducers,
   consensusState: consensusRedusers,
-  appState: appReducers
+  appState: appReducers,
+  faucetState: faucetReducers
 };
 
 export interface State {
@@ -28,4 +31,5 @@ export interface State {
   consensusState: ConsensusState;
   stakeState: StakeState;
   appState: AppState;
+  faucetState: FaucetState;
 };

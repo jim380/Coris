@@ -36,27 +36,10 @@ export class ValidatorsService {
       for (const i in validators) {
         validators[i].rank = (Number(i) + 1);
 
-        // TOFIX @aakatev 7/14/19
-        // Do this mapping on backend
-        if(validators[i].account.error) {
-          validators[i].account = { 
-            type: null, 
-            value: { 
-              coins: [{ amount: 0, denom: 'uatom' }] 
-            } 
-          }
-        } else if (
-          validators[i].account.type === "auth/DelayedVestingAccount"
-        ) {
-          validators[i].account.value = validators[i].account.value.BaseVestingAccount.BaseAccount; 
-        } else if (
-          !validators[i].account.value.coins
-        ) {
-          validators[i].account.value.coins = [{ amount: 0, denom: 'uatom' }];
+        if(validators[i].account.value.coins.length === 0) {
+          validators[i].account.value.coins.push({ amount: 0, denom: 'tree' }) 
         }
-
       }
-      // console.log(validators);
       this.appStore.dispatch(new UpdateValidators(validators));
     });
 
