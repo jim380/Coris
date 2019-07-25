@@ -1,4 +1,4 @@
-<section [className]="(theme$|async) === 'dark-theme' ? 'main navy-blue-skin' : 'main indigo-skin'">
+<section [className]="(theme$|async) === 'dark-theme' ? 'main white-skin' : 'main pink-skin'">
   <header>
       <!-- Sidebar navigation -->
       <mdb-side-nav #sidenavRef class="sn-bg-1" [fixed]="false">
@@ -6,7 +6,7 @@
           <li>
             <div class="logo-wrapper waves-light">
               <a [routerLink]="['/validators']">
-              <img src="../../../../assets/img/Coris_logo.png" class="img-fluid flex-center logo">
+              <img [src]="(theme$|async) === 'dark-theme' ? '../../../../assets/img/Coris_logo_dark.png' : '../../../../assets/img/Coris_logo.png'" class="img-fluid flex-center logo">
               </a>
             </div>
           </li>
