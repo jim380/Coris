@@ -4,10 +4,10 @@
 A community-built Blockchain explorer for the cosmos ecosystem, brought to you by Cypher Core LLC.
 
 ## Documentation
-[Coris Docs](https://docs.coris.network/index.html)
+[Coris Docs](http://docs.coris.network/index.html)
 
 ## Explorer
-http://coris.network
+https://coris.network
 
 ## Contact
 @aakatev<br/>
