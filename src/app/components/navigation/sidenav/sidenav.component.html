@@ -1,4 +1,4 @@
-<section [className]="(theme$|async) === 'dark-theme' ? 'main white-skin' : 'main cyan-skin'">
+<section [className]="(theme$|async) === 'dark-theme' ? 'main black-skin' : 'main cyan-skin'">
   <header>
       <!-- Sidebar navigation -->
       <mdb-side-nav #sidenavRef class="sn-bg-1" [fixed]="false">
@@ -6,7 +6,7 @@
           <li>
             <div class="logo-wrapper waves-light">
               <a [routerLink]="['/validators']">
-              <img [src]="(theme$|async) === 'dark-theme' ? '../../../../assets/img/Coris_logo_dark.png' : '../../../../assets/img/Coris_logo.png'" class="img-fluid flex-center logo">
+              <img [src]="(theme$|async) === 'dark-theme' ? '../../../../assets/img/Coris_logo.png' : '../../../../assets/img/Coris_logo.png'" class="img-fluid flex-center logo">
               </a>
             </div>
           </li>
@@ -80,7 +80,7 @@
 
               <mdb-accordion-item class="no-collase">
                 <h4 class="theme-toggle justify-content-between align-items-center">
-                  <mat-slide-toggle (change)="onToggleTheme()" class="app-toggle">Dark Theme</mat-slide-toggle>
+                  <mat-slide-toggle (change)="onToggleTheme()" color="primary" class="app-toggle">Dark Theme</mat-slide-toggle>
                 </h4>
               </mdb-accordion-item>
             </mdb-accordion>
@@ -118,7 +118,7 @@
         <form class="form-inline waves-light waves-light ml-auto clearfix d-none d-xl-inline-block" mdbWavesEffect>
           <div  class="md-form my-0 mx-3">
             <input style="width: 30vw;" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="Enter moniker / address / height / hash" aria-label="Search">
-            <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn color="amber" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
+            <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn color="primary" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
           </div>
         </form>
         <ul class="nav navbar-nav nav-flex-icons ml-auto ie-double-nav ie-hidden-double-nav d-xl-none">

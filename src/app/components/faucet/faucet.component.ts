@@ -39,14 +39,14 @@ export class FaucetComponent implements OnInit, OnDestroy {
 
   onFaucetRequest(address) {
     if(address.length !== 39) {
-      this.statusText = 'Please enter legal address! Note: No need to provide prefix.'
+      this.statusText = 'No input provided. Or provided input is invalid.'
       this.statusClass = 'alert-warning';
     } else {
       this.faucetService
         .postFaucet(`xrn:${address}`)
         .subscribe((tx:any) => {
           if(tx.hash) {
-            this.statusText = `Tx successfully broadcasted! Hash: ${tx.hash}`
+            this.statusText = `Success! Hash: ${tx.hash}`
             this.statusClass = 'alert-success';
           } else {
             this.statusText = `${tx.status}`

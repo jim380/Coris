@@ -19,7 +19,7 @@
                   <ul class="list-group">
                     <li *ngIf="proposal.proposer" class="list-group-item d-flex justify-content-between align-items-center">
                       Proposer
-                      <h3 style="cursor: pointer;" (click)="openAccountDialog(proposal.proposer)" class="glance-title"><mdb-badge color="pink">
+                      <h3 style="cursor: pointer;" (click)="openAccountDialog(proposal.proposer)" class="glance-title"><mdb-badge color="amber darken-2">
                         <span *ngIf="(validatorsState | async).validatorsMap.size ? (validatorsState | async).validatorsMap.has( proposal.proposer ) : false; else elseVetoVoter">
                           {{ (validatorsState | async).validatorsMap.get( proposal.proposer )}}
                         </span>
@@ -28,21 +28,21 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Deposit
-                      <h3 class="glance-title"><mdb-badge color="pink">{{proposal.total_deposit[0].amount/1e6 | number:".2-2"}} ATOM</mdb-badge></h3>
+                      <h3 class="glance-title"><mdb-badge color="amber darken-2">{{proposal.total_deposit[0].amount/1e6 | number:".2-2"}} ATOM</mdb-badge></h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Status
-                      <h3 class="glance-title"><mdb-badge color="pink">
+                      <h3 class="glance-title"><mdb-badge color="amber darken-2">
                         {{proposal.proposal_status}}
                       </mdb-badge></h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Voting Start
-                      <h3 class="glance-title"><mdb-badge color="pink">{{ proposal.voting_start_time | date :'short' }}</mdb-badge></h3>
+                      <h3 class="glance-title"><mdb-badge color="amber darken-2">{{ proposal.voting_start_time | date :'short' }}</mdb-badge></h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                       Voting End
-                      <h3 class="glance-title"><mdb-badge color="pink">{{ proposal.voting_end_time | date :'short' }}</mdb-badge></h3>
+                      <h3 class="glance-title"><mdb-badge color="amber darken-2">{{ proposal.voting_end_time | date :'short' }}</mdb-badge></h3>
                     </li>
                   </ul>
                 </mdb-card-body>
