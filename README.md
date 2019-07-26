@@ -7,7 +7,7 @@ A community-built Blockchain explorer for the cosmos ecosystem, brought to you b
 [Coris Docs](http://docs.coris.network/index.html)
 
 ## Explorer
-https://coris.network
+http://coris.network
 
 ## Contact
 @aakatev<br/>

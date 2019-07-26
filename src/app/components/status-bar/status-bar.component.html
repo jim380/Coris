@@ -8,13 +8,15 @@
     <div class="proposer-row">
       <h2 *ngIf="(validatorsMap$|async).size" 
           class="title proposer-title">
-        <i class="ion-person"></i>&nbsp; proposer - 
-        <a href="javascript:undefined" (click)="openValidatorDialog( proposer$ )" style="cursor: pointer;">
+        <i class="ion ion-md-person"></i>&nbsp; proposer - 
+        <mat-chip color="primary" selected>
+          <a href="javascript:undefined" (click)="openValidatorDialog( proposer$ )" style="cursor: pointer;">
           <span *ngIf="(validatorsMap$|async).has( proposer$| async ); else elseBlockproposer">
             {{ (validatorsMap$|async).get( proposer$| async )}}
           </span>
           <ng-template #elseBlockproposer>{{ proposer$ | async }}</ng-template> 
-        </a>
+          </a>
+      </mat-chip>
       </h2>
     </div>
   </div>
