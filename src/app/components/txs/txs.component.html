@@ -1,0 +1,242 @@
+<span *ngIf="txs && txs.length >= INITIAL_TXS_COUNT; else elseLoading">
+  <div (scroll)="onScroll($event)" class="row table-responsive text-nowrap scrollbar-primary main-row mat-elevation-z8">
+
+    <table mat-table
+          [dataSource]="dataSource" 
+          multiTemplateDataRows
+          class="mat-elevation-z8 w-auto">
+
+      <ng-container matColumnDef="hash" sticky>
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-pound"></i>&nbsp;Hash</th>
+        <td mat-cell *matCellDef="let tx" mdbWavesEffect> 
+          <mdb-badge color="pink">{{tx.hash | slice:0:15 }}... 
+          </mdb-badge>&nbsp;
+          <i 
+          class="ion-ios-copy copy-button" 
+          style="cursor: pointer;" 
+          ngxClipboard 
+          [cbContent]="tx.hash" 
+          (click)="onCopySucceess()"
+          mdbTooltip="copy to clipboard" placement="left">
+          </i>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-document-text"></i>&nbsp;Type</th>
+        <td mat-cell *matCellDef="let tx">
+          <mat-chip-list>
+            <mat-chip color = "primary" selected>
+              <span *ngIf="tx.action && tx.action.length > 0; else elseAction">
+                {{ tx.action[0] | titlecase }}
+              </span>
+              <ng-template #elseAction>
+                {{ tx.error | titlecase }}
+              </ng-template>
+            </mat-chip>
+            </mat-chip-list></td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-android-checkbox-outline"></i>&nbsp;Status</th>
+        <td mat-cell *matCellDef="let tx"> 
+          <span *ngIf="!tx.error; else elseStatus"><i class="ion-checkmark-circled success"></i></span>
+          <ng-template #elseStatus>
+            <i class="ion-close-circled fail"></i>
+          </ng-template>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fee">
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-card"></i>&nbsp;Fee</th>
+        <td mat-cell *matCellDef="let tx"> 
+          {{ 
+            tx.fee?.amount ?
+            tx.fee.amount[0].amount : '0' 
+          }}&nbsp;<span class="ticker">uatom</span> 
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="height">
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-soup-can"></i>&nbsp;Height</th>
+        <td mat-cell *matCellDef="let tx"> {{tx.height}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="timestamp">
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-clock"></i>&nbsp;Time</th>
+        <td mat-cell *matCellDef="let tx"> {{tx.details?.timestamp | ago | async}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let tx" [attr.colspan]="displayedColumns.length" class="tx-detail">
+          <div
+              [@detailExpand]="tx == expandedElement ? 'expanded' : 'collapsed'">
+              <mdb-card class="text-left mb-3" bgColor="bg-light">
+                <mdb-card-body>
+                  <mdb-card-text class="text-left">
+                    <span *ngFor="let action of tx.action; index as i">
+
+                      <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgSend'">
+                        <a (click)="openAccountDialog( tx.msg[i].value.from_address )"> 
+                          <app-validator-span [validator]="tx.msg[i].value.from_address"></app-validator-span>
+                        </a>
+                        <br>
+                        <mdb-badge default="true">sent</mdb-badge>&nbsp;
+                        <span *ngIf="tx.msg[i].value.amount">
+                          <span class="txn-amount">{{ tx.msg[i].value.amount[0].amount/1e6 | number:".2-2" }}&nbsp;ATOM</span>
+                        </span>
+                        to 
+                        <br>
+                        <a (click)="openAccountDialog( tx.msg[i].value.to_address )"> 
+                          <app-validator-span [validator]="tx.msg[i].value.to_address"></app-validator-span>
+                        </a>                          
+                      </span>
+
+                      <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgDelegate' 
+                            || tx.msg[i].type === 'cosmos-sdk/MsgUndelegate'">
+                        <a (click)="openAccountDialog( tx.msg[i].value.delegator_address )"> 
+                          <mdb-badge color="cyan">{{ i+1 }}</mdb-badge> 
+                          <app-validator-span [validator]="tx.msg[i].value.delegator_address"></app-validator-span>
+                        </a>                          
+                        <br>
+                        <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgDelegate'; else elseDelegateBlock">
+                          <mdb-badge default="true">delegated</mdb-badge>&nbsp;
+                          <span *ngIf="tx.msg[i].value.amount">
+                            <span class="txn-amount">{{ tx.msg[i].value.amount.amount/1e6 | number:".2-2" }}&nbsp;ATOM</span>
+                          </span>
+                          to 
+                        </span>
+                        <ng-template #elseDelegateBlock>
+                          <mdb-badge default="true">undelegated</mdb-badge>&nbsp;
+                          <span *ngIf="tx.msg[i].value.amount">
+                            <span class="txn-amount">{{ tx.msg[i].value.amount.amount/1e6 | number:".2-2" }}&nbsp;ATOM</span>
+                          </span>
+                          from 
+                        </ng-template>
+                        <br>
+                        <a (click)="openValidatorDialog( tx.msg[i].value.validator_address )"> 
+                          <app-validator-span [validator]="tx.msg[i].value.validator_address"></app-validator-span>
+                        </a>                                              
+                      </span><br>
+
+                      <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgMultiSend'">
+                        <span *ngFor="let input of tx.msg[i].value.inputs">
+                          <a (click)="openAccountDialog( input.address )"> 
+                            <app-validator-span [validator]="input.address"></app-validator-span>
+                          </a>                          
+                          <br>
+                          <mdb-badge default="true">sent</mdb-badge>&nbsp;
+                          <span class="txn-amount">{{ input.coins[0].amount/1e6 | number:".2-2" }}&nbsp;ATOM</span>
+                        </span>
+                        to
+                        <br>
+                        <span *ngFor="let output of tx.msg[i].value.outputs">
+                          <a (click)="openAccountDialog( output.address )"> 
+                            <app-validator-span [validator]="output.address"></app-validator-span>
+                          </a>
+                        </span>                      
+                      </span>
+
+                      <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgWithdrawDelegationReward'">
+                        <a (click)="openAccountDialog( tx.msg[i].value.delegator_address )"> 
+                          <mdb-badge color="cyan">{{ i+1 }}</mdb-badge>
+                          <app-validator-span [validator]="tx.msg[i].value.delegator_address"></app-validator-span> 
+                        </a>
+                        <br>
+                        <mdb-badge default="true">withdrew rewards</mdb-badge>&nbsp;
+                        from 
+                        <br>
+                        <a (click)="openValidatorDialog( tx.msg[i].value.validator_address )"> 
+                          <app-validator-span [validator]="tx.msg[i].value.validator_address"></app-validator-span>
+                        </a>
+                        <br>                          
+                      </span><br>
+
+                      <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgBeginRedelegate'">
+                        <a (click)="openAccountDialog( tx.msg[i].value.delegator_address )"> 
+                          <app-validator-span [validator]="tx.msg[i].value.delegator_address"></app-validator-span>
+                        </a>
+                        &nbsp;<mdb-badge default="true">redelegated</mdb-badge>&nbsp;
+                        <span *ngIf="tx.msg[i].value.amount">
+                          <span class="txn-amount">{{ tx.msg[i].value.amount.amount/1e6 | number:".2-2" }}&nbsp;ATOM</span>
+                        </span>
+                        from 
+                        <br>
+                        <a (click)="openValidatorDialog( tx.msg[i].value.validator_src_address )"> 
+                          <app-validator-span [validator]="tx.msg[i].value.validator_src_address"></app-validator-span>
+                          <br>
+                        </a>
+                        to 
+                        <a (click)="openValidatorDialog( tx.msg[i].value.validator_dst_address )"> 
+                          <app-validator-span [validator]="tx.msg[i].value.validator_dst_address"></app-validator-span>
+                        </a>    
+                        <br>                         
+                      </span>
+
+                      <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgWithdrawValidatorCommission'">
+                        <a (click)="openValidatorDialog( tx.msg[i].value.validator_address )"> 
+                          <app-validator-span [validator]="tx.msg[i].value.validator_address"></app-validator-span>
+                        </a>
+                        <br>
+                        <mdb-badge default="true">withdrew</mdb-badge>&nbsp;
+                        commission
+                        <br>                           
+                      </span>
+
+                      <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgCreateValidator'">
+                        <a (click)="openAccountDialog( tx.msg[i].value.delegator_address )"> 
+                          <app-validator-span [validator]="tx.msg[i].value.delegator_address"></app-validator-span>
+                        </a>
+                        <br> 
+                        <mdb-badge default="true">created validator</mdb-badge>&nbsp;
+                        {{ tx.msg[i].value.description.moniker }}                           
+                      </span>   
+
+
+                      <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgEditValidator'">
+                        <a (click)="openAccountDialog( tx.msg[i].value.delegator_address )"> 
+                          <app-validator-span [validator]="tx.msg[i].value.delegator_address"></app-validator-span>
+                        </a>
+                        <br> 
+                        <mdb-badge default="true">validator updated</mdb-badge>&nbsp;                        
+                      </span>   
+                      
+                      <span *ngIf="tx.msg[i].type === 'cosmos-sdk/MsgVote'">
+                        <a (click)="openAccountDialog( tx.msg[i].value.voter )"> 
+                          <app-validator-span [validator]="tx.msg[i].value.voter"></app-validator-span>
+                        </a>
+                        <br> 
+                        <mdb-badge default="true">voted</mdb-badge>&nbsp;
+                        {{ tx.msg[i].value.option }} on prop.{{ tx.msg[i].value.proposal_id }}                           
+                      </span>        
+                    </span>
+                    <span *ngIf="tx.error">
+                      <mdb-badge danger="true">Error</mdb-badge>&nbsp;{{ tx.error|titlecase }}
+                    </span>
+                  </mdb-card-text>
+                  <button mdbBtn color="pink" rounded="true" size="sm" mdbWavesEffect 
+                  style="cursor: pointer;" (click)="openTxDialog(tx)" class="detail-button">Detail</button>
+                </mdb-card-body>
+              </mdb-card>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let tx; columns: displayedColumns;"
+          [appBgHighlight]="'#d1d1d1'" defaultColor="#ffffff"
+          [class.example-expanded-row]="expandedElement === tx"
+          (click)="expandedElement = expandedElement === tx ? null : tx">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="tx-detail-row"></tr>
+    </table>
+  </div>
+  <div class="button-row">
+    <button class="show-more" mdbBtn (click)="displayOlderTxs();" type="button" color="indigo" size="sm" block="true" mdbWavesEffect>Show More</button>
+  </div>
+</span>
+<ng-template #elseLoading>
+  <div style="display: flex; justify-content: center;">
+    <mdb-spinner spinnerColor="blue"></mdb-spinner>
+  </div> 
+</ng-template>

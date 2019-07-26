@@ -1,0 +1,164 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$light-primary: mat-palette($mat-indigo);
+$light-accent: mat-palette($mat-pink, A200, A100, A400);
+$light-warn: mat-palette($mat-red);
+$light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
+
+.light-theme {
+  @include angular-material-theme($light-theme);
+  
+  html, body {
+    background: white;
+    color: black;
+  }
+  .mat-cell {
+    color: black;
+  }
+  
+  .mat-header-row {
+    background-color: #3F51B5;
+  }  
+
+  mdb-icon {
+    background-color: #3F51B5;
+  }
+
+  .table-subtitle {
+    color: #3F51B5;
+    font-size: 80%;
+  }
+
+  .mat-row:nth-child(even){
+    background-color:#ffffff;
+  }
+
+  .mat-row:nth-child(odd){
+    background-color:hsla(0, 0%, 100%, 0.8);
+  }
+
+  .mat-header-cell {
+    color: #ffffff;
+  }
+
+  .ticker {
+    font-size: 80%;
+    color: #3F51B5;
+  }
+  
+  .title {
+    font-weight: 500;
+    color: black;
+  }
+    
+  a:link,
+  a:visited {
+    color: black;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  a:hover,
+  a:active {
+    color: #FF4081;
+    text-decoration: underline; 
+  }
+}
+
+
+$dark-primary: mat-palette($mat-yellow);
+$dark-accent: mat-palette($mat-pink, A200, A100, A400);
+$dark-warn: mat-palette($mat-red);
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+.dark-theme {
+  @include angular-material-theme($dark-theme);
+
+  .card {
+    background-color: #424242;
+  }
+
+  html, body, section {
+    background: #121212;
+    color: #ffffff;
+  }
+  .mat-row:nth-child(even){
+    background-color: #757575;
+  }
+
+  .mat-row:nth-child(odd){
+    background-color: #424242;
+  }
+
+  .mat-cell {
+    background-color: #757575;
+  }
+  
+  .mat-header-cell {
+    color: #ffffff;
+  }
+
+  .title {
+    font-weight: 500;
+    color:#ffffff;
+  }
+ 
+  a:link,
+  a:visited {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  a:hover,
+  a:active {
+    color: #FF4081;
+    text-decoration: underline; 
+  }
+
+  mdb-icon {
+    background-color: #3F51B5;
+  }
+}
+
+.row {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+table {
+  table-layout: fixed;
+  min-width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  overflow: hidden; 
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.mat-header-cell, .mat-cell {
+  font-size: 20px;
+  font-family: 'Lato', 'Arial', sans-serif;
+  font-weight: 300;
+  text-rendering: optimizeLegibility;
+  vertical-align: middle;
+}
+
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.paginator {
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  float: right;
+  margin-right: 60px;
+}

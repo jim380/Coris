@@ -1,0 +1,89 @@
+<app-chart-cards-gov *ngIf="proposals" [proposals]="proposals.slice(-3)"></app-chart-cards-gov>
+<div class="row scrollbar-primary mat-elevation-z8 table-responsive text-nowrap">
+  <table mat-table multiTemplateDataRows [dataSource]="dataSource" class="mat-elevation-z8 w-auto">
+    
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef><i class="ion-android-funnel"></i></th>
+      <td mat-cell *matCellDef="let proposal">
+        {{proposal.proposal_id}}
+      </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="title" sticky>
+      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-code"></i>&nbsp;Title</th>
+      <td mat-cell *matCellDef="let proposal" mdbTooltip="{{proposal.proposal_content.value.title}}" placement="right">
+        <!-- <span style="cursor: pointer;" (click)="openGovDetailDialog(proposal)">{{proposal.proposal_content.value.title | slice:0:20}}...</span> -->
+        <mdb-badge color="pink" style="cursor: pointer;" (click)="openGovDetailDialog(proposal)">{{proposal.proposal_content.value.title | slice:0:20}} ...</mdb-badge>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-android-checkbox-outline"></i>&nbsp;Status</th>
+      <td mat-cell *matCellDef="let proposal">
+        <span *ngIf="proposal.proposal_status === 'Passed'">
+            <i class="ion-checkmark-circled success"></i>
+        </span>
+        <span *ngIf="proposal.proposal_status === 'Rejected'">
+            <i class="ion-close-circled fail"></i>
+        </span>
+        <span *ngIf="proposal.proposal_status === 'Voting Period'">
+            <i class="ion-minus-circled voting"></i>
+        </span>
+        <!-- <ng-template #elseStatus>
+          <i class="ion-close-circled fail"></i>
+        </ng-template> -->
+        <!-- {{proposal.proposal_status}} -->
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="submitted">
+      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-paper-airplane"></i>&nbsp;Submitted</th>
+      <td mat-cell *matCellDef="let proposal">  
+        {{proposal.submit_time | date:"h:mm a, MMM d, y"}}
+      </td>
+    </ng-container>
+  
+    <!-- <ng-container matColumnDef="voting">
+      <th mat-header-cell *matHeaderCellDef> Voting Started </th>
+      <td mat-cell *matCellDef="let proposal">  
+        {{proposal.voting_start_time | date:"h:mm:ss a, MMM d, y"}}
+      </td>
+    </ng-container> -->
+
+    <ng-container matColumnDef="deposit">
+      <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-archive"></i>&nbsp;Deposit</th>
+      <td mat-cell *matCellDef="let proposal">  
+        {{proposal.total_deposit[0].amount/1e6 | number:".2-2"}} <span class="ticker">ATOM</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="depositEnd">
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-load-c"></i>&nbsp;Deposit End</th>
+        <td mat-cell *matCellDef="let proposal">  
+          {{proposal.deposit_end_time | date:"h:mm a, MMM d, y"}}
+        </td>
+    </ng-container>
+
+    <!-- <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let proposal" [attr.colspan]="displayedColumns.length">
+        <div
+            class="proposal-detail"
+            [@detailExpand]="proposal == expandedElement ? 'expanded' : 'collapsed'">
+          <div class="row">
+            <ul class="list-group">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span style="cursor: pointer;" (click)="openGovDetailDialog(proposal)" class="badge badge-primary badge-pill">Details</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </td>
+    </ng-container> -->
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let proposal; columns: displayedColumns;"
+        [appBgHighlight]="'#d1d1d1'" defaultColor="#ffffff">
+    </tr>
+    <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="proposal-detail-row"></tr> -->
+  </table>
+</div>
