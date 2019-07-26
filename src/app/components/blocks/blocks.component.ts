@@ -14,6 +14,7 @@ import { BlocksState } from 'src/app/state/blocks/blocks.interface';
 import { State } from 'src/app/state';
 import { MatPaginatorIntl } from '@angular/material';
 
+
 export function CustomPaginator() {
   const customPaginatorIntl = new MatPaginatorIntl();
   

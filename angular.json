@@ -34,6 +34,7 @@
               "node_modules/ng-uikit-pro-standard/assets/scss/bootstrap/bootstrap.scss",
               "node_modules/ng-uikit-pro-standard/assets/scss/mdb.scss",
               "node_modules/ngx-toastr/toastr.css",
+              "node_modules/ionicons/dist/scss/ionicons.scss",
               "src/styles.scss",
               "src/app/theme.scss"
             ],

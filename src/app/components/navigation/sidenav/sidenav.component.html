@@ -1,4 +1,4 @@
-<section [className]="(theme$|async) === 'dark-theme' ? 'navy-blue-skin' : 'indigo-skin'">
+<section [className]="(theme$|async) === 'dark-theme' ? 'main grey-skin' : 'main indigo-skin'">
   <header>
       <!-- Sidebar navigation -->
       <mdb-side-nav #sidenavRef class="sn-bg-1" [fixed]="false">
@@ -6,7 +6,7 @@
           <li>
             <div class="logo-wrapper waves-light">
               <a [routerLink]="['/validators']">
-              <img src="../../../../assets/img/Coris_logo.png" class="img-fluid flex-center logo">
+              <img [src]="(theme$|async) === 'dark-theme' ? '../../../../assets/img/Coris_logo.png' : '../../../../assets/img/Coris_logo.png'" class="img-fluid flex-center logo">
               </a>
             </div>
           </li>
@@ -42,33 +42,38 @@
           <li>
             <ul class="collapsible collapsible-accordion">
               <mdb-accordion [multiple]="false" aria-multiselectable="false">
+                
                 <mdb-accordion-item class="no-collase">
                   <mdb-accordion-item-head routerLinkActive="active" mdbWavesEffect routerLink="/validators">
                     <i class="fas fa-users"></i> Validators
                   </mdb-accordion-item-head>
                   <mdb-accordion-item-body></mdb-accordion-item-body>
                 </mdb-accordion-item>
+
                 <mdb-accordion-item class="no-collase">
                   <mdb-accordion-item-head routerLinkActive="active" mdbWavesEffect routerLink="/blocks">
                     <i class="fa fa-cubes"></i> Blocks
                   </mdb-accordion-item-head>
                   <mdb-accordion-item-body></mdb-accordion-item-body>
                 </mdb-accordion-item>            
+
                 <mdb-accordion-item class="no-collase">
                     <mdb-accordion-item-head mdbWavesEffect routerLinkActive="active" routerLink="/txs">
                       <i class="fa fa-tasks"></i> Transactions
                     </mdb-accordion-item-head>
                     <mdb-accordion-item-body></mdb-accordion-item-body>
                 </mdb-accordion-item>
+
                 <mdb-accordion-item class="no-collase">
                   <mdb-accordion-item-head mdbWavesEffect routerLinkActive="active" routerLink="/gov">
                     <i class="fa fa-university"></i> Governance
                   </mdb-accordion-item-head>
                   <mdb-accordion-item-body></mdb-accordion-item-body>
               </mdb-accordion-item>
+              
               <mdb-accordion-item class="no-collase">
                 <h4 class="theme-toggle justify-content-between align-items-center">
-                  <mat-slide-toggle (change)="onToggleTheme()" class="app-toggle">Dark Theme</mat-slide-toggle>
+                  <mat-slide-toggle (change)="onToggleTheme()" color="primary" class="app-toggle">Dark Theme</mat-slide-toggle>
                 </h4>
               </mdb-accordion-item>
             </mdb-accordion>
@@ -96,7 +101,7 @@
         <div class="breadcrumbs breadcrumbs-hidden-nav breadcrumb-dn mr-auto">
           <a [routerLink]="['/validators']"><h1 class="brand-nav">Coris</h1></a>
           <mat-chip-list class="alpha-chip">
-            <mdb-badge color="pink">alpha</mdb-badge>
+            <mdb-badge color="amber"><span class="status">alpha</span></mdb-badge>
           </mat-chip-list>
         </div>
         
@@ -106,7 +111,7 @@
         <form class="form-inline waves-light waves-light ml-auto clearfix d-none d-xl-inline-block" mdbWavesEffect>
           <div  class="md-form my-0 mx-3">
             <input style="width: 30vw;" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="Enter moniker / address / height / hash" aria-label="Search">
-            <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn color="white" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
+            <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn color="primary" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
           </div>
         </form>
         <ul class="nav navbar-nav nav-flex-icons ml-auto ie-double-nav ie-hidden-double-nav d-xl-none">
@@ -135,6 +140,7 @@
               <h3 class="clearfix d-none d-md-inline-block">Governance</h3>
             </a>
           </li>
+
         </ul>
       </navlinks>
     </mdb-navbar>

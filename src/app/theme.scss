@@ -2,8 +2,8 @@
 
 @include mat-core();
 
-$light-primary: mat-palette($mat-indigo);
-$light-accent: mat-palette($mat-pink, A200, A100, A400);
+$light-primary: mat-palette($mat-teal);
+$light-accent: mat-palette($mat-amber, A400);
 $light-warn: mat-palette($mat-red);
 $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
 
@@ -15,17 +15,16 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
     color: black;
   }
 
-
   .mat-cell {
     color: black;
   }
   
   .mat-header-row {
-    background-color: #3F51B5;
+    background-color: #00897B;
   }  
 
   .table-subtitle {
-    color: #3F51B5;
+    color: #00897B;
     font-size: 80%;
   }
 
@@ -43,41 +42,57 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
 
   .ticker {
     font-size: 80%;
-    color: #3F51B5;
+    color: #00897B;
   }
-  
-  mdb-card-title {
-    color: white;
+
+  .btn-floating {
+    background-color: #00897B;
   }
   
   mdb-card-header,
   .validator-mb-card {
-    background-color: #3F51B5;
+    background-color: #00897B;
   }
 
   .mat-table {
-    background:  #3F51B5;
+    background:  #00897B;
   }
+
   .title {
     font-weight: 500;
     color: black;
   }
     
   .cascading-admin-card .admin-up mdb-icon {
-    background-color: #3f51b5;
+    background-color: #00897B;
   }
   
   a:link,
   a:visited {
-    color: black;
+    color: white;
     text-decoration: none;
     transition: color 0.2s;
   }
 
+  .footer-copyright
+  a:link,
+  a:visited {
+    color: white;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  // a:hover,
+  // a:active {
+  //   color: #FFC107;
+  //   text-decoration: underline; 
+  // }
+
+  .footer-copyright
   a:hover,
   a:active {
-    color: #FF4081;
-    text-decoration: underline; 
+    color: #FFC107;
+    //text-decoration: underline; 
   }
 
   .btn-outline-custom {
@@ -101,13 +116,21 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
   .form-control-mobile::placeholder{
     color: #FF4081;
     font-size: 65%;
-  }  
+  }
+
+  .header-subtitle {
+    color: black;
+  }
+
+  mdb-card-title {
+    color: white;
+  }
     
 }
 
 
-$dark-primary: mat-palette($mat-cyan, A200);
-$dark-accent: mat-palette($mat-pink, A200, A100, A400);
+$dark-primary: mat-palette($mat-deep-purple, A100);
+$dark-accent: mat-palette($mat-green, A400);
 $dark-warn: mat-palette($mat-red);
 $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
@@ -115,12 +138,12 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   @include angular-material-theme($dark-theme);
 
   html, body, section {
-    background: #424242;
+    background: #121212;
     color: #ffffff;
   }
 
   .mat-header-row {
-    background-color: #353b50;
+    background-color: hsl(0, 0%, 10%);
   }  
 
   .mat-card {
@@ -128,7 +151,7 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   }  
 
   mdb-card-title {
-    color: #ff4081;
+    color: #ffffff;
   }
 
   .mat-table {
@@ -137,11 +160,11 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   
   mdb-card-header,
   .validator-mb-card {
-    background-color: #353b50;
+    background-color: hsl(0, 0%, 10%);
   }
 
   .mat-cell {
-    background-color: #757575;
+    background-color: hsl(0, 0%, 15%);
   }
 
   
@@ -155,13 +178,17 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   }
 
   .card {
-    background-color: #353b50;
+    background-color: hsl(0, 0%, 15%);
   }
 
   .form-control-mobile::placeholder{
     color: #40c6c6;
     font-size: 65%;
   }  
+  
+  .header-subtitle {
+    color: #ffffff;
+  }
   
   .btn-outline-custom {
     border: 2px solid #40c6c6 !important;
@@ -170,7 +197,7 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   }
 
   .cascading-admin-card .admin-up mdb-icon {
-    background-color: #40c6c6;
+    background-color: #BB86FC;
   }
 
   .list-group-item {
@@ -184,23 +211,40 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
     transition: color 0.2s;
   }
 
+  .footer-copyright
   a:hover,
   a:active {
-    color: #FF4081;
-    text-decoration: underline; 
+    color: #40c6c6;
+    //text-decoration: underline; 
   }
+
+  // a:hover,
+  // a:active {
+  //   color: #40c6c6;
+  //   text-decoration: underline; 
+  // }
 
   .fail {
     color: #FF5722;/*#00796b;*/
-  }    
+  }
+  
+  .card-title h1 {
+    color: white;
+  }
+  
   .ticker {
     font-size: 80%;
     color: #40c6c6;
   }
   
+  .btn-floating {
+    background-color: #40c6c6;
+  }
+
   .mat-paginator {
     background-color: inherit;
   }
+
 }
 
 .row {
@@ -212,6 +256,7 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   max-width: 100vw;
   margin: 0;
 }
+
 @media (min-width: 768px) {
 
   .responsive-row {
@@ -219,7 +264,6 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
     margin: 0 auto;
   }
 }
-
 
 table {
   table-layout: fixed;

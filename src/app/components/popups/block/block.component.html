@@ -10,7 +10,7 @@
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Hash
-                        <h3 class="glance-title"><mdb-badge color="pink">
+                        <h3 class="glance-title"><mdb-badge color="amber darken-2">
                           {{ block.hash | slice:0:15 }} ...
                           <i 
                             class="ion-ios-copy copy-button" 
@@ -24,7 +24,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Proposer
-                        <h3 class="glance-title"><mdb-badge color="pink">
+                        <h3 class="glance-title"><mdb-badge color="amber darken-2">
                           <span *ngIf="(validatorsState | async).validatorsMap.size 
                             ? (validatorsState | async).validatorsMap.has(block.proposer) 
                             : false; else elseBlockProposer"
@@ -38,11 +38,11 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Transactions
-                        <h3 class="glance-title"><mdb-badge color="pink">{{ block.txs }}</mdb-badge></h3>
+                        <h3 class="glance-title"><mdb-badge color="amber darken-2">{{ block.txs }}</mdb-badge></h3>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         Timestamp
-                        <h3 class="glance-title"><mdb-badge color="pink">{{ block.time | ago | async }}</mdb-badge></h3>
+                        <h3 class="glance-title"><mdb-badge color="amber darken-2">{{ block.time | ago | async }}</mdb-badge></h3>
                     </li>
                 </ul>
             </mdb-card-body>
