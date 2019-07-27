@@ -7,12 +7,13 @@
           class="mat-elevation-z8 w-auto">
 
       <ng-container matColumnDef="hash" sticky>
-        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-pound"></i>&nbsp;Hash</th>
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion ion-ios-attach"></i>&nbsp;Hash</th>
         <td mat-cell *matCellDef="let tx" mdbWavesEffect> 
-          <mdb-badge color="pink">{{tx.hash | slice:0:15 }}... 
-          </mdb-badge>&nbsp;
+          <!-- <mdb-badge color="pink">{{tx.hash | slice:0:15 }}... 
+          </mdb-badge> -->
+          <button mat-raised-button style="cursor: pointer" color="accent" selected>{{ tx.hash | slice:0:15 }}...</button>
           <i 
-          class="ion-ios-copy copy-button" 
+          class="ion ion-ios-copy copy-button" 
           style="cursor: pointer;" 
           ngxClipboard 
           [cbContent]="tx.hash" 
@@ -23,7 +24,7 @@
       </ng-container>
 
       <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-document-text"></i>&nbsp;Type</th>
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion ion-ios-document"></i>&nbsp;Type</th>
         <td mat-cell *matCellDef="let tx">
           <mat-chip-list>
             <mat-chip color = "primary" selected>
@@ -38,17 +39,17 @@
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-android-checkbox-outline"></i>&nbsp;Status</th>
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion ion-ios-checkbox-outline"></i>&nbsp;Status</th>
         <td mat-cell *matCellDef="let tx"> 
-          <span *ngIf="!tx.error; else elseStatus"><i class="ion-checkmark-circled success"></i></span>
+          <span *ngIf="!tx.error; else elseStatus"><i class="ion ion-ios-checkmark-circle success"></i></span>
           <ng-template #elseStatus>
-            <i class="ion-close-circled fail"></i>
+            <i class="ion ion-ios-close-circle fail"></i>
           </ng-template>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="fee">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-card"></i>&nbsp;Fee</th>
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion ion-ios-card"></i>&nbsp;Fee</th>
         <td mat-cell *matCellDef="let tx"> 
           {{ 
             tx.fee?.amount ?
@@ -58,12 +59,12 @@
       </ng-container>
 
       <ng-container matColumnDef="height">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-soup-can"></i>&nbsp;Height</th>
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion ion-ios-cube"></i>&nbsp;Height</th>
         <td mat-cell *matCellDef="let tx"> {{tx.height}} </td>
       </ng-container>
 
       <ng-container matColumnDef="timestamp">
-        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion-clock"></i>&nbsp;Time</th>
+        <th mat-header-cell *matHeaderCellDef class="th-lg"><i class="ion ion-ios-timer"></i>&nbsp;Time</th>
         <td mat-cell *matCellDef="let tx"> {{tx.details?.timestamp | ago | async}} </td>
       </ng-container>
 
@@ -214,8 +215,8 @@
                       <mdb-badge danger="true">Error</mdb-badge>&nbsp;{{ tx.error|titlecase }}
                     </span>
                   </mdb-card-text>
-                  <button mdbBtn color="pink" rounded="true" size="sm" mdbWavesEffect 
-                  style="cursor: pointer;" (click)="openTxDialog(tx)" class="detail-button">Detail</button>
+
+                  <button mat-raised-button style="cursor: pointer" color="accent" class="detail-button" (click)="openTxDialog(tx)" selected>Detail</button>
                 </mdb-card-body>
               </mdb-card>
           </div>

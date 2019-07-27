@@ -3,17 +3,18 @@
 @include mat-core();
 
 $light-primary: mat-palette($mat-indigo);
-$light-accent: mat-palette($mat-pink, A200, A100, A400);
+$light-accent: mat-palette($mat-pink, A400);
 $light-warn: mat-palette($mat-red);
 $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
 
 .light-theme {
   @include angular-material-theme($light-theme);
   
-  html, body {
+  html, body, section {
     background: white;
     color: black;
   }
+
   .mat-cell {
     color: black;
   }
@@ -21,10 +22,6 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
   .mat-header-row {
     background-color: #3F51B5;
   }  
-
-  mdb-icon {
-    background-color: #3F51B5;
-  }
 
   .table-subtitle {
     color: #3F51B5;
@@ -47,54 +44,137 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
     font-size: 80%;
     color: #3F51B5;
   }
+
+  .btn-floating {
+    background-color: #3F51B5;
+  }
   
+  mdb-card-header,
+  .validator-mb-card {
+    background-color: #3F51B5;
+  }
+
+  .mat-table {
+    background:  #3F51B5;
+  }
+
   .title {
     font-weight: 500;
     color: black;
   }
     
+  .cascading-admin-card .admin-up mdb-icon {
+    background-color: #3F51B5;
+  }
+  
   a:link,
   a:visited {
-    color: black;
+    color: white;
     text-decoration: none;
     transition: color 0.2s;
   }
 
+  .footer-copyright
+  a:link,
+  a:visited {
+    color: white;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  // a:hover,
+  // a:active {
+  //   color: #FFC107;
+  //   text-decoration: underline; 
+  // }
+
+  .footer-copyright
   a:hover,
   a:active {
-    color: #FF4081;
-    text-decoration: underline; 
+    color: #ec407a;
+    //text-decoration: underline; 
   }
+
+  .btn-outline-custom {
+    border: 2px solid #ec407a !important;
+    background-color: transparent !important;
+    color: #ec407a !important;
+  }
+
+  .fail {
+    color: #F44336;
+  }
+
+  .list-group-item {
+    color: black;
+  }
+
+  .form-control::placeholder{
+    color: white;
+  }
+  
+  .form-control-mobile::placeholder{
+    color: #FF4081;
+    font-size: 65%;
+  }
+
+  .header-subtitle {
+    color: black;
+  }
+
+  .status {
+    color: white;
+  }
+
+  .copy-button {
+    color:#3F51B5;
+  }
+  
+  mdb-card-title {
+    color: white;
+  }
+    
 }
 
 
-$dark-primary: mat-palette($mat-yellow);
-$dark-accent: mat-palette($mat-pink, A200, A100, A400);
+$dark-primary: mat-palette($mat-deep-purple, A100);
+$dark-accent: mat-palette($mat-green, A400);
 $dark-warn: mat-palette($mat-red);
 $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
 .dark-theme {
   @include angular-material-theme($dark-theme);
 
-  .card {
-    background-color: #424242;
-  }
-
   html, body, section {
     background: #121212;
     color: #ffffff;
   }
-  .mat-row:nth-child(even){
-    background-color: #757575;
+
+  .mat-header-row {
+    background-color: hsl(0, 0%, 10%);
+  }  
+
+  .mat-card {
+    background-color: inherit;
+  }  
+
+  mdb-card-title {
+    color: #ffffff;
   }
 
-  .mat-row:nth-child(odd){
-    background-color: #424242;
+  .mat-table {
+    background: #353b50;
+  }
+  
+  mdb-card-header,
+  .validator-mb-card {
+    background-color: hsl(0, 0%, 10%);
   }
 
   .mat-cell {
-    background-color: #757575;
+    background-color: hsl(0, 0%, 15%);
   }
+
   
   .mat-header-cell {
     color: #ffffff;
@@ -104,7 +184,38 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
     font-weight: 500;
     color:#ffffff;
   }
- 
+
+  .card {
+    background-color: hsl(0, 0%, 15%);
+  }
+
+  .form-control-mobile::placeholder{
+    color: #40c6c6;
+    font-size: 65%;
+  }  
+  
+  .header-subtitle {
+    color: #ffffff;
+  }
+  
+  .btn-outline-custom {
+    border: 2px solid #40c6c6 !important;
+    background-color: transparent !important;
+    color: #40c6c6 !important;
+  }
+
+  .cascading-admin-card .admin-up mdb-icon {
+    background-color: #BB86FC;
+  }
+
+  .list-group-item {
+    background-color: inherit;
+  }
+
+  .status {
+    color: white;
+  }
+  
   a:link,
   a:visited {
     color: #ffffff;
@@ -112,20 +223,62 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
     transition: color 0.2s;
   }
 
+  .footer-copyright
   a:hover,
   a:active {
-    color: #FF4081;
-    text-decoration: underline; 
+    color: #40c6c6;
+    //text-decoration: underline; 
   }
 
-  mdb-icon {
-    background-color: #3F51B5;
+  // a:hover,
+  // a:active {
+  //   color: #40c6c6;
+  //   text-decoration: underline; 
+  // }
+
+  .fail {
+    color: #FF5722;/*#00796b;*/
   }
+  
+  .card-title h1 {
+    color: white;
+  }
+
+  .copy-button {
+    color: white;
+  }
+  
+  .ticker {
+    font-size: 80%;
+    color: #40c6c6;
+  }
+  
+  .btn-floating {
+    background-color: #40c6c6;
+  }
+
+  .mat-paginator {
+    background-color: inherit;
+  }
+
 }
 
 .row {
   max-width: 90%;
   margin: 0 auto;
+}
+
+.responsive-row {
+  max-width: 100vw;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+
+  .responsive-row {
+    max-width: 90%;
+    margin: 0 auto;
+  }
 }
 
 table {
@@ -156,9 +309,11 @@ td {
 }
 
 .paginator {
-  display: flex;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  float: right;
-  margin-right: 60px;
+  display: flex !important;
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+  float: right !important;
+  margin-right: 60px !important;
 }
+
+

@@ -1,4 +1,4 @@
-<section [className]="(theme$|async) === 'dark-theme' ? 'main grey-skin' : 'main indigo-skin'">
+<section [className]="(theme$|async) === 'dark-theme' ? 'main black-skin' : 'main indigo-skin'">
   <header>
       <!-- Sidebar navigation -->
       <mdb-side-nav #sidenavRef class="sn-bg-1" [fixed]="false">
@@ -101,7 +101,7 @@
         <div class="breadcrumbs breadcrumbs-hidden-nav breadcrumb-dn mr-auto">
           <a [routerLink]="['/validators']"><h1 class="brand-nav">Coris</h1></a>
           <mat-chip-list class="alpha-chip">
-            <mdb-badge color="amber"><span class="status">alpha</span></mdb-badge>
+            <mdb-badge color="pink"><span class="status">alpha</span></mdb-badge>
           </mat-chip-list>
         </div>
         

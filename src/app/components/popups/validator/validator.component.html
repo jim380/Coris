@@ -116,7 +116,7 @@
                       <mdb-badge color="cyan">
                         Voting Power
                       </mdb-badge>
-                    <h4>{{ validator.tokens | number:'.0-0' }}</h4>
+                    <h4>{{ validator.tokens/1e6 | number:'.0-0' }}</h4>
                   </div>
                   <div class="col-sm-4 col-12">
                       <mdb-badge color="amber darken-2">
@@ -140,7 +140,7 @@
                     <h4>
                       <span *ngIf="validator.account.type; else balanceElseBlock" 
                               matTooltipPosition="above">
-                        {{ validator.account.value.coins[0].amount | number:'.0-0'}}
+                        {{ validator.account.value.coins[0].amount/1e6 | number:'.0-0'}}
                       </span>
                       <ng-template #balanceElseBlock>
                         0
@@ -152,7 +152,7 @@
                         Rewards
                     </mdb-badge>
                     <h4 *ngIf="validator.rewards">
-                      {{validator.rewards[0].amount | number:'.2-2'}}
+                      {{validator.rewards[0].amount/1e6 | number:'.2-2'}}
                     </h4>
                   </div>
                   <div class="col-sm-4 col-12">
@@ -160,7 +160,7 @@
                       Outstanding Rewards
                     </mdb-badge>
                     <h4 *ngIf="validator.outstanding_rewards">
-                      {{validator.outstanding_rewards[0].amount | number:'.2-2'}} 
+                      {{validator.outstanding_rewards[0].amount/1e6 | number:'.2-2'}} 
                     </h4>
                   </div>
                 </div>
