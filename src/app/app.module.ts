@@ -47,6 +47,7 @@ import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { BtnCloseComponent } from './components/popups/btn-close/btn-close.component';
 import { ValidatorSpanComponent } from './components/validator-span/validator-span.component';
+import { FaucetComponent } from './components/faucet/faucet.component';
 
 declare var Hammer: any;
 
@@ -95,7 +96,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     AccountDetailComponent,
     BtnCloseComponent,
     DialogEntryComponent,
-    ValidatorSpanComponent
+    ValidatorSpanComponent,
+    FaucetComponent
   ],
   entryComponents: [
     GovDetailComponent,
