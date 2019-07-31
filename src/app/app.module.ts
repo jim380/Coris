@@ -48,6 +48,7 @@ import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-br
 import { BtnCloseComponent } from './components/popups/btn-close/btn-close.component';
 import { ValidatorSpanComponent } from './components/validator-span/validator-span.component';
 import { FaucetComponent } from './components/faucet/faucet.component';
+import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 
 declare var Hammer: any;
 
@@ -125,15 +126,19 @@ export class MyHammerConfig extends HammerGestureConfig {
       preventDuplicates: true,
       progressBar: true,
       closeButton: true,
-    })
-
+    }),
+    RecaptchaModule
   ],
   providers: [
     MDBSpinningPreloader,
     { 
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig
-    }
+    },
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: { siteKey: '6Lfoq7AUAAAAALVNTiTbWO2DbKbG4OrcS_mIZEhk' } as RecaptchaSettings,
+    },
   ],
   bootstrap: [AppComponent],
 })

@@ -28,7 +28,7 @@
     <div class="pt-2">
       <button mat-raised-button color="primary" (click)="onFaucetRequest(addrInputRef.value)">Claim</button>
     </div>
-    
+    <re-captcha #captchaRef size="invisible" (resolved)="resolved($event)"></re-captcha>
     <div class="alert {{statusClass}}" role="alert">
       Status: {{statusText}}
       <button type="button" (click)="onStatusHide()" class="close" data-dismiss="alert" aria-label="Close">

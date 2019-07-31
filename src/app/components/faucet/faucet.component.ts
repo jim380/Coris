@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FaucetService } from 'src/app/services/faucet.service';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/state';
@@ -6,6 +6,7 @@ import { selectTxs } from 'src/app/state/txs/txs.reducers';
 import { selectFaucetState } from 'src/app/state/faucet/faucet.reducers';
 import { first, map } from 'rxjs/operators';
 import { UpdateFaucetCoins } from 'src/app/state/faucet/faucet.actions';
+import { RecaptchaComponent } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-faucet',
@@ -13,12 +14,14 @@ import { UpdateFaucetCoins } from 'src/app/state/faucet/faucet.actions';
   styleUrls: ['./faucet.component.scss']
 })
 export class FaucetComponent implements OnInit, OnDestroy {
+  sender: string|null = null;
   statusText: string = 'n/a';
   statusClass: string = 'd-none' ;
   txsSize:number = 0;
   txs$ = this.appStore.select(selectTxs).subscribe(txs => this.txsSize = txs.length);
   faucet$ = this.appStore.select(selectFaucetState);
 
+  @ViewChild('captchaRef', {static: false}) captchaRef: RecaptchaComponent;
   constructor(
     private faucetService: FaucetService,
     private appStore: Store<State>
@@ -37,22 +40,28 @@ export class FaucetComponent implements OnInit, OnDestroy {
     this.txs$.unsubscribe();
   }
 
+  resolved(captchaResponse: string) {
+    console.log(captchaResponse);
+    this.faucetService
+      .postFaucet(`xrn:${this.sender}`)
+      .subscribe((tx:any) => {
+        if(tx.hash) {
+          this.statusText = `Success! Hash: ${tx.hash}`
+          this.statusClass = 'alert-success';
+        } else {
+          this.statusText = `${tx.status}`
+          this.statusClass = 'alert-danger';
+        }
+      });
+  }
+
   onFaucetRequest(address) {
     if(address.length !== 39) {
       this.statusText = 'No input provided. Or provided input is invalid.'
       this.statusClass = 'alert-warning';
     } else {
-      this.faucetService
-        .postFaucet(`xrn:${address}`)
-        .subscribe((tx:any) => {
-          if(tx.hash) {
-            this.statusText = `Success! Hash: ${tx.hash}`
-            this.statusClass = 'alert-success';
-          } else {
-            this.statusText = `${tx.status}`
-            this.statusClass = 'alert-danger';
-          }
-        });
+      this.sender = address;
+      this.captchaRef.execute();
     }
   }
 

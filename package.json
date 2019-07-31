@@ -30,6 +30,7 @@
     "hammerjs": "^2.0.8",
     "ionicons": "^4.6.2",
     "js-sha256": "^0.9.0",
+    "ng-recaptcha": "^4.3.0",
     "ng-uikit-pro-standard": "git+https://oauth2:ULKdG4NuUxzJcpQFspxF@git.mdbootstrap.com/mdb/angular/ng-uikit-pro-standard.git",
     "ngx-clipboard": "^12.1.1",
     "ngx-toastr": "^10.0.4",
