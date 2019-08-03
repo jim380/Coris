@@ -49,6 +49,7 @@ import { BtnCloseComponent } from './components/popups/btn-close/btn-close.compo
 import { ValidatorSpanComponent } from './components/validator-span/validator-span.component';
 import { FaucetComponent } from './components/faucet/faucet.component';
 import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
+import { DialogContent } from './components/faucet/dialog/dialog-content';
 
 declare var Hammer: any;
 
@@ -98,7 +99,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     BtnCloseComponent,
     DialogEntryComponent,
     ValidatorSpanComponent,
-    FaucetComponent
+    FaucetComponent,
+    DialogContent
   ],
   entryComponents: [
     GovDetailComponent,
@@ -107,7 +109,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     TxComponent,
     BlockComponent,
     AccountDetailComponent,
-    DialogEntryComponent
+    DialogEntryComponent,
+    DialogContent
   ],
   imports: [
     BrowserModule,

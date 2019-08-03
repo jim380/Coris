@@ -9,8 +9,8 @@
     <div class="row d-flex justify-content-center">
       <!-- Grid column -->
       <div class="col-12 pb-2">
-        <p class="card-text">
-          Per request sends out 1,000,000 tree.
+        <p class="mat-card-content">
+          Faucet sends out 1,000,000 tree per request.
         </p>
         <div class="col-auto">
           <!-- Material input -->
@@ -25,15 +25,19 @@
       <!-- Grid column -->
     </div>
     <!-- Grid row -->
-    <div class="pt-2">
-      <button mat-raised-button color="primary" (click)="onFaucetRequest(addrInputRef.value)">Claim</button>
+    <div *ngIf="!statusSent">
+      <p>
+        <mat-checkbox (change)="OnChange($event)" class="px-1"></mat-checkbox>Accept our <a (click)="openDialog()">terms use</a>.
+      </p>
+      <button [disabled]="!statusCanSend" mat-raised-button color="primary" (click)="onFaucetRequest(addrInputRef.value)">Claim</button>
     </div>
+    
     <re-captcha #captchaRef size="invisible" (resolved)="resolved($event)"></re-captcha>
-    <div class="alert {{statusClass}}" role="alert">
+    
+    <hr class="my-4">
+    <div class="text-left pt-1">
       Status: {{statusText}}
-      <button type="button" (click)="onStatusHide()" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
     </div>
+
   </div>
 </div>

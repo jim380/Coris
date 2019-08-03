@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:100,300,300i,400);
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap');
 @import "app/theme";
 $ionicons-font-path: "~ionicons/dist/fonts";
 @import "~ionicons/dist/scss/ionicons.scss";
@@ -6,8 +6,8 @@ $ionicons-font-path: "~ionicons/dist/fonts";
 html, body {
   font-size: 20px;
   line-height: 1.5;
-  font-family: 'Lato', 'Arial', sans-serif;
-  font-weight: 300;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 400;
   text-rendering: optimizeLegibility;
   height: 100%;
   margin: 0;
@@ -271,9 +271,15 @@ footer p {
   background-color: #00796B;
 }
 
+
+.terms-dialog .mat-dialog-container {
+  padding: 24px !important;
+}
+
 .mat-dialog-container {
   padding: 0 !important;
 }
+
 
 .fixed-top {
   z-index: 150 !important;
