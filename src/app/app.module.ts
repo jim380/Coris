@@ -50,6 +50,7 @@ import { ValidatorSpanComponent } from './components/validator-span/validator-sp
 import { FaucetComponent } from './components/faucet/faucet.component';
 import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { DialogContent } from './components/faucet/dialog/dialog-content';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 declare var Hammer: any;
 
@@ -118,6 +119,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     MaterialModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    FlexLayoutModule,
     ClipboardModule,
     [
       StoreModule.forRoot(reducers)

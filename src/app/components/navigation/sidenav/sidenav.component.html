@@ -1,6 +1,5 @@
-<section [className]="(theme$|async) === 'dark-theme' ? 'main black-skin' : 'main cyan-skin'">
+<!-- <section [className]="(theme$|async) === 'dark-theme' ? 'main black-skin' : 'main cyan-skin'">
   <header>
-      <!-- Sidebar navigation -->
       <mdb-side-nav #sidenavRef class="sn-bg-1" [fixed]="false">
         <mdb-navbar-brand>
           <li>
@@ -10,11 +9,9 @@
               </a>
             </div>
           </li>
-          <!--/. Logo -->
         </mdb-navbar-brand>
 
         <links>
-          <!--Social-->
           <li>
             <ul class="social">
               <li>
@@ -90,18 +87,15 @@
       <div class="sidenav-bg mask-strong"></div>
     </mdb-side-nav>
 
-    <!-- Navbar -->
     <mdb-navbar SideClass="navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav"
                 [containerInside]="false">
 
       <navlinks class="navbar-container">
-        <!-- SideNav slide-out button -->
         <div class="float-left">
           <a (click)="sidenavRef.show()" class="button-collapse hidden-nav-button-collapse">
             <i class="fas fa-bars"></i>
           </a>
         </div>
-        <!--/. SideNav slide-out button -->
       </navlinks>
 
       <mdb-navbar-brand>
@@ -182,4 +176,60 @@
   <router-outlet (activate)="onRouterEvent($event)"></router-outlet>
   <app-scroll-top></app-scroll-top>
   <app-footer></app-footer>
-</section>
+</section> -->
+<div class="app-container">
+
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Coris</span>
+      <span fxFlex></span>
+      <form class="form-inline waves-light waves-light ml-auto clearfix d-none d-lg-inline-block">
+        <div  class="md-form my-0 mx-3">
+          <input style="width: 30vw;" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="Enter moniker / address / height / hash" aria-label="Search">
+          <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn color="primary" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
+        </div>
+      </form>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav>
+      <form class="form-inline waves-light waves-light ml-auto clearfix d-lg-none d-inline-block">
+        <div  class="md-form my-0 mx-3">
+          <input style="width: 70vw;" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="Enter moniker / address / height / hash" aria-label="Search">
+          <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn color="primary" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
+        </div>
+      </form>
+      <mat-nav-list>
+        <a mat-list-item routerLink='/validators'>
+          <h3><i class="mx-3 fa fa-users"></i>Validator</h3>
+        </a>
+        <a mat-list-item routerLink='/blocks'>
+          <h3><i class="mx-3 fa fa-cubes"></i>Blocks</h3>
+        </a>
+        <a mat-list-item routerLink='/txs'>
+          <h3><i class="mx-3 fa fa-tasks"></i>Transactions</h3>
+        </a>
+        <a mat-list-item routerLink='/gov'>
+          <h3><i class="mx-3 fa fa-university"></i>Governance</h3>
+        </a>
+        <a mat-list-item routerLink='/faucet'>
+          <h3><i class="mx-3 fa fa-shower"></i>Faucet</h3>
+        </a>
+        <a class="mx-3">
+          <mat-slide-toggle style="color:white" (change)="onToggleTheme()">Dark Theme</mat-slide-toggle>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content fxFlexFill>
+      <app-status-bar></app-status-bar>
+      <router-outlet></router-outlet>
+      <app-scroll-top></app-scroll-top>
+      <app-footer></app-footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+</div>
