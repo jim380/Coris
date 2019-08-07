@@ -1,182 +1,3 @@
-<!-- <section [className]="(theme$|async) === 'dark-theme' ? 'main black-skin' : 'main cyan-skin'">
-  <header>
-      <mdb-side-nav #sidenavRef class="sn-bg-1" [fixed]="false">
-        <mdb-navbar-brand>
-          <li>
-            <div class="logo-wrapper waves-light">
-              <a [routerLink]="['/validators']">
-              <img [src]="(theme$|async) === 'dark-theme' ? '../../../../assets/img/Coris_logo.png' : '../../../../assets/img/Coris_logo.png'" class="img-fluid flex-center logo">
-              </a>
-            </div>
-          </li>
-        </mdb-navbar-brand>
-
-        <links>
-          <li>
-            <ul class="social">
-              <li>
-                <a class="icons-sm fb-ic" href="https://github.com/jim380/Coris" target=" ">
-                  <i class="fab fa-github"> </i>
-                </a>
-              </li>
-              <li>
-                <a class="icons-sm pin-ic" href="https://twitter.com/cypher_core" target=" ">
-                  <i class="fab fa-twitter"> </i>
-                </a>
-              </li>
-              <li>
-                <a class="icons-sm gplus-ic" href="https://t.me/cyphercore" target=" ">
-                  <i class="fab fa-telegram"> </i>
-                </a>
-              </li>
-              <li>
-                <a class="icons-sm tw-ic" href="https://www.linkedin.com/company/cypher-core/about/?viewAsMember=true" target=" ">
-                  <i class="fab fa-linkedin"> </i>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <ul class="collapsible collapsible-accordion">
-              <mdb-accordion [multiple]="false" aria-multiselectable="false">
-                
-                <mdb-accordion-item class="no-collase">
-                  <mdb-accordion-item-head routerLinkActive="active" mdbWavesEffect routerLink="/validators">
-                    <i class="fas fa-users"></i> Validators
-                  </mdb-accordion-item-head>
-                  <mdb-accordion-item-body></mdb-accordion-item-body>
-                </mdb-accordion-item>
-
-                <mdb-accordion-item class="no-collase">
-                  <mdb-accordion-item-head routerLinkActive="active" mdbWavesEffect routerLink="/blocks">
-                    <i class="fa fa-cubes"></i> Blocks
-                  </mdb-accordion-item-head>
-                  <mdb-accordion-item-body></mdb-accordion-item-body>
-                </mdb-accordion-item>            
-
-                <mdb-accordion-item class="no-collase">
-                    <mdb-accordion-item-head mdbWavesEffect routerLinkActive="active" routerLink="/txs">
-                      <i class="fa fa-tasks"></i> Transactions
-                    </mdb-accordion-item-head>
-                    <mdb-accordion-item-body></mdb-accordion-item-body>
-                </mdb-accordion-item>
-
-                <mdb-accordion-item class="no-collase">
-                  <mdb-accordion-item-head mdbWavesEffect routerLinkActive="active" routerLink="/gov">
-                    <i class="fa fa-university"></i> Governance
-                  </mdb-accordion-item-head>
-                  <mdb-accordion-item-body></mdb-accordion-item-body>
-              </mdb-accordion-item>
-              
-              <mdb-accordion-item class="no-collase">
-                  <mdb-accordion-item-head mdbWavesEffect routerLinkActive="active" routerLink="/faucet">
-                    <i class="fa fa-shower"></i> Faucet
-                  </mdb-accordion-item-head>
-                  <mdb-accordion-item-body></mdb-accordion-item-body>
-              </mdb-accordion-item>
-
-              <mdb-accordion-item class="no-collase">
-                <h4 class="theme-toggle justify-content-between align-items-center">
-                  <mat-slide-toggle (change)="onToggleTheme()" color="primary" class="app-toggle">Dark Theme</mat-slide-toggle>
-                </h4>
-              </mdb-accordion-item>
-            </mdb-accordion>
-          </ul>
-        </li>
-      </links>
-      <div class="sidenav-bg mask-strong"></div>
-    </mdb-side-nav>
-
-    <mdb-navbar SideClass="navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav"
-                [containerInside]="false">
-
-      <navlinks class="navbar-container">
-        <div class="float-left">
-          <a (click)="sidenavRef.show()" class="button-collapse hidden-nav-button-collapse">
-            <i class="fas fa-bars"></i>
-          </a>
-        </div>
-      </navlinks>
-
-      <mdb-navbar-brand>
-        <div class="breadcrumbs breadcrumbs-hidden-nav breadcrumb-dn mr-auto">
-          <a [routerLink]="['/validators']"><h1 class="brand-nav">Coris</h1></a>
-          <mat-chip-list class="alpha-chip">
-            <mdb-badge color="amber"><span class="status">alpha</span></mdb-badge>
-          </mat-chip-list>
-        </div>
-        
-      </mdb-navbar-brand>
-
-      <navlinks>
-        <form class="form-inline waves-light waves-light ml-auto clearfix d-none d-xl-inline-block" mdbWavesEffect>
-          <div  class="md-form my-0 mx-3">
-            <input style="width: 30vw;" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="Enter moniker / address / height / hash" aria-label="Search">
-            <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn color="primary" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
-          </div>
-        </form>
-        <ul class="nav navbar-nav nav-flex-icons ml-auto ie-double-nav ie-hidden-double-nav d-xl-none">
-          <li class="nav-item">
-            <a class="nav-link waves-light" mdbWavesEffect routerLink="/validators" routerLinkActive="active">
-              <i class="mr-1 fa fa-users"></i>
-              <h3 class="clearfix d-none d-md-inline-block">Validator</h3>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link waves-light" mdbWavesEffect routerLink="/blocks" routerLinkActive="active">
-              <i class="mr-1 fa fa-cubes"></i>
-              <h3 class="clearfix d-none d-md-inline-block">Blocks</h3>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link waves-light" mdbWavesEffect routerLink="/txs" routerLinkActive="active">
-              <i class="mr-1 fa fa-tasks"></i>
-              <h3 class="clearfix d-none d-md-inline-block">Transactions</h3>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link waves-light" mdbWavesEffect routerLink="/gov" routerLinkActive="active">
-              <i class="mr-1 fa fa-university"></i>
-              <h3 class="clearfix d-none d-md-inline-block">Governance</h3>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link waves-light" mdbWavesEffect routerLink="/faucet" routerLinkActive="active">
-              <i class="mr-1 fa fa-shower"></i>
-              <h3 class="clearfix d-none d-md-inline-block">Faucet</h3>
-            </a>
-          </li>
-        </ul>
-      </navlinks>
-    </mdb-navbar>
-  </header>
-  <div class="fixed-action-btn d-xl-none" style="top: 100px; right: 24px;">
-    <a  class="btn-floating pink waves-light" 
-        mdbWavesEffect
-        [mdbPopover]="popTemplate"
-        placement="left">
-      <i class="fas fa-search"></i>
-    </a>
-  </div>
-  <ng-template #popTemplate>
-    <div class="row search-box">
-      <form style="width: 90vw;" class="form-inline waves-light" mdbWavesEffect>
-        <div class="md-form my-0">
-          <input  #searchQueryRef class="form-control-mobile form-control mr-sm-2" 
-                  type="text" 
-                  placeholder="Enter tx hash / block height / address" 
-                  aria-label="Search">
-          <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn outline="true" size="sm" class="btn-outline-custom my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
-        </div>
-      </form>
-    </div>
-  </ng-template>
-  <app-status-bar></app-status-bar>
-  <router-outlet (activate)="onRouterEvent($event)"></router-outlet>
-  <app-scroll-top></app-scroll-top>
-  <app-footer></app-footer>
-</section> -->
 <div class="app-container">
 
   <mat-toolbar color="primary">
@@ -189,7 +10,9 @@
       <form class="form-inline waves-light waves-light ml-auto clearfix d-none d-lg-inline-block">
         <div  class="md-form my-0 mx-3">
           <input style="width: 30vw;" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="Enter moniker / address / height / hash" aria-label="Search">
-          <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn color="primary" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
+          <button (click)="onSearchBtnClick(searchQueryRef.value)" mat-icon-button aria-label="Search icon">
+            <mat-icon>search</mat-icon>
+          </button>
         </div>
       </form>
     </mat-toolbar-row>
@@ -198,9 +21,11 @@
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sidenav>
       <form class="form-inline waves-light waves-light ml-auto clearfix d-lg-none d-inline-block">
-        <div  class="md-form my-0 mx-3">
+        <div class="md-form my-0 mx-3">
           <input style="width: 70vw;" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="Enter moniker / address / height / hash" aria-label="Search">
-          <button (click)="onSearchBtnClick(searchQueryRef.value)" mdbBtn color="primary" outline="true" size="sm" class="my-0 waves-light" type="submit" mdbWavesEffect>Search</button>
+          <button (click)="onSearchBtnClick(searchQueryRef.value)" mat-icon-button aria-label="Search icon">
+            <mat-icon style="color:white">search</mat-icon>
+          </button>
         </div>
       </form>
       <mat-nav-list>

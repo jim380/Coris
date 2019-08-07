@@ -82,17 +82,10 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
     transition: color 0.2s;
   }
 
-  // a:hover,
-  // a:active {
-  //   color: #FFC107;
-  //   text-decoration: underline; 
-  // }
-
   .footer-copyright
   a:hover,
   a:active {
     color: #FFC107;
-    //text-decoration: underline; 
   }
 
   .btn-outline-custom {
@@ -214,18 +207,11 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   .footer-copyright
   a:hover,
   a:active {
-    color: #40c6c6;
-    //text-decoration: underline; 
+    color: #40c6c6; 
   }
 
-  // a:hover,
-  // a:active {
-  //   color: #40c6c6;
-  //   text-decoration: underline; 
-  // }
-
   .fail {
-    color: #FF5722;/*#00796b;*/
+    color: #FF5722;
   }
   
   .card-title h1 {
@@ -299,5 +285,3 @@ td {
   float: right !important;
   margin-right: 60px !important;
 }
-
-

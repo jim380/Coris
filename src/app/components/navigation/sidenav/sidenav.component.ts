@@ -22,8 +22,7 @@ export class SidenavComponent implements OnInit {
     private appStore: Store<State>
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   onSearchBtnClick(query) {
     if(query.length === 45 && query.slice(0, 6) === "cosmos") {
@@ -43,36 +42,9 @@ export class SidenavComponent implements OnInit {
     this.appStore.dispatch(new ToggleTheme());
   }
 
-
   onMobileSearchBtnClick(query) {
     this.sidenav.hide();
     this.onSearchBtnClick(query);
   }
 
-
-  onRouterEvent(e) {
-    switch (this.router.url) {
-      case "/validators":
-          this.activeRoute = "Validator";
-        break;
-      
-      case "/blocks":
-          this.activeRoute = "Blocks";
-        break;
-  
-      case "/txs":
-          this.activeRoute = "Transactions";
-        break;
-    
-      case "/gov":
-          this.activeRoute = "Governance";
-        break;
-      
-      default:
-        this.activeRoute = "";
-        break;
-    }
-  }
-
-  
 }

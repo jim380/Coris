@@ -3,19 +3,27 @@
 $ionicons-font-path: "~ionicons/dist/fonts";
 @import "~ionicons/dist/scss/ionicons.scss";
 
-html, body {
+body { 
+  font-family: Roboto, Arial, sans-serif;
+  margin: 0;
   font-size: 20px;
   line-height: 1.5;
-  font-family: 'Roboto Condensed', sans-serif;
   font-weight: 400;
   text-rendering: optimizeLegibility;
-  height: 100%;
-  margin: 0;
 }
 
-nav {
-  height: 10vh;
-  background: #111923;
+.app-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.sidenav-container {
+  flex: 1;
 }
 
 section {
