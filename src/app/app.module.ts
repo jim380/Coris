@@ -51,6 +51,7 @@ import { FaucetComponent } from './components/faucet/faucet.component';
 import { RecaptchaModule, RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 import { DialogContent } from './components/faucet/dialog/dialog-content';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { SearchComponent } from './components/navigation/sidenav/search/search.component';
 
 declare var Hammer: any;
 
@@ -101,7 +102,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     DialogEntryComponent,
     ValidatorSpanComponent,
     FaucetComponent,
-    DialogContent
+    DialogContent,
+    SearchComponent
   ],
   entryComponents: [
     GovDetailComponent,

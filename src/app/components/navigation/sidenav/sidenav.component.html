@@ -7,27 +7,14 @@
       </button>
       <span>Coris</span>
       <span fxFlex></span>
-      <form class="form-inline waves-light waves-light ml-auto clearfix d-none d-lg-inline-block">
-        <div  class="md-form my-0 mx-3">
-          <input style="width: 30vw;" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="Enter moniker / address / height / hash" aria-label="Search">
-          <button (click)="onSearchBtnClick(searchQueryRef.value)" mat-icon-button aria-label="Search icon">
-            <mat-icon>search</mat-icon>
-          </button>
-        </div>
-      </form>
+      <app-search fxHide fxShow.gt-sm="true"></app-search>
     </mat-toolbar-row>
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sidenav>
-      <form class="form-inline waves-light waves-light ml-auto clearfix d-lg-none d-inline-block">
-        <div class="md-form my-0 mx-3">
-          <input style="width: 70vw;" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="Enter moniker / address / height / hash" aria-label="Search">
-          <button (click)="onSearchBtnClick(searchQueryRef.value)" mat-icon-button aria-label="Search icon">
-            <mat-icon style="color:white">search</mat-icon>
-          </button>
-        </div>
-      </form>
+      <app-search fxHide.gt-sm="true"></app-search>
+      <mat-divider></mat-divider>
       <mat-nav-list>
         <a mat-list-item routerLink='/validators'>
           <h3><i class="mx-3 fa fa-users"></i>Validator</h3>
@@ -44,6 +31,7 @@
         <a mat-list-item routerLink='/faucet'>
           <h3><i class="mx-3 fa fa-shower"></i>Faucet</h3>
         </a>
+        <mat-divider></mat-divider>
         <a class="mx-3">
           <mat-slide-toggle style="color:white" (change)="onToggleTheme()">Dark Theme</mat-slide-toggle>
         </a>

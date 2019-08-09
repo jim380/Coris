@@ -1,0 +1,14 @@
+<!-- <div>
+  <input style="width: 30vw;" #searchQueryRef class="form-control mr-sm-2" type="text" placeholder="Enter moniker / address / height / hash" aria-label="Search">
+  <button (click)="onSearchBtnClick(searchQueryRef.value)" mat-icon-button aria-label="Search icon">
+    <mat-icon>search</mat-icon>
+  </button>
+</div> -->
+<form class="search-form">
+  <mat-form-field class="search-field">
+    <input type="tel" matInput placeholder="Enter moniker / address / height / hash">  
+  </mat-form-field>
+  <button (click)="onSearchBtnClick(searchQueryRef.value)" mat-icon-button aria-label="Search icon">
+    <mat-icon>search</mat-icon>
+  </button>
+</form>
