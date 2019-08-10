@@ -7,5 +7,5 @@ tcp_port=8081
 ng build --prod --build-optimizer --output-path distr
 cd distr && tar cf - . | nc $destination_host $tcp_port
 
-# Now on recieving, go in served folder and run:
+# Now on receiving end, go in served folder and run:
 # nc -l $tcp_port | tar xf -
