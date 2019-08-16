@@ -1,8 +1,9 @@
-// #TODO fix issue with websockets proxy
-const NETWORK = `cosmos`
+const NODE_URL = `coris.network`;
+const NETWORK = `cosmos`;
 
-export const nodeRpc1 = `https://libration.xyz/${NETWORK}/rpc1`;
-export const nodeRpc2 = `https://libration.xyz/${NETWORK}/rpc2`;
-export const nodeWs = `wss://libration.xyz/${NETWORK}/websocket`;
-export const appApi = `https://libration.xyz/${NETWORK}/api`;
-export const faucetRpc = 'http://regen.coris.network/api'
+export const nodeRpc1 = `https://${NODE_URL}/${NETWORK}/rpc1`;
+export const nodeRpc2 = `https://${NODE_URL}/${NETWORK}/rpc2`;
+export const nodeWs = `wss://${NODE_URL}/${NETWORK}/websocket`;
+export const appApi = `https://${NODE_URL}/${NETWORK}/api`;
+// TODO remove faucet from cosmos version
+export const faucetRpc = 'http://regen.coris.network/api';
