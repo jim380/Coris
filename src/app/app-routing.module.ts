@@ -11,7 +11,7 @@ import { GovernanceComponent } from './components/explorer/governance/governance
 
 import { BlockComponent } from './components/explorer/blocks/block/block.component';
 import { TxComponent } from './components/explorer/txs/tx/tx.component';
-import { ValidatorComponent } from './components/explorer/popups/validator/validator.component';
+import { ValidatorComponent } from './components/explorer/validators/validator/validator.component';
 import { AccountDetailComponent } from './components/explorer/account/account-detail.component';
 import { GovDetailComponent } from './components/explorer/governance/proposal/gov-detail.component';
 

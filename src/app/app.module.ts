@@ -24,13 +24,13 @@ import { CarouselComponent } from './components/status-bar/carousel/carousel.com
 // End main components
 
 // Popup components
-import { ValidatorComponent } from './components/explorer/popups/validator/validator.component';
+import { ValidatorComponent } from './components/explorer/validators/validator/validator.component';
 import { GovDetailComponent } from './components/explorer/governance/proposal/gov-detail.component';
 import { BlockComponent } from './components/explorer/blocks/block/block.component';
 import { TxComponent } from './components/explorer/txs/tx/tx.component';
 import { TxsListCardComponent } from './components/explorer/txs/txs-list-card/txs-list-card.component';
 import { AccountDetailComponent } from './components/explorer/account/account-detail.component';
-import { DialogEntryComponent } from './components/explorer/popups/dialog-entry.component'
+import { DialogEntryComponent } from './components/explorer/shared/dialog-entry.component'
 // End popup components
 
 // Chart components
@@ -45,8 +45,8 @@ import { ScrollTopComponent } from './components/scroll-top/scroll-top.component
 import { AgoPipe } from './pipes/ago.pipe';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { BtnCloseComponent } from './components/explorer/popups/btn-close/btn-close.component';
-import { ValidatorSpanComponent } from './components/explorer/validator-span/validator-span.component';
+import { BtnCloseComponent } from './components/explorer/shared/btn-close/btn-close.component';
+import { ValidatorSpanComponent } from './components/explorer/shared/validator-span/validator-span.component';
 import { FaucetComponent } from './components/faucet/faucet.component';
 
 declare var Hammer: any;

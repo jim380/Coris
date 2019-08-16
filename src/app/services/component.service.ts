@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GovDetailComponent } from '../components/explorer/governance/proposal/gov-detail.component';
-import { ValidatorComponent } from '../components/explorer/popups/validator/validator.component';
+import { ValidatorComponent } from '../components/explorer/validators/validator/validator.component';
 import { TxsListCardComponent } from '../components/explorer/txs/txs-list-card/txs-list-card.component';
 import { BlockComponent } from '../components/explorer/blocks/block/block.component';
 import { TxComponent } from '../components/explorer/txs/tx/tx.component';

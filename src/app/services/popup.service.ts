@@ -7,7 +7,7 @@ import { nodeRpc1 } from '../../config'
 import { Block } from '../interfaces/block.interface';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material';
-import { ValidatorComponent } from '../components/explorer/popups/validator/validator.component';
+import { ValidatorComponent } from '../components/explorer/validators/validator/validator.component';
 import { AccountDetailComponent } from '../components/explorer/account/account-detail.component';
 import { TxComponent } from '../components/explorer/txs/tx/tx.component';
 import { BlockComponent } from '../components/explorer/blocks/block/block.component';
