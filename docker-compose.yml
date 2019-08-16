@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+
+  dev:
+    container_name: coris
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/usr/src/Coris'
+      - '/usr/src/Coris/node_modules'
+    ports:
+      - '4201:4200'
