@@ -4,7 +4,7 @@ import { MatTableDataSource, MatTable } from '@angular/material';
 import { trigger, style, animate, transition, state } from '@angular/animations';
 import { GovService } from 'src/app/services/gov.service';
 import { PopupService } from 'src/app/services/popup.service';
-import { GovDetailComponent } from '../popups/gov-detail/gov-detail.component';
+import { GovDetailComponent } from './proposal/gov-detail.component';
 
 @Component({
   selector: 'app-governance',

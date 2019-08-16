@@ -8,7 +8,6 @@ import { TxsService } from 'src/app/services/txs.service';
   templateUrl: './account-detail.component.html',
   styleUrls: [
     './account-detail.component.scss',
-    '../popups-common.scss'
   ]
 })
 export class AccountDetailComponent implements OnInit {

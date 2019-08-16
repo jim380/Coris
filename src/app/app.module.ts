@@ -13,10 +13,10 @@ import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 
 // Main components
 import { AppComponent } from './app.component';
-import { ValidatorsComponent } from './components/validators/validators.component';
-import { BlocksComponent } from './components/blocks/blocks.component';
-import { TxsComponent } from './components/txs/txs.component';
-import { GovernanceComponent } from './components/governance/governance.component';
+import { ValidatorsComponent } from './components/explorer/validators/validators.component';
+import { BlocksComponent } from './components/explorer/blocks/blocks.component';
+import { TxsComponent } from './components/explorer/txs/txs.component';
+import { GovernanceComponent } from './components/explorer/governance/governance.component';
 import { StatusBarComponent } from './components/status-bar/status-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SidenavComponent } from './components/navigation/sidenav/sidenav.component';
@@ -24,18 +24,18 @@ import { CarouselComponent } from './components/status-bar/carousel/carousel.com
 // End main components
 
 // Popup components
-import { ValidatorComponent } from './components/popups/validator/validator.component';
-import { GovDetailComponent } from './components/popups/gov-detail/gov-detail.component';
-import { BlockComponent } from './components/popups/block/block.component';
-import { TxComponent } from './components/popups/tx/tx.component';
-import { TxsListCardComponent } from './components/popups/txs-list-card/txs-list-card.component';
-import { AccountDetailComponent } from './components/popups/account-detail/account-detail.component';
-import { DialogEntryComponent } from './components/popups/dialog-entry.component'
+import { ValidatorComponent } from './components/explorer/popups/validator/validator.component';
+import { GovDetailComponent } from './components/explorer/governance/proposal/gov-detail.component';
+import { BlockComponent } from './components/explorer/blocks/block/block.component';
+import { TxComponent } from './components/explorer/txs/tx/tx.component';
+import { TxsListCardComponent } from './components/explorer/txs/txs-list-card/txs-list-card.component';
+import { AccountDetailComponent } from './components/explorer/account/account-detail.component';
+import { DialogEntryComponent } from './components/explorer/popups/dialog-entry.component'
 // End popup components
 
 // Chart components
-import { ChartCardsComponent } from './components/validators/chart-cards/chart-cards.component';
-import { ChartCardsGovComponent } from './components/governance/chart-cards-gov/chart-cards-gov.component';
+import { ChartCardsComponent } from './components/explorer/validators/chart-cards/chart-cards.component';
+import { ChartCardsGovComponent } from './components/explorer/governance/chart-cards-gov/chart-cards-gov.component';
 // End chart components
 
 import { reducers } from './state/index';
@@ -45,8 +45,8 @@ import { ScrollTopComponent } from './components/scroll-top/scroll-top.component
 import { AgoPipe } from './pipes/ago.pipe';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { BtnCloseComponent } from './components/popups/btn-close/btn-close.component';
-import { ValidatorSpanComponent } from './components/validator-span/validator-span.component';
+import { BtnCloseComponent } from './components/explorer/popups/btn-close/btn-close.component';
+import { ValidatorSpanComponent } from './components/explorer/validator-span/validator-span.component';
 import { FaucetComponent } from './components/faucet/faucet.component';
 
 declare var Hammer: any;
@@ -98,15 +98,6 @@ export class MyHammerConfig extends HammerGestureConfig {
     DialogEntryComponent,
     ValidatorSpanComponent,
     FaucetComponent
-  ],
-  entryComponents: [
-    GovDetailComponent,
-    ValidatorComponent,
-    TxsListCardComponent,
-    TxComponent,
-    BlockComponent,
-    AccountDetailComponent,
-    DialogEntryComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Block } from '../../interfaces/block.interface';
-import { nodeRpc2 } from '../../../config';
+import { Block } from '../../../interfaces/block.interface';
+import { nodeRpc2 } from '../../../../config';
 import { DatePipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';

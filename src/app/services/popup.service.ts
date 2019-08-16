@@ -7,11 +7,11 @@ import { nodeRpc1 } from '../../config'
 import { Block } from '../interfaces/block.interface';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material';
-import { ValidatorComponent } from '../components/popups/validator/validator.component';
-import { AccountDetailComponent } from '../components/popups/account-detail/account-detail.component';
-import { TxComponent } from '../components/popups/tx/tx.component';
-import { BlockComponent } from '../components/popups/block/block.component';
-import { GovDetailComponent } from '../components/popups/gov-detail/gov-detail.component';
+import { ValidatorComponent } from '../components/explorer/popups/validator/validator.component';
+import { AccountDetailComponent } from '../components/explorer/account/account-detail.component';
+import { TxComponent } from '../components/explorer/txs/tx/tx.component';
+import { BlockComponent } from '../components/explorer/blocks/block/block.component';
+import { GovDetailComponent } from '../components/explorer/governance/proposal/gov-detail.component';
 import { State } from '../state/index.js';
 import { ValidatorsState } from '../state/validators/validator.interface.js';
 import { selectValidatorsState } from '../state/validators/validators.reducers.js';

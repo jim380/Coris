@@ -11,7 +11,6 @@ import { selectValidatorsState } from 'src/app/state/validators/validators.reduc
   templateUrl: './gov-detail.component.html',
   styleUrls: [
     './gov-detail.component.scss',
-    '../popups-common.scss'
   ]
 })
 export class GovDetailComponent implements OnInit, AfterViewInit {

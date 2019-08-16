@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
-import { nodeRpc1, nodeRpc2 } from '../../../config'
-import { Tx } from '../../interfaces/tx.interface';
+import { nodeRpc1, nodeRpc2 } from '../../../../config'
+import { Tx } from '../../../interfaces/tx.interface';
 import {  MatTableDataSource, 
           MatPaginator, 
           MatTable, 

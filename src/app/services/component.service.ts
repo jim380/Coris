@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { GovDetailComponent } from '../components/popups/gov-detail/gov-detail.component';
-import { ValidatorComponent } from '../components/popups/validator/validator.component';
-import { TxsListCardComponent } from '../components/popups/txs-list-card/txs-list-card.component';
-import { BlockComponent } from '../components/popups/block/block.component';
-import { TxComponent } from '../components/popups/tx/tx.component';
-import { AccountDetailComponent } from '../components/popups/account-detail/account-detail.component';
+import { GovDetailComponent } from '../components/explorer/governance/proposal/gov-detail.component';
+import { ValidatorComponent } from '../components/explorer/popups/validator/validator.component';
+import { TxsListCardComponent } from '../components/explorer/txs/txs-list-card/txs-list-card.component';
+import { BlockComponent } from '../components/explorer/blocks/block/block.component';
+import { TxComponent } from '../components/explorer/txs/tx/tx.component';
+import { AccountDetailComponent } from '../components/explorer/account/account-detail.component';
 
 @Injectable({
   providedIn: 'root'

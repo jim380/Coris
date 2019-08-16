@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 
-import { ValidatorsComponent } from './components/validators/validators.component';
-import { BlocksComponent } from './components/blocks/blocks.component';
-import { TxsComponent } from './components/txs/txs.component';
-import { GovernanceComponent } from './components/governance/governance.component';
-import { DialogEntryComponent } from './components/popups/dialog-entry.component';
+import { ValidatorsComponent } from './components/explorer/validators/validators.component';
+import { BlocksComponent } from './components/explorer/blocks/blocks.component';
+import { TxsComponent } from './components/explorer/txs/txs.component';
+import { GovernanceComponent } from './components/explorer/governance/governance.component';
+
 // import { FaucetComponent } from './components/faucet/faucet.component';
 // import { DashboardComponent } from './components/dashboard/dashboard.component';
-// import { TestComponent } from './components/test/test.component';
-// import { BlockComponent } from './components/popups/block/block.component';
-// import { TxComponent } from './components/popups/tx/tx.component';
-// import { ValidatorComponent } from './components/popups/validator/validator.component';
+
+import { BlockComponent } from './components/explorer/blocks/block/block.component';
+import { TxComponent } from './components/explorer/txs/tx/tx.component';
+import { ValidatorComponent } from './components/explorer/popups/validator/validator.component';
+import { AccountDetailComponent } from './components/explorer/account/account-detail.component';
+import { GovDetailComponent } from './components/explorer/governance/proposal/gov-detail.component';
 
 const routerOptions: ExtraOptions = {
   anchorScrolling: 'enabled',
@@ -26,11 +28,11 @@ const routes: Routes = [
   { path: 'txs', component: TxsComponent },
   { path: 'gov', component: GovernanceComponent },
 
-  { path: 'block/:height', component: DialogEntryComponent },
-  { path: 'tx/:hash', component: DialogEntryComponent },
-  { path: 'validator/:address', component: DialogEntryComponent },
-  { path: 'account/:address', component: DialogEntryComponent },
-  { path: 'proposal/:id', component: DialogEntryComponent },
+  { path: 'block/:height', component: BlockComponent },
+  { path: 'tx/:hash', component: TxComponent },
+  { path: 'validator/:address', component: ValidatorComponent },
+  { path: 'account/:address', component: AccountDetailComponent },
+  { path: 'proposal/:id', component: GovDetailComponent },
 
   { path: '**', redirectTo:'/validators' }
 ];

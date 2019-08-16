@@ -11,6 +11,7 @@ export class DialogEntryComponent {
     private activatedRoute: ActivatedRoute
   ) { 
     this.activatedRoute.url.subscribe((urlSegments) => {
+      console.log("123", urlSegments)
       switch (urlSegments[0].path) {
         case "validator": {
           this.popupService.openValidatorDialogAddr(urlSegments[1].path);

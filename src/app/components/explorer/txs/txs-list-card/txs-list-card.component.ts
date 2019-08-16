@@ -9,7 +9,6 @@ import { PopupService } from 'src/app/services/popup.service';
   templateUrl: './txs-list-card.component.html',
   styleUrls: [
     './txs-list-card.component.scss',
-    '../popups-common.scss'
   ]
 })
 export class TxsListCardComponent implements OnInit, AfterViewInit {

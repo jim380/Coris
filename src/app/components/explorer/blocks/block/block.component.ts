@@ -12,7 +12,6 @@ import { selectValidatorsState } from 'src/app/state/validators/validators.reduc
   templateUrl: './block.component.html',
   styleUrls: [
     './block.component.scss',
-    '../popups-common.scss'
   ]
 })
 

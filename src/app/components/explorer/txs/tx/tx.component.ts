@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { BlockComponent } from '../block/block.component';
+import { BlockComponent } from '../../blocks/block/block.component';
 import { State } from 'src/app/state';
 import { ValidatorsState } from 'src/app/state/validators/validator.interface';
 import { selectValidatorsState } from 'src/app/state/validators/validators.reducers';
@@ -13,7 +13,6 @@ import { selectValidatorsState } from 'src/app/state/validators/validators.reduc
   templateUrl: './tx.component.html',
   styleUrls: [
     './tx.component.scss',
-    '../popups-common.scss'
   ]
 })
 export class TxComponent implements OnInit {

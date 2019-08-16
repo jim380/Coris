@@ -14,7 +14,6 @@ import { ValidatorsState } from 'src/app/state/validators/validator.interface';
   templateUrl: './validator.component.html',
   styleUrls: [
     './validator.component.scss',
-    '../popups-common.scss'
   ]
 })
 
