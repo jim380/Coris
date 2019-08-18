@@ -65,7 +65,7 @@
                 </mdb-accordion-item>
 
                 <mdb-accordion-item class="no-collase">
-                  <mdb-accordion-item-head mdbWavesEffect routerLinkActive="active" routerLink="/gov">
+                  <mdb-accordion-item-head mdbWavesEffect routerLinkActive="active" routerLink="/proposals">
                     <i class="fa fa-university"></i> Governance
                   </mdb-accordion-item-head>
                   <mdb-accordion-item-body></mdb-accordion-item-body>
@@ -135,7 +135,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link waves-light" mdbWavesEffect routerLink="/gov" routerLinkActive="active">
+            <a class="nav-link waves-light" mdbWavesEffect routerLink="/proposals" routerLinkActive="active">
               <i class="mr-1 fa fa-university"></i>
               <h3 class="clearfix d-none d-md-inline-block">Governance</h3>
             </a>
@@ -166,8 +166,8 @@
       </form>
     </div>
   </ng-template>
-  <app-status-bar></app-status-bar>
-  <router-outlet (activate)="onRouterEvent($event)"></router-outlet>
+  <!-- <app-status-bar></app-status-bar> -->
+  <router-outlet></router-outlet>
   <app-scroll-top></app-scroll-top>
   <app-footer></app-footer>
 </section>

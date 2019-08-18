@@ -9,6 +9,7 @@ import { MaterialModule } from './material.module';
 import { ClipboardModule } from 'ngx-clipboard';
 import { ToastrModule } from 'ngx-toastr';
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
+import { FlexLayoutModule } from '@angular/flex-layout';
 // End app modules
 
 // Main components
@@ -105,6 +106,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     MaterialModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    FlexLayoutModule,
     ClipboardModule,
     [
       StoreModule.forRoot(reducers)

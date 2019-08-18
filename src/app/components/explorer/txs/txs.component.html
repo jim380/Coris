@@ -216,7 +216,7 @@
                     </span>
                   </mdb-card-text>
 
-                  <button mat-raised-button style="cursor: pointer" color="accent" class="detail-button" (click)="openTxDialog(tx)" selected>Detail</button>
+                  <button mat-raised-button style="cursor: pointer" color="accent" class="detail-button" [routerLink]="tx.hash" selected>Detail</button>
                 </mdb-card-body>
               </mdb-card>
           </div>

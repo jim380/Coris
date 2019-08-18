@@ -25,54 +25,8 @@ export class SidenavComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSearchBtnClick(query) {
-    if(query.length === 45 && query.slice(0, 6) === "cosmos") {
-      this.popupService.openAccountDialogAddr(query);
-    } else if(query.length === 52 && query.slice(0, 13) === "cosmosvaloper") {
-      this.popupService.openValidatorDialogAddr(query);
-    } else if(query.length === 64) {
-      this.popupService.openTxDialogHash(query);
-    } else if(!isNaN(query)) {
-      this.popupService.openBlockDialogHeight(query);
-    } else {
-      this.popupService.openValidatorDialogMoniker(query);
-    }
-  }
 
   onToggleTheme() {
     this.appStore.dispatch(new ToggleTheme());
   }
-
-
-  onMobileSearchBtnClick(query) {
-    this.sidenav.hide();
-    this.onSearchBtnClick(query);
-  }
-
-
-  onRouterEvent(e) {
-    switch (this.router.url) {
-      case "/validators":
-          this.activeRoute = "Validator";
-        break;
-      
-      case "/blocks":
-          this.activeRoute = "Blocks";
-        break;
-  
-      case "/txs":
-          this.activeRoute = "Transactions";
-        break;
-    
-      case "/gov":
-          this.activeRoute = "Governance";
-        break;
-      
-      default:
-        this.activeRoute = "";
-        break;
-    }
-  }
-
-  
 }

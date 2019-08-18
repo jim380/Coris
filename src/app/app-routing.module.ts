@@ -24,15 +24,14 @@ const routerOptions: ExtraOptions = {
 const routes: Routes = [
   { path: '', redirectTo: '/validators', pathMatch: 'full'},
   { path: 'validators', component: ValidatorsComponent },
+  { path: 'validators/:address', component: ValidatorComponent },
   { path: 'blocks', component: BlocksComponent },
+  { path: 'blocks/:height', component: BlockComponent },
   { path: 'txs', component: TxsComponent },
-  { path: 'gov', component: GovernanceComponent },
-
-  { path: 'block/:height', component: BlockComponent },
-  { path: 'tx/:hash', component: TxComponent },
-  { path: 'validator/:address', component: ValidatorComponent },
+  { path: 'txs/:hash', component: TxComponent },
+  { path: 'proposals', component: GovernanceComponent },
+  { path: 'proposals/:id', component: GovDetailComponent },
   { path: 'account/:address', component: AccountDetailComponent },
-  { path: 'proposal/:id', component: GovDetailComponent },
 
   { path: '**', redirectTo:'/validators' }
 ];
